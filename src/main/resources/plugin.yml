@@ -1,0 +1,40 @@
+name: DreaminTools
+version: '${version}'
+main: fr.dreamin.dreamintools.DreaminTools
+api-version: '1.20'
+commands:
+  dt:
+    description: DreaminTools
+    aliases: dreamintools
+    permission: dreamintools.use
+    permission-message: You don't have the permission to use this command.
+  dvh:
+    description: "dvh"
+    aliases: ["dreaminvoicehote"]
+  dv:
+    description: "dv"
+    aliases: ["dreaminvoice"]
+  dvd:
+    description: "dvd"
+    aliases: ["dreaminvoicedev"]
+  as:
+    description: "as"
+    aliases: [ "as" ]
+  coal:
+    description: "coal"
+    aliases: [ "getcoal" ]
+  getid:
+    description: "getid"
+    aliases: [ "getid" ]
+  showvoice:
+    description: "showvoice"
+    aliases: [ "showvoice" ]
+  tag:
+    description: "tag"
+    aliases: [ "tag" ]
+  door:
+    description: "door"
+    aliases: [ "door" ]
+  interact:
+    description: "interact"
+    aliases: [ "interact" ]

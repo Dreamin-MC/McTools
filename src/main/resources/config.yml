@@ -1,0 +1,33 @@
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#>>       PLUGIN CONFIGURATION       >>
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+dreaminTools:
+  prefix: "§8» §f" #player's msg
+  broadcastprefix: "[§c§lDreaminTools§r] " #global's & console's msg
+
+  buildMode: false
+  editMode: false
+  defaultGui: false
+  defaultItems: false
+  voiceMode: false
+  voiceWallMode: false #true = enable voice mode, false = disable voice mode
+  voiceDistanceMax: 10 #max distance for voiceWallMode
+
+  permission:
+    hote: "dreamintools.hote"
+    dev: "dreamintools.dev"
+  message:
+    errorconsole: "§cVous ne pouvez pas exécuter cette commande dans la console :("
+    errorcmd: "§cVous n'avez pas la permission d'exécute"
+
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#>>       DATABASE INFORMATION       >>
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+sql:
+  host: ""
+  port: 3306
+  dbName: ""
+  username: ""
+  password: ""
+  defaultPrefix: ""
