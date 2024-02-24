@@ -1,10 +1,12 @@
 package fr.dreamin.mctools.api.time;
 
+import fr.dreamin.mctools.api.service.Service;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class TimerManager {
+public class TimerManager extends Service {
 
   private static class ActionKey {
     private final UUID playerId;

@@ -2,12 +2,10 @@ package fr.dreamin.mctools.components.gui.armorStand;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
-import fr.dreamin.mctools.api.gui.GuiBuilder;
-import fr.dreamin.mctools.api.gui.GuiItems;
-import fr.dreamin.mctools.api.gui.PaginationManager;
-import fr.dreamin.mctools.api.gui.PictureGui;
+import fr.dreamin.mctools.api.glowing.GlowingEntities;
+import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -22,7 +20,7 @@ public class ArmorStandBasicSettings implements GuiBuilder {
   public String name(Player player) {
     DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    return CustomChatColor.WHITE.getColorWithText((dtPlayer.getArmorStandManager().isInvisibleGui() ? "七七七七七七七" : PictureGui.GENERIC_27.getName()));
+    return CustomChatColor.WHITE.getColorWithText((dtPlayer.getArmorStandManager().isInvisibleGui() ? "七" : PictureGui.GENERIC_27.getName()));
 
   }
 
@@ -66,7 +64,7 @@ public class ArmorStandBasicSettings implements GuiBuilder {
       dtPlayer.getArmorStandManager().setInvisibleGui(!dtPlayer.getArmorStandManager().isInvisibleGui());
     }
     else if (current.getType().equals(Material.NAME_TAG) && current.getItemMeta().getDisplayName().contains("Retour")) {
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMenuGui.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMenuGui.class);
       return;
     }
     else if (current.getType().equals(Material.NAME_TAG) && current.getItemMeta().getDisplayName().contains("Quitter")) {
@@ -101,16 +99,16 @@ public class ArmorStandBasicSettings implements GuiBuilder {
         }
         else if (current.getItemMeta().getDisplayName().contains("Glowing")) {
 
-          if (McTools.getInstance().getGlowingEntities().isGlowing(dtPlayer.getPlayer(), armorStand)) {
+          if (McTools.getService(GlowingEntities.class).isGlowing(dtPlayer.getPlayer(), armorStand)) {
             try {
-              McTools.getInstance().getGlowingEntities().setGlowing(armorStand, dtPlayer.getPlayer(), ChatColor.BLUE);
+              McTools.getService(GlowingEntities.class).setGlowing(armorStand, dtPlayer.getPlayer(), ChatColor.BLUE);
             } catch (ReflectiveOperationException e) {
               throw new RuntimeException(e);
             }
           }
           else {
             try {
-              McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand, dtPlayer.getPlayer());
+              McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
             } catch (ReflectiveOperationException e) {
               throw new RuntimeException(e);
             }
@@ -123,7 +121,7 @@ public class ArmorStandBasicSettings implements GuiBuilder {
 
 
 
-    McTools.getInstance().getGuiManager().open(player, ArmorStandBasicSettings.class);
+    McTools.getService(GuiManager.class).open(player, ArmorStandBasicSettings.class);
 
   }
 

@@ -11,7 +11,7 @@ public enum PaginationType {
     PAGE {
       public void setPagination(Player player, PaginationManager paginationManager, GuiBuilder menu, GuiItems items) {
 
-        int page = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
+        int page = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
 
         int itemsPerPage = paginationManager.getItemsPerPage();
         int totalPages = paginationManager.getTotalPages();
@@ -37,28 +37,28 @@ public enum PaginationType {
       public void setNext(Player player, PaginationManager paginationManager, Class<? extends GuiBuilder> gClass) {
 
         if (paginationManager.isSync()) {
-          McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addPageForAll(gClass.getSimpleName());
+          McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addPageForAll(gClass.getSimpleName());
         }
         else
-          McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addPage(player, gClass.getSimpleName());
-        McTools.getInstance().getGuiManager().open(player, gClass);
+          McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addPage(player, gClass.getSimpleName());
+        McTools.getService(GuiManager.class).open(player, gClass);
       }
 
       @Override
       public void setPrevious(Player player, PaginationManager paginationManager, Class<? extends GuiBuilder> gClass) {
         if (paginationManager.isSync()) {
-          McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().removePageForAll(gClass.getSimpleName());
+          McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removePageForAll(gClass.getSimpleName());
         }
         else
-          McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().removePage(player, gClass.getSimpleName());
-        McTools.getInstance().getGuiManager().open(player, gClass);
+          McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removePage(player, gClass.getSimpleName());
+        McTools.getService(GuiManager.class).open(player, gClass);
       }
     },
     LOOP_PAGE {
       @Override
       public void setPagination(Player player, PaginationManager paginationManager, GuiBuilder menu, GuiItems items) {
 
-        int page = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
+        int page = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
 
         int itemsPerPage = paginationManager.getItemsPerPage();
         int totalPages = paginationManager.getTotalPages();
@@ -79,42 +79,42 @@ public enum PaginationType {
 
       @Override
       public void setNext(Player player, PaginationManager paginationManager, Class<? extends GuiBuilder> gClass) {
-        int page = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getGuiPage(player, gClass.getSimpleName());
+        int page = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, gClass.getSimpleName());
         int totalPages = paginationManager.getTotalPages();
 
         if (paginationManager.isSync()) {
-          if (page == totalPages) McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPageForAll(gClass.getSimpleName(), 1);
-          else McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addPageForAll(gClass.getSimpleName());
+          if (page == totalPages) McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPageForAll(gClass.getSimpleName(), 1);
+          else McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addPageForAll(gClass.getSimpleName());
         }
         else {
-          if (page == totalPages) McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(player, gClass.getSimpleName(), 1);
-          else McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addPage(player, gClass.getSimpleName());
+          if (page == totalPages) McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(player, gClass.getSimpleName(), 1);
+          else McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addPage(player, gClass.getSimpleName());
         }
-        McTools.getInstance().getGuiManager().open(player, gClass);
+        McTools.getService(GuiManager.class).open(player, gClass);
       }
 
       @Override
       public void setPrevious(Player player, PaginationManager paginationManager, Class<? extends GuiBuilder> gClass) {
-        int page = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getGuiPage(player, gClass.getSimpleName());
+        int page = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, gClass.getSimpleName());
         int totalPages = paginationManager.getTotalPages();
 
 
         if (paginationManager.isSync()) {
-          if (page == 1) McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPageForAll(gClass.getSimpleName(), totalPages);
-          else McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().removePageForAll(gClass.getSimpleName());
+          if (page == 1) McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPageForAll(gClass.getSimpleName(), totalPages);
+          else McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removePageForAll(gClass.getSimpleName());
         }
         else {
-          if (page == 1) McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(player, gClass.getSimpleName(), totalPages);
-          else McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().removePage(player, gClass.getSimpleName());
+          if (page == 1) McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(player, gClass.getSimpleName(), totalPages);
+          else McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removePage(player, gClass.getSimpleName());
         }
-        McTools.getInstance().getGuiManager().open(player, gClass);
+        McTools.getService(GuiManager.class).open(player, gClass);
       }
     },
     LINE {
       @Override
       public void setPagination(Player player, PaginationManager paginationManager, GuiBuilder menu, GuiItems items) {
 
-        int indexStart = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
+        int indexStart = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
 
         int itemsPerPage = paginationManager.getItemsPerPage();
         int startSlot = paginationManager.getSlotStart();
@@ -142,28 +142,28 @@ public enum PaginationType {
       @Override
       public void setNext(Player player, PaginationManager paginationManager, Class<? extends GuiBuilder> gClass) {
         if (paginationManager.isSync()) {
-          McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addPageForAll(gClass.getSimpleName());
+          McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addPageForAll(gClass.getSimpleName());
         }
         else
-          McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addPage(player, gClass.getSimpleName());
-        McTools.getInstance().getGuiManager().open(player, gClass);
+          McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addPage(player, gClass.getSimpleName());
+        McTools.getService(GuiManager.class).open(player, gClass);
       }
 
       @Override
       public void setPrevious(Player player, PaginationManager paginationManager, Class<? extends GuiBuilder> gClass) {
         if (paginationManager.isSync()) {
-          McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().removePageForAll(gClass.getSimpleName());
+          McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removePageForAll(gClass.getSimpleName());
         }
         else
-          McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().removePage(player, gClass.getSimpleName());
-        McTools.getInstance().getGuiManager().open(player, gClass);
+          McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removePage(player, gClass.getSimpleName());
+        McTools.getService(GuiManager.class).open(player, gClass);
       }
     },
     LOOP_LINE {
       @Override
       public void setPagination(Player player, PaginationManager paginationManager, GuiBuilder menu, GuiItems items) {
 
-        int indexStart = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
+        int indexStart = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
 
         int itemsPerPage = paginationManager.getItemsPerPage();
         int startSlot = paginationManager.getSlotStart();
@@ -189,21 +189,21 @@ public enum PaginationType {
       @Override
       public void setNext(Player player, PaginationManager paginationManager, Class<? extends GuiBuilder> gClass) {
         if (paginationManager.isSync()) {
-          McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addPageForAll(gClass.getSimpleName());
+          McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addPageForAll(gClass.getSimpleName());
         }
         else
-          McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addPage(player, gClass.getSimpleName());
-        McTools.getInstance().getGuiManager().open(player, gClass);
+          McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addPage(player, gClass.getSimpleName());
+        McTools.getService(GuiManager.class).open(player, gClass);
       }
 
       @Override
       public void setPrevious(Player player, PaginationManager paginationManager, Class<? extends GuiBuilder> gClass) {
         if (paginationManager.isSync()) {
-          McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().removePageForAll(gClass.getSimpleName());
+          McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removePageForAll(gClass.getSimpleName());
         }
         else
-          McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().removePage(player, gClass.getSimpleName());
-        McTools.getInstance().getGuiManager().open(player, gClass);
+          McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removePage(player, gClass.getSimpleName());
+        McTools.getService(GuiManager.class).open(player, gClass);
       }
     },
     AUTO_LINE(){

@@ -1,7 +1,9 @@
-package fr.dreamin.mctools.generic.service;
+package fr.dreamin.mctools.api.service;
 
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.log.Logging;
 import lombok.SneakyThrows;
+import org.bukkit.Bukkit;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -48,9 +50,9 @@ public class ServiceManager {
                         field.set(i, v);
                     } else {
                         if (v == null) {
-                            McTools.getLog().error("Field " + field.getName() + " in " + target.getSimpleName() + " is null, this is probably a bug");
+                            System.out.println("Field " + field.getName() + " in " + target.getSimpleName() + " is null, this is probably a bug");
                         } else {
-                            McTools.getLog().warn("WARNING! field " + field.getName() + " in " + target.getSimpleName() + " doesn't have the inject annotation, but it was resolved as " + v.getClass().getName());
+                            System.out.println("WARNING! field " + field.getName() + " in " + target.getSimpleName() + " doesn't have the inject annotation, but it was resolved as " + v.getClass().getName());
                         }
                     }
                 }
@@ -60,7 +62,7 @@ public class ServiceManager {
             i.onEnable();
             return i;
         } catch (Exception e) {
-            McTools.getLog().error("Failed to load service: " + target.getName());
+            getService(Logging.class).error("Failed to load service: " + target.getName());
             throw e;
         }
     }

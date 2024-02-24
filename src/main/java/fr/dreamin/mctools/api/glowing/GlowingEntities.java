@@ -2,6 +2,8 @@ package fr.dreamin.mctools.api.glowing;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.service.Service;
 import io.netty.channel.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -35,27 +37,35 @@ import java.util.logging.Logger;
  * @version 1.3.1
  * @author Dreamin
  */
-public class GlowingEntities implements Listener {
+public class GlowingEntities  extends Service implements Listener {
 
-  protected final @NotNull Plugin plugin;
+  protected @NotNull Plugin plugin;
   private Map<Player, PlayerData> glowing;
   boolean enabled = false;
 
   private int uid;
 
+
   /**
    * Initializes the Glowing API.
    *
-   * @param plugin plugin that will be used to register the events.
    */
-  public GlowingEntities(@NotNull Plugin plugin) {
+  @Override
+  public void onEnable() {
+    super.onEnable();
     if (!Packets.enabled)
       throw new IllegalStateException(
         "The Glowing Entities API is disabled. An error has occured during initialization.");
 
-    this.plugin = Objects.requireNonNull(plugin);
+    this.plugin = McTools.getInstance();
 
     enable();
+  }
+
+  @Override
+  public void onDisable() {
+    super.onDisable();
+    disable();
   }
 
   /**

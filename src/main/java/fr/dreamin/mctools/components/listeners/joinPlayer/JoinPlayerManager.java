@@ -5,7 +5,7 @@ import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;

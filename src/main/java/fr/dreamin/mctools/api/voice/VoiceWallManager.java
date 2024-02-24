@@ -5,35 +5,37 @@ import com.craftmend.openaudiomc.api.impl.event.events.ClientRequestVoiceEvent;
 import com.craftmend.openaudiomc.api.interfaces.AudioApi;
 import com.craftmend.openaudiomc.spigot.modules.voicechat.filters.FilterService;
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.gui.GuiManager;
+import fr.dreamin.mctools.api.service.Service;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
-public class VoiceWallManager {
+public class VoiceWallManager extends Service {
 
   private BukkitTask bukkitTask;
 
-  public VoiceWallManager() {
+  @Override
+  public void onEnable() {
+    super.onEnable();
+    new BukkitRunnable() {
+      @Override
+      public void run() {
 
-      new BukkitRunnable() {
-        @Override
-        public void run() {
-
-          if (McTools.getCodex().isVoiceWallMode()) {
-            startRunTask();
-            addFilter();
-          }
-          startEvents();
+        if (McTools.getCodex().isVoiceWallMode()) {
+          startRunTask();
+          addFilter();
         }
-      }.runTaskLater(McTools.getInstance(), 40);
-
+        startEvents();
+      }
+    }.runTaskLater(McTools.getInstance(), 40);
   }
 
   private void startEvents() {
     AudioApi.getInstance().getEventDriver().on(ClientRequestVoiceEvent.class).setHandler(event -> {
-      if (McTools.getInstance().getGuiManager().getGuiConfig().getMainGui() != null) McTools.getInstance().getGuiManager().getGuiConfig().openGuiForAll(McTools.getInstance().getGuiManager().getGuiConfig().getMainGui().getClass());
+      if (McTools.getService(GuiManager.class).getGuiConfig().getMainGui() != null) McTools.getService(GuiManager.class).getGuiConfig().openGuiForAll(McTools.getService(GuiManager.class).getGuiConfig().getMainGui().getClass());
     });
   }
 

@@ -1,5 +1,7 @@
 package fr.dreamin.mctools.api.glowing;
 
+import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.service.Service;
 import io.papermc.paper.event.packet.PlayerChunkLoadEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -20,23 +22,35 @@ import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
-public class GlowingBlocks implements Listener {
+public class GlowingBlocks extends Service implements Listener {
 
-	private final @NotNull GlowingEntities entities;
+	private @NotNull GlowingEntities entities;
 	private Map<Player, PlayerData> glowing;
 	private boolean enabled = false;
+
 
 	/**
 	 * Initializes the Glowing blocks API.
 	 *
-	 * @param plugin plugin that will be used to register the events.
 	 */
-	public GlowingBlocks(@NotNull Plugin plugin) {
+	@Override
+	public void onEnable() {
+		super.onEnable();
 		testForPaper();
 
-		this.entities = new GlowingEntities(plugin);
+		this.entities = McTools.getService(GlowingEntities.class);
 
 		enable();
+	}
+
+	@Override
+	public void onDisable() {
+		super.onDisable();
+		disable();
+	}
+
+	public GlowingBlocks(@NotNull Plugin plugin) {
+
 	}
 
 	/**

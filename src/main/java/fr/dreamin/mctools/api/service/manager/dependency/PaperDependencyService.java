@@ -1,7 +1,7 @@
-package fr.dreamin.mctools.paper.services.dependency;
+package fr.dreamin.mctools.api.service.manager.dependency;
 
 import fr.dreamin.mctools.McTools;
-import fr.dreamin.mctools.generic.service.Service;
+import fr.dreamin.mctools.api.service.Service;
 import lombok.NoArgsConstructor;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -25,7 +25,7 @@ public class PaperDependencyService extends Service implements Listener {
 
     public PaperDependencyService ifPluginEnabled(String pluginName, DependencyHandler handler) {
         if (Bukkit.getPluginManager().isPluginEnabled(pluginName)) {
-            McTools.getLog().warn("Plugin " + pluginName + " is already enabled, running handler");
+            System.out.println("Plugin " + pluginName + " is already enabled, running handler");
             handler.onLoad(pluginName, Bukkit.getPluginManager().getPlugin(pluginName));
             enabledPlugins.add(pluginName);
         } else {
@@ -41,7 +41,7 @@ public class PaperDependencyService extends Service implements Listener {
     public void onLoad(PluginEnableEvent enableEvent) {
         List<DependencyHandler> handlers = handlerMap.getOrDefault(enableEvent.getPlugin().getName(), new ArrayList<>());
         for (DependencyHandler handler : handlers) {
-            McTools.getLog().info("Plugin " + enableEvent.getPlugin().getName() + " is now enabled, running handler");
+            System.out.println("Plugin " + enableEvent.getPlugin().getName() + " is now enabled, running handler");
             handler.onLoad(enableEvent.getPlugin().getName(), enableEvent.getPlugin());
         }
     }

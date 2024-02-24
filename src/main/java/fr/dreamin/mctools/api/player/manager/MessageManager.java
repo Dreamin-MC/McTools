@@ -1,5 +1,6 @@
-package fr.dreamin.mctools.api.player;
+package fr.dreamin.mctools.api.player.manager;
 
+import fr.dreamin.mctools.api.colors.CustomChatColor;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.entity.Player;
@@ -29,6 +30,16 @@ public class MessageManager {
 
   public static void sendActionBarMessage(Player player, String message) {
     player.spigot().sendMessage(ChatMessageType.ACTION_BAR, TextComponent.fromLegacyText(message));
+  }
+
+  public static void sendError(Player player, String prefix, String msg) {
+    player.sendMessage(prefix + CustomChatColor.RED.getColorWithText("Error") + CustomChatColor.GRAY.getColorWithText(" : ") + CustomChatColor.WHITE.getColorWithText(msg));
+  }
+
+  public static void sendError(List<Player> players, String prefix, String msg) {
+    for (Player player : players) {
+      sendError(player, prefix, msg);
+    }
   }
 
 }

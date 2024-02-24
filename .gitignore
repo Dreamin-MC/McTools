@@ -21,3 +21,4 @@ out/*
 .vscode/*
 
 # Custom
+test-server/

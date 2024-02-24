@@ -3,7 +3,7 @@ package fr.dreamin.mctools.api.gui;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.math.Math;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -104,7 +104,7 @@ public class GuiPageManager {
     }
     else if (paginationManager.getType().equals(PaginationType.LINE)) {
 
-      int indexStart = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getGuiPage(player, gClass.getSimpleName());
+      int indexStart = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, gClass.getSimpleName());
       int slotStart = paginationManager.getSlotStart();
 
       List<ItemStack> items = Math.reorderItems(paginationManager.getItems(), indexStart - 1);
@@ -133,7 +133,7 @@ public class GuiPageManager {
     }
     else if (paginationManager.getType().equals(PaginationType.LOOP_LINE)) {
 
-      int indexStart = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getGuiPage(player, gClass.getSimpleName());
+      int indexStart = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, gClass.getSimpleName());
       int slotStart = paginationManager.getSlotStart();
 
       List<ItemStack> items = Math.reorderItemsAZ(paginationManager.getItems(), indexStart - 1);

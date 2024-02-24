@@ -49,8 +49,8 @@ public class ListMapGui implements GuiBuilder {
 
   @Override
   public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
-    if (McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
-      int index = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
+    if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
+      int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
       player.teleport(Bukkit.getWorlds().get(index).getSpawnLocation());
 
     }

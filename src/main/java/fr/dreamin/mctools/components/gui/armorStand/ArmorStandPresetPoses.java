@@ -2,12 +2,9 @@ package fr.dreamin.mctools.components.gui.armorStand;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
-import fr.dreamin.mctools.api.gui.GuiBuilder;
-import fr.dreamin.mctools.api.gui.GuiItems;
-import fr.dreamin.mctools.api.gui.PaginationManager;
-import fr.dreamin.mctools.api.gui.PictureGui;
+import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -22,7 +19,7 @@ public class ArmorStandPresetPoses implements GuiBuilder {
   public String name(Player player) {
     DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    return CustomChatColor.WHITE.getColorWithText((dtPlayer.getArmorStandManager().isInvisibleGui() ? "七七七七七七七七七七七七七七七七七七七" : PictureGui.ARMOR_POSE.getName()));
+    return CustomChatColor.WHITE.getColorWithText((dtPlayer.getArmorStandManager().isInvisibleGui() ? "七" : PictureGui.ARMOR_POSE.getName()));
   }
 
   @Override
@@ -62,7 +59,7 @@ public class ArmorStandPresetPoses implements GuiBuilder {
       dtPlayer.getArmorStandManager().setInvisibleGui(!dtPlayer.getArmorStandManager().isInvisibleGui());
     }
     else if (current.getType().equals(Material.NAME_TAG) && current.getItemMeta().getDisplayName().contains("Retour")) {
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMenuGui.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMenuGui.class);
     }
     else if (current.getType().equals(Material.NAME_TAG) && current.getItemMeta().getDisplayName().contains("Quitter")) {
       player.closeInventory();

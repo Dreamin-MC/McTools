@@ -2,13 +2,10 @@ package fr.dreamin.mctools.api.gui.defaultGui;
 
 import com.rexcantor64.triton.api.language.Language;
 import fr.dreamin.mctools.McTools;
-import fr.dreamin.mctools.api.gui.GuiBuilder;
-import fr.dreamin.mctools.api.gui.GuiItems;
-import fr.dreamin.mctools.api.gui.PaginationManager;
-import fr.dreamin.mctools.api.gui.PaginationType;
+import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -44,8 +41,8 @@ public class LanguageConfifGui implements GuiBuilder {
 
     DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    if (McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
-      int index = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
+    if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
+      int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
 
       if (McTools.getInstance().getTritonManager() != null) {
         Language language = McTools.getInstance().getTritonManager().getLanguageManager().getAllLanguages().get(index);

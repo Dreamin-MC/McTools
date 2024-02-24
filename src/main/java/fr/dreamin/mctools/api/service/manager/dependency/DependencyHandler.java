@@ -1,4 +1,4 @@
-package fr.dreamin.mctools.paper.services.dependency;
+package fr.dreamin.mctools.api.service.manager.dependency;
 
 import org.bukkit.plugin.Plugin;
 

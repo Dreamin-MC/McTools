@@ -1,6 +1,7 @@
-package fr.dreamin.mctools.generic.service;
+package fr.dreamin.mctools.api.service;
 
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.log.Logging;
 
 public abstract class Service implements Servicable {
 
@@ -11,7 +12,7 @@ public abstract class Service implements Servicable {
     }
 
     public void log(String s) {
-        McTools.getLog().info(getClass().getSimpleName() + ": " + s);
+        System.out.println(getClass().getSimpleName() + ": " + s);
     }
 
     public <T extends Servicable> T getService(Class<T> s) {

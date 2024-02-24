@@ -1,4 +1,4 @@
-package fr.dreamin.mctools.generic.service;
+package fr.dreamin.mctools.api.service;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -2,7 +2,7 @@ package fr.dreamin.mctools.api.gui;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -61,7 +61,7 @@ public class GuiConfig {
 
   public void openGui(Player player) {
     if (!containsGuiOpen(player)) return;
-    McTools.getInstance().getGuiManager().open(player, getGuiOpen().get(player));
+    McTools.getService(GuiManager.class).open(player, getGuiOpen().get(player));
   }
 
   public void openGuiForAll(Class<? extends GuiBuilder> gClass) {
@@ -72,7 +72,7 @@ public class GuiConfig {
       if (!containsGuiOpen(player)) continue;
 
       if (getPlayerGuiOpen(player).getSimpleName().equals(gClass.getSimpleName()))
-        McTools.getInstance().getGuiManager().open(player, gClass);
+        McTools.getService(GuiManager.class).open(player, gClass);
     }
   }
 

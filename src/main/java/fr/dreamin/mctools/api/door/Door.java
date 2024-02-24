@@ -7,6 +7,7 @@ import com.ticxo.modelengine.api.model.ActiveModel;
 import com.ticxo.modelengine.api.model.ModeledEntity;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.cuboide.Cuboide;
+import fr.dreamin.mctools.api.time.CooldownManager;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -154,10 +155,10 @@ public class Door {
 
       if (event.getAction().equals(BaseEntityInteractEvent.Action.INTERACT_ON) && event.getModel().equals(doorManager.getActiveModel())) {
 
-        if (!McTools.getInstance().getCooldownManager().isCooldown(doorManager.getModeledEntity().toString())) {
+        if (!McTools.getService(CooldownManager.class).isCooldown(doorManager.getModeledEntity().toString())) {
           runnableList.forEach(runnable -> runnable.run(event, doorManager));
 
-          McTools.getInstance().getCooldownManager().setCooldown(doorManager.getModeledEntity().toString(), 10, (key) -> {});
+          McTools.getService(CooldownManager.class).setCooldown(doorManager.getModeledEntity().toString(), 10, (key) -> {});
         }
       }
 

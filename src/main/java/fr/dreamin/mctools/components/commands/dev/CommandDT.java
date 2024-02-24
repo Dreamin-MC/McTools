@@ -2,11 +2,12 @@ package fr.dreamin.mctools.components.commands.dev;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.advancements.AdvancementMessage;
+import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.defaultGui.ListMapGui;
 import fr.dreamin.mctools.api.hologram.ItemDisplayManager;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -72,7 +73,7 @@ public class CommandDT implements CommandExecutor, TabCompleter {
           break;
 
         case "listmap":
-          McTools.getInstance().getGuiManager().open(player, ListMapGui.class);
+          McTools.getService(GuiManager.class).open(player, ListMapGui.class);
           break;
         case "convert":
 

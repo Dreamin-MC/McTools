@@ -1,11 +1,12 @@
-package fr.dreamin.mctools.api.player;
+package fr.dreamin.mctools.api.player.manager;
 
 import com.craftmend.openaudiomc.api.interfaces.AudioApi;
 import com.craftmend.openaudiomc.generic.media.objects.MediaOptions;
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.player.SoundType;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.dependency.PaperDependencyService;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

@@ -5,7 +5,7 @@ import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -59,7 +59,7 @@ public class ArmorStandListSelected implements GuiBuilder {
       player.closeInventory();
     }
     else if (slot == 46) {
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMenuGui.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMenuGui.class);
     }
     else if (slot == 52) {
       player.closeInventory();
@@ -71,15 +71,15 @@ public class ArmorStandListSelected implements GuiBuilder {
     }
     else {
 
-      if (McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
-        int index = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
+      if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
+        int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
 
         ArmorStand armorStand = dtPlayer.getArmorStandManager().getArmorStandSelected().get(index);
 
         if (action.equals(ClickType.RIGHT)) {
           dtPlayer.getArmorStandManager().removeArmorStandSelected(armorStand, true);
 
-          McTools.getInstance().getGuiManager().open(player, ArmorStandListSelected.class);
+          McTools.getService(GuiManager.class).open(player, ArmorStandListSelected.class);
           player.sendMessage("§cVous avez supprimé l'armor stand de votre sélection.");
         }
         else if(action.equals(ClickType.SHIFT_RIGHT)) {

@@ -2,13 +2,10 @@ package fr.dreamin.mctools.components.gui.armorStand;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
-import fr.dreamin.mctools.api.gui.GuiBuilder;
-import fr.dreamin.mctools.api.gui.GuiItems;
-import fr.dreamin.mctools.api.gui.PaginationManager;
-import fr.dreamin.mctools.api.gui.PictureGui;
+import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.components.gui.tag.TagCategoryList;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -58,26 +55,26 @@ public class ArmorStandMenuGui implements GuiBuilder {
 
     switch (slot) {
       case 2:
-        McTools.getInstance().getGuiManager().open(player, ArmorStandBasicSettings.class);
+        McTools.getService(GuiManager.class).open(player, ArmorStandBasicSettings.class);
         break;
       case 3:
-        McTools.getInstance().getGuiManager().open(player, ArmorStandArmsSettings.class);
+        McTools.getService(GuiManager.class).open(player, ArmorStandArmsSettings.class);
         break;
       case 5:
-        McTools.getInstance().getGuiManager().open(player, ArmorStandMoveRotate.class);
+        McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotate.class);
         break;
       case 6:
-        McTools.getInstance().getGuiManager().open(player, ArmorStandPresetPoses.class);
+        McTools.getService(GuiManager.class).open(player, ArmorStandPresetPoses.class);
         break;
       case 13:
-        McTools.getInstance().getGuiManager().open(player, ArmorStandListSelected.class);
+        McTools.getService(GuiManager.class).open(player, ArmorStandListSelected.class);
         break;
       case 18:
-        McTools.getInstance().getGuiManager().open(player, TagCategoryList.class);
+        McTools.getService(GuiManager.class).open(player, TagCategoryList.class);
         break;
       case 22:
         dtPlayer.getArmorStandManager().setInvisibleGui(!dtPlayer.getArmorStandManager().isInvisibleGui());
-        McTools.getInstance().getGuiManager().open(player, ArmorStandMenuGui.class);
+        McTools.getService(GuiManager.class).open(player, ArmorStandMenuGui.class);
         break;
       case 26:
         player.closeInventory();

@@ -1,9 +1,10 @@
 package fr.dreamin.mctools.components.commands.hote;
 
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.defaultGui.voice.ListPlayerGui;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -31,7 +32,7 @@ public class CommandDVH implements CommandExecutor, TabCompleter {
 
       switch (args[0]) {
         case "listplayers":
-          McTools.getInstance().getGuiManager().open(player, ListPlayerGui.class);
+          McTools.getService(GuiManager.class).open(player, ListPlayerGui.class);
           break;
       }
 

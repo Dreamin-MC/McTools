@@ -1,13 +1,10 @@
 package fr.dreamin.mctools.components.gui.armorStand;
 
 import fr.dreamin.mctools.McTools;
-import fr.dreamin.mctools.api.gui.GuiBuilder;
-import fr.dreamin.mctools.api.gui.GuiItems;
-import fr.dreamin.mctools.api.gui.PaginationManager;
-import fr.dreamin.mctools.api.gui.PaginationType;
+import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -73,8 +70,8 @@ public class ArmorStandListLocked implements GuiBuilder {
     }
     else {
 
-      if (McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
-        int index = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
+      if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
+        int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
 
         ArmorStand armorStand = dtPlayer.getArmorStandManager().getArmorStandLocked().get(index);
 
@@ -83,14 +80,14 @@ public class ArmorStandListLocked implements GuiBuilder {
           dtPlayer.getArmorStandManager().removeArmorStandLocked(armorStand, false);
           dtPlayer.getArmorStandManager().addArmorStandSelected(armorStand);
 
-          McTools.getInstance().getGuiManager().open(player, ArmorStandListLocked.class);
+          McTools.getService(GuiManager.class).open(player, ArmorStandListLocked.class);
           player.sendMessage("§aVous avez ajouté un armor stand à votre sélection.");
         }
         else if (action.equals(ClickType.RIGHT)) {
 
           dtPlayer.getArmorStandManager().removeArmorStandLocked(armorStand, true);
 
-          McTools.getInstance().getGuiManager().open(player, ArmorStandListLocked.class);
+          McTools.getService(GuiManager.class).open(player, ArmorStandListLocked.class);
           player.sendMessage("§cVous avez retiré un armor stand à votre list locked.");
         }
         else if (action.equals(ClickType.SHIFT_LEFT) || action.equals(ClickType.SHIFT_RIGHT)) {

@@ -2,6 +2,8 @@ package fr.dreamin.mctools.components.players.manager;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
+import fr.dreamin.mctools.api.glowing.GlowingEntities;
+import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.components.gui.armorStand.ArmorStandListLocked;
 import fr.dreamin.mctools.components.gui.armorStand.ArmorStandListRadius;
@@ -109,10 +111,10 @@ public class ArmorStandManager {
     if (setInvisibleArmorStand) armorStand.setInvisible(true);
 
     try {
-      McTools.getInstance().getGlowingEntities().setGlowing(armorStand, dtPlayer.getPlayer(), ChatColor.WHITE);
+      McTools.getService(GlowingEntities.class).setGlowing(armorStand, dtPlayer.getPlayer(), ChatColor.WHITE);
 
       if (armorStand.getPassenger() != null)
-        McTools.getInstance().getGlowingEntities().setGlowing(armorStand.getPassenger(), dtPlayer.getPlayer(), ChatColor.WHITE);
+        McTools.getService(GlowingEntities.class).setGlowing(armorStand.getPassenger(), dtPlayer.getPlayer(), ChatColor.WHITE);
 
     } catch (ReflectiveOperationException e) {
       throw new RuntimeException(e);
@@ -125,10 +127,10 @@ public class ArmorStandManager {
     for (ArmorStand armorStand1 : armorStand) {
       armorStand1.setGravity(false);
       try {
-        McTools.getInstance().getGlowingEntities().setGlowing(armorStand1, dtPlayer.getPlayer(), ChatColor.WHITE);
+        McTools.getService(GlowingEntities.class).setGlowing(armorStand1, dtPlayer.getPlayer(), ChatColor.WHITE);
 
         if (armorStand1.getPassenger() != null)
-          McTools.getInstance().getGlowingEntities().setGlowing(armorStand1.getPassenger(), dtPlayer.getPlayer(), ChatColor.WHITE);
+          McTools.getService(GlowingEntities.class).setGlowing(armorStand1.getPassenger(), dtPlayer.getPlayer(), ChatColor.WHITE);
       } catch (ReflectiveOperationException e) {
         throw new RuntimeException(e);
       }
@@ -140,25 +142,25 @@ public class ArmorStandManager {
     this.armorStandList.remove(armorStand);
     if (removeGlowing)
       try {
-        McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand, dtPlayer.getPlayer());
+        McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
         if (armorStand.getPassenger() != null)
-          McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+          McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
 
       } catch (ReflectiveOperationException e) {
         throw new RuntimeException(e);
       }
-    McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListSelected.class.getSimpleName(), 1);
+    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListSelected.class.getSimpleName(), 1);
   }
 
   public void removeAllArmorStandSelected(boolean removeGlowing) {
     if (removeGlowing) {
       for (ArmorStand armorStand : armorStandList) {
         try {
-          McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand, dtPlayer.getPlayer());
+          McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
           if (armorStand.getPassenger() != null)
-            McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+            McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
 
         } catch (ReflectiveOperationException e) {
           throw new RuntimeException(e);
@@ -166,16 +168,16 @@ public class ArmorStandManager {
       }
     }
     this.armorStandList.clear();
-    McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListSelected.class.getSimpleName(), 1);
+    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListSelected.class.getSimpleName(), 1);
   }
 
 
   public void dispawnArmorStandSelected(ArmorStand armorStand) {
     try {
-      McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand, dtPlayer.getPlayer());
+      McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
       if (armorStand.getPassenger() != null) {
-        McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+        McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
         armorStand.getPassenger().remove();
       }
 
@@ -184,16 +186,16 @@ public class ArmorStandManager {
     }
     this.armorStandList.remove(armorStand);
     armorStand.remove();
-    McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListSelected.class.getSimpleName(), 1);
+    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListSelected.class.getSimpleName(), 1);
   }
 
   public void dispawnAllArmorStandSelected() {
     for (ArmorStand armorStand : armorStandList) {
       try {
-        McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand, dtPlayer.getPlayer());
+        McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
         if (armorStand.getPassenger() != null) {
-          McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+          McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
           armorStand.getPassenger().remove();
         }
 
@@ -203,7 +205,7 @@ public class ArmorStandManager {
       armorStand.remove();
     }
     this.armorStandList.clear();
-    McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListSelected.class.getSimpleName(), 1);
+    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListSelected.class.getSimpleName(), 1);
   }
 
   public List<ArmorStand> getArmorStandRadius() {
@@ -256,33 +258,33 @@ public class ArmorStandManager {
   public void removeArmorStandRadius(ArmorStand armorStand, boolean removeGlowing) {
     if (removeGlowing)
       try {
-        McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand, dtPlayer.getPlayer());
+        McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
         if (armorStand.getPassenger() != null)
-          McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+          McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
 
       } catch (ReflectiveOperationException e) {
         throw new RuntimeException(e);
       }
     this.armorStandRadius.remove(armorStand);
-    McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListRadius.class.getSimpleName(), 1);
+    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListRadius.class.getSimpleName(), 1);
   }
 
   public void removeAllArmorStandRadius(boolean removeGlowing) {
     if (removeGlowing)
       for (ArmorStand armorStand : armorStandRadius) {
         try {
-          McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand, dtPlayer.getPlayer());
+          McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
           if (armorStand.getPassenger() != null)
-            McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+            McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
 
         } catch (ReflectiveOperationException e) {
           throw new RuntimeException(e);
         }
       }
     this.armorStandRadius.clear();
-    McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListRadius.class.getSimpleName(), 1);
+    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListRadius.class.getSimpleName(), 1);
   }
 
   public void dispawnArmorStandRadius(ArmorStand armorStand) {
@@ -292,7 +294,7 @@ public class ArmorStandManager {
       armorStand.getPassenger().remove();
 
     armorStand.remove();
-    McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListRadius.class.getSimpleName(), 1);
+    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListRadius.class.getSimpleName(), 1);
   }
 
   public void dispawnAllArmorStandRadius() {
@@ -302,7 +304,7 @@ public class ArmorStandManager {
         armorStand.getPassenger().remove();
     }
     this.armorStandRadius.clear();
-    McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListRadius.class.getSimpleName(), 1);
+    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListRadius.class.getSimpleName(), 1);
   }
 
   public List<ArmorStand> getArmorStandLocked() {
@@ -341,10 +343,10 @@ public class ArmorStandManager {
     this.armorStandLocked.add(armorStand);
     armorStand.setGravity(false);
     try {
-      McTools.getInstance().getGlowingEntities().setGlowing(armorStand, dtPlayer.getPlayer(), ChatColor.RED);
+      McTools.getService(GlowingEntities.class).setGlowing(armorStand, dtPlayer.getPlayer(), ChatColor.RED);
 
       if (armorStand.getPassenger() != null)
-        McTools.getInstance().getGlowingEntities().setGlowing(armorStand.getPassenger(), dtPlayer.getPlayer(), ChatColor.RED);
+        McTools.getService(GlowingEntities.class).setGlowing(armorStand.getPassenger(), dtPlayer.getPlayer(), ChatColor.RED);
 
     } catch (ReflectiveOperationException e) {
       throw new RuntimeException(e);
@@ -356,10 +358,10 @@ public class ArmorStandManager {
     for (ArmorStand armorStand1 : armorStand) {
       armorStand1.setGravity(false);
       try {
-        McTools.getInstance().getGlowingEntities().setGlowing(armorStand1, dtPlayer.getPlayer(), ChatColor.RED);
+        McTools.getService(GlowingEntities.class).setGlowing(armorStand1, dtPlayer.getPlayer(), ChatColor.RED);
 
         if (armorStand1.getPassenger() != null)
-          McTools.getInstance().getGlowingEntities().setGlowing(armorStand1.getPassenger(), dtPlayer.getPlayer(), ChatColor.RED);
+          McTools.getService(GlowingEntities.class).setGlowing(armorStand1.getPassenger(), dtPlayer.getPlayer(), ChatColor.RED);
 
       } catch (ReflectiveOperationException e) {
         throw new RuntimeException(e);
@@ -373,41 +375,41 @@ public class ArmorStandManager {
 
     if (removeGlowing)
       try {
-        McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand, dtPlayer.getPlayer());
+        McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
         if (armorStand.getPassenger() != null)
-          McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+          McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
 
       } catch (ReflectiveOperationException e) {
         throw new RuntimeException(e);
       }
     this.armorStandLocked.remove(armorStand);
-    McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListLocked.class.getSimpleName(), 1);
+    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListLocked.class.getSimpleName(), 1);
   }
 
   public void removeAllArmorStandLocked(boolean removeGlowing) {
     if (removeGlowing)
       for (ArmorStand armorStand : armorStandLocked) {
         try {
-          McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand, dtPlayer.getPlayer());
+          McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
           if (armorStand.getPassenger() != null)
-            McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+            McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
 
         } catch (ReflectiveOperationException e) {
           throw new RuntimeException(e);
         }
       }
     this.armorStandLocked.clear();
-    McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListLocked.class.getSimpleName(), 1);
+    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListLocked.class.getSimpleName(), 1);
   }
 
   public void dispawnArmorStandLocked(ArmorStand armorStand) {
     try {
-      McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand, dtPlayer.getPlayer());
+      McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
       if (armorStand.getPassenger() != null) {
-        McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+        McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
         armorStand.getPassenger().remove();
       }
 
@@ -416,16 +418,16 @@ public class ArmorStandManager {
     }
     this.armorStandLocked.remove(armorStand);
     armorStand.remove();
-    McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListLocked.class.getSimpleName(), 1);
+    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListLocked.class.getSimpleName(), 1);
   }
 
   public void dispawnAllArmorStandLocked() {
     for (ArmorStand armorStand : armorStandLocked) {
       try {
-        McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand, dtPlayer.getPlayer());
+        McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
         if (armorStand.getPassenger() != null) {
-          McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+          McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
           armorStand.getPassenger().remove();
         }
 
@@ -435,7 +437,7 @@ public class ArmorStandManager {
       armorStand.remove();
     }
     this.armorStandLocked.clear();
-    McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListLocked.class.getSimpleName(), 1);
+    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), ArmorStandListLocked.class.getSimpleName(), 1);
   }
 
   public ArmorStand getIfArmorStandSelected(ArmorStand armorStand) {

@@ -1,13 +1,11 @@
 package fr.dreamin.mctools.components.gui.armorStand;
 
 import fr.dreamin.mctools.McTools;
-import fr.dreamin.mctools.api.gui.GuiBuilder;
-import fr.dreamin.mctools.api.gui.GuiItems;
-import fr.dreamin.mctools.api.gui.PaginationManager;
-import fr.dreamin.mctools.api.gui.PaginationType;
+import fr.dreamin.mctools.api.glowing.GlowingEntities;
+import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -75,8 +73,8 @@ public class ArmorStandListRadius implements GuiBuilder {
     }
     else {
 
-      if (McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
-        int index = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
+      if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
+        int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
 
         ArmorStand armorStand = dtPlayer.getArmorStandManager().getArmorStandRadius().get(index);
         if (action.equals(ClickType.LEFT)) {
@@ -85,12 +83,12 @@ public class ArmorStandListRadius implements GuiBuilder {
           dtPlayer.getArmorStandManager().removeArmorStandRadius(armorStand, false);
           dtPlayer.getArmorStandManager().addArmorStandSelected(armorStand);
 
-          McTools.getInstance().getGuiManager().open(player, ArmorStandListRadius.class);
+          McTools.getService(GuiManager.class).open(player, ArmorStandListRadius.class);
           player.sendMessage("§aVous avez ajouté un armor stand à votre sélection.");
         } else if (action.equals(ClickType.RIGHT)) {
           dtPlayer.getArmorStandManager().removeArmorStandRadius(armorStand, true);
 
-          McTools.getInstance().getGuiManager().open(player, ArmorStandListRadius.class);
+          McTools.getService(GuiManager.class).open(player, ArmorStandListRadius.class);
           player.sendMessage("§cVous avez retiré un armor stand à votre sélection.");
         } else if (action.equals(ClickType.SHIFT_LEFT)) {
           player.teleport(armorStand.getLocation());
@@ -98,15 +96,15 @@ public class ArmorStandListRadius implements GuiBuilder {
         } else if (action.equals(ClickType.SHIFT_RIGHT)) {
           armorStand.setGlowing(!armorStand.isGlowing());
 
-          if (McTools.getInstance().getGlowingEntities().isGlowing(dtPlayer.getPlayer(), armorStand)) {
+          if (McTools.getService(GlowingEntities.class).isGlowing(dtPlayer.getPlayer(), armorStand)) {
             try {
-              McTools.getInstance().getGlowingEntities().setGlowing(armorStand, dtPlayer.getPlayer(), ChatColor.BLUE);
+              McTools.getService(GlowingEntities.class).setGlowing(armorStand, dtPlayer.getPlayer(), ChatColor.BLUE);
             } catch (ReflectiveOperationException e) {
               throw new RuntimeException(e);
             }
           } else {
             try {
-              McTools.getInstance().getGlowingEntities().unsetGlowing(armorStand, dtPlayer.getPlayer());
+              McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
             } catch (ReflectiveOperationException e) {
               throw new RuntimeException(e);
             }

@@ -2,14 +2,11 @@ package fr.dreamin.mctools.components.gui.armorStand;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
-import fr.dreamin.mctools.api.gui.GuiBuilder;
-import fr.dreamin.mctools.api.gui.GuiItems;
-import fr.dreamin.mctools.api.gui.PaginationManager;
-import fr.dreamin.mctools.api.gui.PictureGui;
+import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -26,7 +23,7 @@ public class ArmorStandMoveRotate implements GuiBuilder {
   public String name(Player player) {
     DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    return CustomChatColor.WHITE.getColorWithText((dtPlayer.getArmorStandManager().isInvisibleGui() ? "七七七七七七七七七七七七七七七七七七七" : PictureGui.ARMOR_MOVE_ROTATE.getName()));
+    return CustomChatColor.WHITE.getColorWithText((dtPlayer.getArmorStandManager().isInvisibleGui() ? "七" : PictureGui.ARMOR_MOVE_ROTATE.getName()));
   }
 
   @Override
@@ -79,51 +76,51 @@ public class ArmorStandMoveRotate implements GuiBuilder {
 
     if (current.getItemMeta().getDisplayName().contains("déplacement (0.1)")) {
       dtPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.1);
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMoveRotate.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotate.class);
       return;
     }
     else if (current.getItemMeta().getDisplayName().contains("déplacement (0.01)")) {
       dtPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.01);
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMoveRotate.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotate.class);
       return;
     }
     else if (current.getItemMeta().getDisplayName().contains("déplacement (1)")) {
       dtPlayer.getArmorStandManager().setDistanceMoveArmorStand(1);
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMoveRotate.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotate.class);
       return;
     }
     else if (current.getItemMeta().getDisplayName().contains("déplacement (0.05)")) {
       dtPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.05);
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMoveRotate.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotate.class);
       return;
     }
     if (current.getItemMeta().getDisplayName().contains("Rotation (90)")) {
       dtPlayer.getArmorStandManager().setArmorStandRotation((float)90);
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMoveRotate.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotate.class);
       return;
     }
     else if (current.getItemMeta().getDisplayName().contains("Rotation (45)")) {
       dtPlayer.getArmorStandManager().setArmorStandRotation((float)45);
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMoveRotate.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotate.class);
       return;
     }
     else if (current.getItemMeta().getDisplayName().contains("Rotation (22.5)")) {
       dtPlayer.getArmorStandManager().setArmorStandRotation((float)22.5);
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMoveRotate.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotate.class);
       return;
     }
     else if (current.getItemMeta().getDisplayName().contains("Rotation (0.5)")) {
       dtPlayer.getArmorStandManager().setArmorStandRotation((float)0.5);
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMoveRotate.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotate.class);
       return;
     }
     else if (current.getType().equals(Material.NAME_TAG) && current.getItemMeta().getDisplayName().contains("Passage")) {
       dtPlayer.getArmorStandManager().setInvisibleGui(!dtPlayer.getArmorStandManager().isInvisibleGui());
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMoveRotate.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotate.class);
       return;
     }
     else if (current.getType().equals(Material.NAME_TAG) && current.getItemMeta().getDisplayName().contains("Retour")) {
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMenuGui.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMenuGui.class);
       return;
     }
     else if (current.getType().equals(Material.NAME_TAG) && current.getItemMeta().getDisplayName().contains("Quitter")) {

@@ -7,7 +7,7 @@ import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.components.build.Tag;
 import fr.dreamin.mctools.components.game.manager.BuildManager;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -20,7 +20,7 @@ public class TagList implements GuiBuilder {
 
   @Override
   public String name(Player player) {
-    return CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45.getName()) + "七七七七七七七七七七七七七七七七七七七七七七七七七七七七七七七七七七";
+    return CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45.getName());
   }
 
   @Override
@@ -42,8 +42,8 @@ public class TagList implements GuiBuilder {
   public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
     DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    if (McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
-      int index = McTools.getInstance().getGuiManager().getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
+    if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
+      int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
 
       Tag tag = BuildManager.getTagsByCategory(dtPlayer.getBuildManager().getTagCategory()).get(index);
 

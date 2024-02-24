@@ -2,12 +2,9 @@ package fr.dreamin.mctools.components.gui.armorStand;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
-import fr.dreamin.mctools.api.gui.GuiBuilder;
-import fr.dreamin.mctools.api.gui.GuiItems;
-import fr.dreamin.mctools.api.gui.PaginationManager;
-import fr.dreamin.mctools.api.gui.PictureGui;
+import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -23,7 +20,7 @@ public class ArmorStandArmsSettings implements GuiBuilder {
   public String name(Player player) {
     DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    return CustomChatColor.WHITE.getColorWithText((dtPlayer.getArmorStandManager().isInvisibleGui() ? "七七七七七七七七七七七七七七七七七七七七七七七七七七" : PictureGui.ARMOR_MOVE_ROTATE.getName() + "七七七七七七七七七七七七七七七七七七七七七七七七七七"));
+    return CustomChatColor.WHITE.getColorWithText((dtPlayer.getArmorStandManager().isInvisibleGui() ? "七" : PictureGui.ARMOR_MOVE_ROTATE.getName()));
   }
 
 
@@ -66,36 +63,36 @@ public class ArmorStandArmsSettings implements GuiBuilder {
 
     if (current.getItemMeta().getDisplayName().contains("Bras")) {
       dtPlayer.getArmorStandManager().setLeftArmPos(!dtPlayer.getArmorStandManager().isLeftArmPos());
-      McTools.getInstance().getGuiManager().open(player, ArmorStandArmsSettings.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandArmsSettings.class);
       return;
     }
     else if (current.getItemMeta().getDisplayName().contains("Rotation (90)")) {
       dtPlayer.getArmorStandManager().setArmRotate(90);
-      McTools.getInstance().getGuiManager().open(player, ArmorStandArmsSettings.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandArmsSettings.class);
       return;
     }
     else if (current.getItemMeta().getDisplayName().contains("Rotation (45)")) {
       dtPlayer.getArmorStandManager().setArmRotate(45);
-      McTools.getInstance().getGuiManager().open(player, ArmorStandArmsSettings.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandArmsSettings.class);
       return;
     }
     else if (current.getItemMeta().getDisplayName().contains("Rotation (22.5)")) {
       dtPlayer.getArmorStandManager().setArmRotate(22.5);
-      McTools.getInstance().getGuiManager().open(player, ArmorStandArmsSettings.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandArmsSettings.class);
       return;
     }
     else if (current.getItemMeta().getDisplayName().contains("Rotation (0.5)")) {
       dtPlayer.getArmorStandManager().setArmRotate(0.5);
-      McTools.getInstance().getGuiManager().open(player, ArmorStandArmsSettings.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandArmsSettings.class);
       return;
     }
     else if (current.getType().equals(Material.NAME_TAG) && current.getItemMeta().getDisplayName().contains("Passage")) {
       dtPlayer.getArmorStandManager().setInvisibleGui(!dtPlayer.getArmorStandManager().isInvisibleGui());
-      McTools.getInstance().getGuiManager().open(player, ArmorStandArmsSettings.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandArmsSettings.class);
       return;
     }
     else if (current.getType().equals(Material.NAME_TAG) && current.getItemMeta().getDisplayName().contains("Retour")) {
-      McTools.getInstance().getGuiManager().open(player, ArmorStandMenuGui.class);
+      McTools.getService(GuiManager.class).open(player, ArmorStandMenuGui.class);
       return;
     }
     else if (current.getType().equals(Material.NAME_TAG) && current.getItemMeta().getDisplayName().contains("Quitter")) {

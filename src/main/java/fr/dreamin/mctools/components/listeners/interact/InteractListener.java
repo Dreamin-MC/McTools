@@ -2,13 +2,14 @@ package fr.dreamin.mctools.components.listeners.interact;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
+import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.api.minecraft.Minecraft;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
-import fr.dreamin.mctools.api.player.SoundManager;
+import fr.dreamin.mctools.api.player.manager.SoundManager;
 import fr.dreamin.mctools.api.armorPose.ArmorManager;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
@@ -58,7 +59,7 @@ public class InteractListener implements Listener {
       player.playSound(player, Sound.ITEM_ARMOR_EQUIP_ELYTRA, 1, 1);
     }
     else if (Minecraft.compareItem(event.getItem(), new ItemBuilder(ItemsPreset.itemConfig.getItem()).setName(CustomChatColor.YELLOW.getColorWithText("[lang]default.item.config[/lang]")).toItemStack())) {
-      McTools.getInstance().getGuiManager().open(player, McTools.getInstance().getGuiManager().getGuiConfig().getMainGui().getClass());
+      McTools.getService(GuiManager.class).open(player, McTools.getService(GuiManager.class).getGuiConfig().getMainGui().getClass());
       SoundManager.playSound(event.getPlayer(), null, "danganronpa:open", SoundCategory.MASTER, 1.0F, 1.0F);
     }
 

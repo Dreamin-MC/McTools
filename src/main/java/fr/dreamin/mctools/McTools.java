@@ -1,13 +1,10 @@
 package fr.dreamin.mctools;
 
-import com.google.gson.Gson;
 import fr.dreamin.mctools.api.glowing.GlowingBlocks;
 import fr.dreamin.mctools.api.glowing.GlowingEntities;
-import fr.dreamin.mctools.api.gui.GuiBuilder;
 import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.defaultGui.LanguageConfifGui;
 import fr.dreamin.mctools.api.gui.defaultGui.ListMapGui;
-import fr.dreamin.mctools.api.gui.defaultGui.TestGui;
 import fr.dreamin.mctools.api.gui.defaultGui.WeatherSettingGui;
 import fr.dreamin.mctools.api.interact.Interact;
 import fr.dreamin.mctools.api.log.Logging;
@@ -35,50 +32,30 @@ import fr.dreamin.mctools.components.gui.armorStand.*;
 import fr.dreamin.mctools.components.gui.tag.TagCategoryList;
 import fr.dreamin.mctools.components.gui.tag.TagList;
 import fr.dreamin.mctools.config.Codex;
-import fr.dreamin.mctools.generic.modules.listeners.interact.FilterInteractService;
-import fr.dreamin.mctools.generic.service.Service;
-import fr.dreamin.mctools.generic.service.ServiceManager;
+import fr.dreamin.mctools.api.service.Service;
+import fr.dreamin.mctools.api.service.ServiceManager;
 import fr.dreamin.mctools.mysql.DatabaseCodex;
 import fr.dreamin.mctools.mysql.DatabaseManager;
-import fr.dreamin.mctools.paper.services.dependency.PaperDependencyService;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
-import lombok.Getter;
+import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public final class McTools extends JavaPlugin{
   private static McTools instance;
   private static Codex codex;
   private DatabaseManager databaseDreaminVoice;
   private static DTGame dtGame;
-  private TritonManager tritonManager;
-  private Map<Class<? extends GuiBuilder>, GuiBuilder> registeredMenus;
-  private GuiManager guiManager;
-  private GlowingEntities glowingEntities;
-  private GlowingBlocks glowingBlocks;
-  private final TimerManager timerManager = new TimerManager();
-  private final CooldownManager cooldownManager = new CooldownManager();
   private final ServiceManager serviceManager = new ServiceManager();
-  private VoiceWallManager voiceWallManager = null;
-  private static Logging logging;
-  private static Gson gson;
 
-  @Getter
   private boolean isDisabled = false;
 
 
   @Override
   public void onEnable() {
     instance = this;
-    this.glowingEntities = new GlowingEntities(instance);
-    this.glowingBlocks = new GlowingBlocks(instance);
 
-    logging = new Logging(this);
-
-    loadDefaultGui();
+    loadGui();
     saveDefaultConfig();
     codex = new Codex(getConfig());
 
@@ -88,48 +65,41 @@ public final class McTools extends JavaPlugin{
 
     dtGame = new DTGame(this);
 
-    getServiceManager().loadServices(FilterInteractService.class, PaperDependencyService.class, PlayersService.class);
+    getServiceManager().loadServices(Logging.class, GuiManager.class, PaperDependencyService.class, PlayersService.class, TimerManager.class, CooldownManager.class, GlowingEntities.class, GlowingBlocks.class);
 
     getService(PaperDependencyService.class)
       .ifPluginEnabled("FastAsyncWorldEdit", (pluginName, plugin) -> {
-        McTools.getLog().info("FastAsyncWorldEdit is detected !");})
+        getService(Logging.class).info("FastAsyncWorldEdit is detected !");})
       .ifPluginEnabled("Citizens", (pluginName, plugin) -> {
-        McTools.getLog().info("Citizens is detected !");})
+        getService(Logging.class).info("Citizens is detected !");})
       .ifPluginEnabled("LuckPerms", (pluginName, plugin) -> {
-        McTools.getLog().info("LuckPerms is detected !");})
+        getService(Logging.class).info("LuckPerms is detected !");})
       .ifPluginEnabled("PlaceholderAPI", (pluginName, plugin) -> {
-        McTools.getLog().info("PlaceholderAPI is detected !");})
+        getService(Logging.class).info("PlaceholderAPI is detected !");})
       .ifPluginEnabled("ProtocolLib", (pluginName, plugin) -> {
-        McTools.getLog().info("ProtocolLib is detected !");})
+        getService(Logging.class).info("ProtocolLib is detected !");})
       .ifPluginEnabled("ModelEngine", (pluginName, plugin) -> {
-        McTools.getLog().info("ModelEngine is detected !");})
+        getService(Logging.class).info("ModelEngine is detected !");})
       .ifPluginEnabled("Multiverse-Core", (pluginName, plugin) -> {
-        McTools.getLog().info("Multiverse-Core is detected !");})
+        getService(Logging.class).info("Multiverse-Core is detected !");})
       .ifPluginEnabled("OpenAudioMc", (pluginName, plugin) -> {
-        McTools.getLog().info("OpenAudioMc is detected !");
-        voiceWallManager = new VoiceWallManager();
+        getService(Logging.class).info("OpenAudioMc is detected !");
+        getService(VoiceWallManager.class);
       })
       .ifPluginEnabled("Triton", (pluginName, plugin) -> {
-        McTools.getLog().info("Triton is detected !");
+        getService(Logging.class).info("Triton is detected !");
         if (getService(PaperDependencyService.class).isPluginEnabled("ProtocolLib") && getService(PaperDependencyService.class).isPluginEnabled("PlaceholderAPI")) {
-          tritonManager = new TritonManager();
-          guiManager.addMenu(new LanguageConfifGui());
+          getServiceManager().loadService(TritonManager.class);
+          getService(GuiManager.class).addMenu(new LanguageConfifGui());
         }
       }
     );
 
     loadCommands();
-
-    gson = new Gson();
-
-
-    
   }
 
   @Override
   public void onDisable() {
-    this.glowingEntities.disable();
-    this.glowingBlocks.disable();
     isDisabled = true;
 
     ArmorManager.getArmors().forEach(armorPose -> armorPose.remove());
@@ -161,39 +131,36 @@ public final class McTools extends JavaPlugin{
     this.databaseDreaminVoice = databaseDreaminVoice;
   }
 
-  public GuiManager getGuiManager() {
-        return guiManager;
-    }
-  public Map<Class<? extends GuiBuilder>, GuiBuilder> getRegisteredMenus() {
-        return registeredMenus;
-  }
-  public void addMenu(GuiBuilder guiBuilder){
-    guiManager.addMenu(guiBuilder);
-  }
-  private void loadDefaultGui() {
-    getServer().getPluginManager().registerEvents(new GuiManager(),instance);
-    guiManager=new GuiManager();
-    registeredMenus=new HashMap<>();
 
-    guiManager.addMenu(new WeatherSettingGui());
-    guiManager.addMenu(new ListMapGui());
-    guiManager.addMenu(new TestGui());
+  private void loadGui() {
+    GuiManager guiManager = getService(GuiManager.class);
 
+    loadDefaultGui(guiManager);
+
+    guiManager.addMenu(
+      //armorStand
+      new ArmorStandMenuGui(),
+      new ArmorStandMoveRotate(),
+      new ArmorStandBasicSettings(),
+      new ArmorStandListLocked(),
+      new ArmorStandPresetPoses(),
+      new ArmorStandListRadius(),
+      new ArmorStandListLocked(),
+      new ArmorStandArmsSettings(),
+
+      //tag
+      new TagCategoryList(),
+      new TagList()
+    );
+  }
+  private void loadDefaultGui(GuiManager guiManager) {
+    guiManager.addMenu(new WeatherSettingGui(), new ListMapGui());
   }
 
-  public GlowingEntities getGlowingEntities() {
-    return glowingEntities;
-  }
-  public GlowingBlocks getGlowingBlocks() {
-    return glowingBlocks;
+  public boolean isDisabled() {
+    return isDisabled;
   }
 
-  public TimerManager getTimerManager() {
-    return timerManager;
-  }
-  public CooldownManager getCooldownManager() {
-    return cooldownManager;
-  }
   public ServiceManager getServiceManager() {
     return serviceManager;
   }
@@ -201,10 +168,10 @@ public final class McTools extends JavaPlugin{
   public TritonManager getTritonManager() {
 
     if (getService(PaperDependencyService.class).isPluginEnabled("Triton")) {
-      return tritonManager;
+      return getService(TritonManager.class);
     }
     else {
-      McTools.getLog().error("Triton is not enabled !");
+      getService(Logging.class).error("Triton is not enabled !");
       return null;
     }
   }
@@ -212,20 +179,12 @@ public final class McTools extends JavaPlugin{
   public VoiceWallManager getVoiceWallManager() {
 
     if (getService(PaperDependencyService.class).isPluginEnabled("OpenAudioMc")) {
-      return voiceWallManager;
+      return getService(VoiceWallManager.class);
     }
     else {
-      McTools.getLog().error("OpenAudioMc is not enabled !");
+      getService(Logging.class).error("OpenAudioMc is not enabled !");
       return null;
     }
-  }
-
-  public static Logging getLog() {
-    return logging;
-  }
-
-  public static Gson getGson() {
-    return gson;
   }
 
   public static <T extends Service> T getService(Class<T> service) {
@@ -252,19 +211,7 @@ public final class McTools extends JavaPlugin{
       SimpleCommand.createCommand("door", new CommandDoor(), "door");
       SimpleCommand.createCommand("interact", new CommandInteract(), "interact");
 
-      //armor stand
-      addMenu(new ArmorStandMenuGui());
-      addMenu(new ArmorStandMoveRotate());
-      addMenu(new ArmorStandBasicSettings());
-      addMenu(new ArmorStandListSelected());
-      addMenu(new ArmorStandPresetPoses());
-      addMenu(new ArmorStandListRadius());
-      addMenu(new ArmorStandListLocked());
-      addMenu(new ArmorStandArmsSettings());
 
-      //tag
-      addMenu(new TagCategoryList());
-      addMenu(new TagList());
     }
 
   }

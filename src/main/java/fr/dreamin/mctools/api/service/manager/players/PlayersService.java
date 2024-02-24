@@ -1,7 +1,7 @@
-package fr.dreamin.mctools.paper.services.players;
+package fr.dreamin.mctools.api.service.manager.players;
 
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.generic.service.Service;
+import fr.dreamin.mctools.api.service.Service;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;

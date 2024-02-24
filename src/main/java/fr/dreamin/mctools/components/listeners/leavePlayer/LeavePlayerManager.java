@@ -2,7 +2,7 @@ package fr.dreamin.mctools.components.listeners.leavePlayer;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.entity.Player;
 
 public class LeavePlayerManager {

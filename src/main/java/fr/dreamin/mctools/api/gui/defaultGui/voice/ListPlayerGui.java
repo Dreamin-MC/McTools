@@ -4,9 +4,10 @@ import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.GuiBuilder;
 import fr.dreamin.mctools.api.gui.GuiItems;
+import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.PaginationManager;
 import fr.dreamin.mctools.components.players.DTPlayer;
-import fr.dreamin.mctools.paper.services.players.PlayersService;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -74,7 +75,7 @@ public class ListPlayerGui implements GuiBuilder {
         if (current.getItemMeta().getDisplayName().contains(dtPlayer.getPlayer().getName())) {
 
           dtPlayer.getVoiceManager().setSelected(true);
-          McTools.getInstance().getGuiManager().open(player, ConfigPlayerGui.class);
+          McTools.getService(GuiManager.class).open(player, ConfigPlayerGui.class);
 
         }
 
@@ -85,13 +86,13 @@ public class ListPlayerGui implements GuiBuilder {
         dtPlayer.getVoiceManager().setForcedMutet(true);
       }
 
-      McTools.getInstance().getGuiManager().open(player, ListPlayerGui.class);
+      McTools.getService(GuiManager.class).open(player, ListPlayerGui.class);
     }
     else {
       for (DTPlayer dtPlayer: McTools.getService(PlayersService.class).getDTPlayers()) {
           dtPlayer.getVoiceManager().setForcedMutet(false);
       }
-      McTools.getInstance().getGuiManager().open(player, ListPlayerGui.class);
+      McTools.getService(GuiManager.class).open(player, ListPlayerGui.class);
     }
 
 

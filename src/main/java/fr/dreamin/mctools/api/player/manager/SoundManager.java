@@ -1,4 +1,4 @@
-package fr.dreamin.mctools.api.player;
+package fr.dreamin.mctools.api.player.manager;
 
 import org.bukkit.Location;
 import org.bukkit.Sound;

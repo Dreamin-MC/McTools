@@ -2,9 +2,10 @@ package fr.dreamin.mctools.components.players;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.items.ItemBuilder;
+import fr.dreamin.mctools.api.log.Logging;
 import fr.dreamin.mctools.components.players.manager.*;
 import fr.dreamin.mctools.mysql.fetcher.UserFetcher.UserFetcher;
-import fr.dreamin.mctools.paper.services.dependency.PaperDependencyService;
+import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -37,7 +38,7 @@ public class DTPlayer {
 
     if (McTools.getService(PaperDependencyService.class).isPluginEnabled("Triton")) this.tritonManager = new TritonManager(player);
     else {
-      McTools.getLog().warn("§cTriton is not enabled, some features will not be available.");
+      McTools.getService(Logging.class).warn("§cTriton is not enabled, some features will not be available.");
       this.tritonManager = null;
     }
 
@@ -47,7 +48,7 @@ public class DTPlayer {
         UserFetcher.getIfInsert(this);
       }
       else {
-        McTools.getLog().warn("§cOpenAudio is not enabled, some features will note be available.");
+        McTools.getService(Logging.class).warn("§cOpenAudio is not enabled, some features will note be available.");
         this.voiceManager = null;
       }
     }

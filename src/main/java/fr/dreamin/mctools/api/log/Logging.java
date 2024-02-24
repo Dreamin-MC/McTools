@@ -2,17 +2,20 @@ package fr.dreamin.mctools.api.log;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.Version;
+import fr.dreamin.mctools.api.service.Service;
 import org.bukkit.plugin.Plugin;
 
 import javax.annotation.Nullable;
 import java.util.logging.Logger;
 
-public class Logging {
-  private final Logger logger;
-  private final Plugin plugin;
+public class Logging extends Service {
+  private Logger logger;
+  private Plugin plugin;
 
-  public Logging(Plugin plugin) {
-    this.plugin = plugin;
+  @Override
+  public void onEnable() {
+    super.onEnable();
+    this.plugin = McTools.getInstance();
     this.logger = plugin.getLogger();
   }
 

@@ -3,6 +3,7 @@ package fr.dreamin.mctools.api.gui.defaultGui;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.GuiBuilder;
+import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.PaginationManager;
 import fr.dreamin.mctools.api.gui.GuiItems;
 import org.bukkit.Bukkit;
@@ -47,16 +48,16 @@ public class WeatherSettingGui implements GuiBuilder {
       case 21:
         weatherType = weatherType.getNextWeatherType();
         weatherType.setWeather();
-        McTools.getInstance().getGuiManager().open(player, WeatherSettingGui.class);
+        McTools.getService(GuiManager.class).open(player, WeatherSettingGui.class);
         break;
       case 23:
         dayType = dayType.getNextDayType();
         dayType.setTime();
-        McTools.getInstance().getGuiManager().open(player, WeatherSettingGui.class);
+        McTools.getService(GuiManager.class).open(player, WeatherSettingGui.class);
         break;
       case 31:
-        if (McTools.getInstance().getGuiManager().getGuiConfig().getMainGui() != null)
-          McTools.getInstance().getGuiManager().open(player, McTools.getInstance().getGuiManager().getGuiConfig().getMainGui().getClass());
+        if (McTools.getService(GuiManager.class).getGuiConfig().getMainGui() != null)
+          McTools.getService(GuiManager.class).open(player, McTools.getService(GuiManager.class).getGuiConfig().getMainGui().getClass());
         else {
           player.sendMessage(CustomChatColor.RED.getColorWithText("The main gui is not set"));
           player.closeInventory();
