@@ -14,8 +14,7 @@ public class SoundManager {
     if (location != null) {
       for (Player player: playerList) {
         if (player.getWorld().equals(location.getWorld()))
-          if (player.getLocation().distance(location) <= 16)
-            player.playSound(location, sound, soundCategory, volume, pitch);
+          if (player.getLocation().distance(location) <= 16) player.playSound(location, sound, soundCategory, volume, pitch);
       }
     }
     else {
@@ -29,8 +28,7 @@ public class SoundManager {
     if (location != null) {
       for (Player player: playerList) {
         if (player.getWorld().equals(location.getWorld()))
-          if (player.getLocation().distance(location) <= 16)
-            player.playSound(location, soundName, soundCategory, volume, pitch);
+          if (player.getLocation().distance(location) <= 16) player.playSound(location, soundName, soundCategory, volume, pitch);
       }
     }
     else {
@@ -44,30 +42,24 @@ public class SoundManager {
 
     if (location != null)
       if (player.getWorld().equals(location.getWorld()))
-        if (player.getLocation().distance(location) <= 16)
-          player.playSound(location, soundName, soundCategory, volume, pitch);
-    else
-      player.playSound(player.getLocation(), soundName, soundCategory, volume, pitch);
+        if (player.getLocation().distance(location) <= 16) player.playSound(location, soundName, soundCategory, volume, pitch);
+    else player.playSound(player.getLocation(), soundName, soundCategory, volume, pitch);
   }
 
   public static void playSound(Player player, Location location, Sound sound, SoundCategory soundCategory, float volume, float pitch) {
 
     if (location != null)
       if (player.getWorld().equals(location.getWorld()))
-        if (player.getLocation().distance(location) <= 16)
-          player.playSound(location, sound, soundCategory, volume, pitch);
-    else
-      player.playSound(player.getLocation(), sound, soundCategory, volume, pitch);
+        if (player.getLocation().distance(location) <= 16) player.playSound(location, sound, soundCategory, volume, pitch);
+    else player.playSound(player.getLocation(), sound, soundCategory, volume, pitch);
   }
 
   public static void playSound(Player player, Location location, String soundName, SoundCategory soundCategory, float volume, float pitch) {
 
     if (location != null)
       if (player.getWorld().equals(location.getWorld()))
-        if (player.getLocation().distance(location) <= 16)
-          player.playSound(location, soundName, soundCategory, volume, pitch);
-        else
-          player.playSound(player.getLocation(), soundName, soundCategory, volume, pitch);
+        if (player.getLocation().distance(location) <= 16) player.playSound(location, soundName, soundCategory, volume, pitch);
+        else player.playSound(player.getLocation(), soundName, soundCategory, volume, pitch);
   }
 
 }

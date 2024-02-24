@@ -1,16 +1,11 @@
-name: DreaminTools
+name: McTools
 version: '${version}'
-main: fr.dreamin.dreamintools.McTools
+main: fr.dreamin.mctools.McTools
 api-version: '1.20'
 commands:
   dt:
-    description: McTools
-    aliases: McTools
-    permission: McTools.use
-    permission-message: You don't have the permission to use this command.
-  dvh:
-    description: "dvh"
-    aliases: ["dreaminvoicehote"]
+    description: "McTools"
+    aliases: "mctools"
   dv:
     description: "dv"
     aliases: ["dreaminvoice"]

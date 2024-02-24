@@ -37,14 +37,10 @@ public class GuiItems {
   public void create(String name, String value, PlayerHeadMethod method, int slot, String...lore) {
     ItemBuilder it = new ItemBuilder(Material.PLAYER_HEAD).setName(name).setLore(lore);
 
-    if (method.equals(PlayerHeadMethod.URL))
-      it.setPlayerHFromUrl(value);
-    else if (method.equals(PlayerHeadMethod.PLAYER_NAME))
-      it.setPlayerHFromName(value);
-    else if (method.equals(PlayerHeadMethod.PLAYER_UUID))
-      it.setPlayerHFromUuid(UUID.fromString(value));
-    else if (method.equals(PlayerHeadMethod.BASE64))
-      it.setPlayerHFromBase64(value);
+    if (method.equals(PlayerHeadMethod.URL)) it.setPlayerHFromUrl(value);
+    else if (method.equals(PlayerHeadMethod.PLAYER_NAME)) it.setPlayerHFromName(value);
+    else if (method.equals(PlayerHeadMethod.PLAYER_UUID)) it.setPlayerHFromUuid(UUID.fromString(value));
+    else if (method.equals(PlayerHeadMethod.BASE64)) it.setPlayerHFromBase64(value);
 
     inv.setItem(slot, it.toItemStack());
   }

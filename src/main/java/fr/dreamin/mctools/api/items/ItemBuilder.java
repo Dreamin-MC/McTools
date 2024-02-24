@@ -123,7 +123,6 @@ public class ItemBuilder {
   }
 
   public ItemBuilder setPotionColor(Color color) {
-
     PotionMeta meta = (PotionMeta) is.getItemMeta();
     meta.setColor(color);
     is.setItemMeta(meta);
@@ -158,6 +157,7 @@ public class ItemBuilder {
       im.setOwner(owner);
       is.setItemMeta(im);
     } catch (ClassCastException expected) {
+      return this;
     }
     return this;
   }
@@ -183,8 +183,7 @@ public class ItemBuilder {
 
   @SuppressWarnings("deprecation")
   public ItemBuilder setWoolColor(DyeColor color) {
-    if (!is.getType().equals(Material.WHITE_WOOL))
-      return this;
+    if (!is.getType().equals(Material.WHITE_WOOL)) return this;
     this.is.setDurability(color.getWoolData());
     return this;
   }
@@ -195,6 +194,7 @@ public class ItemBuilder {
       im.setColor(color);
       is.setItemMeta(im);
     } catch (ClassCastException expected) {
+      return this;
     }
     return this;
   }

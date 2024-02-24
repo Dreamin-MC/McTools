@@ -73,28 +73,22 @@ public class ListPlayerGui implements GuiBuilder {
       for (DTPlayer dtPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
 
         if (current.getItemMeta().getDisplayName().contains(dtPlayer.getPlayer().getName())) {
-
           dtPlayer.getVoiceManager().setSelected(true);
           McTools.getService(GuiManager.class).open(player, ConfigPlayerGui.class);
-
         }
-
       }
     else if (current.getItemMeta().getDisplayName().contains("Mute")) {
 
       for (DTPlayer dtPlayer: McTools.getService(PlayersService.class).getDTPlayers()) {
         dtPlayer.getVoiceManager().setForcedMutet(true);
       }
-
       McTools.getService(GuiManager.class).open(player, ListPlayerGui.class);
     }
     else {
       for (DTPlayer dtPlayer: McTools.getService(PlayersService.class).getDTPlayers()) {
-          dtPlayer.getVoiceManager().setForcedMutet(false);
+        dtPlayer.getVoiceManager().setForcedMutet(false);
       }
       McTools.getService(GuiManager.class).open(player, ListPlayerGui.class);
     }
-
-
   }
 }

@@ -51,28 +51,22 @@ public class Minecraft {
     reader.close();
 
     String response = builder.toString();
-    if (response == null || response.isEmpty()) {
-      throw new Exception("Response from server is empty.");
-    }
+    if (response == null || response.isEmpty()) throw new Exception("Response from server is empty.");
 
     JsonObject json = new JsonParser().parse(response).getAsJsonObject();
-    if (!json.has("name")) {
-      throw new Exception("Invalid UUID.");
-    }
+    if (!json.has("name")) throw new Exception("Invalid UUID.");
 
     String name = json.get("name").getAsString();
     return name;
   }
   public static void clearPlayerItem(Player player, Material material) {
     for (ItemStack item : player.getInventory().getContents().clone()) {
-      if (item != null && item.getType().equals(material))
-        player.getInventory().remove(item);
+      if (item != null && item.getType().equals(material)) player.getInventory().remove(item);
     }
   }
   public static Boolean hasLocationInRayon(List<Location> locList, Location centerLoc, Double rayon) {
     for (Location location : locList) {
-      if (centerLoc.distance(location) <= rayon)
-        return true;
+      if (centerLoc.distance(location) <= rayon) return true;
     }
     return false;
   }
@@ -89,12 +83,10 @@ public class Minecraft {
   public static void dropInventory(Inventory inventory, Location location, boolean clearInv) {
     if (inventory.getContents().length > 0) {
       for (ItemStack item : inventory.getContents()) {
-        if (item != null)
-          location.getWorld().dropItem(location, item);
+        if (item != null) location.getWorld().dropItem(location, item);
       }
 
-      if (clearInv)
-        inventory.clear();
+      if (clearInv) inventory.clear();
     }
   }
 
@@ -113,9 +105,7 @@ public class Minecraft {
     ItemStack[] items = invOrigin.getContents();
 
     for (ItemStack item : items) {
-      if (item != null && invGoal.firstEmpty() != -1) {
-        invGoal.addItem(item);
-      }
+      if (item != null && invGoal.firstEmpty() != -1) invGoal.addItem(item);
     }
   }
 
@@ -137,12 +127,9 @@ public class Minecraft {
           double x = radius * Math.cos(angle);
           double z = radius * Math.sin(angle);
 
-          if (showAll)
-            player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation().add(new Vector(x, 0, z)), 0, new Particle.DustOptions(Color.RED, 1));
-          else
-            player.spawnParticle(Particle.REDSTONE, player.getLocation().add(new Vector(x, 0, z)), 0, new Particle.DustOptions(Color.RED, 1));
+          if (showAll) player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation().add(new Vector(x, 0, z)), 0, new Particle.DustOptions(Color.RED, 1));
+          else player.spawnParticle(Particle.REDSTONE, player.getLocation().add(new Vector(x, 0, z)), 0, new Particle.DustOptions(Color.RED, 1));
         }
-
         radius += radiusIncrement;
         elapsedMicroSeconds += 0.1;
       }
@@ -166,12 +153,9 @@ public class Minecraft {
           double x = radius * Math.cos(angle);
           double z = radius * Math.sin(angle);
 
-          if (showAll)
-            player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation().add(new Vector(x, 0, z)), 0, new Particle.DustOptions(Color.GREEN, 1));
-          else
-            player.spawnParticle(Particle.REDSTONE, player.getLocation().add(new Vector(x, 0, z)), 0, new Particle.DustOptions(Color.GREEN, 1));
+          if (showAll) player.getWorld().spawnParticle(Particle.REDSTONE, player.getLocation().add(new Vector(x, 0, z)), 0, new Particle.DustOptions(Color.GREEN, 1));
+          else player.spawnParticle(Particle.REDSTONE, player.getLocation().add(new Vector(x, 0, z)), 0, new Particle.DustOptions(Color.GREEN, 1));
         }
-
         radius += radiusIncrement;
         elapsedMicroSeconds += 0.1;
       }
@@ -183,12 +167,9 @@ public class Minecraft {
     for (int i = 0; i < message.length(); i++) {
       char lettre = message.charAt(i);
 
-      if (i % modulo == 0)
-        resultat.append("§k" + lettre + "§r");
-      else
-        resultat.append(lettre);
+      if (i % modulo == 0) resultat.append("§k" + lettre + "§r");
+      else resultat.append(lettre);
     }
-
     return resultat.toString();
   }
   public static Location getLocWithYawAndPitch(Location location, float yaw, float pitch) {
@@ -208,9 +189,7 @@ public class Minecraft {
       for (int y = playerY - radius; y <= playerY + radius; y++) {
         for (int z = playerZ - radius; z <= playerZ + radius; z++) {
           Block block = world.getBlockAt(x, y, z);
-          if (block.getType() == material) {
-            return true;
-          }
+          if (block.getType() == material) return true;
         }
       }
     }
@@ -270,39 +249,28 @@ public class Minecraft {
     if (block.getBlockData() instanceof Slab) {
       Slab slab = (Slab) block.getBlockData();
 
-      if (slab.getType() == Slab.Type.TOP)
-        location.add(0, 1, 0);
-      else if (slab.getType() == Slab.Type.DOUBLE)
-        location.add(0, 1, 0);
-      else
-        location.add(0, 0.5, 0);
+      if (slab.getType() == Slab.Type.TOP) location.add(0, 1, 0);
+      else if (slab.getType() == Slab.Type.DOUBLE) location.add(0, 1, 0);
+      else location.add(0, 0.5, 0);
     }
     else if (block.getBlockData() instanceof TrapDoor) {
       TrapDoor trapDoor = (TrapDoor) block.getBlockData();
-      if (trapDoor.getHalf() == Bisected.Half.TOP)
-        location.add(0, 1, 0);
-      else if (trapDoor.isOpen())
-        location.add(0, 1, 0);
-      else
-        location.add(0, 0.19, 0);
+      if (trapDoor.getHalf() == Bisected.Half.TOP) location.add(0, 1, 0);
+      else if (trapDoor.isOpen()) location.add(0, 1, 0);
+      else location.add(0, 0.19, 0);
     }
     else if (block.getBlockData() instanceof Stairs) {
       Stairs stairs = (Stairs) block.getBlockData();
 
-      if (stairs.getHalf() == Bisected.Half.TOP)
-        location.add(0, 1, 0);
+      if (stairs.getHalf() == Bisected.Half.TOP) location.add(0, 1, 0);
       else {
         double yDifference = playerLocation.getY() - location.getY();
         boolean isPlayerInAir = !playerLocation.getBlock().getRelative(0, -1, 0).getType().isSolid();
         boolean isBlockAboveSolid = block.getRelative(0, 1, 0).getType().isSolid();
 
-        if (yDifference >= 1.0 && !isPlayerInAir) {
-          location.add(0, 1, 0);
-        } else if (yDifference >= 0.5 && !isPlayerInAir && !isBlockAboveSolid) {
-          location.add(0, 0.5, 0);
-        } else {
-          location.add(0, 1, 0);
-        }
+        if (yDifference >= 1.0 && !isPlayerInAir) location.add(0, 1, 0);
+        else if (yDifference >= 0.5 && !isPlayerInAir && !isBlockAboveSolid) location.add(0, 0.5, 0);
+        else location.add(0, 1, 0);
       }
     }
     else if (blockType == Material.SNOW) {
@@ -312,20 +280,15 @@ public class Minecraft {
       double height = layers / 8.0;
       location.add(0, height, 0);
     }
-    else if (blockType.name().contains("FENCE") || blockType.name().contains("WALL")) {
-      location.add(0, 1.5, 0);
-    } else {
-      location.add(0, 1, 0);
-    }
+    else if (blockType.name().contains("FENCE") || blockType.name().contains("WALL")) location.add(0, 1.5, 0);
+    else location.add(0, 1, 0);
   }
   public static boolean isInBlocOrUnderSolidBloc(Location location) {
     Block blockUnder = location.getBlock();
     Block blockFeet = location.clone().add(0, -1, 0).getBlock();
 
-    if (blockUnder.getType().isSolid() || blockFeet.getType().isSolid())
-      return true;
-    else
-      return false;
+    if (blockUnder.getType().isSolid() || blockFeet.getType().isSolid()) return true;
+    else return false;
   }
   public static Player raycastPlayerWithParticules(Player player, double maxDistance, Particle particle, int nbrParticule, double vitesse, double v1, double v2, double v3, double particleGap, boolean particulePassedThrough) {
     Location playerLocation = player.getEyeLocation();
@@ -337,17 +300,13 @@ public class Minecraft {
     double distance = maxDistance;
     for (double i = 0; i < distance; i += particleGap) {
       Location particleLoc = playerLocation.clone().add(playerDirection.clone().multiply(i));
-      if (!particulePassedThrough && particleLoc.getBlock().getType().isSolid())
-        break;
-
+      if (!particulePassedThrough && particleLoc.getBlock().getType().isSolid()) break;
       world.spawnParticle(particle, particleLoc, nbrParticule, vitesse ,v1,v2, v3);
     }
 
     if (result != null) {
       Entity hitEntity = result.getHitEntity();
-      if (hitEntity instanceof Player) {
-        return (Player) hitEntity;
-      }
+      if (hitEntity instanceof Player) return (Player) hitEntity;
     }
     return null;
   }
@@ -358,9 +317,7 @@ public class Minecraft {
     RayTraceResult result = playerLocation.getWorld().rayTrace(playerLocation, playerDirection, maxDistance, FluidCollisionMode.NEVER, true, 0.5, entity -> entity instanceof Player && !entity.getUniqueId().equals(player.getUniqueId()));
 
     if (result != null) {
-      if (result.getHitEntity() instanceof Player) {
-        return (Player) result.getHitEntity();
-      }
+      if (result.getHitEntity() instanceof Player) return (Player) result.getHitEntity();
     }
     return null;
   }
@@ -375,22 +332,16 @@ public class Minecraft {
     ItemStack itemStack = inventory.getItem(slot);
 
     if (itemStack != null) {
-      if (itemStack.getAmount() <= amount) {
-        inventory.clear(slot);
-      } else {
-        itemStack.setAmount(itemStack.getAmount() - amount);
-      }
+      if (itemStack.getAmount() <= amount) inventory.clear(slot);
+      else itemStack.setAmount(itemStack.getAmount() - amount);
     }
   }
   public static void removeItemFromHand(Player player, EquipmentSlot hand, int amount) {
     ItemStack itemStack = hand == EquipmentSlot.HAND ? player.getInventory().getItemInMainHand() : player.getInventory().getItemInOffHand();
 
     if (itemStack != null) {
-      if (itemStack.getAmount() <= amount) {
-        itemStack.setAmount(0);
-      } else {
-        itemStack.setAmount(itemStack.getAmount() - amount);
-      }
+      if (itemStack.getAmount() <= amount) itemStack.setAmount(0);
+      else itemStack.setAmount(itemStack.getAmount() - amount);
     }
   }
   public static Block getBlockUnderPlayer(Entity entity) {
@@ -459,18 +410,14 @@ public class Minecraft {
     reader.close();
 
     String response = builder.toString();
-    if (response == null || response.isEmpty()) {
-      throw new Exception("Response from server is empty.");
-    }
+    if (response == null || response.isEmpty()) throw new Exception("Response from server is empty.");
 
     JsonObject json = new JsonParser().parse(response).getAsJsonObject();
 
     if (json.has("properties")) {
       for (int i = 0; i < json.getAsJsonArray("properties").size(); i++) {
         JsonObject property = json.getAsJsonArray("properties").get(i).getAsJsonObject();
-        if (property.has("name") && "textures".equals(property.get("name").getAsString())) {
-          return property.get("value").getAsString();
-        }
+        if (property.has("name") && "textures".equals(property.get("name").getAsString())) return property.get("value").getAsString();
       }
     }
 
@@ -510,10 +457,8 @@ public class Minecraft {
       Location coin1 = cuboide.getLocA();
       Location coin2 = cuboide.getLocB();
 
-      if (coin1 == null)
-        coin1 = coin2;
-      else if (coin2 == null)
-        coin2 = coin1;
+      if (coin1 == null) coin1 = coin2;
+      else if (coin2 == null) coin2 = coin1;
 
       // Récupérer les coordonnées des coins
       int x1 = Math.min(coin1.getBlockX(), coin2.getBlockX());
@@ -528,8 +473,7 @@ public class Minecraft {
         for (int y = y1; y <= y2; y++) {
           for (int z = z1; z <= z2; z++) {
             if (x == x1 || x == x2 || y == y1 || y == y2 || z == z1 || z == z2) {
-              if (player.getLocation().distance(new Location(world,x, y, z)) <= 30)
-                player.spawnParticle(Particle.VILLAGER_HAPPY, x + 0.5, y + 0.5, z + 0.5, 1, 0, 0, 0, 0);
+              if (player.getLocation().distance(new Location(world,x, y, z)) <= 30) player.spawnParticle(Particle.VILLAGER_HAPPY, x + 0.5, y + 0.5, z + 0.5, 1, 0, 0, 0, 0);
             }
           }
         }
@@ -544,10 +488,8 @@ public class Minecraft {
     Location coin1 = cuboid.getLocA();
     Location coin2 = cuboid.getLocB();
 
-    if (coin1 == null)
-      coin1 = coin2;
-    else if (coin2 == null)
-      coin2 = coin1;
+    if (coin1 == null) coin1 = coin2;
+    else if (coin2 == null) coin2 = coin1;
 
     // Récupérer les coordonnées des coins
     int x1 = Math.min(coin1.getBlockX(), coin2.getBlockX());
@@ -562,12 +504,8 @@ public class Minecraft {
       for (int y = y1; y <= y2; y++) {
         for (int z = z1; z <= z2; z++) {
           if (x == x1 || x == x2 || y == y1 || y == y2 || z == z1 || z == z2) {
-
             Location loc = new Location(world, x, y, z);
-
-            if (player.getLocation().distance(loc) <= 30)
-
-              player.spawnParticle(Particle.REDSTONE, loc.add(0.5, 0.5, 0.5), 1, 0, 0, 0, 0, color);
+            if (player.getLocation().distance(loc) <= 30) player.spawnParticle(Particle.REDSTONE, loc.add(0.5, 0.5, 0.5), 1, 0, 0, 0, 0, color);
           }
         }
       }
@@ -579,10 +517,8 @@ public class Minecraft {
   public static void showCuboid(Player player, Location coin1, Location coin2) {
     World world = player.getWorld();
 
-    if (coin1 == null)
-      coin1 = coin2;
-    else if (coin2 == null)
-      coin2 = coin1;
+    if (coin1 == null) coin1 = coin2;
+    else if (coin2 == null) coin2 = coin1;
 
     // Récupérer les coordonnées des coins
     int x1 = Math.min(coin1.getBlockX(), coin2.getBlockX());
@@ -597,8 +533,7 @@ public class Minecraft {
       for (int y = y1; y <= y2; y++) {
         for (int z = z1; z <= z2; z++) {
           if (x == x1 || x == x2 || y == y1 || y == y2 || z == z1 || z == z2) {
-            if (player.getLocation().distance(new Location(world,x, y, z)) <= 50)
-              player.spawnParticle(Particle.VILLAGER_HAPPY, x + 0.5, y + 0.5, z + 0.5, 1, 0, 0, 0, 0);
+            if (player.getLocation().distance(new Location(world,x, y, z)) <= 50) player.spawnParticle(Particle.VILLAGER_HAPPY, x + 0.5, y + 0.5, z + 0.5, 1, 0, 0, 0, 0);
           }
         }
       }
@@ -608,10 +543,8 @@ public class Minecraft {
   public static void showCuboid(Player player, Location coin1, Location coin2, Particle particle) {
     World world = player.getWorld();
 
-    if (coin1 == null)
-      coin1 = coin2;
-    else if (coin2 == null)
-      coin2 = coin1;
+    if (coin1 == null) coin1 = coin2;
+    else if (coin2 == null) coin2 = coin1;
 
     // Récupérer les coordonnées des coins
     int x1 = Math.min(coin1.getBlockX(), coin2.getBlockX());
@@ -626,8 +559,7 @@ public class Minecraft {
       for (int y = y1; y <= y2; y++) {
         for (int z = z1; z <= z2; z++) {
           if (x == x1 || x == x2 || y == y1 || y == y2 || z == z1 || z == z2) {
-            if (player.getLocation().distance(new Location(world,x, y, z)) <= 50)
-              player.spawnParticle(particle, x + 0.5, y + 0.5, z + 0.5, 1, 0, 0, 0, 0);
+            if (player.getLocation().distance(new Location(world,x, y, z)) <= 50) player.spawnParticle(particle, x + 0.5, y + 0.5, z + 0.5, 1, 0, 0, 0, 0);
           }
         }
       }

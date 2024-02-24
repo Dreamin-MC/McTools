@@ -19,9 +19,7 @@ public class HudManager {
     this.dtPlayer = dtPlayer;
     this.messageProvider = messageProvider;
 
-    if (hudType == HudType.ACTIONBAR) {
-      dtPlayer.getPlayer().sendActionBar("§aHello World");
-    }
+    if (hudType == HudType.ACTIONBAR) dtPlayer.getPlayer().sendActionBar("§aHello World");
     else if (hudType == HudType.BOSSBAR) {
       barManager = new BarManager(dtPlayer.getPlayer());
       barManager.setBarTitle("§aHello World");
@@ -45,9 +43,7 @@ public class HudManager {
   }
 
   public void startHudTask(long delay, long interval) {
-    if (task != null && !task.isCancelled()) {
-      task.cancel();
-    }
+    if (task != null && !task.isCancelled()) task.cancel();
 
     task = new BukkitRunnable() {
       @Override

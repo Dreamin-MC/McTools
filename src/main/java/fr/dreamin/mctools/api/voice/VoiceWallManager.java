@@ -23,7 +23,6 @@ public class VoiceWallManager extends Service {
     new BukkitRunnable() {
       @Override
       public void run() {
-
         if (McTools.getCodex().isVoiceWallMode()) {
           startRunTask();
           addFilter();
@@ -49,21 +48,15 @@ public class VoiceWallManager extends Service {
           if (otherDTPlayer.equals(dtPlayer)) continue;
 
           //get if player is dead and the otherPlayer is not dead
-          if (playersService.getSpectators().contains(dtPlayer) && !playersService.getSpectators().contains(otherDTPlayer)) {
-            dtPlayer.getVoiceManager().getClientConnection().setModerating(true);
+          if (playersService.getSpectators().contains(dtPlayer) && !playersService.getSpectators().contains(otherDTPlayer)) dtPlayer.getVoiceManager().getClientConnection().setModerating(true);
 
-          }
           //get if player is not dead and the otherPlayer is dead
-          else if (!playersService.getSpectators().contains(dtPlayer) && playersService.getSpectators().contains(otherDTPlayer)) {
-            otherDTPlayer.getVoiceManager().getClientConnection().setModerating(true);
-          }
+          else if (!playersService.getSpectators().contains(dtPlayer) && playersService.getSpectators().contains(otherDTPlayer)) otherDTPlayer.getVoiceManager().getClientConnection().setModerating(true);
           else {
             double distance = dtPlayer.getPlayer().getLocation().distance(otherDTPlayer.getPlayer().getLocation());
             if (distance <= McTools.getCodex().getVoiceDistanceMax() && (RayCast. hasLineOfSight(dtPlayer.getPlayer(), otherDTPlayer.getPlayer()))) {
-
               if (dtPlayer.getVoiceManager().getDTPlayersSpeaker().contains(otherDTPlayer)) continue;
               else if (otherDTPlayer.getVoiceManager().getDTPlayersSpeaker().contains(dtPlayer)) continue;
-
               dtPlayer.getVoiceManager().getDTPlayersSpeaker().add(otherDTPlayer);
               otherDTPlayer.getVoiceManager().getDTPlayersSpeaker().add(dtPlayer);
             }

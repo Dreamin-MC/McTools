@@ -33,15 +33,14 @@ public class GlowingBlocks extends Service implements Listener {
 	 * Initializes the Glowing blocks API.
 	 *
 	 */
-	@Override
-	public void onEnable() {
-		super.onEnable();
+	public GlowingBlocks() {
 		testForPaper();
 
 		this.entities = McTools.getService(GlowingEntities.class);
 
 		enable();
 	}
+
 
 	@Override
 	public void onDisable() {

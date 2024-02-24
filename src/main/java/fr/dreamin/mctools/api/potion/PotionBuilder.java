@@ -21,20 +21,24 @@ public class PotionBuilder {
     this.potionUseType = PotionUseType.SELF;
     this.potion = new ItemStack(Material.POTION);
   }
+
   public PotionBuilder(PotionUseType potionUseType) {
     this.potionUseType = potionUseType;
     this.potion = new ItemStack(potionUseType.getMaterial());
   }
+
   public PotionBuilder(PotionEffectClass PotionEffectClass) {
     this.potionUseType = PotionUseType.SELF;
     this.potion = new ItemStack(Material.POTION);
     addPotionEffect(PotionEffectClass);
   }
+
   public PotionBuilder(List<PotionEffectClass> PotionEffectClassList) {
     this.potionUseType = PotionUseType.SELF;
     this.potion = new ItemStack(Material.POTION);
     addPotionEffectList(PotionEffectClassList);
   }
+
   public PotionBuilder(PotionBuilder potionBuilder) {
     this.potionUseType = potionBuilder.getPotionUseType();
     this.potion = new ItemStack(potionBuilder.toItemStack());

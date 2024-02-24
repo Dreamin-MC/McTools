@@ -23,8 +23,7 @@ public class ConfigPlayerGui implements GuiBuilder {
 
     for (DTPlayer vPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
 
-      if (vPlayer.getVoiceManager().isSelected())
-        name = vPlayer.getPlayer().getName();
+      if (vPlayer.getVoiceManager().isSelected()) name = vPlayer.getPlayer().getName();
 
     }
 
@@ -56,15 +55,10 @@ public class ConfigPlayerGui implements GuiBuilder {
           CustomChatColor.RED.getColorWithText(dtPlayer.getPlayer().getName())),
           dtPlayer.getPlayer().getName(), GuiItems.PlayerHeadMethod.PLAYER_NAME, 4);
 
-
         if (dtPlayer.getVoiceManager().getClient().isConnected()) {
-          if (dtPlayer.getVoiceManager().isForcedMute())
-            guiItems.create("Mute Forcé : Activé", Material.BARRIER, 2, 40);
-          else
-            guiItems.create("Mute Forcé : Désactivé", Material.BARRIER, 2, 40);
+          if (dtPlayer.getVoiceManager().isForcedMute()) guiItems.create("Mute Forcé : Activé", Material.BARRIER, 2, 40);
+          else guiItems.create("Mute Forcé : Désactivé", Material.BARRIER, 2, 40);
         }
-
-
       }
 
     }
@@ -78,11 +72,8 @@ public class ConfigPlayerGui implements GuiBuilder {
 
       if (dtPlayer.getVoiceManager().isSelected()) {
 
-        if (current.getItemMeta().getDisplayName().contains("Activé"))
-          dtPlayer.getVoiceManager().setForcedMutet(false);
-        else if (current.getItemMeta().getDisplayName().contains("Désactivé"))
-          dtPlayer.getVoiceManager().setForcedMutet(true);
-
+        if (current.getItemMeta().getDisplayName().contains("Activé")) dtPlayer.getVoiceManager().setForcedMutet(false);
+        else if (current.getItemMeta().getDisplayName().contains("Désactivé")) dtPlayer.getVoiceManager().setForcedMutet(true);
 
         McTools.getService(GuiManager.class).open(player, ConfigPlayerGui.class);
       }

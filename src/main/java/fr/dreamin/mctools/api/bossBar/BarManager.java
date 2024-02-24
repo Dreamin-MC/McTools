@@ -17,18 +17,15 @@ public class BarManager {
   }
 
   public void showBar() {
-    if (!customBossBar.getPlayers().contains(player))
-      customBossBar.addPlayer(player);
+    if (!customBossBar.getPlayers().contains(player)) customBossBar.addPlayer(player);
   }
 
   public void hideBar() {
-    if (customBossBar.getPlayers().contains(player))
-      customBossBar.removePlayer(player);
+    if (customBossBar.getPlayers().contains(player)) customBossBar.removePlayer(player);
   }
 
   public boolean isShow() {
-    if (customBossBar.getPlayers().contains(player))
-      return true;
+    if (customBossBar.getPlayers().contains(player)) return true;
     return false;
   }
 

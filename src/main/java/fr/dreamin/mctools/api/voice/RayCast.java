@@ -18,9 +18,7 @@ public class RayCast {
 
     for (Location playerPoint : playerPoints) {
       for (Location targetPoint : targetPoints) {
-        if (raycast(playerPoint, targetPoint, player, target)) {
-          return true;
-        }
+        if (raycast(playerPoint, targetPoint, player, target)) return true;
       }
     }
 

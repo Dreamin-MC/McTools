@@ -3,6 +3,7 @@ package fr.dreamin.mctools.components.players;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.api.log.Logging;
+import fr.dreamin.mctools.api.minecraft.Minecraft;
 import fr.dreamin.mctools.components.players.manager.*;
 import fr.dreamin.mctools.mysql.fetcher.UserFetcher.UserFetcher;
 import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
@@ -15,15 +16,17 @@ public class DTPlayer {
   private final Player player;
   private boolean hasPermAdmin = false;
   private boolean hasPermDev = false;
+  private boolean hasPermHot = false;
   private boolean isEditMode;
-  private final BuildManager buildManager = new BuildManager();
+  private final BuildPlayerManager buildManager = new BuildPlayerManager();
   private final ArmorStandManager armorStandManager;
-  private final VoiceConfManager voiceConfManager = new VoiceConfManager();
+  private final VoiceConfPlayerManager voiceConfManager = new VoiceConfPlayerManager();
   private final HudPlayerManager hudPlayerManager;
-  private final TritonManager tritonManager;
-  private VoiceManager voiceManager;
+  private final TritonPlayerManager tritonManager;
+  private final PlayerTickManager playerTickManager;
+  private VoicePlayerManager voiceManager;
   private final ItemStack itemStats;
-  private final String skinBase64;
+  private String skinBase64 = null;
   private boolean isCanMove = true;
 
   public DTPlayer(Player player) {
@@ -31,12 +34,14 @@ public class DTPlayer {
     this.isEditMode = false;
     this.armorStandManager = new ArmorStandManager(this);
     this.hudPlayerManager = new HudPlayerManager(this);
+    this.playerTickManager = new PlayerTickManager(this);
     this.itemStats = new ItemBuilder(Material.PLAYER_HEAD).setPlayerHFromName(player.getName()).setName("§eStatistique de " + player.getName()).toItemStack();
 
     if (player.hasPermission("dreamintools.admin")) this.hasPermAdmin = true;
     if (player.hasPermission("dreamintools.dev")) this.hasPermDev = true;
+    if (player.hasPermission("dreamintools.hot")) this.hasPermHot = true;
 
-    if (McTools.getService(PaperDependencyService.class).isPluginEnabled("Triton")) this.tritonManager = new TritonManager(player);
+    if (McTools.getService(PaperDependencyService.class).isPluginEnabled("Triton")) this.tritonManager = new TritonPlayerManager(player);
     else {
       McTools.getService(Logging.class).warn("§cTriton is not enabled, some features will not be available.");
       this.tritonManager = null;
@@ -44,7 +49,7 @@ public class DTPlayer {
 
     if (McTools.getCodex().isVoiceMode()) {
       if (McTools.getService(PaperDependencyService.class).isPluginEnabled("OpenAudioMc")) {
-        this.voiceManager = new VoiceManager(this);
+        this.voiceManager = new VoicePlayerManager(this);
         UserFetcher.getIfInsert(this);
       }
       else {
@@ -52,16 +57,13 @@ public class DTPlayer {
         this.voiceManager = null;
       }
     }
-    else {
-      this.voiceManager = null;
-    }
+    else this.voiceManager = null;
 
-    this.skinBase64 = null;
-//    try {
-//      this.skinBase64 = Minecraft.getSkinBase64(player.getUniqueId().toString());
-//    } catch (Exception e) {
-//      throw new RuntimeException(e);
-//    }
+    try {
+      this.skinBase64 = Minecraft.getSkinBase64(player.getUniqueId().toString());
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
 
   }
 
@@ -95,7 +97,15 @@ public class DTPlayer {
     return hasPermDev;
   }
 
-  public BuildManager getBuildManager() {
+  public boolean hasPermHot() {
+    return hasPermHot;
+  }
+
+  public PlayerTickManager getPlayerTickManager() {
+    return playerTickManager;
+  }
+
+  public BuildPlayerManager getBuildManager() {
     return buildManager;
   }
 
@@ -107,15 +117,15 @@ public class DTPlayer {
     return hudPlayerManager;
   }
 
-  public VoiceConfManager getVoiceConfManager() {
+  public VoiceConfPlayerManager getVoiceConfManager() {
     return voiceConfManager;
   }
 
-  public TritonManager getTritonManager() {
+  public TritonPlayerManager getTritonManager() {
     return tritonManager;
   }
 
-  public VoiceManager getVoiceManager() {
+  public VoicePlayerManager getVoiceManager() {
     return voiceManager;
   }
 

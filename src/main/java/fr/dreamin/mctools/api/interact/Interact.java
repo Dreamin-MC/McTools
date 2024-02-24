@@ -56,7 +56,6 @@ public class Interact {
 
   public void setInteract() {
     AnimationHandler animOpen = getActiveModel().getAnimationHandler();
-
     animOpen.playAnimation("anim_interact", 0, 0, 1, true);
   }
 
@@ -93,7 +92,6 @@ public class Interact {
     public void onInteract(BaseEntityInteractEvent event) {
 
       if (event.getAction().equals(BaseEntityInteractEvent.Action.INTERACT_ON) && event.getModel().equals(doorManager.getActiveModel())) {
-
         if (!McTools.getService(CooldownManager.class).isCooldown(doorManager.getModeledEntity().toString())) {
           runnableList.forEach(runnable -> runnable.run(event, doorManager));
           McTools.getService(CooldownManager.class).setCooldown(doorManager.getModeledEntity().toString(), 10, (key) -> {});

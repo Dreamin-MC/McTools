@@ -23,7 +23,7 @@ public class ArmorStandManager {
   private List<ArmorStand> armorStandList = new ArrayList<>();
   private List<ArmorStand> armorStandLocked = new ArrayList<>();
   private List<ArmorStand> armorStandRadius = new ArrayList<>();
-  private double distanceMoveArmorStand = 0.5;
+  private double distanceMoveArmorStand = 1;
   private float armorStandRotation = (float)45;
   private double armRotate = 90;
   private boolean isInvisibleGui = false;
@@ -260,8 +260,7 @@ public class ArmorStandManager {
       try {
         McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
-        if (armorStand.getPassenger() != null)
-          McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+        if (armorStand.getPassenger() != null) McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
 
       } catch (ReflectiveOperationException e) {
         throw new RuntimeException(e);
@@ -276,8 +275,7 @@ public class ArmorStandManager {
         try {
           McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
-          if (armorStand.getPassenger() != null)
-            McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+          if (armorStand.getPassenger() != null) McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
 
         } catch (ReflectiveOperationException e) {
           throw new RuntimeException(e);
@@ -317,16 +315,13 @@ public class ArmorStandManager {
 
       ItemBuilder itemBuilder = new ItemBuilder(armorStand.getHelmet());
 
-      if (armorStand.getPassenger() != null) {
-        itemBuilder.setType(Material.SHULKER_BOX);
-      }
-      else if (itemBuilder.toItemStack().getType().equals(Material.AIR))
-
-        itemBuilder.setType(Material.ARMOR_STAND);
+      if (armorStand.getPassenger() != null) itemBuilder.setType(Material.SHULKER_BOX);
+      else if (itemBuilder.toItemStack().getType().equals(Material.AIR)) itemBuilder.setType(Material.ARMOR_STAND);
 
       itemBuilder.setName("");
       itemBuilder.setLore(
-        "§fx :" + armorStand.getLocation().getX(),
+        "Map : " + armorStand.getWorld().getName(),
+        "§fx : " + armorStand.getLocation().getX(),
         "§fy : " + armorStand.getLocation().getY(),
         "§fz : " + armorStand.getLocation().getZ(),
         "§fClique gauche pour ajouter à la liste",
@@ -360,8 +355,7 @@ public class ArmorStandManager {
       try {
         McTools.getService(GlowingEntities.class).setGlowing(armorStand1, dtPlayer.getPlayer(), ChatColor.RED);
 
-        if (armorStand1.getPassenger() != null)
-          McTools.getService(GlowingEntities.class).setGlowing(armorStand1.getPassenger(), dtPlayer.getPlayer(), ChatColor.RED);
+        if (armorStand1.getPassenger() != null) McTools.getService(GlowingEntities.class).setGlowing(armorStand1.getPassenger(), dtPlayer.getPlayer(), ChatColor.RED);
 
       } catch (ReflectiveOperationException e) {
         throw new RuntimeException(e);
@@ -377,8 +371,7 @@ public class ArmorStandManager {
       try {
         McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
-        if (armorStand.getPassenger() != null)
-          McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+        if (armorStand.getPassenger() != null) McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
 
       } catch (ReflectiveOperationException e) {
         throw new RuntimeException(e);
@@ -393,8 +386,7 @@ public class ArmorStandManager {
         try {
           McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, dtPlayer.getPlayer());
 
-          if (armorStand.getPassenger() != null)
-            McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
+          if (armorStand.getPassenger() != null) McTools.getService(GlowingEntities.class).unsetGlowing(armorStand.getPassenger(), dtPlayer.getPlayer());
 
         } catch (ReflectiveOperationException e) {
           throw new RuntimeException(e);

@@ -94,15 +94,12 @@ public class GuiPageManager {
       // Filtrer pour ajuster l'index basé sur les slots exclus
       int adjustedIndex = 0;
       for (int i = slotStart; i < slot; i++) {
-        if (!notAccountSlots.contains(i)) {
-          adjustedIndex++;
-        }
+        if (!notAccountSlots.contains(i)) adjustedIndex++;
       }
 
       // Calcul ajusté pour l'index dans la pagination
       index = (page - 1) * itemsPerPage + adjustedIndex;
-    }
-    else if (paginationManager.getType().equals(PaginationType.LINE)) {
+    } else if (paginationManager.getType().equals(PaginationType.LINE)) {
 
       int indexStart = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, gClass.getSimpleName());
       int slotStart = paginationManager.getSlotStart();
@@ -114,9 +111,8 @@ public class GuiPageManager {
       // Ajustement de l'index basé sur les slots non pris en compte
       int adjustedSlot = slot;
       for (Integer notAccountSlot : notAccountSlots) {
-        if (slot > notAccountSlot) { // Si le slot cliqué est après un slot non pris en compte, on ajuste
-          adjustedSlot--;
-        }
+        // Si le slot cliqué est après un slot non pris en compte, on ajuste
+        if (slot > notAccountSlot) adjustedSlot--;
       }
 
       // Trouver l'item correspondant dans les items réordonnés
@@ -125,13 +121,10 @@ public class GuiPageManager {
 
         // Retourner l'index de l'item dans la liste originale des items
         for (int i = 0; i < paginationManager.getItems().size(); i++) {
-          if (item.equals(paginationManager.getItems().get(i))) {
-            index = i;
-          }
+          if (item.equals(paginationManager.getItems().get(i))) index = i;
         }
       }
-    }
-    else if (paginationManager.getType().equals(PaginationType.LOOP_LINE)) {
+    } else if (paginationManager.getType().equals(PaginationType.LOOP_LINE)) {
 
       int indexStart = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, gClass.getSimpleName());
       int slotStart = paginationManager.getSlotStart();
@@ -143,28 +136,25 @@ public class GuiPageManager {
       // Calcul de l'index ajusté pour les slots non pris en compte
       int adjustedSlot = slot;
       for (Integer notAccountSlot : notAccountSlots) {
-        if (slot > notAccountSlot) { // Ajustement seulement si le slot cliqué est après un slot ignoré
+        // Ajustement seulement si le slot cliqué est après un slot ignoré
+        if (slot > notAccountSlot) {
           adjustedSlot--;
         }
-      }
 
-      // Gestion du bouclage
-      adjustedSlot = adjustedSlot % items.size(); // S'assure que l'index est valide dans le contexte du bouclage
+        // Gestion du bouclage
+        adjustedSlot = adjustedSlot % items.size(); // S'assure que l'index est valide dans le contexte du bouclage
 
-      // Trouver l'item correspondant dans la liste des items réordonnés
-      if (adjustedSlot >= 0 && adjustedSlot < items.size()) {
-        ItemStack item = items.get(adjustedSlot);
+        // Trouver l'item correspondant dans la liste des items réordonnés
+        if (adjustedSlot >= 0 && adjustedSlot < items.size()) {
+          ItemStack item = items.get(adjustedSlot);
 
-        // Retourner l'index de l'item dans la liste originale des items
-        for (int i = 0; i < paginationManager.getItems().size(); i++) {
-          if (item.equals(paginationManager.getItems().get(i))) {
-            index =  i;
+          // Retourner l'index de l'item dans la liste originale des items
+          for (int i = 0; i < paginationManager.getItems().size(); i++) {
+            if (item.equals(paginationManager.getItems().get(i))) index = i;
           }
         }
       }
     }
-
     return index;
   }
-
 }

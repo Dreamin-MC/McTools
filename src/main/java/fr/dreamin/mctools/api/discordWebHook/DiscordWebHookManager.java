@@ -49,9 +49,7 @@ public class DiscordWebHookManager {
   }
 
   public void execute() throws IOException {
-    if (this.content == null && this.embeds.isEmpty()) {
-      throw new IllegalArgumentException("Set content or add at least one EmbedObject");
-    }
+    if (this.content == null && this.embeds.isEmpty()) throw new IllegalArgumentException("Set content or add at least one EmbedObject");
 
     JSONObject json = new JSONObject();
 
@@ -348,9 +346,8 @@ public class DiscordWebHookManager {
     private final HashMap<String, Object> map = new HashMap<>();
 
     void put(String key, Object value) {
-      if (value != null) {
-        map.put(key, value);
-      }
+      if (value != null) map.put(key, value);
+
     }
 
     @Override
@@ -364,15 +361,11 @@ public class DiscordWebHookManager {
         Object val = entry.getValue();
         builder.append(quote(entry.getKey())).append(":");
 
-        if (val instanceof String) {
-          builder.append(quote(String.valueOf(val)));
-        } else if (val instanceof Integer) {
-          builder.append(Integer.valueOf(String.valueOf(val)));
-        } else if (val instanceof Boolean) {
-          builder.append(val);
-        } else if (val instanceof JSONObject) {
-          builder.append(val.toString());
-        } else if (val.getClass().isArray()) {
+        if (val instanceof String) builder.append(quote(String.valueOf(val)));
+        else if (val instanceof Integer) builder.append(Integer.valueOf(String.valueOf(val)));
+        else if (val instanceof Boolean) builder.append(val);
+        else if (val instanceof JSONObject) builder.append(val.toString());
+        else if (val.getClass().isArray()) {
           builder.append("[");
           int len = Array.getLength(val);
           for (int j = 0; j < len; j++) {

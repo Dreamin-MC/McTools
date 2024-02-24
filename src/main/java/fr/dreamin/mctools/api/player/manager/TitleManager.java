@@ -9,13 +9,13 @@ public class TitleManager {
   public static void sendTitleToAll(List<Player> playerList, String title, String sub) {
     for (Player player: playerList) {
       player.sendTitle(title, sub);
-    };
+    }
   }
 
   public static void sendTitleToAll(List<Player> playerList, String title) {
     for (Player player: playerList) {
       player.sendTitle(title, "");
-    };
+    }
   }
 
 }

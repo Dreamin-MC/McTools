@@ -40,9 +40,7 @@ public class TimerManager extends Service {
 
   public String getElapsedTime(UUID playerId, String action) {
     Long startTime = startTimes.get(new ActionKey(playerId, action));
-    if (startTime == null) {
-      return "Timer non démarré";
-    }
+    if (startTime == null) return "Timer non démarré";
 
     long elapsedTimeMillis = System.currentTimeMillis() - startTime;
     long minutes = (elapsedTimeMillis / 1000) / 60;
@@ -56,9 +54,7 @@ public class TimerManager extends Service {
 
   public int getElapsedSeconds(UUID playerId, String action) {
     Long startTime = startTimes.get(new ActionKey(playerId, action));
-    if (startTime == null) {
-      return 0; // Le timer n'a pas été démarré
-    }
+    if (startTime == null) return 0; // Le timer n'a pas été démarré
 
     long elapsedTimeMillis = System.currentTimeMillis() - startTime;
     return (int) (elapsedTimeMillis / 1000); // Convertit le temps écoulé en secondes

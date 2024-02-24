@@ -44,7 +44,6 @@ public class JsonManager {
 
     JsonObject jsonObject = gson.fromJson(location, JsonObject.class);
 
-
     loc = new Location(w, jsonObject.get("x").getAsDouble(), jsonObject.get("y").getAsDouble(), jsonObject.get("z").getAsDouble(), jsonObject.get("yaw").getAsFloat(), jsonObject.get("pitch").getAsFloat());
 
     return loc;

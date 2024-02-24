@@ -18,7 +18,6 @@ import java.util.List;
 public class ListMapGui implements GuiBuilder {
 
   private List<ItemStack> items = new ArrayList<>();
-
   {
 
     for (World world : Bukkit.getWorlds()) {
@@ -52,8 +51,6 @@ public class ListMapGui implements GuiBuilder {
     if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
       int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
       player.teleport(Bukkit.getWorlds().get(index).getSpawnLocation());
-
     }
-
   }
 }

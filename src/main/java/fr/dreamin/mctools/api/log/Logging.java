@@ -44,9 +44,8 @@ public class Logging extends Service {
     this.error("## %s has encountered a critical error!".formatted(this.plugin.getName()));
     this.error("## %s".formatted(error));
     this.error("##");
-    if (throwable == null) {
-      this.error("## No stack trace provided");
-    } else {
+    if (throwable == null) this.error("## No stack trace provided");
+    else {
       this.error("## Stack trace:");
       this.error("## %s".formatted(throwable));
       StackTraceElement[] stack = throwable.getStackTrace();
@@ -64,7 +63,8 @@ public class Logging extends Service {
       this.error("## This is probably not your fault.");
       this.error("## Contact the developer to fix it.");
       this.error("## Be sure to send the entire error while reporting.");
-    } else {
+    }
+    else {
       this.error("## This is probably not your fault, but you may be able to fix it.");
       this.error("## You should try: %s".formatted(fix));
       this.error("## Contact the developer if this doesn't work.");

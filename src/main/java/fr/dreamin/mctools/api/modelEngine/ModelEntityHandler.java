@@ -60,10 +60,8 @@ public class ModelEntityHandler {
     if (this.modeledEntity != null && this.activeModel != null) {
       AnimationHandler animHandler = this.activeModel.getAnimationHandler();
       if (animHandler.isPlayingAnimation(this.animationPlayingName)) {
-        if (force)
-          animHandler.forceStopAnimation(this.animationPlayingName);
-        else
-          animHandler.stopAnimation(this.animationPlayingName);
+        if (force) animHandler.forceStopAnimation(this.animationPlayingName);
+        else animHandler.stopAnimation(this.animationPlayingName);
       }
     }
   }

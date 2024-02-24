@@ -29,22 +29,15 @@ public class CooldownManager extends Service {
     // Convertir les ticks en millisecondes pour endTime
     long endTime = System.currentTimeMillis() + (cooldownTick * 50L);
 
-    if (isCooldownInternal(key)) {
-      removeCooldownInternal(key);
-    }
+    if (isCooldownInternal(key)) removeCooldownInternal(key);
 
-    if (key instanceof ActionPlayerKey) {
-      actionCooldowns.put((ActionPlayerKey) key, endTime);
-    } else if (key instanceof String) {
-      keyCooldowns.put((String) key, endTime);
-    }
+    if (key instanceof ActionPlayerKey) actionCooldowns.put((ActionPlayerKey) key, endTime);
+    else if (key instanceof String) keyCooldowns.put((String) key, endTime);
 
     int taskId = Bukkit.getScheduler().scheduleSyncDelayedTask(McTools.getInstance(), () -> {
       removeCooldownInternal(key);
 
-      if (callback != null) {
-        callback.onCooldownEnd(key);
-      }
+      if (callback != null) callback.onCooldownEnd(key);
       removeCooldownInternal(key);
 
     }, cooldownTick);
@@ -63,11 +56,10 @@ public class CooldownManager extends Service {
   }
   private boolean isCooldownInternal(Object key) {
     Long endTime;
-    if (key instanceof ActionPlayerKey) {
-      endTime = actionCooldowns.get(key);
-    } else {
-      endTime = keyCooldowns.get(key);
-    }
+
+    if (key instanceof ActionPlayerKey) endTime = actionCooldowns.get(key);
+    else endTime = keyCooldowns.get(key);
+
     return endTime != null && System.currentTimeMillis() < endTime;
   }
 
@@ -81,29 +73,23 @@ public class CooldownManager extends Service {
   }
   private String getRemainingTimeInternal(Object key) {
     Long endTime;
-    if (key instanceof ActionPlayerKey) {
-      endTime = actionCooldowns.get(key);
-    } else {
-      endTime = keyCooldowns.get(key);
-    }
 
-    if (endTime == null || System.currentTimeMillis() >= endTime) {
-      return "Pas de cooldown";
-    }
+    if (key instanceof ActionPlayerKey) endTime = actionCooldowns.get(key);
+    else endTime = keyCooldowns.get(key);
+
+    if (endTime == null || System.currentTimeMillis() >= endTime) return "Pas de cooldown";
 
     long remainingTime = (endTime - System.currentTimeMillis()) / 1000;
     long minutes = remainingTime / 60;
     long seconds = remainingTime % 60;
 
-    if (minutes > 0 && seconds > 0) {
+    if (minutes > 0 && seconds > 0)
       return String.format("Temps restants %d minute%s et %d seconde%s",
         minutes, minutes > 1 ? "s" : "",
         seconds, seconds > 1 ? "s" : "");
-    } else if (minutes > 0) {
-      return String.format("Temps restants %d minute%s", minutes, minutes > 1 ? "s" : "");
-    } else {
-      return String.format("Temps restant %d seconde%s", seconds, seconds > 1 ? "s" : "");
-    }
+    else if (minutes > 0) return String.format("Temps restants %d minute%s", minutes, minutes > 1 ? "s" : "");
+    else return String.format("Temps restant %d seconde%s", seconds, seconds > 1 ? "s" : "");
+
   }
 
 
@@ -116,14 +102,9 @@ public class CooldownManager extends Service {
   }
   private int getRemainingSecondsInternal(Object key) {
     Long endTime;
-    if (key instanceof ActionPlayerKey) {
-      endTime = actionCooldowns.get(key);
-    } else {
-      endTime = keyCooldowns.get(key);
-    }
-    if (endTime == null || System.currentTimeMillis() >= endTime) {
-      return 0; // Aucun cooldown ou cooldown terminé
-    }
+    if (key instanceof ActionPlayerKey) endTime = actionCooldowns.get(key);
+    else endTime = keyCooldowns.get(key);
+    if (endTime == null || System.currentTimeMillis() >= endTime) return 0; // Aucun cooldown ou cooldown terminé
 
     long remainingTimeMillis = endTime - System.currentTimeMillis();
     return (int) (remainingTimeMillis / 1000); // Convertit le temps restant en secondes
@@ -138,18 +119,13 @@ public class CooldownManager extends Service {
     removeCooldownInternal(key);
   }
   private void removeCooldownInternal(Object key) {
-    if (key instanceof ActionPlayerKey) {
-      actionCooldowns.remove(key);
-    } else {
-      keyCooldowns.remove(key);
-    }
+    if (key instanceof ActionPlayerKey) actionCooldowns.remove(key);
+    else keyCooldowns.remove(key);
     if (cooldownTasks.containsKey(key)) {
       Bukkit.getScheduler().cancelTask(cooldownTasks.get(key));
       cooldownTasks.remove(key);
-
     }
     cooldownCallbacks.remove(key);
   }
-
 }
 

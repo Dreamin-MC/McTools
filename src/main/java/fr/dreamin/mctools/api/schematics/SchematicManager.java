@@ -29,15 +29,12 @@ public class SchematicManager {
     this.affineTransform = new AffineTransform();
 
     try (InputStream schematicStream = getClass().getClassLoader().getResourceAsStream(resourcePath)) {
-      if (schematicStream == null) {
-        throw new FileNotFoundException("Le fichier schématique à l'emplacement " + resourcePath + " n'a pas été trouvé dans les ressources.");
-      }
+      if (schematicStream == null) throw new FileNotFoundException("Le fichier schématique à l'emplacement " + resourcePath + " n'a pas été trouvé dans les ressources.");
 
       String fileExtension = resourcePath.substring(resourcePath.lastIndexOf(".") + 1);
       ClipboardFormat format = ClipboardFormats.findByExtension(fileExtension);
-      if (format == null) {
-        throw new IOException("Format non reconnu pour le fichier à l'emplacement " + resourcePath);
-      }
+
+      if (format == null) throw new IOException("Format non reconnu pour le fichier à l'emplacement " + resourcePath);
 
       try (ClipboardReader reader = format.getReader(schematicStream)) {
         this.clipboard = reader.read();
@@ -59,8 +56,7 @@ public class SchematicManager {
   }
 
   public void loadSchematic() {
-    if (clipboard != null)
-      return;
+    if (clipboard != null) return;
 
     try {
       try (ClipboardReader reader = ClipboardFormats.findByFile(schematicFile).getReader(Files.newInputStream(schematicFile.toPath()))) {
@@ -72,8 +68,7 @@ public class SchematicManager {
   }
 
   public void rotateSchematic(double angle) {
-    if (clipboard == null)
-      loadSchematic();
+    if (clipboard == null) loadSchematic();
 
     // Calculer le centre du schématique
     BlockVector3 center = clipboard.getRegion().getCenter().toBlockPoint();
@@ -91,8 +86,7 @@ public class SchematicManager {
 
 
   public void pasteSchematic(Location location, boolean ignoreAirBlock) {
-    if (clipboard == null)
-      loadSchematic();
+    if (clipboard == null) loadSchematic();
 
     EditSession editSession = null;
     try {
@@ -114,9 +108,7 @@ public class SchematicManager {
     } catch (Exception e) {
       e.printStackTrace();
     } finally {
-      if (editSession != null) {
-        editSession.close();
-      }
+      if (editSession != null) editSession.close();
     }
   }
 

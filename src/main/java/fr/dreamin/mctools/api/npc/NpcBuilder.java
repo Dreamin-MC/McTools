@@ -35,16 +35,12 @@ public class NpcBuilder {
   }
 
   public NpcBuilder setLocation(Location location) {
-    if (location != null) {
-      this.npc.spawn(location);
-    }
+    if (location != null) this.npc.spawn(location);
     return this;
   }
 
   public NpcBuilder setInvisible() {
-
-    if (!npc.hasTrait(InvisibleTrait.class))
-      npc.addTrait(InvisibleTrait.class);
+    if (!npc.hasTrait(InvisibleTrait.class)) npc.addTrait(InvisibleTrait.class);
 
     InvisibleTrait invisibleTrait = npc.getOrAddTrait(InvisibleTrait.class);
     invisibleTrait.setInvisible(true);
@@ -91,16 +87,12 @@ public class NpcBuilder {
 
       SleepingTrait trait = npc.getOrAddTrait(SleepingTrait.class);
       trait.toSleep();
-      if (!trait.isSleeping()) {
-        npc.removeTrait(SleepingTrait.class);
-      }
-
+      if (!trait.isSleeping()) npc.removeTrait(SleepingTrait.class);
     }
     else if (pose.equals(Pose.SITTING)) {
       SittingTrait trait = npc.getOrAddTrait(SittingTrait.class);
       trait.sit();
-      if (!trait.isSitting())
-        npc.removeTrait(SittingTrait.class);
+      if (!trait.isSitting()) npc.removeTrait(SittingTrait.class);
     }
     else if (pose.equals(Pose.SNEAKING)) {
       SneakingTrait sneakingTrait = npc.getOrAddTrait(SneakingTrait.class);
@@ -109,20 +101,15 @@ public class NpcBuilder {
     else if (pose.equals(Pose.STANDING)) {
       SneakingTrait sneakingTrait = npc.getOrAddTrait(SneakingTrait.class);
       sneakingTrait.stand();
-      if (!sneakingTrait.isSneaking())
-        npc.removeTrait(SneakingTrait.class);
+      if (!sneakingTrait.isSneaking()) npc.removeTrait(SneakingTrait.class);
     }
-
-
     return this;
   }
 
   public NpcBuilder setFollow(Entity entity) {
     FollowTrait trait = npc.getOrAddTrait(FollowTrait.class);
     trait.follow(entity);
-    if (!trait.isActive()) {
-      npc.removeTrait(FollowTrait.class);
-    }
+    if (!trait.isActive()) npc.removeTrait(FollowTrait.class);
 
     return this;
   }
@@ -130,9 +117,7 @@ public class NpcBuilder {
   public NpcBuilder setRideable(boolean ride) {
     Controllable trait = npc.getOrAddTrait(Controllable.class);
     trait.setEnabled(ride);
-    if (!trait.isEnabled()) {
-      npc.removeTrait(Controllable.class);
-    }
+    if (!trait.isEnabled()) npc.removeTrait(Controllable.class);
 
     return this;
   }

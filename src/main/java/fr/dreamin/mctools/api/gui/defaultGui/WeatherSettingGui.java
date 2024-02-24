@@ -39,7 +39,6 @@ public class WeatherSettingGui implements GuiBuilder {
     items.create("§7Weather: " + weatherType.getName(), weatherType.getMaterial(), 21);
     items.create("§7Day: " + dayType.getName(), dayType.getMaterial(), 23);
     items.create(CustomChatColor.RED.getColorWithText("Back"), Material.ARROW, 31);
-    
   }
 
   @Override

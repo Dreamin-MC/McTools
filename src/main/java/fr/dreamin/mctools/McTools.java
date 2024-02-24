@@ -16,14 +16,12 @@ import fr.dreamin.mctools.components.commands.build.CommandInteract;
 import fr.dreamin.mctools.components.commands.build.CommandDoor;
 import fr.dreamin.mctools.components.commands.build.CommandTag;
 import fr.dreamin.mctools.components.commands.build.armorStand.CommandArmorStand;
-import fr.dreamin.mctools.components.commands.build.models.CommandGetCoal;
+import fr.dreamin.mctools.components.commands.build.models.CommandCoal;
 import fr.dreamin.mctools.components.commands.build.models.CommandGetId;
 import fr.dreamin.mctools.components.commands.build.voice.CommandShowVoice;
-import fr.dreamin.mctools.components.commands.dev.CommandDT;
+import fr.dreamin.mctools.components.commands.CommandMT;
 import fr.dreamin.mctools.api.commands.SimpleCommand;
-import fr.dreamin.mctools.components.commands.dev.CommandDVD;
-import fr.dreamin.mctools.components.commands.hote.CommandDVH;
-import fr.dreamin.mctools.components.commands.player.CommandDV;
+import fr.dreamin.mctools.components.commands.voice.CommandDV;
 import fr.dreamin.mctools.components.game.DTGame;
 import fr.dreamin.mctools.api.armorPose.ArmorManager;
 import fr.dreamin.mctools.components.game.manager.DoorManager;
@@ -34,7 +32,6 @@ import fr.dreamin.mctools.components.gui.tag.TagList;
 import fr.dreamin.mctools.config.Codex;
 import fr.dreamin.mctools.api.service.Service;
 import fr.dreamin.mctools.api.service.ServiceManager;
-import fr.dreamin.mctools.mysql.DatabaseCodex;
 import fr.dreamin.mctools.mysql.DatabaseManager;
 import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
@@ -61,7 +58,7 @@ public final class McTools extends JavaPlugin{
 
     setDatabase(new DatabaseManager(codex.getHost(), codex.getPort(), codex.getDbName(), codex.getUsername(), codex.getPassword()));
     getDatabase().connection();
-    DatabaseCodex.checkIfExist();
+//    DatabaseCodex.checkIfExist();
 
     dtGame = new DTGame(this);
 
@@ -196,22 +193,17 @@ public final class McTools extends JavaPlugin{
   }
 
   private void loadCommands() {
-
-    SimpleCommand.createCommand("dt", new CommandDT(), "dreamintools");
-    SimpleCommand.createCommand("dvh", new CommandDVH());
+    SimpleCommand.createCommand("mt", new CommandMT(), "mctools");
     SimpleCommand.createCommand("dv", new CommandDV());
-    SimpleCommand.createCommand("dvd", new CommandDVD());
 
     if (getCodex().isBuildMode()) {
       SimpleCommand.createCommand("as", new CommandArmorStand(), "as");
-      SimpleCommand.createCommand("coal", new CommandGetCoal(), "getcoal");
+      SimpleCommand.createCommand("coal", new CommandCoal(), "getcoal");
       SimpleCommand.createCommand("getid", new CommandGetId(), "getid");
       SimpleCommand.createCommand("showvoice", new CommandShowVoice(), "showvoice");
       SimpleCommand.createCommand("tag", new CommandTag(), "tag");
       SimpleCommand.createCommand("door", new CommandDoor(), "door");
       SimpleCommand.createCommand("interact", new CommandInteract(), "interact");
-
-
     }
 
   }

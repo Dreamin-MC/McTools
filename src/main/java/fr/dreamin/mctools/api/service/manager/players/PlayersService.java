@@ -16,28 +16,23 @@ public class PlayersService extends Service {
   }
 
   public void addDTPlayer(DTPlayer dTPlayer) {
-    if (!dTPlayers.contains(dTPlayer))
-      dTPlayers.add(dTPlayer);
+    if (!dTPlayers.contains(dTPlayer)) dTPlayers.add(dTPlayer);
   }
 
   public void removeDTPlayer(DTPlayer dTPlayer) {
-    if (dTPlayers.contains(dTPlayer))
-      dTPlayers.remove(dTPlayer);
+    if (dTPlayers.contains(dTPlayer)) dTPlayers.remove(dTPlayer);
   }
 
   public DTPlayer getPlayer(Player player) {
-
     for (DTPlayer dTPlayer : getDTPlayers()) {
-      if (dTPlayer.getPlayer().equals(player))
-        return dTPlayer;
+      if (dTPlayer.getPlayer().equals(player)) return dTPlayer;
     }
     return null;
   }
 
   public boolean contains(Player player) {
     for (DTPlayer dtPlayer : getDTPlayers()) {
-      if (dtPlayer.getPlayer().equals(player))
-        return true;
+      if (dtPlayer.getPlayer().equals(player)) return true;
     }
     return false;
   }
@@ -49,8 +44,7 @@ public class PlayersService extends Service {
   public void addSpectators(Player player) {
     DTPlayer dTPlayer = getPlayer(player);
 
-    if (!spectators.contains(dTPlayer))
-      spectators.add(dTPlayer);
+    if (!spectators.contains(dTPlayer)) spectators.add(dTPlayer);
   }
 
   public void removeSpectators(Player player) {
@@ -59,7 +53,6 @@ public class PlayersService extends Service {
   }
 
   public boolean ifPossibleToStart() {
-
     boolean result = false;
 
     for (DTPlayer dtPlayer : getDTPlayers()) {
@@ -76,6 +69,4 @@ public class PlayersService extends Service {
     }
     return dtPlayers;
   }
-
-
 }

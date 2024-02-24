@@ -60,23 +60,14 @@ public class Math {
     // Utilisez l'angle de rotation pour déterminer la direction à suivre
     rotation = (rotation + 360) % 360;
 
-    if (rotation >= 337.5 || rotation < 22.5) {
-      return "⬆"; // Flèche vers le haut
-    } else if (rotation < 67.5) {
-      return "⬉"; // Flèche diagonale haut droite
-    } else if (rotation < 112.5) {
-      return "⬅"; // Flèche vers la gauche
-    } else if (rotation < 157.5) {
-      return "⬋"; // Flèche diagonale bas gauche
-    } else if (rotation < 202.5) {
-      return "⬇"; // Flèche vers le bas
-    } else if (rotation < 247.5) {
-      return "⬊"; // Flèche diagonale bas droite
-    } else if (rotation < 292.5) {
-      return "➡"; // Flèche vers la droite
-    } else {
-      return "⬈"; // Flèche diagonale haut gauche
-    }
+    if (rotation >= 337.5 || rotation < 22.5) return "⬆"; // Flèche vers le haut
+    else if (rotation < 67.5) return "⬉"; // Flèche diagonale haut droite
+    else if (rotation < 112.5) return "⬅"; // Flèche vers la gauche
+    else if (rotation < 157.5) return "⬋"; // Flèche diagonale bas gauche
+    else if (rotation < 202.5) return "⬇"; // Flèche vers le bas
+    else if (rotation < 247.5) return "⬊"; // Flèche diagonale bas droite
+    else if (rotation < 292.5) return "➡"; // Flèche vers la droite
+    else return "⬈"; // Flèche diagonale haut gauche
   }
 
   public static int getRandomNumber(int min, int max) {
@@ -95,9 +86,7 @@ public class Math {
 
     for (int i = 0; i < values.length; i++) {
       randomValue -= values[i];
-      if (randomValue <= 0) {
-        return names[i];
-      }
+      if (randomValue <= 0) return names[i];
     }
 
     return names[names.length - 1];
@@ -124,9 +113,7 @@ public class Math {
   }
 
   public static List<ItemStack> reorderItemsAZ(List<ItemStack> items, int id) {
-    if (items == null || items.isEmpty()) {
-      throw new IllegalArgumentException("Invalid list of items");
-    }
+    if (items == null || items.isEmpty()) throw new IllegalArgumentException("Invalid list of items");
 
     // Ajuster id pour qu'il soit toujours positif
     id = (id % items.size() + items.size()) % items.size();
@@ -146,9 +133,7 @@ public class Math {
     return reorderedItems;
   }
   public static List<ItemStack> reorderItems(List<ItemStack> items, int id) {
-    if (items == null || items.isEmpty() || id < 0 || id >= items.size()) {
-      throw new IllegalArgumentException("Invalid list of items or id");
-    }
+    if (items == null || items.isEmpty() || id < 0 || id >= items.size()) throw new IllegalArgumentException("Invalid list of items or id");
 
     List<ItemStack> reorderedItems = new ArrayList<>();
     // Ajouter les éléments de l'indice spécifié jusqu'à la fin de la liste

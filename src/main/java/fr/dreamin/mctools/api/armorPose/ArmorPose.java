@@ -119,9 +119,7 @@ public class ArmorPose {
         }
 
       }
-      else if (pose.equals(Pose.SITTING)) {
-        seat.remove();
-      }
+      else if (pose.equals(Pose.SITTING)) seat.remove();
       ArmorManager.removeArmor(this);
     }
 

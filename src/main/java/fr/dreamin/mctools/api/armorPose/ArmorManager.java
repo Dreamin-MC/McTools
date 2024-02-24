@@ -20,18 +20,14 @@ public class ArmorManager {
 
   public static ArmorPose getArmor(ArmorStand armorStand) {
     for (ArmorPose armorSitting : armors) {
-      if (armorSitting.getArmorStand().equals(armorStand)) {
-        return armorSitting;
-      }
+      if (armorSitting.getArmorStand().equals(armorStand)) return armorSitting;
     }
     return null;
   }
 
   public static ArmorPose getArmor(Player player) {
     for (ArmorPose armorSitting : armors) {
-      if (armorSitting.getPlayer().equals(player)) {
-        return armorSitting;
-      }
+      if (armorSitting.getPlayer().equals(player)) return armorSitting;
     }
     return null;
   }
@@ -45,11 +41,8 @@ public class ArmorManager {
   }
 
   public static void addArmor(ArmorStand armorStand, Player player, Pose pose) {
-
     ArmorPose armorSitting = new ArmorPose(armorStand, player, pose);
-
     armors.add(armorSitting);
-
   }
 
   public static void removeArmor(ArmorPose armorSitting) {

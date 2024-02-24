@@ -22,8 +22,7 @@ public class Cuboide {
   public Cuboide(Location locA, Location locB, boolean saveBlocks) {
     this.locA = locA;
     this.locB = locB;
-    if (saveBlocks)
-      saveBlocks();
+    if (saveBlocks) saveBlocks();
   }
 
 
@@ -70,15 +69,12 @@ public class Cuboide {
 
       @Override
       public void run() {
-        if (currentY < minY) {
-          // Arrêter la tâche si nous avons atteint le bas
-          this.cancel();
-        } else {
+        // Arrêter la tâche si nous avons atteint le bas
+        if (currentY < minY) this.cancel();
+        else {
           // Changer le type de bloc à l'altitude actuelle
           for (SavedBlock savedBlock : savedBlocks) {
-            if (savedBlock.getLocation().getBlockY() == currentY) {
-              locA.getWorld().getBlockAt(savedBlock.getLocation()).setType(material);
-            }
+            if (savedBlock.getLocation().getBlockY() == currentY) locA.getWorld().getBlockAt(savedBlock.getLocation()).setType(material);
           }
 
           // Descendre d'un bloc pour le prochain tour
@@ -97,10 +93,9 @@ public class Cuboide {
 
       @Override
       public void run() {
-        if (currentY > maxY) {
-          // Arrêtez la tâche si nous avons atteint le sommet
-          this.cancel();
-        } else {
+        // Arrêtez la tâche si nous avons atteint le sommet
+        if (currentY > maxY) this.cancel();
+        else {
           // Changez le type de bloc à l'altitude actuelle en AIR pour le supprimer
           for (SavedBlock savedBlock : savedBlocks) {
             if (savedBlock.getLocation().getBlockY() == currentY) {
@@ -119,8 +114,7 @@ public class Cuboide {
 
   public void restoreBlocks() {
 
-    if (!saveBlocks)
-      return;
+    if (!saveBlocks) return;
 
     for (SavedBlock savedBlock : savedBlocks) {
       Location loc = savedBlock.getLocation();
