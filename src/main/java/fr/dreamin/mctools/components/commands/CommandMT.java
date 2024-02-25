@@ -3,6 +3,7 @@ package fr.dreamin.mctools.components.commands;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.defaultGui.ListMapGui;
+import fr.dreamin.mctools.api.player.PlayerPerm;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.command.Command;
@@ -30,7 +31,7 @@ public class CommandMT implements CommandExecutor, TabCompleter {
 
     MTPlayer dTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    if (dTPlayer.hasPermAdmin() || dTPlayer.hasPermDev()) {
+    if (PlayerPerm.hasPermMin(dTPlayer.getPerm(), PlayerPerm.BUILD)) {
       switch (strings[0]) {
         case "reload":
           McTools.getCodex().loadConf();
@@ -76,7 +77,7 @@ public class CommandMT implements CommandExecutor, TabCompleter {
 
     List<String> listArgs = new ArrayList<>();
 
-    if (dTPlayer.hasPermAdmin() || dTPlayer.hasPermDev()) {
+    if (PlayerPerm.hasPermMin(dTPlayer.getPerm(), PlayerPerm.BUILD)) {
       if (strings.length == 1) {
         listArgs.add("reload");
         listArgs.add("listmap");

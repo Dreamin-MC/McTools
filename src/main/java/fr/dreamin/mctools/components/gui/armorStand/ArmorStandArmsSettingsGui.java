@@ -20,7 +20,7 @@ public class ArmorStandArmsSettingsGui implements GuiBuilder {
   public String name(Player player) {
     MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    return CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? "七" : PictureGui.ARMOR_MOVE_ROTATE.getName()));
+    return CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.ARMOR_MOVE_ROTATE.getName()));
   }
 
 
@@ -59,7 +59,6 @@ public class ArmorStandArmsSettingsGui implements GuiBuilder {
   @Override
   public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
     MTPlayer mTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
-
 
     switch (slot) {
       case 0:

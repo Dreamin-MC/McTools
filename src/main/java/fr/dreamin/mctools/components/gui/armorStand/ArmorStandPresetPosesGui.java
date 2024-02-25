@@ -18,7 +18,7 @@ public class ArmorStandPresetPosesGui implements GuiBuilder {
   public String name(Player player) {
     MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    return CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? "七" : PictureGui.ARMOR_POSE.getName()));
+    return CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.ARMOR_POSE.getName()));
   }
 
   @Override

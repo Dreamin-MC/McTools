@@ -131,9 +131,11 @@ public final class McTools extends JavaPlugin{
   private void loadGui() {
     GuiManager guiManager = getService(GuiManager.class);
 
-    loadDefaultGui(guiManager);
-
     guiManager.addMenu(
+      //default gui
+      new WeatherSettingGui(),
+      new ListMapGui(),
+
       //armorStand
       new ArmorStandMenuGui(),
       new ArmorStandMoveRotateGui(),
@@ -149,10 +151,6 @@ public final class McTools extends JavaPlugin{
       new TagListGui()
     );
   }
-  private void loadDefaultGui(GuiManager guiManager) {
-    guiManager.addMenu(new WeatherSettingGui(), new ListMapGui());
-  }
-
   public boolean isDisabled() {
     return isDisabled;
   }

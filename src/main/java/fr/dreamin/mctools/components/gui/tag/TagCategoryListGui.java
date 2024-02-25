@@ -48,7 +48,6 @@ public class TagCategoryListGui implements GuiBuilder {
       MTPlayer.getBuildManager().setTagCategory(BuildManager.getTagCategorys().get(index));
 
       McTools.getService(GuiManager.class).open(player, TagListGui.class);
-
     }
   }
 }

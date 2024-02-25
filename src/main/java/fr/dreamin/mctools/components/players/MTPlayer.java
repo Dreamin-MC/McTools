@@ -4,6 +4,7 @@ import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.api.log.Logging;
 import fr.dreamin.mctools.api.minecraft.Minecraft;
+import fr.dreamin.mctools.api.player.PlayerPerm;
 import fr.dreamin.mctools.components.players.manager.*;
 import fr.dreamin.mctools.mysql.fetcher.UserFetcher.UserFetcher;
 import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
@@ -14,9 +15,7 @@ import org.bukkit.inventory.ItemStack;
 public class MTPlayer {
 
   private final Player player;
-  private boolean hasPermAdmin = false;
-  private boolean hasPermDev = false;
-  private boolean hasPermHot = false;
+  private PlayerPerm perm;
   private boolean isEditMode;
   private final BuildPlayerManager buildManager = new BuildPlayerManager();
   private final ArmorStandManager armorStandManager;
@@ -37,9 +36,7 @@ public class MTPlayer {
     this.playerTickManager = new PlayerTickManager(this);
     this.itemStats = new ItemBuilder(Material.PLAYER_HEAD).setPlayerHFromName(player.getName()).setName("§eStatistique de " + player.getName()).toItemStack();
 
-    if (player.hasPermission("mctools.admin")) this.hasPermAdmin = true;
-    if (player.hasPermission("mctools.dev")) this.hasPermDev = true;
-    if (player.hasPermission("mctools.hot")) this.hasPermHot = true;
+    this.perm = PlayerPerm.getTopPerm(player);
 
     if (McTools.getService(PaperDependencyService.class).isPluginEnabled("Triton")) this.tritonManager = new TritonPlayerManager(player);
     else {
@@ -89,16 +86,8 @@ public class MTPlayer {
     else player.setGravity(true);
   }
 
-  public boolean hasPermAdmin() {
-    return hasPermAdmin;
-  }
-
-  public boolean hasPermDev() {
-    return hasPermDev;
-  }
-
-  public boolean hasPermHot() {
-    return hasPermHot;
+  public PlayerPerm getPerm() {
+    return perm;
   }
 
   public PlayerTickManager getPlayerTickManager() {

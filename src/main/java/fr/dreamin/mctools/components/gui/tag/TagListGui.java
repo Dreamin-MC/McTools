@@ -50,7 +50,6 @@ public class TagListGui implements GuiBuilder {
       MTPlayer.getBuildManager().setTag(tag);
 
       player.closeInventory();
-
     }
   }
 }
