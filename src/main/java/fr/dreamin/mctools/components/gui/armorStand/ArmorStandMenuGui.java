@@ -17,7 +17,7 @@ public class ArmorStandMenuGui implements GuiBuilder {
 
   @Override
   public String name(Player player) {
-    return CustomChatColor.WHITE.getColorWithText(PictureGui.ARMORS.getName());
+    return McTools.getCodex().isRessourcepack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.ARMORS.getName()) : "ArmorStand Menu";
   }
 
   @Override

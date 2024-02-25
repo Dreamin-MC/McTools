@@ -11,9 +11,6 @@ public class Codex {
   //  >>>>>> MESSAGE <<<<<<
   private String errorConsole, errorCommand;
 
-  //  >>>>>> PERMISSION <<<<<<
-  private String permHote, permDev;
-
   //  >>>>>>>> GUI <<<<<<<<
   private String prefixGUIName = "";
 
@@ -22,7 +19,7 @@ public class Codex {
   private int port;
 
   // >>>>>>>> API <<<<<<<<
-  private boolean editMode = false, defaultGui = false, defaultItems = false, buildMode = false;
+  private boolean editMode = false, defaultGui = false, defaultItems = false, buildMode = false, ressourcepack = false;
 
   //  >>>>>>>> VOICE <<<<<<<<
   private boolean voiceMode, voiceWallMode;
@@ -33,7 +30,6 @@ public class Codex {
     pluginName = "DreamTools";
     initMessage();
     initGlobal();
-    initPermission();
     initSQLData();
     initApi();
     initVoice();
@@ -44,7 +40,6 @@ public class Codex {
 
     initMessage();
     initGlobal();
-    initPermission();
     initSQLData();
     initApi();
     initVoice();
@@ -54,17 +49,14 @@ public class Codex {
 
 
   private void initGlobal(){
-    prefix = getStr("dreaminTools.prefix");
-    broadcastprefix = getStr("dreaminTools.broadcastprefix");
+    prefix = getStr("mcTools.prefix");
+    broadcastprefix = getStr("mcTools.broadcastprefix");
+
 
   }
-  private void initPermission(){
-    permHote= getStr("dreaminTools.permission.hote");
-    permDev= getStr("dreaminTools.permission.dev");
-  }
   private void initMessage(){
-    errorConsole = getStr("dreaminTools.message.errorconsole");
-    errorCommand = getStr("dreaminTools.message.errorcmd");
+    errorConsole = getStr("mcTools.message.errorconsole");
+    errorCommand = getStr("mcTools.message.errorcmd");
   }
 
   private void initSQLData() {
@@ -77,16 +69,17 @@ public class Codex {
   }
 
   private void initApi() {
-    editMode = getBool("dreaminTools.editMode");
-    defaultGui = getBool("dreaminTools.defaultGui");
-    defaultItems = getBool("dreaminTools.defaultItems");
-    buildMode = getBool("dreaminTools.buildMode");
+    editMode = getBool("mcTools.editMode");
+    defaultGui = getBool("mcTools.defaultGui");
+    defaultItems = getBool("mcTools.defaultItems");
+    buildMode = getBool("mcTools.buildMode");
+    ressourcepack = getBool("mcTools.ressourcepack");
   }
 
   private void initVoice(){
-    voiceMode = getBool("dreaminTools.voiceMode");
-    voiceWallMode = getBool("dreaminTools.voiceWallMode");
-    voiceDistanceMax = getInt("dreaminTools.voiceDistanceMax");
+    voiceMode = getBool("mcTools.voiceMode");
+    voiceWallMode = getBool("mcTools.voiceWallMode");
+    voiceDistanceMax = getInt("mcTools.voiceDistanceMax");
   }
 
 
@@ -107,11 +100,9 @@ public class Codex {
   public String getPluginName() {
     return pluginName;
   }
-
   public String getPrefix() {
     return prefix;
   }
-
   public String getBroadcastprefix() {
     return broadcastprefix;
   }
@@ -120,7 +111,6 @@ public class Codex {
   public String getErrorConsole() {
     return errorConsole;
   }
-
   public String getErrorCommand() {
     return errorCommand;
   }
@@ -129,7 +119,6 @@ public class Codex {
   public String getPermHote() {
     return permHote;
   }
-
   public String getPermDev() {
     return permDev;
   }
@@ -146,23 +135,18 @@ public class Codex {
   public String getHost() {
     return host;
   }
-
   public String getDbName() {
     return dbName;
   }
-
   public String getUsername() {
     return username;
   }
-
   public String getPassword() {
     return password;
   }
-
   public String getDefaultPrefix() {
     return defaultPrefix;
   }
-
   public int getPort() {
     return port;
   }
@@ -172,16 +156,17 @@ public class Codex {
   public boolean isEditMode() {
     return editMode;
   }
-
   public boolean isDefaultGui() {
     return defaultGui;
   }
-
   public boolean isDefaultItems() {
     return defaultItems;
   }
   public boolean isBuildMode() {
     return buildMode;
+  }
+  public boolean isRessourcepack() {
+    return ressourcepack;
   }
 
 
@@ -189,7 +174,6 @@ public class Codex {
   public boolean isVoiceWallMode() {
     return voiceWallMode;
   }
-
   public boolean isVoiceMode() {
     return voiceMode;
   }

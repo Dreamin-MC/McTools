@@ -125,6 +125,4 @@ public class MTPlayer {
   public String getSkinBase64() {
     return skinBase64;
   }
-
-
 }

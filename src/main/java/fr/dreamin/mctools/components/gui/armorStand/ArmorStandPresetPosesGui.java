@@ -18,7 +18,7 @@ public class ArmorStandPresetPosesGui implements GuiBuilder {
   public String name(Player player) {
     MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    return CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.ARMOR_POSE.getName()));
+    return McTools.getCodex().isRessourcepack() ? CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.ARMOR_POSE.getName())) : "ArmorStandPreset Preset Poses";
   }
 
   @Override

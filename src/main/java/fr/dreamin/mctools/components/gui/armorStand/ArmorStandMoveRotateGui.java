@@ -23,7 +23,7 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
   public String name(Player player) {
     MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    return CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.ARMOR_MOVE_ROTATE.getName()));
+    return McTools.getCodex().isRessourcepack() ? CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.ARMOR_MOVE_ROTATE.getName())) : "ArmorStand Move Rotate";
   }
 
   @Override

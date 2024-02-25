@@ -1,9 +1,11 @@
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #>>       PLUGIN CONFIGURATION       >>
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-dreaminTools:
+mcTools:
   prefix: "§8» §f" #player's msg
-  broadcastprefix: "[§c§lDreaminTools§r] " #global's & console's msg
+  broadcastprefix: "[§c§lMcTools§r] " #global's & console's msg
+
+  ressourcepack: false
 
   buildMode: false
   editMode: false
@@ -13,9 +15,6 @@ dreaminTools:
   voiceWallMode: false #true = enable voice mode, false = disable voice mode
   voiceDistanceMax: 10 #max distance for voiceWallMode
 
-  permission:
-    hote: "dreamintools.hote"
-    dev: "dreamintools.dev"
   message:
     errorconsole: "§cVous ne pouvez pas exécuter cette commande dans la console :("
     errorcmd: "§cVous n'avez pas la permission d'exécute"

@@ -20,7 +20,7 @@ public class ArmorStandBasicSettingsGui implements GuiBuilder {
   public String name(Player player) {
     MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    return CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.GENERIC_27.getName()));
+    return McTools.getCodex().isRessourcepack() ? CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.GENERIC_27.getName())) : "ArmorStand Basic Settings";
 
   }
 

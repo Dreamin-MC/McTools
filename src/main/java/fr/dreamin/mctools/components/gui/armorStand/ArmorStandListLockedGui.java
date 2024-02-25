@@ -1,6 +1,7 @@
 package fr.dreamin.mctools.components.gui.armorStand;
 
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
 import fr.dreamin.mctools.components.players.MTPlayer;
@@ -18,7 +19,7 @@ public class ArmorStandListLockedGui implements GuiBuilder {
 
   @Override
   public String name(Player player) {
-    return "§8» §e§lLOCKED";
+    return McTools.getCodex().isRessourcepack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45) : "§8» §e§lLOCKED";
   }
 
   @Override

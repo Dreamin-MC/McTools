@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class CommandMT implements CommandExecutor, TabCompleter {
@@ -31,7 +32,7 @@ public class CommandMT implements CommandExecutor, TabCompleter {
 
     MTPlayer dTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    if (PlayerPerm.hasPermMin(dTPlayer.getPerm(), PlayerPerm.BUILD)) {
+    if (player.hasPermission(PlayerPerm.BUILD.getPerm())) {
       switch (strings[0]) {
         case "reload":
           McTools.getCodex().loadConf();
@@ -79,8 +80,7 @@ public class CommandMT implements CommandExecutor, TabCompleter {
 
     if (PlayerPerm.hasPermMin(dTPlayer.getPerm(), PlayerPerm.BUILD)) {
       if (strings.length == 1) {
-        listArgs.add("reload");
-        listArgs.add("listmap");
+        listArgs = Arrays.asList("reload", "listmap");
         if (McTools.getCodex().isEditMode()) listArgs.add("editmode");
 
         return listArgs;

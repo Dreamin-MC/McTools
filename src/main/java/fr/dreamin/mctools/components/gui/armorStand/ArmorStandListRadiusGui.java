@@ -1,6 +1,7 @@
 package fr.dreamin.mctools.components.gui.armorStand;
 
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.glowing.GlowingEntities;
 import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
@@ -20,7 +21,7 @@ public class ArmorStandListRadiusGui implements GuiBuilder {
 
   @Override
   public String name(Player player) {
-    return "§8» §e§lRADIUS";
+    return McTools.getCodex().isRessourcepack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45) : "§8» §e§lRADIUS";
   }
 
   @Override
