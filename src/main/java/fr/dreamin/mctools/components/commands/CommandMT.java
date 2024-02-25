@@ -3,7 +3,7 @@ package fr.dreamin.mctools.components.commands;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.defaultGui.ListMapGui;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -28,7 +28,7 @@ public class CommandMT implements CommandExecutor, TabCompleter {
 
     Player player = (Player) commandSender;
 
-    DTPlayer dTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    MTPlayer dTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
     if (dTPlayer.hasPermAdmin() || dTPlayer.hasPermDev()) {
       switch (strings[0]) {
@@ -72,7 +72,7 @@ public class CommandMT implements CommandExecutor, TabCompleter {
 
     Player player = (Player) commandSender;
 
-    DTPlayer dTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    MTPlayer dTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
     List<String> listArgs = new ArrayList<>();
 

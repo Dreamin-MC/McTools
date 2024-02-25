@@ -8,7 +8,7 @@ import fr.dreamin.mctools.api.minecraft.Minecraft;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
 import fr.dreamin.mctools.api.player.manager.SoundManager;
 import fr.dreamin.mctools.api.armorPose.ArmorManager;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -36,7 +36,7 @@ public class InteractListener implements Listener {
   public void onInteractAtBlock(PlayerInteractEvent event) {
     Player player = event.getPlayer();
 
-    DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(event.getPlayer());
+    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(event.getPlayer());
 
     //Empecher la double interaction lors d'un clic droit.
     if (event.getHand() != EquipmentSlot.HAND) {
@@ -75,9 +75,9 @@ public class InteractListener implements Listener {
 
     if (event.getRightClicked() instanceof ArmorStand) {
       ArmorStand armorStand = (ArmorStand) event.getRightClicked();
-      DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(event.getPlayer());
+      MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(event.getPlayer());
 
-      if (dtPlayer != null && ArmorManager.getArmor(armorStand) == null && !event.getPlayer().isSneaking()) {
+      if (MTPlayer != null && ArmorManager.getArmor(armorStand) == null && !event.getPlayer().isSneaking()) {
 
         if (ArmorManager.haveTagSeat(armorStand)) ArmorManager.addArmor(armorStand, event.getPlayer(), Pose.SITTING);
         else if (ArmorManager.haveTagSleep(armorStand)) ArmorManager.addArmor(armorStand, event.getPlayer(), Pose.SLEEPING);
@@ -89,15 +89,15 @@ public class InteractListener implements Listener {
 
       if (event.getRightClicked() instanceof ArmorStand && event.getPlayer().isSneaking()) {
 
-        DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(event.getPlayer());
+        MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(event.getPlayer());
 
-        if (dtPlayer != null) {
+        if (MTPlayer != null) {
 
-          if (dtPlayer.getArmorStandManager().getIfArmorStandSelected((ArmorStand) event.getRightClicked()) == null)
+          if (MTPlayer.getArmorStandManager().getIfArmorStandSelected((ArmorStand) event.getRightClicked()) == null)
 
-            if (dtPlayer.getArmorStandManager().getIfArmorStandLocked((ArmorStand) event.getRightClicked()) == null) dtPlayer.getArmorStandManager().addArmorStandSelected((ArmorStand) event.getRightClicked());
-            else dtPlayer.getPlayer().sendMessage("§cErreur: §fVous ne pouvez pas sélectionner un armor stand verrouillé.");
-          else dtPlayer.getArmorStandManager().removeArmorStandSelected((ArmorStand) event.getRightClicked(), true);
+            if (MTPlayer.getArmorStandManager().getIfArmorStandLocked((ArmorStand) event.getRightClicked()) == null) MTPlayer.getArmorStandManager().addArmorStandSelected((ArmorStand) event.getRightClicked());
+            else MTPlayer.getPlayer().sendMessage("§cErreur: §fVous ne pouvez pas sélectionner un armor stand verrouillé.");
+          else MTPlayer.getArmorStandManager().removeArmorStandSelected((ArmorStand) event.getRightClicked(), true);
         }
 
       }

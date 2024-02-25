@@ -3,7 +3,7 @@ package fr.dreamin.mctools.components.game.manager;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.components.build.Tag;
 import fr.dreamin.mctools.components.build.TagCategory;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.mysql.fetcher.buildCategoryFetcher.BuildCategoryFetcher;
 import fr.dreamin.mctools.mysql.fetcher.buildTagFetcher.BuildTagFetcher;
 import org.bukkit.Material;
@@ -55,11 +55,11 @@ public class BuildManager {
     return null;
   }
 
-  public static List<ItemStack> getTagItemStacks(DTPlayer dtPlayer) {
+  public static List<ItemStack> getTagItemStacks(MTPlayer MTPlayer) {
 
     List<ItemStack> itemStacks = new ArrayList<>();
 
-    for (Tag tag : getTagsByCategory(dtPlayer.getBuildManager().getTagCategory())) {
+    for (Tag tag : getTagsByCategory(MTPlayer.getBuildManager().getTagCategory())) {
       itemStacks.add(new ItemBuilder(Material.PAPER).setName(tag.getValue()).toItemStack());
     }
     return itemStacks;

@@ -1,7 +1,7 @@
 package fr.dreamin.mctools.components.players.manager;
 
 import fr.dreamin.mctools.McTools;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.components.players.filter.tick.CustomFilterTick;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
@@ -11,14 +11,14 @@ import java.util.List;
 
 public class PlayerTickManager {
 
-  private final DTPlayer dtPlayer;
+  private final MTPlayer MTPlayer;
   private BukkitTask tickTask;
   private boolean isPaused = false;
   private int actualTick = -1;
   private List<CustomFilterTick> customTicks = new ArrayList<>();
 
-  public PlayerTickManager(DTPlayer dtPlayer) {
-    this.dtPlayer = dtPlayer;
+  public PlayerTickManager(MTPlayer MTPlayer) {
+    this.MTPlayer = MTPlayer;
 
     startBukkitTask();
   }
@@ -29,7 +29,7 @@ public class PlayerTickManager {
     if (this.isPaused) return;
 
     for (CustomFilterTick customTick : customTicks) {
-      customTick.actualTick(dtPlayer, actualTick);
+      customTick.actualTick(MTPlayer, actualTick);
     }
 
     actualTick++;
@@ -45,8 +45,8 @@ public class PlayerTickManager {
   }
 
   //------GETTER------//
-  public DTPlayer getDTPlayer() {
-    return dtPlayer;
+  public MTPlayer getDTPlayer() {
+    return MTPlayer;
   }
 
   public int getActualTick() {

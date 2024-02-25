@@ -7,7 +7,7 @@ import com.craftmend.openaudiomc.spigot.modules.voicechat.filters.FilterService;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.service.Service;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -43,26 +43,26 @@ public class VoiceWallManager extends Service {
 
       PlayersService playersService = McTools.getService(PlayersService.class);
 
-      for (DTPlayer dtPlayer : playersService.getDTPlayers()) {
-        for (DTPlayer otherDTPlayer : playersService.getDTPlayers()) {
-          if (otherDTPlayer.equals(dtPlayer)) continue;
+      for (MTPlayer MTPlayer : playersService.getDTPlayers()) {
+        for (MTPlayer otherMTPlayer : playersService.getDTPlayers()) {
+          if (otherMTPlayer.equals(MTPlayer)) continue;
 
           //get if player is dead and the otherPlayer is not dead
-          if (playersService.getSpectators().contains(dtPlayer) && !playersService.getSpectators().contains(otherDTPlayer)) dtPlayer.getVoiceManager().getClientConnection().setModerating(true);
+          if (playersService.getSpectators().contains(MTPlayer) && !playersService.getSpectators().contains(otherMTPlayer)) MTPlayer.getVoiceManager().getClientConnection().setModerating(true);
 
           //get if player is not dead and the otherPlayer is dead
-          else if (!playersService.getSpectators().contains(dtPlayer) && playersService.getSpectators().contains(otherDTPlayer)) otherDTPlayer.getVoiceManager().getClientConnection().setModerating(true);
+          else if (!playersService.getSpectators().contains(MTPlayer) && playersService.getSpectators().contains(otherMTPlayer)) otherMTPlayer.getVoiceManager().getClientConnection().setModerating(true);
           else {
-            double distance = dtPlayer.getPlayer().getLocation().distance(otherDTPlayer.getPlayer().getLocation());
-            if (distance <= McTools.getCodex().getVoiceDistanceMax() && (RayCast. hasLineOfSight(dtPlayer.getPlayer(), otherDTPlayer.getPlayer()))) {
-              if (dtPlayer.getVoiceManager().getDTPlayersSpeaker().contains(otherDTPlayer)) continue;
-              else if (otherDTPlayer.getVoiceManager().getDTPlayersSpeaker().contains(dtPlayer)) continue;
-              dtPlayer.getVoiceManager().getDTPlayersSpeaker().add(otherDTPlayer);
-              otherDTPlayer.getVoiceManager().getDTPlayersSpeaker().add(dtPlayer);
+            double distance = MTPlayer.getPlayer().getLocation().distance(otherMTPlayer.getPlayer().getLocation());
+            if (distance <= McTools.getCodex().getVoiceDistanceMax() && (RayCast. hasLineOfSight(MTPlayer.getPlayer(), otherMTPlayer.getPlayer()))) {
+              if (MTPlayer.getVoiceManager().getDTPlayersSpeaker().contains(otherMTPlayer)) continue;
+              else if (otherMTPlayer.getVoiceManager().getDTPlayersSpeaker().contains(MTPlayer)) continue;
+              MTPlayer.getVoiceManager().getDTPlayersSpeaker().add(otherMTPlayer);
+              otherMTPlayer.getVoiceManager().getDTPlayersSpeaker().add(MTPlayer);
             }
             else {
-              dtPlayer.getVoiceManager().getDTPlayersSpeaker().remove(otherDTPlayer);
-              otherDTPlayer.getVoiceManager().getDTPlayersSpeaker().remove(dtPlayer);
+              MTPlayer.getVoiceManager().getDTPlayersSpeaker().remove(otherMTPlayer);
+              otherMTPlayer.getVoiceManager().getDTPlayersSpeaker().remove(MTPlayer);
             }
           }
 
@@ -87,11 +87,11 @@ public class VoiceWallManager extends Service {
     PlayersService playersService = McTools.getService(PlayersService.class);
 
     OpenAudioMc.getService(FilterService.class).addFilterFunction((listener, possibleSpeaker) -> {
-      DTPlayer dtPlayer = playersService.getPlayer(listener);
-      DTPlayer otherDTPlayer = playersService.getPlayer(possibleSpeaker);
+      MTPlayer MTPlayer = playersService.getPlayer(listener);
+      MTPlayer otherMTPlayer = playersService.getPlayer(possibleSpeaker);
 
-      if (!playersService.getSpectators().contains(dtPlayer) && !playersService.getSpectators().contains(otherDTPlayer)) {
-        if (dtPlayer.getVoiceManager().getDTPlayersSpeaker().contains(otherDTPlayer)) {
+      if (!playersService.getSpectators().contains(MTPlayer) && !playersService.getSpectators().contains(otherMTPlayer)) {
+        if (MTPlayer.getVoiceManager().getDTPlayersSpeaker().contains(otherMTPlayer)) {
           Bukkit.broadcastMessage(listener.getName() + " " + "can hear" + " " + possibleSpeaker.getName());
           return true;
         }

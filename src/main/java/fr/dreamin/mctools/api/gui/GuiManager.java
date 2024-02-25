@@ -1,14 +1,12 @@
 package fr.dreamin.mctools.api.gui;
 
-import com.rexcantor64.triton.guiapi.GuiButton;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.service.Service;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -18,7 +16,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GuiManager extends Service implements Listener{
 
@@ -61,17 +58,36 @@ public class GuiManager extends Service implements Listener{
     }
     else {
 
-      GuiBuilder menu = guiPlayer.get(inv);
+      GuiBuilder m = guiPlayer.get(inv);
 
-      PaginationManager paginationManager = menu.getPaginationManager(player, inv);
+      if (m != null) {
+        PaginationManager paginationManager = m.getPaginationManager(player, inv);
 
-      if (paginationManager != null) {
-        if (event.getSlot() == paginationManager.getSlotNext() && current.getItemMeta().getDisplayName().equals(paginationManager.getNext().getItemMeta().getDisplayName())) paginationManager.getType().setNext(player, paginationManager, menu.getClass());
-        else if (event.getSlot() == paginationManager.getSlotPrevious() && current.getItemMeta().getDisplayName().equals(paginationManager.getPrevious().getItemMeta().getDisplayName())) paginationManager.getType().setPrevious(player, paginationManager, menu.getClass());
+        if (paginationManager != null) {
+          if (event.getSlot() == paginationManager.getSlotNext() && current.getItemMeta().getDisplayName().equals(paginationManager.getNext().getItemMeta().getDisplayName())) paginationManager.getType().setNext(player, paginationManager, m.getClass());
+          else if (event.getSlot() == paginationManager.getSlotPrevious() && current.getItemMeta().getDisplayName().equals(paginationManager.getPrevious().getItemMeta().getDisplayName())) paginationManager.getType().setPrevious(player, paginationManager, m.getClass());
+        }
+
+        m.onClick(player, inv, current, event.getSlot(), event.getClick());
+        event.setCancelled(true);
+      }
+      else {
+        getRegisteredMenus().values().stream()
+          .filter(menu -> event.getView().getTitle().equalsIgnoreCase(menu.name(player)))
+          .forEach(menu -> {
+
+            PaginationManager paginationManager = menu.getPaginationManager(player, inv);
+
+            if (paginationManager != null) {
+              if (event.getSlot() == paginationManager.getSlotNext() && current.getItemMeta().getDisplayName().equals(paginationManager.getNext().getItemMeta().getDisplayName())) paginationManager.getType().setNext(player, paginationManager, menu.getClass());
+              else if (event.getSlot() == paginationManager.getSlotPrevious() && current.getItemMeta().getDisplayName().equals(paginationManager.getPrevious().getItemMeta().getDisplayName())) paginationManager.getType().setPrevious(player, paginationManager, menu.getClass());
+            }
+
+            menu.onClick(player, inv, current, event.getSlot(), event.getClick());
+            event.setCancelled(true);
+          });
       }
 
-      menu.onClick(player, inv, current, event.getSlot(), event.getClick());
-      event.setCancelled(true);
     }
   }
 
@@ -127,8 +143,8 @@ public class GuiManager extends Service implements Listener{
           if (!getGuiConfig().getGuiPageManager().containsGuiPage(player, menu.getClass().getSimpleName())) getGuiConfig().getGuiPageManager().addGuiPage(player, menu.getClass().getSimpleName(), 1);
         }
         else {
-         for (DTPlayer dtPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
-           if (!getGuiConfig().getGuiPageManager().containsGuiPage(dtPlayer.getPlayer(), menu.getClass().getSimpleName())) getGuiConfig().getGuiPageManager().addGuiPage(dtPlayer.getPlayer(), menu.getClass().getSimpleName(), 1);
+         for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+           if (!getGuiConfig().getGuiPageManager().containsGuiPage(MTPlayer.getPlayer(), menu.getClass().getSimpleName())) getGuiConfig().getGuiPageManager().addGuiPage(MTPlayer.getPlayer(), menu.getClass().getSimpleName(), 1);
          }
         }
 

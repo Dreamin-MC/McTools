@@ -1,21 +1,21 @@
 package fr.dreamin.mctools.components.players.manager;
 
 import fr.dreamin.mctools.api.hud.HudManager;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 
 import java.util.HashMap;
 
 public class HudPlayerManager {
 
   private HashMap<String, HudManager> hudManagers = new HashMap<>();
-  private DTPlayer dtPlayer;
+  private MTPlayer MTPlayer;
 
-  public HudPlayerManager(DTPlayer dtPlayer) {
-    this.dtPlayer = dtPlayer;
+  public HudPlayerManager(MTPlayer MTPlayer) {
+    this.MTPlayer = MTPlayer;
   }
 
-  public DTPlayer getDtPlayer() {
-    return dtPlayer;
+  public MTPlayer getDtPlayer() {
+    return MTPlayer;
   }
 
   public HashMap<String, HudManager> getHudManagers() {

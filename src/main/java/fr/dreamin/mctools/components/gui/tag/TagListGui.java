@@ -6,7 +6,7 @@ import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.components.build.Tag;
 import fr.dreamin.mctools.components.game.manager.BuildManager;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
-public class TagList implements GuiBuilder {
+public class TagListGui implements GuiBuilder {
 
   @Override
   public String name(Player player) {
@@ -40,14 +40,14 @@ public class TagList implements GuiBuilder {
 
   @Override
   public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
-    DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
     if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
       int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
 
-      Tag tag = BuildManager.getTagsByCategory(dtPlayer.getBuildManager().getTagCategory()).get(index);
+      Tag tag = BuildManager.getTagsByCategory(MTPlayer.getBuildManager().getTagCategory()).get(index);
 
-      dtPlayer.getBuildManager().setTag(tag);
+      MTPlayer.getBuildManager().setTag(tag);
 
       player.closeInventory();
 

@@ -6,7 +6,7 @@ import com.craftmend.openaudiomc.api.interfaces.Client;
 import com.craftmend.openaudiomc.generic.client.objects.ClientConnection;
 import com.craftmend.openaudiomc.generic.networking.interfaces.NetworkingService;
 import fr.dreamin.mctools.api.player.SoundType;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -22,12 +22,12 @@ public class VoicePlayerManager {
   private int volumeAction;
   private int volumeAmbien;
   private int volumeEvent;
-  private List<DTPlayer> vPlayersSpeaker = new ArrayList<>();
+  private List<MTPlayer> vPlayersSpeaker = new ArrayList<>();
 
-  public VoicePlayerManager(DTPlayer dtPlayer) {
-    this.player = dtPlayer.getPlayer();
-    this.client = AudioApi.getInstance().getClient(dtPlayer.getPlayer().getUniqueId());
-    this.clientConnection = OpenAudioMc.getService(NetworkingService.class).getClient(dtPlayer.getPlayer().getUniqueId());
+  public VoicePlayerManager(MTPlayer MTPlayer) {
+    this.player = MTPlayer.getPlayer();
+    this.client = AudioApi.getInstance().getClient(MTPlayer.getPlayer().getUniqueId());
+    this.clientConnection = OpenAudioMc.getService(NetworkingService.class).getClient(MTPlayer.getPlayer().getUniqueId());
   }
 
   public Client getClient() {
@@ -79,7 +79,7 @@ public class VoicePlayerManager {
     return clientConnection;
   }
 
-  public List<DTPlayer> getDTPlayersSpeaker() {
+  public List<MTPlayer> getDTPlayersSpeaker() {
     return vPlayersSpeaker;
   }
 

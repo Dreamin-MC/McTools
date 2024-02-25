@@ -27,8 +27,8 @@ import fr.dreamin.mctools.api.armorPose.ArmorManager;
 import fr.dreamin.mctools.components.game.manager.DoorManager;
 import fr.dreamin.mctools.components.game.manager.InteractManager;
 import fr.dreamin.mctools.components.gui.armorStand.*;
-import fr.dreamin.mctools.components.gui.tag.TagCategoryList;
-import fr.dreamin.mctools.components.gui.tag.TagList;
+import fr.dreamin.mctools.components.gui.tag.TagCategoryListGui;
+import fr.dreamin.mctools.components.gui.tag.TagListGui;
 import fr.dreamin.mctools.config.Codex;
 import fr.dreamin.mctools.api.service.Service;
 import fr.dreamin.mctools.api.service.ServiceManager;
@@ -110,7 +110,6 @@ public final class McTools extends JavaPlugin{
 
   }
 
-
   public static McTools getInstance() {
     return instance;
   }
@@ -137,17 +136,17 @@ public final class McTools extends JavaPlugin{
     guiManager.addMenu(
       //armorStand
       new ArmorStandMenuGui(),
-      new ArmorStandMoveRotate(),
-      new ArmorStandBasicSettings(),
-      new ArmorStandListLocked(),
-      new ArmorStandPresetPoses(),
-      new ArmorStandListRadius(),
-      new ArmorStandListLocked(),
-      new ArmorStandArmsSettings(),
+      new ArmorStandMoveRotateGui(),
+      new ArmorStandBasicSettingsGui(),
+      new ArmorStandListLockedGui(),
+      new ArmorStandPresetPosesGui(),
+      new ArmorStandListRadiusGui(),
+      new ArmorStandArmsSettingsGui(),
+      new ArmorStandListSelectedGui(),
 
       //tag
-      new TagCategoryList(),
-      new TagList()
+      new TagCategoryListGui(),
+      new TagListGui()
     );
   }
   private void loadDefaultGui(GuiManager guiManager) {

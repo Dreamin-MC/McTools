@@ -11,7 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-public class DTPlayer {
+public class MTPlayer {
 
   private final Player player;
   private boolean hasPermAdmin = false;
@@ -29,7 +29,7 @@ public class DTPlayer {
   private String skinBase64 = null;
   private boolean isCanMove = true;
 
-  public DTPlayer(Player player) {
+  public MTPlayer(Player player) {
     this.player = player;
     this.isEditMode = false;
     this.armorStandManager = new ArmorStandManager(this);
@@ -37,9 +37,9 @@ public class DTPlayer {
     this.playerTickManager = new PlayerTickManager(this);
     this.itemStats = new ItemBuilder(Material.PLAYER_HEAD).setPlayerHFromName(player.getName()).setName("§eStatistique de " + player.getName()).toItemStack();
 
-    if (player.hasPermission("dreamintools.admin")) this.hasPermAdmin = true;
-    if (player.hasPermission("dreamintools.dev")) this.hasPermDev = true;
-    if (player.hasPermission("dreamintools.hot")) this.hasPermHot = true;
+    if (player.hasPermission("mctools.admin")) this.hasPermAdmin = true;
+    if (player.hasPermission("mctools.dev")) this.hasPermDev = true;
+    if (player.hasPermission("mctools.hot")) this.hasPermHot = true;
 
     if (McTools.getService(PaperDependencyService.class).isPluginEnabled("Triton")) this.tritonManager = new TritonPlayerManager(player);
     else {

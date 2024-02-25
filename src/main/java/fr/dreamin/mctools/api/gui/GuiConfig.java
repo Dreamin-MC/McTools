@@ -1,7 +1,7 @@
 package fr.dreamin.mctools.api.gui;
 
 import fr.dreamin.mctools.McTools;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -65,9 +65,9 @@ public class GuiConfig {
   }
 
   public void openGuiForAll(Class<? extends GuiBuilder> gClass) {
-    for (DTPlayer dtPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+    for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
 
-      Player player = dtPlayer.getPlayer();
+      Player player = MTPlayer.getPlayer();
 
       if (!containsGuiOpen(player)) continue;
 

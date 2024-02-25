@@ -2,26 +2,26 @@ package fr.dreamin.mctools.api.hud;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.bossBar.BarManager;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import org.bukkit.boss.BarColor;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class HudManager {
 
   private HudType hudType;
-  private DTPlayer dtPlayer;
+  private MTPlayer MTPlayer;
   private BarManager barManager;
   private BukkitRunnable task;
   private MessageProvider messageProvider;
 
-  public HudManager(HudType hudType, DTPlayer dtPlayer, MessageProvider messageProvider) {
+  public HudManager(HudType hudType, MTPlayer MTPlayer, MessageProvider messageProvider) {
     this.hudType = hudType;
-    this.dtPlayer = dtPlayer;
+    this.MTPlayer = MTPlayer;
     this.messageProvider = messageProvider;
 
-    if (hudType == HudType.ACTIONBAR) dtPlayer.getPlayer().sendActionBar("§aHello World");
+    if (hudType == HudType.ACTIONBAR) MTPlayer.getPlayer().sendActionBar("§aHello World");
     else if (hudType == HudType.BOSSBAR) {
-      barManager = new BarManager(dtPlayer.getPlayer());
+      barManager = new BarManager(MTPlayer.getPlayer());
       barManager.setBarTitle("§aHello World");
       barManager.updateBar(0F);
       barManager.setColor(BarColor.GREEN);
@@ -34,8 +34,8 @@ public class HudManager {
     return hudType;
   }
 
-  public DTPlayer getDtPlayer() {
-    return dtPlayer;
+  public MTPlayer getDtPlayer() {
+    return MTPlayer;
   }
 
   public BarManager getBarManager() {
@@ -69,13 +69,13 @@ public class HudManager {
   public void sendHud(String message) {
     switch (hudType) {
       case ACTIONBAR:
-        dtPlayer.getPlayer().sendActionBar(message);
+        MTPlayer.getPlayer().sendActionBar(message);
         break;
       case BOSSBAR:
         barManager.setBarTitle(message);
         break;
       case CHAT:
-        dtPlayer.getPlayer().sendMessage(message);
+        MTPlayer.getPlayer().sendMessage(message);
         break;
       case TITLE:
         break;

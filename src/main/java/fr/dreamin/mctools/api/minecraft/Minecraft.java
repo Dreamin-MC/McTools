@@ -11,6 +11,7 @@ import org.bukkit.block.data.type.Slab;
 import org.bukkit.block.data.type.Snow;
 import org.bukkit.block.data.type.Stairs;
 import org.bukkit.block.data.type.TrapDoor;
+import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
@@ -20,6 +21,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.EulerAngle;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
@@ -564,6 +566,57 @@ public class Minecraft {
         }
       }
     }
+  }
+
+  public static void setArmorStandPose(ArmorStand armorStand, double rightArmRoll, double rightArmYaw, double rightArmPitch, double leftArmRoll, double leftArmYaw, double leftArmPitch, double rightLegRoll, double rightLegYaw, double rightLegPitch, double leftLegRoll, double LeftLegYaw, double llp_yaw, double headRoll, double headYaw, double headPitch, double bodyRoll, double bodyYaw, double bodyPitch) {
+
+    // Set general settings
+    armorStand.setArms(true);
+    armorStand.setBasePlate(false);
+    armorStand.setGravity(false);
+
+    // Calculate and set right arm settings
+    rightArmRoll = Math.toRadians(rightArmRoll);
+    rightArmYaw = Math.toRadians(rightArmYaw);
+    rightArmPitch = Math.toRadians(rightArmPitch);
+    EulerAngle rightArmEulerAngle = new EulerAngle(rightArmRoll, rightArmYaw, rightArmPitch);
+    armorStand.setRightArmPose(rightArmEulerAngle);
+
+    // Calculate and set left arm settings
+    leftArmRoll = Math.toRadians(leftArmRoll);
+    leftArmYaw = Math.toRadians(leftArmYaw);
+    leftArmPitch = Math.toRadians(leftArmPitch);
+    EulerAngle leftArmEulerAngle = new EulerAngle(leftArmRoll, leftArmYaw, leftArmPitch);
+    armorStand.setLeftArmPose(leftArmEulerAngle);
+
+    // Calculate and set right leg settings
+    rightLegRoll = Math.toRadians(rightLegRoll);
+    rightLegYaw = Math.toRadians(rightLegYaw);
+    rightLegPitch = Math.toRadians(rightLegPitch);
+    EulerAngle rightLegEulerAngle = new EulerAngle(rightLegRoll, rightLegYaw, rightLegPitch);
+    armorStand.setRightLegPose(rightLegEulerAngle);
+
+    // Calculate and set left leg settings
+    leftLegRoll = Math.toRadians(leftLegRoll);
+    LeftLegYaw = Math.toRadians(LeftLegYaw);
+    llp_yaw = Math.toRadians(llp_yaw);
+    EulerAngle leftLegEulerAngle = new EulerAngle(leftLegRoll, LeftLegYaw, llp_yaw);
+    armorStand.setLeftLegPose(leftLegEulerAngle);
+
+    // Calculate and set body settings
+    bodyRoll = Math.toRadians(bodyRoll);
+    bodyYaw = Math.toRadians(bodyYaw);
+    bodyPitch = Math.toRadians(bodyPitch);
+    EulerAngle bodyEulerAngle = new EulerAngle(bodyRoll, bodyYaw, bodyPitch);
+    armorStand.setBodyPose(bodyEulerAngle);
+
+    // Calculate and set head settings
+    headRoll = Math.toRadians(headRoll);
+    headYaw = Math.toRadians(headYaw);
+    headPitch = Math.toRadians(headPitch);
+    EulerAngle headEulerAngle = new EulerAngle(headRoll, headYaw, headPitch);
+    armorStand.setHeadPose(headEulerAngle);
+
   }
 
 }

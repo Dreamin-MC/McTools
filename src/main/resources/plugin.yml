@@ -3,15 +3,12 @@ version: '${version}'
 main: fr.dreamin.mctools.McTools
 api-version: '1.20'
 commands:
-  dt:
+  mt:
     description: "McTools"
     aliases: "mctools"
   dv:
     description: "dv"
     aliases: ["dreaminvoice"]
-  dvd:
-    description: "dvd"
-    aliases: ["dreaminvoicedev"]
   as:
     description: "as"
     aliases: [ "as" ]

@@ -1,7 +1,7 @@
 package fr.dreamin.mctools.components.listeners.breakListener;
 
 import fr.dreamin.mctools.McTools;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
@@ -45,7 +45,7 @@ public class BreakListener implements Listener {
         if (lastDamager.containsKey(armorStandId)) {
           Player player = lastDamager.get(armorStandId);
 
-          for (DTPlayer bPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+          for (MTPlayer bPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
 
             for (ArmorStand armorStand1 : bPlayer.getArmorStandManager().getArmorStandSelected()) {
               if (armorStand1.getUniqueId().equals(armorStandId)) {

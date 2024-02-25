@@ -2,7 +2,7 @@ package fr.dreamin.mctools.api.gui;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.math.Math;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,8 +24,8 @@ public class GuiPageManager {
   }
 
   public void addGuiPageForAll(String name, int page) {
-    for (DTPlayer dtPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
-      addGuiPage(dtPlayer.getPlayer(), name, page);
+    for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+      addGuiPage(MTPlayer.getPlayer(), name, page);
     }
   }
 
@@ -36,8 +36,8 @@ public class GuiPageManager {
   }
 
   public void addPageForAll(String name) {
-    for (DTPlayer dtPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
-      addPage(dtPlayer.getPlayer(), name);
+    for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+      addPage(MTPlayer.getPlayer(), name);
     }
   }
 
@@ -48,8 +48,8 @@ public class GuiPageManager {
   }
 
   public void removePageForAll(String name) {
-    for (DTPlayer dtPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
-      removePage(dtPlayer.getPlayer(), name);
+    for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+      removePage(MTPlayer.getPlayer(), name);
     }
   }
 

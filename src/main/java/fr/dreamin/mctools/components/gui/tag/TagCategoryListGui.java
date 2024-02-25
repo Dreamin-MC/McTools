@@ -5,7 +5,7 @@ import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.components.game.manager.BuildManager;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
 
-public class TagCategoryList implements GuiBuilder {
+public class TagCategoryListGui implements GuiBuilder {
 
   @Override
   public String name(Player player) {
@@ -40,14 +40,14 @@ public class TagCategoryList implements GuiBuilder {
   @Override
   public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
 
-    DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
     if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
       int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
 
-      dtPlayer.getBuildManager().setTagCategory(BuildManager.getTagCategorys().get(index));
+      MTPlayer.getBuildManager().setTagCategory(BuildManager.getTagCategorys().get(index));
 
-      McTools.getService(GuiManager.class).open(player, TagList.class);
+      McTools.getService(GuiManager.class).open(player, TagListGui.class);
 
     }
   }

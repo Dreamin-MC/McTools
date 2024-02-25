@@ -4,7 +4,7 @@ import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.defaultGui.voice.ListPlayerGui;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -27,13 +27,13 @@ public class CommandDV implements CommandExecutor, TabCompleter {
     }
 
     Player player = (Player) sender;
-    DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
     if (player.hasPermission(McTools.getCodex().getPermHote())) {
 
       switch (args[0]) {
         case "listplayers":
-          if (dtPlayer.hasPermHot()) McTools.getService(GuiManager.class).open(player, ListPlayerGui.class);
+          if (MTPlayer.hasPermHot()) McTools.getService(GuiManager.class).open(player, ListPlayerGui.class);
           break;
       }
 
@@ -50,10 +50,10 @@ public class CommandDV implements CommandExecutor, TabCompleter {
 
     Player player = (Player) sender;
 
-    DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
     if (args.length == 1)
-      if (dtPlayer.hasPermHot()) return Arrays.asList("listplayers");
+      if (MTPlayer.hasPermHot()) return Arrays.asList("listplayers");
 
     return new ArrayList<>();
   }

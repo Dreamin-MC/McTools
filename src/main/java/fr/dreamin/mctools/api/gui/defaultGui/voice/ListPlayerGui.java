@@ -6,7 +6,7 @@ import fr.dreamin.mctools.api.gui.GuiBuilder;
 import fr.dreamin.mctools.api.gui.GuiItems;
 import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.PaginationManager;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -37,24 +37,24 @@ public class ListPlayerGui implements GuiBuilder {
 
     int i = 0;
 
-    for (DTPlayer dtPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+    for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
 
-      dtPlayer.getVoiceManager().setSelected(false);
+      MTPlayer.getVoiceManager().setSelected(false);
 
-      guiItems.create((dtPlayer.getVoiceManager().getClient().isConnected() ?
-        CustomChatColor.GREEN.getColorWithText(dtPlayer.getPlayer().getName()) :
-        CustomChatColor.RED.getColorWithText(dtPlayer.getPlayer().getName())),
-        dtPlayer.getPlayer().getName(), GuiItems.PlayerHeadMethod.PLAYER_NAME, i,
+      guiItems.create((MTPlayer.getVoiceManager().getClient().isConnected() ?
+        CustomChatColor.GREEN.getColorWithText(MTPlayer.getPlayer().getName()) :
+        CustomChatColor.RED.getColorWithText(MTPlayer.getPlayer().getName())),
+        MTPlayer.getPlayer().getName(), GuiItems.PlayerHeadMethod.PLAYER_NAME, i,
         "§7",
-        "§7Cliquez pour modifier les paramètres de " + dtPlayer.getPlayer().getName(),
+        "§7Cliquez pour modifier les paramètres de " + MTPlayer.getPlayer().getName(),
         "§7",
         "§7Information :",
-        "§7Etat de connection : " + (dtPlayer.getVoiceManager().getClient().isConnected() ?
+        "§7Etat de connection : " + (MTPlayer.getVoiceManager().getClient().isConnected() ?
           CustomChatColor.GREEN.getColorWithText("Oui") :
           CustomChatColor.RED.getColorWithText("Non")),
-        (dtPlayer.getVoiceManager().getClient().isConnected() ? "§7Volume côté client : " + dtPlayer.getVoiceManager().getClient().getVolume() + "%" : ""),
-        (dtPlayer.getVoiceManager().getClient().isConnected() ? "§7Etat du micro : " + (dtPlayer.getVoiceManager().getClient().isMicrophoneActive() ? CustomChatColor.GREEN.getColorWithText("Activé") : CustomChatColor.RED.getColorWithText("Désactivé")) : ""),
-        (dtPlayer.getVoiceManager().isForcedMute() ? "§7Etat du mute forcé : " + CustomChatColor.RED.getColorWithText("Activé") : "§7Etat du mute forcé : " + CustomChatColor.GREEN.getColorWithText("Désactivé"))
+        (MTPlayer.getVoiceManager().getClient().isConnected() ? "§7Volume côté client : " + MTPlayer.getVoiceManager().getClient().getVolume() + "%" : ""),
+        (MTPlayer.getVoiceManager().getClient().isConnected() ? "§7Etat du micro : " + (MTPlayer.getVoiceManager().getClient().isMicrophoneActive() ? CustomChatColor.GREEN.getColorWithText("Activé") : CustomChatColor.RED.getColorWithText("Désactivé")) : ""),
+        (MTPlayer.getVoiceManager().isForcedMute() ? "§7Etat du mute forcé : " + CustomChatColor.RED.getColorWithText("Activé") : "§7Etat du mute forcé : " + CustomChatColor.GREEN.getColorWithText("Désactivé"))
 
       );
 
@@ -70,23 +70,23 @@ public class ListPlayerGui implements GuiBuilder {
   public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
 
     if (current.getType().equals(Material.PLAYER_HEAD))
-      for (DTPlayer dtPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+      for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
 
-        if (current.getItemMeta().getDisplayName().contains(dtPlayer.getPlayer().getName())) {
-          dtPlayer.getVoiceManager().setSelected(true);
+        if (current.getItemMeta().getDisplayName().contains(MTPlayer.getPlayer().getName())) {
+          MTPlayer.getVoiceManager().setSelected(true);
           McTools.getService(GuiManager.class).open(player, ConfigPlayerGui.class);
         }
       }
     else if (current.getItemMeta().getDisplayName().contains("Mute")) {
 
-      for (DTPlayer dtPlayer: McTools.getService(PlayersService.class).getDTPlayers()) {
-        dtPlayer.getVoiceManager().setForcedMutet(true);
+      for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+        MTPlayer.getVoiceManager().setForcedMutet(true);
       }
       McTools.getService(GuiManager.class).open(player, ListPlayerGui.class);
     }
     else {
-      for (DTPlayer dtPlayer: McTools.getService(PlayersService.class).getDTPlayers()) {
-        dtPlayer.getVoiceManager().setForcedMutet(false);
+      for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+        MTPlayer.getVoiceManager().setForcedMutet(false);
       }
       McTools.getService(GuiManager.class).open(player, ListPlayerGui.class);
     }

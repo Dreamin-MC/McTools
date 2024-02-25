@@ -4,7 +4,7 @@ import com.rexcantor64.triton.api.language.Language;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.items.ItemBuilder;
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -39,7 +39,7 @@ public class LanguageConfifGui implements GuiBuilder {
   @Override
   public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
 
-    DTPlayer dtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
     if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
       int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
@@ -47,9 +47,9 @@ public class LanguageConfifGui implements GuiBuilder {
       if (McTools.getInstance().getTritonManager() != null) {
         Language language = McTools.getInstance().getTritonManager().getLanguageManager().getAllLanguages().get(index);
 
-        if (language != null && dtPlayer.getTritonManager().getLanguagePlayer().getLanguage() != language ) {
-          dtPlayer.getTritonManager().getLanguagePlayer().setLang(language);
-          player.sendMessage(McTools.getInstance().getTritonManager().getLanguageManager().getText(dtPlayer.getTritonManager().getLanguagePlayer(), "dreamintools.change.language") + " " + language.getRawDisplayName());
+        if (language != null && MTPlayer.getTritonManager().getLanguagePlayer().getLanguage() != language ) {
+          MTPlayer.getTritonManager().getLanguagePlayer().setLang(language);
+          player.sendMessage(McTools.getInstance().getTritonManager().getLanguageManager().getText(MTPlayer.getTritonManager().getLanguagePlayer(), "dreamintools.change.language") + " " + language.getRawDisplayName());
         }
       }
     }

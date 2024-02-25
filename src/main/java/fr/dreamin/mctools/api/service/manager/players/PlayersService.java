@@ -1,7 +1,9 @@
 package fr.dreamin.mctools.api.service.manager.players;
 
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.Service;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -9,64 +11,66 @@ import java.util.List;
 
 public class PlayersService extends Service {
 
-  private List<DTPlayer> dTPlayers = new ArrayList<>(), spectators = new ArrayList<>();
+  @Getter @Setter
+  private Class<? extends MTPlayer> playerClass = null;
 
-  public List<DTPlayer> getDTPlayers() {
-    return dTPlayers;
+  @Getter @Setter
+  private List<MTPlayer> DTPlayers = new ArrayList<>(), spectators = new ArrayList<>();
+
+  //------ADDER------//
+
+  public void addDTPlayer(MTPlayer dTPlayer) {
+    if (!DTPlayers.contains(dTPlayer)) DTPlayers.add(dTPlayer);
   }
 
-  public void addDTPlayer(DTPlayer dTPlayer) {
-    if (!dTPlayers.contains(dTPlayer)) dTPlayers.add(dTPlayer);
+  public void addSpectators(Player player) {
+    MTPlayer dTPlayer = getPlayer(player);
+
+    if (!spectators.contains(dTPlayer)) spectators.add(dTPlayer);
   }
 
-  public void removeDTPlayer(DTPlayer dTPlayer) {
-    if (dTPlayers.contains(dTPlayer)) dTPlayers.remove(dTPlayer);
+  //------REMOVER------//
+
+  public void removeDTPlayer(MTPlayer dTPlayer) {
+    if (DTPlayers.contains(dTPlayer)) DTPlayers.remove(dTPlayer);
   }
 
-  public DTPlayer getPlayer(Player player) {
-    for (DTPlayer dTPlayer : getDTPlayers()) {
+  public void removeSpectators(Player player) {
+    MTPlayer dTPlayer = getPlayer(player);
+    spectators.remove(dTPlayer);
+  }
+
+  //------METHODS------//
+
+  public MTPlayer getPlayer(Player player) {
+    for (MTPlayer dTPlayer : getDTPlayers()) {
       if (dTPlayer.getPlayer().equals(player)) return dTPlayer;
     }
     return null;
   }
 
   public boolean contains(Player player) {
-    for (DTPlayer dtPlayer : getDTPlayers()) {
-      if (dtPlayer.getPlayer().equals(player)) return true;
+    for (MTPlayer MTPlayer : getDTPlayers()) {
+      if (MTPlayer.getPlayer().equals(player)) return true;
     }
     return false;
-  }
-
-  public List<DTPlayer> getSpectators() {
-    return spectators;
-  }
-
-  public void addSpectators(Player player) {
-    DTPlayer dTPlayer = getPlayer(player);
-
-    if (!spectators.contains(dTPlayer)) spectators.add(dTPlayer);
-  }
-
-  public void removeSpectators(Player player) {
-    DTPlayer dTPlayer = getPlayer(player);
-    spectators.remove(dTPlayer);
   }
 
   public boolean ifPossibleToStart() {
     boolean result = false;
 
-    for (DTPlayer dtPlayer : getDTPlayers()) {
-      if (dtPlayer.getVoiceManager().getClient().isConnected()) result = true;
+    for (MTPlayer MTPlayer : getDTPlayers()) {
+      if (MTPlayer.getVoiceManager().getClient().isConnected()) result = true;
       else result = false;
     }
     return result;
   }
 
-  public List<DTPlayer> playersNotConnected() {
-    List<DTPlayer> dtPlayers = new ArrayList<>();
-    for (DTPlayer dtPlayer : getDTPlayers()) {
-      if (!dtPlayer.getVoiceManager().getClient().isConnected()) dtPlayers.add(dtPlayer);
+  public List<MTPlayer> playersNotConnected() {
+    List<MTPlayer> MTPlayers = new ArrayList<>();
+    for (MTPlayer MTPlayer : getDTPlayers()) {
+      if (!MTPlayer.getVoiceManager().getClient().isConnected()) MTPlayers.add(MTPlayer);
     }
-    return dtPlayers;
+    return MTPlayers;
   }
 }

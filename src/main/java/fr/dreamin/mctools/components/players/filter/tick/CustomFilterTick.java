@@ -1,8 +1,8 @@
 package fr.dreamin.mctools.components.players.filter.tick;
 
-import fr.dreamin.mctools.components.players.DTPlayer;
+import fr.dreamin.mctools.components.players.MTPlayer;
 
 public interface CustomFilterTick {
 
-  void actualTick(DTPlayer dtPlayer, Integer tick);
+  void actualTick(MTPlayer MTPlayer, Integer tick);
 }
