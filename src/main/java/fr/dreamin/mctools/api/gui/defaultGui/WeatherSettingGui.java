@@ -6,6 +6,11 @@ import fr.dreamin.mctools.api.gui.GuiBuilder;
 import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.PaginationManager;
 import fr.dreamin.mctools.api.gui.GuiItems;
+import fr.dreamin.mctools.api.packUtils.ItemsPreset;
+import fr.dreamin.mctools.api.player.manager.MessageManager;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
+import fr.dreamin.mctools.components.lang.LangMsg;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,7 +25,7 @@ public class WeatherSettingGui implements GuiBuilder {
 
   @Override
   public String name(Player player) {
-    return McTools.getCodex().getPrefixGUIName() + CustomChatColor.WHITE.getColorWithText("Weather Settings");
+    return LangMsg.WEATHERSETTINGS_TITLE.getMsg(McTools.getService(PlayersService.class).getPlayer(player).getLang());
   }
 
   @Override
@@ -34,32 +39,33 @@ public class WeatherSettingGui implements GuiBuilder {
   }
 
   @Override
-  public void contents(Player player, Inventory inv, GuiItems items) {
+  public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems items) {
     items.createList("", Material.BLACK_STAINED_GLASS_PANE, new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44});
-    items.create("§7Weather: " + weatherType.getName(), weatherType.getMaterial(), 21);
-    items.create("§7Day: " + dayType.getName(), dayType.getMaterial(), 23);
-    items.create(CustomChatColor.RED.getColorWithText("Back"), Material.ARROW, 31);
+    items.create(LangMsg.WEATHERSETTINGS_WEATHER.getMsg(mtPlayer.getLang(), weatherType.getName(mtPlayer)), weatherType.getMaterial(), 21);
+    items.create(LangMsg.WEATHERSETTINGS_DAY.getMsg(mtPlayer.getLang(), dayType.getName()), dayType.getMaterial(), 23);
+    items.create(ItemsPreset.arrowBackWard.getItem(), 31);
   }
 
   @Override
-  public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
+  public void onClick(MTPlayer mtPlayer, Inventory inv, ItemStack current, int slot, ClickType action, int indexPagination) {
+
     switch (slot) {
       case 21:
         weatherType = weatherType.getNextWeatherType();
         weatherType.setWeather();
-        McTools.getService(GuiManager.class).open(player, WeatherSettingGui.class);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), WeatherSettingGui.class);
         break;
       case 23:
         dayType = dayType.getNextDayType();
         dayType.setTime();
-        McTools.getService(GuiManager.class).open(player, WeatherSettingGui.class);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), WeatherSettingGui.class);
         break;
       case 31:
         if (McTools.getService(GuiManager.class).getGuiConfig().getMainGui() != null)
-          McTools.getService(GuiManager.class).open(player, McTools.getService(GuiManager.class).getGuiConfig().getMainGui().getClass());
+          McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), McTools.getService(GuiManager.class).getGuiConfig().getMainGui().getClass());
         else {
-          player.sendMessage(CustomChatColor.RED.getColorWithText("The main gui is not set"));
-          player.closeInventory();
+          mtPlayer.getPlayer().sendMessage(LangMsg.MAINGUI_NOTSET.getMsg(mtPlayer.getLang()));
+          mtPlayer.getPlayer().closeInventory();
         }
         break;
     }
@@ -67,7 +73,7 @@ public class WeatherSettingGui implements GuiBuilder {
 
   private static enum WeatherType {
 
-    THUNDER(CustomChatColor.YELLOW.getColorWithText("Thunder"), null, Material.BLAZE_ROD) {
+    THUNDER(LangMsg.WEATHERSETTINGS_THUNDER, null, Material.BLAZE_ROD) {
       @Override
       public void setWeather() {
         Bukkit.getWorlds().forEach(world -> {
@@ -77,7 +83,7 @@ public class WeatherSettingGui implements GuiBuilder {
         });
       }
     },
-    RAIN(CustomChatColor.BLUE.getColorWithText("Rain"), THUNDER, Material.WATER_BUCKET) {
+    RAIN(LangMsg.WEATHERSETTINGS_THUNDER, THUNDER, Material.WATER_BUCKET) {
       @Override
       public void setWeather() {
         Bukkit.getWorlds().forEach(world -> {
@@ -89,7 +95,7 @@ public class WeatherSettingGui implements GuiBuilder {
     },
 
 
-    CLEAR(CustomChatColor.GREEN.getColorWithText("Clear"), RAIN, Material.BUCKET) {
+    CLEAR(LangMsg.WEATHERSETTINGS_THUNDER, RAIN, Material.BUCKET) {
       @Override
       public void setWeather() {
         Bukkit.getWorlds().forEach(world -> {
@@ -100,12 +106,12 @@ public class WeatherSettingGui implements GuiBuilder {
       }
     };
 
-    private final String name;
+    private final LangMsg msg;
     private WeatherType nextWeatherType;
     private final Material material;
 
-    WeatherType(String name, WeatherType nextWeatherType, Material material) {
-      this.name = name;
+    WeatherType(LangMsg msg, WeatherType nextWeatherType, Material material) {
+      this.msg = msg;
       this.nextWeatherType = nextWeatherType;
       this.material = material;
     }
@@ -114,8 +120,8 @@ public class WeatherSettingGui implements GuiBuilder {
       THUNDER.setNextWeatherType(CLEAR);
     }
 
-    public String getName() {
-      return name;
+    public String getName(MTPlayer mtPlayer) {
+      return this.msg.getMsg(mtPlayer.getLang());
     }
 
     public Material getMaterial() {

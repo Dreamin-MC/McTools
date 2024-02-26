@@ -36,7 +36,7 @@ public class ArmorStandListLockedGui implements GuiBuilder {
   }
 
   @Override
-  public void contents(Player player, Inventory inv, GuiItems guiItems) {
+  public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems guiItems) {
 
     guiItems.create("§cTout supprimer", Material.BARRIER, 37, "§7Supprimer tous les armor stands de votre liste verouillé.");
     guiItems.create("§cDétruir les armors stands", Material.IRON_AXE, 40, "§7Détruire tous les armor stands de votre liste verouillé.");
@@ -45,55 +45,53 @@ public class ArmorStandListLockedGui implements GuiBuilder {
   }
 
   @Override
-  public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
-
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+  public void onClick(MTPlayer mtPlayer, Inventory inv, ItemStack current, int slot, ClickType action, int indexPagination) {
 
     switch (slot) {
       case 37:
-        MTPlayer.getArmorStandManager().removeAllArmorStandLocked(true);
-        player.closeInventory();
-        player.sendMessage("§cVous avez supprimé tous les armor stands de votre liste verouillé.");
+        mtPlayer.getArmorStandManager().removeAllArmorStandLocked(true);
+        mtPlayer.getPlayer().closeInventory();
+        mtPlayer.getPlayer().sendMessage("§cVous avez supprimé tous les armor stands de votre liste verouillé.");
         break;
       case 43:
 
-        MTPlayer.getArmorStandManager().addAllArmorStandSelected(MTPlayer.getArmorStandManager().getArmorStandLocked());
-        MTPlayer.getArmorStandManager().removeAllArmorStandLocked(false);
+        mtPlayer.getArmorStandManager().addAllArmorStandSelected(mtPlayer.getArmorStandManager().getArmorStandLocked());
+        mtPlayer.getArmorStandManager().removeAllArmorStandLocked(false);
 
-        player.closeInventory();
-        player.sendMessage("§aVous avez ajouter tous les armorstand verouillé.");
+        mtPlayer.getPlayer().closeInventory();
+        mtPlayer.getPlayer().sendMessage("§aVous avez ajouter tous les armorstand verouillé.");
         break;
       case 40:
 
-        MTPlayer.getArmorStandManager().dispawnAllArmorStandLocked();
+        mtPlayer.getArmorStandManager().dispawnAllArmorStandLocked();
 
-        player.closeInventory();
-        player.sendMessage("§aVous avez détruit tous les armorstand sélectioné.");
+        mtPlayer.getPlayer().closeInventory();
+        mtPlayer.getPlayer().sendMessage("§aVous avez détruit tous les armorstand sélectioné.");
         break;
       default:
-        if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
-          int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
+        if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(mtPlayer.getPlayer(), inv), slot)) {
+          int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(mtPlayer.getPlayer(), getPaginationManager(mtPlayer.getPlayer(), inv), slot, getClass());
 
-          ArmorStand armorStand = MTPlayer.getArmorStandManager().getArmorStandLocked().get(index);
+          ArmorStand armorStand = mtPlayer.getArmorStandManager().getArmorStandLocked().get(index);
 
           if (action.equals(ClickType.LEFT)) {
-            MTPlayer.getArmorStandManager().removeArmorStandLocked(armorStand, false);
-            MTPlayer.getArmorStandManager().addArmorStandSelected(armorStand);
+            mtPlayer.getArmorStandManager().removeArmorStandLocked(armorStand, false);
+            mtPlayer.getArmorStandManager().addArmorStandSelected(armorStand);
 
-            McTools.getService(GuiManager.class).open(player, ArmorStandListLockedGui.class);
-            player.sendMessage("§aVous avez ajouté un armor stand à votre sélection.");
+            McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandListLockedGui.class);
+            mtPlayer.getPlayer().sendMessage("§aVous avez ajouté un armor stand à votre sélection.");
           }
           else if (action.equals(ClickType.RIGHT)) {
 
-            MTPlayer.getArmorStandManager().removeArmorStandLocked(armorStand, true);
+            mtPlayer.getArmorStandManager().removeArmorStandLocked(armorStand, true);
 
-            McTools.getService(GuiManager.class).open(player, ArmorStandListLockedGui.class);
-            player.sendMessage("§cVous avez retiré un armor stand à votre list locked.");
+            McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandListLockedGui.class);
+            mtPlayer.getPlayer().sendMessage("§cVous avez retiré un armor stand à votre list locked.");
           }
-          else if (action.equals(ClickType.SHIFT_LEFT) || action.equals(ClickType.SHIFT_RIGHT)) player.teleport(armorStand.getLocation());
+          else if (action.equals(ClickType.SHIFT_LEFT) || action.equals(ClickType.SHIFT_RIGHT)) mtPlayer.getPlayer().teleport(armorStand.getLocation());
           else if (action.equals(ClickType.MIDDLE)) {
-            if (!armorStand.getHelmet().getType().equals(Material.AIR)) player.getInventory().addItem(armorStand.getHelmet());
-            else player.sendMessage("§cErreur : §7Cet armor stand n'a pas d'item en tête.");
+            if (!armorStand.getHelmet().getType().equals(Material.AIR)) mtPlayer.getPlayer().getInventory().addItem(armorStand.getHelmet());
+            else mtPlayer.getPlayer().sendMessage("§cErreur : §7Cet armor stand n'a pas d'item en tête.");
           }
         }
         break;

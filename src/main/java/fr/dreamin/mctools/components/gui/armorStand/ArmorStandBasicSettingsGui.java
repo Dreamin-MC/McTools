@@ -33,8 +33,7 @@ public class ArmorStandBasicSettingsGui implements GuiBuilder {
   }
 
   @Override
-  public void contents(Player player, Inventory inv, GuiItems guiItems) {
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+  public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems guiItems) {
 
     guiItems.create("Bras", Material.IRON_SWORD, 0);
     guiItems.create("Base Armor stand visible", Material.STONE_SLAB, 1, "Changer entre visible et invisible");
@@ -45,7 +44,7 @@ public class ArmorStandBasicSettingsGui implements GuiBuilder {
     guiItems.create("Taille", Material.OAK_PLANKS, 6, "Mettre une taille normale ou petite");
     guiItems.create("Invulnerable", Material.OBSIDIAN, 7, "Invicible ou non");
     guiItems.create("Glowing", Material.GLOWSTONE_DUST, 8, "Glowing ou non");
-    guiItems.create((MTPlayer.getArmorStandManager().isInvisibleGui() ? "Passage Visible" : "Passage Invisible"), Material.NAME_TAG, (MTPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 22);
+    guiItems.create((mtPlayer.getArmorStandManager().isInvisibleGui() ? "Passage Visible" : "Passage Invisible"), Material.NAME_TAG, (mtPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 22);
 
     guiItems.create("Retour en arrière", Material.NAME_TAG, 3, 18);
     guiItems.create("Quitter", Material.NAME_TAG, 4, 26);
@@ -53,65 +52,63 @@ public class ArmorStandBasicSettingsGui implements GuiBuilder {
   }
 
   @Override
-  public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
-
+  public void onClick(MTPlayer mtPlayer, Inventory inv, ItemStack current, int slot, ClickType action, int indexPagination) {
 
     switch (slot) {
       case 0:
-        MTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
           armorStand.setArms(!armorStand.hasArms());
         });
         break;
       case 1:
-        MTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
           armorStand.setBasePlate(true);
         });
         break;
       case 2:
-        MTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
           armorStand.setBasePlate(false);
         });
         break;
       case 3:
-        MTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
           armorStand.setGravity(false);
         });
         break;
       case 4:
-        MTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
           armorStand.setGravity(true);
         });
         break;
       case 5:
-        MTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
           armorStand.setVisible(false);
         });
         break;
       case 6:
-        MTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
           armorStand.setSmall(false);
         });
         break;
       case 7:
-        MTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
           armorStand.setInvulnerable(true);
         });
         break;
       case 8:
-        MTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
           armorStand.setInvulnerable(false);
         });
         break;
       case 22:
-        MTPlayer.getArmorStandManager().setInvisibleGui(!MTPlayer.getArmorStandManager().isInvisibleGui());
+        mtPlayer.getArmorStandManager().setInvisibleGui(!mtPlayer.getArmorStandManager().isInvisibleGui());
         break;
 
       case 18:
-        McTools.getService(GuiManager.class).open(player, ArmorStandMenuGui.class);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMenuGui.class);
         break;
       case 26:
-        player.closeInventory();
+        mtPlayer.getPlayer().closeInventory();
         break;
 
     }

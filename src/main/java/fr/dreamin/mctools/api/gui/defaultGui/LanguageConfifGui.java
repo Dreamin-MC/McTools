@@ -32,25 +32,19 @@ public class LanguageConfifGui implements GuiBuilder {
   }
 
   @Override
-  public void contents(Player player, Inventory inv, GuiItems items) {
+  public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems items) {
 
   }
 
   @Override
-  public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
+  public void onClick(MTPlayer mtPlayer, Inventory inv, ItemStack current, int slot, ClickType action, int indexPagination) {
 
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    if (McTools.getInstance().getTritonManager() != null) {
+      Language language = McTools.getInstance().getTritonManager().getLanguageManager().getAllLanguages().get(indexPagination);
 
-    if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
-      int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
-
-      if (McTools.getInstance().getTritonManager() != null) {
-        Language language = McTools.getInstance().getTritonManager().getLanguageManager().getAllLanguages().get(index);
-
-        if (language != null && MTPlayer.getTritonManager().getLanguagePlayer().getLanguage() != language ) {
-          MTPlayer.getTritonManager().getLanguagePlayer().setLang(language);
-          player.sendMessage(McTools.getInstance().getTritonManager().getLanguageManager().getText(MTPlayer.getTritonManager().getLanguagePlayer(), "dreamintools.change.language") + " " + language.getRawDisplayName());
-        }
+      if (language != null && mtPlayer.getTritonManager().getLanguagePlayer().getLanguage() != language ) {
+        mtPlayer.getTritonManager().getLanguagePlayer().setLang(language);
+        mtPlayer.getPlayer().sendMessage(McTools.getInstance().getTritonManager().getLanguageManager().getText(mtPlayer.getTritonManager().getLanguagePlayer(), "dreamintools.change.language") + " " + language.getRawDisplayName());
       }
     }
   }

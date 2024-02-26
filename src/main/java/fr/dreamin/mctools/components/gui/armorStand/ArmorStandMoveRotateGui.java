@@ -37,19 +37,17 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
   }
 
   @Override
-  public void contents(Player player, Inventory inv, GuiItems guiItems) {
+  public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems guiItems) {
 
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    guiItems.create("Rotation (90) " + (mtPlayer.getArmorStandManager().getArmorStandRotation() == 90f ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 90f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 0, "§7Rotation de 90°.");
+    guiItems.create("Rotation (45) " + (mtPlayer.getArmorStandManager().getArmorStandRotation() == 45f ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 45f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 9, "§7Rotation de 45°.");
+    guiItems.create("Rotation (22.5) " + (mtPlayer.getArmorStandManager().getArmorStandRotation() == 22.5f ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 22.5f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 18, "§7Rotation de 22.5°.");
+    guiItems.create("Rotation (0.5) " + (mtPlayer.getArmorStandManager().getArmorStandRotation() == 0.5f ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 0.5f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 27, "§7Rotation de 0.5°.");
 
-    guiItems.create("Rotation (90) " + (MTPlayer.getArmorStandManager().getArmorStandRotation() == 90f ? "(Active)" : ""), (MTPlayer.getArmorStandManager().getArmorStandRotation() == 90f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 0, "§7Rotation de 90°.");
-    guiItems.create("Rotation (45) " + (MTPlayer.getArmorStandManager().getArmorStandRotation() == 45f ? "(Active)" : ""), (MTPlayer.getArmorStandManager().getArmorStandRotation() == 45f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 9, "§7Rotation de 45°.");
-    guiItems.create("Rotation (22.5) " + (MTPlayer.getArmorStandManager().getArmorStandRotation() == 22.5f ? "(Active)" : ""), (MTPlayer.getArmorStandManager().getArmorStandRotation() == 22.5f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 18, "§7Rotation de 22.5°.");
-    guiItems.create("Rotation (0.5) " + (MTPlayer.getArmorStandManager().getArmorStandRotation() == 0.5f ? "(Active)" : ""), (MTPlayer.getArmorStandManager().getArmorStandRotation() == 0.5f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 27, "§7Rotation de 0.5°.");
-
-    guiItems.create("Distance déplacement (1) " + (MTPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 1 ? "(Active)" : ""), (MTPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 1 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 1, "§7Distance de déplacement de 1.");
-    guiItems.create("Distance déplacement (0.1) " + (MTPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.1 ? "(Active)" : ""), (MTPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.1 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 10, "§7Distance de déplacement de 0.1.");
-    guiItems.create("Distance déplacement (0.05) " + (MTPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.05 ? "(Active)" : ""), (MTPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.05 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 19, "§7Distance de déplacement de 0.05.");
-    guiItems.create("Distance déplacement (0.01) " + (MTPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.01 ? "(Active)" : ""), (MTPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.01 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 28, "§7Distance de déplacement de 0.01.");
+    guiItems.create("Distance déplacement (1) " + (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 1 ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 1 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 1, "§7Distance de déplacement de 1.");
+    guiItems.create("Distance déplacement (0.1) " + (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.1 ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.1 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 10, "§7Distance de déplacement de 0.1.");
+    guiItems.create("Distance déplacement (0.05) " + (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.05 ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.05 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 19, "§7Distance de déplacement de 0.05.");
+    guiItems.create("Distance déplacement (0.01) " + (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.01 ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.01 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 28, "§7Distance de déplacement de 0.01.");
 
     guiItems.create(new ItemBuilder(ItemsPreset.arrowForWard.getItem()).setName("Avant").toItemStack(), 4, "§7Déplacer les armor stands vers l'avant.");
     guiItems.create(new ItemBuilder(ItemsPreset.arrowLeft.getItem()).setName("Gauche").toItemStack(), 12, "§7Déplacer les armor stands vers la gauche.");
@@ -59,7 +57,7 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
     guiItems.create(new ItemBuilder(ItemsPreset.arrowUp.getItem()).setName("En haut").toItemStack(), 7, "§7Déplacer les armor stands vers le haut.");
     guiItems.create(new ItemBuilder(ItemsPreset.arrowDown.getItem()).setName("En bas").toItemStack(), 25, "§7Déplacer les armor stands vers le bas.");
 
-    guiItems.create((MTPlayer.getArmorStandManager().isInvisibleGui() ? "Passage Visible" : "Passage Invisible"), Material.NAME_TAG, (MTPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 40, "§7Rendre le menu visible ou invisible.");
+    guiItems.create((mtPlayer.getArmorStandManager().isInvisibleGui() ? "Passage Visible" : "Passage Invisible"), Material.NAME_TAG, (mtPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 40, "§7Rendre le menu visible ou invisible.");
 
     guiItems.create(new ItemBuilder(ItemsPreset.arrowPrevious.getItem()).setName("Rotation gauche").toItemStack(), 41, "§7Rotation de 0.5° vers la gauche.");
     guiItems.create(new ItemBuilder(ItemsPreset.arrowNext.getItem()).setName("Rotation droite").toItemStack(), 42, "§7Rotation de 0.5° vers la droite.");
@@ -70,48 +68,46 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
   }
 
   @Override
-  public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
-
-    MTPlayer mTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+  public void onClick(MTPlayer mtPlayer, Inventory inv, ItemStack current, int slot, ClickType action, int indexPagination) {
 
     switch (slot) {
       case 0:
-        mTPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.1);
-        McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotateGui.class);
+        mtPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.1);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
       case 9:
-        mTPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.01);
-        McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotateGui.class);
+        mtPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.01);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
       case 18:
-        mTPlayer.getArmorStandManager().setDistanceMoveArmorStand(1);
-        McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotateGui.class);
+        mtPlayer.getArmorStandManager().setDistanceMoveArmorStand(1);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
       case 27:
-        mTPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.05);
-        McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotateGui.class);
+        mtPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.05);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
 
       case 1:
-        mTPlayer.getArmorStandManager().setArmorStandRotation((float)90);
-        McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotateGui.class);
+        mtPlayer.getArmorStandManager().setArmorStandRotation((float)90);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
       case 10:
-        mTPlayer.getArmorStandManager().setArmorStandRotation((float)45);
-        McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotateGui.class);
+        mtPlayer.getArmorStandManager().setArmorStandRotation((float)45);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
       case 19:
-        mTPlayer.getArmorStandManager().setArmorStandRotation((float)22.5);
-        McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotateGui.class);
+        mtPlayer.getArmorStandManager().setArmorStandRotation((float)22.5);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
       case 28:
-        mTPlayer.getArmorStandManager().setArmorStandRotation((float)0.5);
-        McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotateGui.class);
+        mtPlayer.getArmorStandManager().setArmorStandRotation((float)0.5);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
 
       case 4:
-        mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
-          Location location = getLocationAv(armorStand, roundYawToCardinalDirection(player.getLocation().getYaw()), mTPlayer);
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+          Location location = getLocationAv(armorStand, roundYawToCardinalDirection(mtPlayer.getPlayer().getLocation().getYaw()), mtPlayer);
 
           if (armorStand.getPassenger() != null && armorStand.getPassenger() instanceof Shulker) {
             Shulker shulker = (Shulker) armorStand.getPassenger();
@@ -123,8 +119,8 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
         });
         return;
       case 12:
-        mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
-          Location location = getLocationG(armorStand, roundYawToCardinalDirection(player.getLocation().getYaw()), mTPlayer);
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+          Location location = getLocationG(armorStand, roundYawToCardinalDirection(mtPlayer.getPlayer().getLocation().getYaw()), mtPlayer);
 
           if (armorStand.getPassenger() != null && armorStand.getPassenger() instanceof Shulker) {
             Shulker shulker = (Shulker) armorStand.getPassenger();
@@ -136,8 +132,8 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
         });
         return;
       case 14:
-        mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
-          Location location = getLocationD(armorStand, roundYawToCardinalDirection(player.getLocation().getYaw()), mTPlayer);
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+          Location location = getLocationD(armorStand, roundYawToCardinalDirection(mtPlayer.getPlayer().getLocation().getYaw()), mtPlayer);
 
           if (armorStand.getPassenger() != null && armorStand.getPassenger() instanceof Shulker) {
             Shulker shulker = (Shulker) armorStand.getPassenger();
@@ -149,8 +145,8 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
         });
         return;
       case 22:
-        mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
-          Location location = getLocationAr(armorStand, roundYawToCardinalDirection(player.getLocation().getYaw()), mTPlayer);
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+          Location location = getLocationAr(armorStand, roundYawToCardinalDirection(mtPlayer.getPlayer().getLocation().getYaw()), mtPlayer);
 
           if (armorStand.getPassenger() != null && armorStand.getPassenger() instanceof Shulker) {
             Shulker shulker = (Shulker) armorStand.getPassenger();
@@ -163,10 +159,10 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
         return;
 
       case 7:
-        mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
           Location location = new Location(
             armorStand.getWorld(), armorStand.getLocation().getX(),
-            armorStand.getLocation().getY() + mTPlayer.getArmorStandManager().getDistanceMoveArmorStand(), armorStand.getLocation().getZ()
+            armorStand.getLocation().getY() + mtPlayer.getArmorStandManager().getDistanceMoveArmorStand(), armorStand.getLocation().getZ()
           );
 
           Float armorStandYaw = armorStand.getLocation().getYaw();
@@ -184,10 +180,10 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
         });
         return;
       case 25:
-        mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
           Location location = new Location(
             armorStand.getWorld(), armorStand.getLocation().getX(),
-            armorStand.getLocation().getY() - mTPlayer.getArmorStandManager().getDistanceMoveArmorStand(), armorStand.getLocation().getZ()
+            armorStand.getLocation().getY() - mtPlayer.getArmorStandManager().getDistanceMoveArmorStand(), armorStand.getLocation().getZ()
           );
 
           Float armorStandYaw = armorStand.getLocation().getYaw();
@@ -205,12 +201,12 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
         return;
 
       case 40:
-        mTPlayer.getArmorStandManager().setInvisibleGui(!mTPlayer.getArmorStandManager().isInvisibleGui());
-        McTools.getService(GuiManager.class).open(player, ArmorStandMoveRotateGui.class);
+        mtPlayer.getArmorStandManager().setInvisibleGui(!mtPlayer.getArmorStandManager().isInvisibleGui());
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
 
       case 41:
-        mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
           Location location = new Location(
             armorStand.getWorld(), armorStand.getLocation().getX(),
             armorStand.getLocation().getY(), armorStand.getLocation().getZ()
@@ -218,7 +214,7 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
 
           Float armorStandYaw = armorStand.getLocation().getYaw();
 
-          location.setYaw(armorStandYaw + mTPlayer.getArmorStandManager().getArmorStandRotation());
+          location.setYaw(armorStandYaw + mtPlayer.getArmorStandManager().getArmorStandRotation());
 
           if (armorStand.getPassenger() != null && armorStand.getPassenger() instanceof Shulker) {
             Shulker shulker = (Shulker) armorStand.getPassenger();
@@ -230,7 +226,7 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
         });
         return;
       case 42:
-        mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+        mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
           Location location = new Location(
             armorStand.getWorld(), armorStand.getLocation().getX(),
             armorStand.getLocation().getY(), armorStand.getLocation().getZ()
@@ -238,7 +234,7 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
 
           Float armorStandYaw = armorStand.getLocation().getYaw();
 
-          location.setYaw(armorStandYaw - mTPlayer.getArmorStandManager().getArmorStandRotation());
+          location.setYaw(armorStandYaw - mtPlayer.getArmorStandManager().getArmorStandRotation());
 
           if (armorStand.getPassenger() != null && armorStand.getPassenger() instanceof Shulker) {
             Shulker shulker = (Shulker) armorStand.getPassenger();
@@ -251,10 +247,10 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
         return;
 
       case 36:
-        McTools.getService(GuiManager.class).open(player, ArmorStandMenuGui.class);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMenuGui.class);
         return;
       case 44:
-        player.closeInventory();
+        mtPlayer.getPlayer().closeInventory();
         break;
 
     }

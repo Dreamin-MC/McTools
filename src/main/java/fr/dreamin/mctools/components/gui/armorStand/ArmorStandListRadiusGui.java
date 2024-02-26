@@ -37,9 +37,7 @@ public class ArmorStandListRadiusGui implements GuiBuilder {
   }
 
   @Override
-  public void contents(Player player, Inventory inv, GuiItems guiItems) {
-
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+  public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems guiItems) {
 
     guiItems.create("§cTout supprimer", Material.BARRIER, 37, "§7Supprimer tous les armor stands de votre liste radius.");
     guiItems.create("§cDétruir les armors stands", Material.IRON_AXE, 40, "§7Détruire tous les armor stands de votre liste radius.");
@@ -48,73 +46,71 @@ public class ArmorStandListRadiusGui implements GuiBuilder {
   }
 
   @Override
-  public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
-
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+  public void onClick(MTPlayer mtPlayer, Inventory inv, ItemStack current, int slot, ClickType action, int indexPagination) {
 
     switch (slot) {
       case 37:
-        MTPlayer.getArmorStandManager().removeAllArmorStandRadius(true);
-        player.closeInventory();
-        player.sendMessage("§cVous avez supprimé tous les armor stands de votre liste radius.");
+        mtPlayer.getArmorStandManager().removeAllArmorStandRadius(true);
+        mtPlayer.getPlayer().closeInventory();
+        mtPlayer.getPlayer().sendMessage("§cVous avez supprimé tous les armor stands de votre liste radius.");
         break;
       case 40:
-        MTPlayer.getArmorStandManager().dispawnAllArmorStandRadius();
-        player.closeInventory();
-        player.sendMessage("§aVous avez détruit tous les armorstand sélectioné.");
+        mtPlayer.getArmorStandManager().dispawnAllArmorStandRadius();
+        mtPlayer.getPlayer().closeInventory();
+        mtPlayer.getPlayer().sendMessage("§aVous avez détruit tous les armorstand sélectioné.");
         break;
       case 43:
-        MTPlayer.getArmorStandManager().addAllArmorStandSelected(MTPlayer.getArmorStandManager().getArmorStandRadius());
-        MTPlayer.getArmorStandManager().removeAllArmorStandRadius(false);
+        mtPlayer.getArmorStandManager().addAllArmorStandSelected(mtPlayer.getArmorStandManager().getArmorStandRadius());
+        mtPlayer.getArmorStandManager().removeAllArmorStandRadius(false);
 
-        player.closeInventory();
-        player.sendMessage("§aVous avez ajouter tous les armorstand radius.");
+        mtPlayer.getPlayer().closeInventory();
+        mtPlayer.getPlayer().sendMessage("§aVous avez ajouter tous les armorstand radius.");
         break;
       default:
-        if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
-          int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
+        if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(mtPlayer.getPlayer(), inv), slot)) {
+          int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(mtPlayer.getPlayer(), getPaginationManager(mtPlayer.getPlayer(), inv), slot, getClass());
 
-          ArmorStand armorStand = MTPlayer.getArmorStandManager().getArmorStandRadius().get(index);
+          ArmorStand armorStand = mtPlayer.getArmorStandManager().getArmorStandRadius().get(index);
           if (action.equals(ClickType.LEFT)) {
-            MTPlayer.getArmorStandManager().removeArmorStandRadius(armorStand, false);
-            MTPlayer.getArmorStandManager().addArmorStandSelected(armorStand);
+            mtPlayer.getArmorStandManager().removeArmorStandRadius(armorStand, false);
+            mtPlayer.getArmorStandManager().addArmorStandSelected(armorStand);
 
-            McTools.getService(GuiManager.class).open(player, ArmorStandListRadiusGui.class);
-            player.sendMessage("§aVous avez ajouté un armor stand à votre sélection.");
+            McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandListRadiusGui.class);
+            mtPlayer.getPlayer().sendMessage("§aVous avez ajouté un armor stand à votre sélection.");
           }
           else if (action.equals(ClickType.RIGHT)) {
-            MTPlayer.getArmorStandManager().removeArmorStandRadius(armorStand, true);
+            mtPlayer.getArmorStandManager().removeArmorStandRadius(armorStand, true);
 
-            McTools.getService(GuiManager.class).open(player, ArmorStandListRadiusGui.class);
-            player.sendMessage("§cVous avez retiré un armor stand à votre sélection.");
+            McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandListRadiusGui.class);
+            mtPlayer.getPlayer().sendMessage("§cVous avez retiré un armor stand à votre sélection.");
           }
           else if (action.equals(ClickType.SHIFT_LEFT)) {
-            player.teleport(armorStand.getLocation());
-            player.sendMessage("§aVous avez été téléporté à l'armor stand.");
+            mtPlayer.getPlayer().teleport(armorStand.getLocation());
+            mtPlayer.getPlayer().sendMessage("§aVous avez été téléporté à l'armor stand.");
           }
           else if (action.equals(ClickType.SHIFT_RIGHT)) {
             armorStand.setGlowing(!armorStand.isGlowing());
 
-            if (McTools.getService(GlowingEntities.class).isGlowing(MTPlayer.getPlayer(), armorStand)) {
+            if (McTools.getService(GlowingEntities.class).isGlowing(mtPlayer.getPlayer(), armorStand)) {
               try {
-                McTools.getService(GlowingEntities.class).setGlowing(armorStand, MTPlayer.getPlayer(), ChatColor.BLUE);
+                McTools.getService(GlowingEntities.class).setGlowing(armorStand, mtPlayer.getPlayer(), ChatColor.BLUE);
               } catch (ReflectiveOperationException e) {
                 throw new RuntimeException(e);
               }
             }
             else {
               try {
-                McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, MTPlayer.getPlayer());
+                McTools.getService(GlowingEntities.class).unsetGlowing(armorStand, mtPlayer.getPlayer());
               } catch (ReflectiveOperationException e) {
                 throw new RuntimeException(e);
               }
             }
 
-            player.sendMessage("§aVous avez " + (armorStand.isGlowing() ? "mis" : "retiré") + " le glowing de l'armor stand.");
+            mtPlayer.getPlayer().sendMessage("§aVous avez " + (armorStand.isGlowing() ? "mis" : "retiré") + " le glowing de l'armor stand.");
           }
           else if (action.equals(ClickType.MIDDLE)) {
-            if (!armorStand.getHelmet().getType().equals(Material.AIR)) player.getInventory().addItem(armorStand.getHelmet());
-            else player.sendMessage("§cErreur : §7Cet armor stand n'a pas d'item en tête.");
+            if (!armorStand.getHelmet().getType().equals(Material.AIR)) mtPlayer.getPlayer().getInventory().addItem(armorStand.getHelmet());
+            else mtPlayer.getPlayer().sendMessage("§cErreur : §7Cet armor stand n'a pas d'item en tête.");
           }
         }
         break;

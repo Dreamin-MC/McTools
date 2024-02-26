@@ -4,6 +4,9 @@ import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.items.ItemBuilder;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
+import fr.dreamin.mctools.components.lang.LangMsg;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -28,7 +31,7 @@ public class ListMapGui implements GuiBuilder {
 
   @Override
   public String name(Player player) {
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_36.getName()) : "List Maps";
+    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_36.getName()) : LangMsg.LISTMAP_TITLE.getMsg(McTools.getService(PlayersService.class).getPlayer(player).getLang());
   }
 
   @Override
@@ -42,15 +45,12 @@ public class ListMapGui implements GuiBuilder {
   }
 
   @Override
-  public void contents(Player player, Inventory inv, GuiItems items) {
+  public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems items) {
 
   }
 
   @Override
-  public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
-    if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
-      int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
-      player.teleport(Bukkit.getWorlds().get(index).getSpawnLocation());
-    }
+  public void onClick(MTPlayer mtPlayer, Inventory inv, ItemStack current, int slot, ClickType action, int indexPagination) {
+    if (Bukkit.getWorlds().get(indexPagination) != null) mtPlayer.getPlayer().teleport(Bukkit.getWorlds().get(indexPagination).getSpawnLocation());
   }
 }

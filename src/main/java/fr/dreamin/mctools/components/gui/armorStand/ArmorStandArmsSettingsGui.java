@@ -32,21 +32,19 @@ public class ArmorStandArmsSettingsGui implements GuiBuilder {
   }
 
   @Override
-  public void contents(Player player, Inventory inv, GuiItems guiItems) {
+  public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems guiItems) {
 
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    guiItems.create("Rotation (90) " + (mtPlayer.getArmorStandManager().getArmRotate() == 90 ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getArmRotate() == 90 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 0, "§7Rotation de 90°.");
+    guiItems.create("Rotation (45) " + (mtPlayer.getArmorStandManager().getArmRotate() == 45 ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getArmRotate() == 45 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 9, "§7Rotation de 45°.");
+    guiItems.create("Rotation (22.5) " + (mtPlayer.getArmorStandManager().getArmRotate() == 22.5 ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getArmRotate() == 22.5 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 18, "§7Rotation de 22.5°.");
+    guiItems.create("Rotation (0.5) " + (mtPlayer.getArmorStandManager().getArmRotate() == 0.5 ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getArmRotate() == 0.5 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 27, "§7Rotation de 0.5°.");
 
-    guiItems.create("Rotation (90) " + (MTPlayer.getArmorStandManager().getArmRotate() == 90 ? "(Active)" : ""), (MTPlayer.getArmorStandManager().getArmRotate() == 90 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 0, "§7Rotation de 90°.");
-    guiItems.create("Rotation (45) " + (MTPlayer.getArmorStandManager().getArmRotate() == 45 ? "(Active)" : ""), (MTPlayer.getArmorStandManager().getArmRotate() == 45 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 9, "§7Rotation de 45°.");
-    guiItems.create("Rotation (22.5) " + (MTPlayer.getArmorStandManager().getArmRotate() == 22.5 ? "(Active)" : ""), (MTPlayer.getArmorStandManager().getArmRotate() == 22.5 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 18, "§7Rotation de 22.5°.");
-    guiItems.create("Rotation (0.5) " + (MTPlayer.getArmorStandManager().getArmRotate() == 0.5 ? "(Active)" : ""), (MTPlayer.getArmorStandManager().getArmRotate() == 0.5 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 27, "§7Rotation de 0.5°.");
+    guiItems.create("Bras : " + (mtPlayer.getArmorStandManager().isLeftArmPos() ? "Gauche" : "Droit"), Material.IRON_SWORD,4, "§7Déplacer les armor stands vers la gauche.");
+    guiItems.create("Move x: " + mtPlayer.getArmorStandManager().getDistanceMoveArmorStand(), Material.GLOWSTONE_DUST,12);
+    guiItems.create("Move y: " + mtPlayer.getArmorStandManager().getDistanceMoveArmorStand(), Material.GLOWSTONE_DUST,13);
+    guiItems.create("Move z: " + mtPlayer.getArmorStandManager().getDistanceMoveArmorStand(), Material.GLOWSTONE_DUST,14);
 
-    guiItems.create("Bras : " + (MTPlayer.getArmorStandManager().isLeftArmPos() ? "Gauche" : "Droit"), Material.IRON_SWORD,4, "§7Déplacer les armor stands vers la gauche.");
-    guiItems.create("Move x: " + MTPlayer.getArmorStandManager().getDistanceMoveArmorStand(), Material.GLOWSTONE_DUST,12);
-    guiItems.create("Move y: " + MTPlayer.getArmorStandManager().getDistanceMoveArmorStand(), Material.GLOWSTONE_DUST,13);
-    guiItems.create("Move z: " + MTPlayer.getArmorStandManager().getDistanceMoveArmorStand(), Material.GLOWSTONE_DUST,14);
-
-    guiItems.create((MTPlayer.getArmorStandManager().isInvisibleGui() ? "Passage Visible" : "Passage Invisible"), Material.NAME_TAG, (MTPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 40, "§7Rendre le menu visible ou invisible.");
+    guiItems.create((mtPlayer.getArmorStandManager().isInvisibleGui() ? "Passage Visible" : "Passage Invisible"), Material.NAME_TAG, (mtPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 40, "§7Rendre le menu visible ou invisible.");
 
     guiItems.create("Retourner au menu", Material.NAME_TAG, 3, 36, "§7Retourner au menu des armor stands.");
     guiItems.create("Quitter", Material.NAME_TAG, 4, 44, "§7Fermer le menu.");
@@ -54,30 +52,30 @@ public class ArmorStandArmsSettingsGui implements GuiBuilder {
   }
 
   @Override
-  public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
-    MTPlayer mTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+  public void onClick(MTPlayer mtPlayer, Inventory inv, ItemStack current, int slot, ClickType action, int indexPagination) {
+    MTPlayer mTPlayer = McTools.getService(PlayersService.class).getPlayer(mtPlayer.getPlayer());
 
     switch (slot) {
       case 0:
         mTPlayer.getArmorStandManager().setArmRotate(90);
-        McTools.getService(GuiManager.class).open(player, ArmorStandArmsSettingsGui.class);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandArmsSettingsGui.class);
         return;
       case 9:
         mTPlayer.getArmorStandManager().setArmRotate(45);
-        McTools.getService(GuiManager.class).open(player, ArmorStandArmsSettingsGui.class);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandArmsSettingsGui.class);
         return;
       case 18:
         mTPlayer.getArmorStandManager().setArmRotate(22.5);
-        McTools.getService(GuiManager.class).open(player, ArmorStandArmsSettingsGui.class);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandArmsSettingsGui.class);
         return;
       case 27:
         mTPlayer.getArmorStandManager().setArmRotate(0.5);
-        McTools.getService(GuiManager.class).open(player, ArmorStandArmsSettingsGui.class);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandArmsSettingsGui.class);
         return;
 
       case 4:
         mTPlayer.getArmorStandManager().setLeftArmPos(!mTPlayer.getArmorStandManager().isLeftArmPos());
-        McTools.getService(GuiManager.class).open(player, ArmorStandArmsSettingsGui.class);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandArmsSettingsGui.class);
         return;
       case 12:
         mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
@@ -112,14 +110,14 @@ public class ArmorStandArmsSettingsGui implements GuiBuilder {
 
       case 40:
         mTPlayer.getArmorStandManager().setInvisibleGui(!mTPlayer.getArmorStandManager().isInvisibleGui());
-        McTools.getService(GuiManager.class).open(player, ArmorStandArmsSettingsGui.class);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandArmsSettingsGui.class);
         return;
 
       case 36:
-        McTools.getService(GuiManager.class).open(player, ArmorStandMenuGui.class);
+        McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMenuGui.class);
         return;
       case 44:
-        player.closeInventory();
+        mtPlayer.getPlayer().closeInventory();
         break;
     }
   }

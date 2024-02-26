@@ -1,13 +1,120 @@
 error:
   console:
-    fr_FR : "%BROADCAST%[color]RED[color] Vous ne pouvez pas exécuter cette commande dans la console :("
-    en_US : "%BROADCAST%[color]RED[color]You cannot execute this command in the console :("
+    lang:
+      fr_FR : "%BROADCAST%[color]RED[color] Vous ne pouvez pas exécuter cette commande dans la console :("
+      en_US : "%BROADCAST%[color]RED[color]You cannot execute this command in the console :("
   perm:
-    fr_FR : "%BROADCAST%[color]RED[color]Vous n'avez pas la permission d'exécuter cette commande"
-    en_US : "%BROADCAST%[color]RED[color]You don't have the permission to execute this command"
+    lang:
+      fr_FR : "%BROADCAST%[color]RED[color]Vous n'avez pas la permission d'exécuter cette commande"
+      en_US : "%BROADCAST%[color]RED[color]You don't have the permission to execute this command"
 
 player:
   update:
     lang:
       fr_FR : "%BROADCAST%[color]WHITE[color]Modification de votre langue par : [color]GOLD[color]%0%"
       en_US : "%BROADCAST%[color]WHITE[color]Update your language to : [color]GOLD[color]%0%"
+
+general:
+  yes:
+    lang:
+      fr_FR : "%BROADCAST%[color]GREEN[color]Oui"
+      en_US : "%BROADCAST%[color]GREEN[color]Yes"
+  no:
+    lang:
+      fr_FR : "%BROADCAST%[color]RED[color]Non"
+      en_US : "%BROADCAST%[color]RED[color]No"
+  enabled:
+    lang:
+      fr_FR: "[color]GREEN[color]Activé"
+      en_US: "[color]GREEN[color]Enabled"
+  disabled:
+    lang:
+      fr_FR: "[color]RED[color]Désactivé"
+      en_US: "[color]RED[color]Disabled"
+  information:
+    lang:
+      fr_FR: "[color]WHITE[color]Information"
+      en_US: "[color]WHITE[color]Information"
+  informations:
+    lang:
+      fr_FR: "[color]WHITE[color]Informations"
+      en_US: "[color]WHITE[color]Informations"
+  mainGui:
+    notSet:
+      lang:
+        fr_FR: "%BROADCAST%[color]RED[color]Aucune GUI principale n'est définie"
+        en_US: "%BROADCAST%[color]RED[color]No main GUI is defined"
+
+
+gui:
+  voice:
+    configPlayer:
+      title:
+        lang:
+          fr_FR: "Modification de %0%"
+          en_US: "Modification of %0%"
+      forcedMute:
+        lang:
+          fr_FR: "Mute Forcé : %0%"
+          en_US: "Forced Mute : %0%"
+    listPlayer:
+      title:
+        lang:
+          fr_FR: "Liste des joueurs"
+          en_US: "List of players"
+      muteAll:
+        lang:
+          fr_FR: "Mute tout le monde"
+          en_US: "Mute everyone"
+      unmuteAll:
+        lang:
+          fr_FR: "Démute tout le monde"
+          en_US: "Unmute everyone"
+
+      lore:
+        modifPlayer:
+          lang:
+            fr_FR: "[color]WHITE[color]Cliquez pour modifier les paramètres de : [color]GOLD[color]%0%"
+            en_US: "[color]WHITE[color]Click to modify the parameters of : [color]GOLD[color]%0%"
+        connectionStatus:
+          lang:
+            fr_FR: "[color]WHITE[color]Statut de la connexion : %0%"
+            en_US: "[color]WHITE[color]Connection status : %0%"
+        clientVolume:
+          lang:
+            fr_FR: "[color]WHITE[color]Volume du client : [color]GOLD[color]%0%"
+            en_US: "[color]WHITE[color]Client volume : [color]GOLD[color]%0%"
+        microStatus:
+          lang:
+            fr_FR: "[color]WHITE[color]Statut du micro : %0%"
+            en_US: "[color]WHITE[color]Microphone status : %0%"
+        forcedMuteStatus:
+          lang:
+            fr_FR: "[color]WHITE[color]Status du mute forcé : %0%"
+            en_US: "[color]WHITE[color]Forced mute status : %0%"
+  listMap:
+    title:
+      lang:
+        fr_FR: "Liste des map"
+        en_US: "List of maps"
+  weatherSetting:
+    title:
+      lang:
+        fr_FR: "Paramètres de la météo"
+        en_US: "Weather settings"
+    weather:
+      lang:
+        fr_FR: "[color]WHITE[color]Météo : %0%"
+        en_US: "[color]WHITE[color]Weather : %0%"
+      thunder:
+        lang:
+          fr_FR: "[color]YELLOW[color]Tonnerre"
+          en_US: "[color]YELLOW[color]Thunder"
+      rain:
+        lang:
+          fr_FR: "[color]YELLOW[color]Pluie"
+          en_US: "[color]YELLOW[color]Rain"
+    day:
+      lang:
+        fr_FR: "[color]WHITE[color]Jour : %0%"
+        en_US: "[color]WHITE[color]Day : %0%"

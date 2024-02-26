@@ -1,6 +1,8 @@
 package fr.dreamin.mctools.api.gui;
 
+import com.rexcantor64.triton.api.language.Language;
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.minecraft.Minecraft;
 import fr.dreamin.mctools.api.service.Service;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
@@ -16,6 +18,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GuiManager extends Service implements Listener{
 
@@ -32,9 +35,11 @@ public class GuiManager extends Service implements Listener{
   @EventHandler
   public void onClick(InventoryClickEvent event){
     Player player = (Player) event.getWhoClicked();
+    MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
     Inventory inv = event.getInventory();
 
     ItemStack current = event.getCurrentItem();
+    AtomicInteger indexPagination = new AtomicInteger();
 
     if(event.getCurrentItem() == null) return;
 
@@ -48,11 +53,11 @@ public class GuiManager extends Service implements Listener{
           PaginationManager paginationManager = menu.getPaginationManager(player, inv);
 
           if (paginationManager != null) {
-            if (event.getSlot() == paginationManager.getSlotNext() && current.getItemMeta().getDisplayName().equals(paginationManager.getNext().getItemMeta().getDisplayName())) paginationManager.getType().setNext(player, paginationManager, menu.getClass());
-            else if (event.getSlot() == paginationManager.getSlotPrevious() && current.getItemMeta().getDisplayName().equals(paginationManager.getPrevious().getItemMeta().getDisplayName())) paginationManager.getType().setPrevious(player, paginationManager, menu.getClass());
+            if (event.getSlot() == paginationManager.getSlotNext() && Minecraft.compareItem(paginationManager.getNext(), current)) paginationManager.getType().setNext(player, paginationManager, menu.getClass());
+            else if (event.getSlot() == paginationManager.getSlotPrevious() && Minecraft.compareItem(paginationManager.getPrevious(), current)) paginationManager.getType().setPrevious(player, paginationManager, menu.getClass());
           }
 
-          menu.onClick(player, inv, current, event.getSlot(), event.getClick());
+          menu.onClick(mtPlayer, inv, current, event.getSlot(), event.getClick(), indexPagination.get());
           event.setCancelled(true);
         });
     }
@@ -66,9 +71,11 @@ public class GuiManager extends Service implements Listener{
         if (paginationManager != null) {
           if (event.getSlot() == paginationManager.getSlotNext() && current.getItemMeta().getDisplayName().equals(paginationManager.getNext().getItemMeta().getDisplayName())) paginationManager.getType().setNext(player, paginationManager, m.getClass());
           else if (event.getSlot() == paginationManager.getSlotPrevious() && current.getItemMeta().getDisplayName().equals(paginationManager.getPrevious().getItemMeta().getDisplayName())) paginationManager.getType().setPrevious(player, paginationManager, m.getClass());
+
+          if (getGuiConfig().getGuiPageManager().containsItemInPagination(paginationManager, event.getSlot())) indexPagination.set(getGuiConfig().getGuiPageManager().getIdItemInPagination(mtPlayer.getPlayer(), paginationManager, event.getSlot(), m.getClass()));
         }
 
-        m.onClick(player, inv, current, event.getSlot(), event.getClick());
+        m.onClick(mtPlayer, inv, current, event.getSlot(), event.getClick(), indexPagination.get());
         event.setCancelled(true);
       }
       else {
@@ -83,7 +90,7 @@ public class GuiManager extends Service implements Listener{
               else if (event.getSlot() == paginationManager.getSlotPrevious() && current.getItemMeta().getDisplayName().equals(paginationManager.getPrevious().getItemMeta().getDisplayName())) paginationManager.getType().setPrevious(player, paginationManager, menu.getClass());
             }
 
-            menu.onClick(player, inv, current, event.getSlot(), event.getClick());
+            menu.onClick(mtPlayer, inv, current, event.getSlot(), event.getClick(), indexPagination.get());
             event.setCancelled(true);
           });
       }
@@ -122,7 +129,7 @@ public class GuiManager extends Service implements Listener{
     if(!getRegisteredMenus().containsKey(gClass)) return;
 
     GuiBuilder menu = getRegisteredMenus().get(gClass);
-
+    MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
     Inventory inv = null;
 
     if (McTools.getCodex().isDefaultGui()) {
@@ -155,7 +162,7 @@ public class GuiManager extends Service implements Listener{
       if (McTools.getCodex().isDefaultGui())
         if (!getGuiConfig().containsNotAccountDefaultItem(gClass)) getGuiConfig().setGuiDefaultItems(inv);
 
-      menu.contents(player, inv, items);
+      menu.contents(mtPlayer, inv, items);
       getGuiConfig().addGuiOpen(player, menu.getClass());
 
     } catch (Exception e) {

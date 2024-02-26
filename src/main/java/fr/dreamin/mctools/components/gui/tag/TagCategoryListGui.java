@@ -33,21 +33,14 @@ public class TagCategoryListGui implements GuiBuilder {
   }
 
   @Override
-  public void contents(Player player, Inventory inv, GuiItems items) {
+  public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems items) {
 
   }
 
   @Override
-  public void onClick(Player player, Inventory inv, ItemStack current, int slot, ClickType action) {
+  public void onClick(MTPlayer mtPlayer, Inventory inv, ItemStack current, int slot, ClickType action, int indexPagination) {
+    mtPlayer.getBuildManager().setTagCategory(BuildManager.getTagCategorys().get(indexPagination));
 
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
-
-    if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(player, inv), slot)) {
-      int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(player, getPaginationManager(player, inv), slot, getClass());
-
-      MTPlayer.getBuildManager().setTagCategory(BuildManager.getTagCategorys().get(index));
-
-      McTools.getService(GuiManager.class).open(player, TagListGui.class);
-    }
+    McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), TagListGui.class);
   }
 }

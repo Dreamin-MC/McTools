@@ -44,8 +44,8 @@ public class Codex {
 
   public Codex(FileConfiguration config) {
     this.config = config;
-    pluginName = "DreamTools";
-    initMessage();
+    pluginName = "McTools";
+
     initGlobal();
     initSQLData();
     initApi();
@@ -55,7 +55,6 @@ public class Codex {
   public void loadConf() {
     Bukkit.broadcastMessage(pluginName + " >> §r§aReload de la configuration...");
 
-    initMessage();
     initGlobal();
     initSQLData();
     initApi();
@@ -66,14 +65,10 @@ public class Codex {
 
 
   private void initGlobal(){
-    prefix = getStr("mcTools.prefix");
-    broadcastprefix = getStr("mcTools.broadcastprefix");
+    prefix = getStr("mcTools.prefix", "§8» §f");
+    broadcastprefix = getStr("mcTools.broadcastprefix", "[§c§lMcTools§r] ");
 
 
-  }
-  private void initMessage(){
-    errorConsole = getStr("mcTools.message.errorconsole");
-    errorCommand = getStr("mcTools.message.errorcmd");
   }
 
   private void initSQLData() {
@@ -86,29 +81,37 @@ public class Codex {
   }
 
   private void initApi() {
-    editMode = getBool("mcTools.editMode");
-    defaultGui = getBool("mcTools.defaultGui");
-    defaultItems = getBool("mcTools.defaultItems");
-    buildMode = getBool("mcTools.buildMode");
-    pack = getBool("mcTools.ressourcepack");
-    defaultLang = Lang.valueOf(getStr("mcTools.defaultLang"));
+    editMode = getBool("mcTools.editMode", false);
+    defaultGui = getBool("mcTools.defaultGui", false);
+    defaultItems = getBool("mcTools.defaultItems", false);
+    buildMode = getBool("mcTools.buildMode", false);
+    pack = getBool("mcTools.ressourcepack", false);
+    defaultLang = Lang.valueOf(getStr("mcTools.defaultLang", "en_US"));
   }
 
   private void initVoice(){
-    voiceMode = getBool("mcTools.voiceMode");
-    voiceWallMode = getBool("mcTools.voiceWallMode");
-    voiceDistanceMax = getInt("mcTools.voiceDistanceMax");
+    voiceMode = getBool("mcTools.voiceMode", false);
+    voiceWallMode = getBool("mcTools.voiceWallMode", false);
+    voiceDistanceMax = getInt("mcTools.voiceDistanceMax", 10);
   }
 
 
   private String getStr(String path) {
     return (config.getString(path));
   }
+  private String getStr(String path, String dflValue) {
+    return (config.getString(path, dflValue));
+  }
+
   private int getInt(String path) {
     return (config.getInt(path));
   }
+  private int getInt(String path, Integer dflValue) {
+    return (config.getInt(path, dflValue));
+  }
 
   private boolean getBool(String path) {return (config.getBoolean(path));}
+  private boolean getBool(String path, Boolean dflValue) {return (config.getBoolean(path, dflValue));}
 
   public FileConfiguration getConfig() {
     return config;
