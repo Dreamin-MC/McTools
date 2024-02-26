@@ -19,7 +19,7 @@ public class ArmorStandListLockedGui implements GuiBuilder {
 
   @Override
   public String name(Player player) {
-    return McTools.getCodex().isRessourcepack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45) : "§8» §e§lLOCKED";
+    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45) : "§8» §e§lLOCKED";
   }
 
   @Override

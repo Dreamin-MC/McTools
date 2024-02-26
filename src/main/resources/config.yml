@@ -7,6 +7,8 @@ mcTools:
 
   ressourcepack: false
 
+  defaultLang: fr_FR
+
   buildMode: false
   editMode: false
   defaultGui: false
@@ -16,8 +18,7 @@ mcTools:
   voiceDistanceMax: 10 #max distance for voiceWallMode
 
   message:
-    errorconsole: "§cVous ne pouvez pas exécuter cette commande dans la console :("
-    errorcmd: "§cVous n'avez pas la permission d'exécute"
+
 
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

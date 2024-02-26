@@ -2,13 +2,10 @@ package fr.dreamin.mctools.components.gui.armorStand;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
-import fr.dreamin.mctools.api.glowing.GlowingEntities;
 import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.entity.ArmorStand;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
@@ -20,7 +17,7 @@ public class ArmorStandBasicSettingsGui implements GuiBuilder {
   public String name(Player player) {
     MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    return McTools.getCodex().isRessourcepack() ? CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.GENERIC_27.getName())) : "ArmorStand Basic Settings";
+    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.GENERIC_27.getName())) : "ArmorStand Basic Settings";
 
   }
 

@@ -10,7 +10,6 @@ import fr.dreamin.mctools.components.gui.armorStand.ArmorStandListSelectedGui;
 import fr.dreamin.mctools.components.gui.armorStand.ArmorStandMenuGui;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -38,30 +37,24 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
       return true;
     }
 
-    Bukkit.broadcastMessage("1");
-
     Player player = (Player) sender;
 
     if (player.hasPermission(PlayerPerm.BUILD.getPerm())) {
 
-      Bukkit.broadcastMessage("2");
-
       MTPlayer mTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
       if (mTPlayer == null) {
-        MessageManager.sendError(player, McTools.getCodex().getPrefix(), "Une erreur est survenue, veuillez réeesayer.");
+        MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Une erreur est survenue, veuillez réeesayer.");
         return true;
       }
 
       if (args.length == 0) McTools.getService(GuiManager.class).open(player, ArmorStandMenuGui.class);
       else {
 
-        Bukkit.broadcastMessage("3");
-
         switch (args[0]) {
           case "set":
             if (args.length <= 1) {
-              MessageManager.sendError(player, McTools.getCodex().getPrefix(), "Merci de mettre une valeur");
+              MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Merci de mettre une valeur");
               return false;
             }
             switch (args[1]) {
@@ -107,7 +100,7 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
             break;
           case "list":
             if (args.length <= 1) {
-              MessageManager.sendError(player, McTools.getCodex().getPrefix(), "Merci de mettre une valeur");
+              MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Merci de mettre une valeur");
               return false;
             }
             switch (args[1]) {
@@ -124,7 +117,7 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
             break;
           case "remove":
             if (args.length <= 1) {
-              MessageManager.sendError(player, McTools.getCodex().getPrefix(), "Merci de mettre une valeur");
+              MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Merci de mettre une valeur");
               return false;
             }
             switch (args[1]) {
@@ -144,7 +137,7 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
             break;
           case "get":
             if (args.length <= 1) {
-              MessageManager.sendError(player, McTools.getCodex().getPrefix(), "Merci de mettre une valeur");
+              MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Merci de mettre une valeur");
               return false;
             }
             switch (args[1]) {
@@ -155,7 +148,7 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
                 break;
               case "radius":
                 if (args.length <= 1) {
-                  MessageManager.sendError(player, McTools.getCodex().getPrefix(), "Merci de mettre une valeur");
+                  MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Merci de mettre une valeur");
                   return false;
                 }
 
@@ -176,7 +169,7 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
             break;
           case "add":
             if (args.length <= 1) {
-              MessageManager.sendError(player, McTools.getCodex().getPrefix(), "Merci de mettre une valeur");
+              MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Merci de mettre une valeur");
               return false;
             }
             switch (args[1]) {
@@ -215,7 +208,7 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
       return false;
     }
     else {
-      MessageManager.sendError(player, McTools.getCodex().getPrefix(), McTools.getCodex().getErrorCommand());
+      MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), McTools.getCodex().getErrorCommand());
       return false;
     }
   }
@@ -227,36 +220,22 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
 
     if (player.hasPermission(PlayerPerm.BUILD.getPerm())) {
 
-      Bukkit.broadcastMessage("test");
-
       switch (args.length) {
-        case 1:
-          return Arrays.asList("set", "list", "remove", "get", "add");
+        case 1: return Arrays.asList("set", "list", "remove", "get", "add");
         case 2:
           switch (args[0]) {
-            case "set":
-              return Arrays.asList("helmet", "weapon", "rotate", "move", "shulker", "invisible");
-            case "list":
-              return Arrays.asList("radius", "locked", "selected");
-            case "remove":
-              return Arrays.asList("all");
-            case "get":
-              return Arrays.asList("rotation", "radius");
-            case "add":
-              return Arrays.asList("lock", "shulker");
+            case "set": return Arrays.asList("helmet", "weapon", "rotate", "move", "shulker", "invisible");
+            case "list": return Arrays.asList("radius", "locked", "selected");
+            case "remove": return Arrays.asList("all");
+            case "get": return Arrays.asList("rotation", "radius");
+            case "add": return Arrays.asList("lock", "shulker");
           }
           break;
         case 3:
           switch (args[1]) {
-            case "all":
-              if (args[0] == "remove") return Arrays.asList("locked", "selected");
-              break;
-            case "radius":
-              if (args[0] == "get") return Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20", "30", "40", "50", "100");
-              break;
-            case "rotate":
-              if (args[0] == "set") return Arrays.asList("armorstand", "arm");
-              break;
+            case "all": return Arrays.asList("locked", "selected");
+            case "radius": return Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20", "30", "40", "50", "100");
+            case "rotate": return Arrays.asList("armorstand", "arm");
           }
           break;
       }

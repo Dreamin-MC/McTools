@@ -5,9 +5,12 @@ import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.api.log.Logging;
 import fr.dreamin.mctools.api.minecraft.Minecraft;
 import fr.dreamin.mctools.api.player.PlayerPerm;
+import fr.dreamin.mctools.components.lang.Lang;
 import fr.dreamin.mctools.components.players.manager.*;
 import fr.dreamin.mctools.mysql.fetcher.UserFetcher.UserFetcher;
 import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -27,6 +30,9 @@ public class MTPlayer {
   private final ItemStack itemStats;
   private String skinBase64 = null;
   private boolean isCanMove = true;
+
+  @Getter @Setter
+  private Lang lang = McTools.getCodex().getDefaultLang();
 
   public MTPlayer(Player player) {
     this.player = player;

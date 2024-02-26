@@ -1,0 +1,13 @@
+error:
+  console:
+    fr_FR : "%BROADCAST%[color]RED[color] Vous ne pouvez pas exécuter cette commande dans la console :("
+    en_US : "%BROADCAST%[color]RED[color]You cannot execute this command in the console :("
+  perm:
+    fr_FR : "%BROADCAST%[color]RED[color]Vous n'avez pas la permission d'exécuter cette commande"
+    en_US : "%BROADCAST%[color]RED[color]You don't have the permission to execute this command"
+
+player:
+  update:
+    lang:
+      fr_FR : "%BROADCAST%[color]WHITE[color]Modification de votre langue par : [color]GOLD[color]%0%"
+      en_US : "%BROADCAST%[color]WHITE[color]Update your language to : [color]GOLD[color]%0%"

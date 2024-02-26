@@ -32,15 +32,22 @@ import fr.dreamin.mctools.components.gui.tag.TagListGui;
 import fr.dreamin.mctools.config.Codex;
 import fr.dreamin.mctools.api.service.Service;
 import fr.dreamin.mctools.api.service.ServiceManager;
+import fr.dreamin.mctools.config.LangManager;
+import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.mysql.DatabaseManager;
 import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
+import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class McTools extends JavaPlugin{
   private static McTools instance;
   private static Codex codex;
+  private static LangManager langManager;
+
+  @Getter
+  private static LangMsg langMsg;
   private DatabaseManager databaseDreaminVoice;
   private static DTGame dtGame;
   private final ServiceManager serviceManager = new ServiceManager();
@@ -55,6 +62,8 @@ public final class McTools extends JavaPlugin{
     loadGui();
     saveDefaultConfig();
     codex = new Codex(getConfig());
+
+    langManager = new LangManager(this);
 
     setDatabase(new DatabaseManager(codex.getHost(), codex.getPort(), codex.getDbName(), codex.getUsername(), codex.getPassword()));
     getDatabase().connection();

@@ -23,7 +23,7 @@ import java.util.List;
 
 public class CommandDoor implements CommandExecutor, TabCompleter {
 
-  private static final String PREFIX = McTools.getCodex().getPrefix();
+  private static final String PREFIX = McTools.getCodex().getBroadcastprefix();
 
   @Override
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {

@@ -1,29 +1,46 @@
 package fr.dreamin.mctools.config;
 
+import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.components.lang.Lang;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class Codex {
   private FileConfiguration config;
+
   //  >>>>>>> PLUGIN <<<<<<<
+  @Getter @Setter
   private String pluginName, prefix, broadcastprefix;
 
   //  >>>>>> MESSAGE <<<<<<
+  @Getter @Setter
   private String errorConsole, errorCommand;
 
   //  >>>>>>>> GUI <<<<<<<<
+  @Getter @Setter
   private String prefixGUIName = "";
 
   //  >>>>>>>> SQL <<<<<<<<
+  @Getter @Setter
   private String host, dbName, username, password, defaultPrefix;
+  @Getter @Setter
   private int port;
+  @Getter @Setter
+  private Lang defaultLang;
 
   // >>>>>>>> API <<<<<<<<
-  private boolean editMode = false, defaultGui = false, defaultItems = false, buildMode = false, ressourcepack = false;
+  @Getter @Setter
+  private boolean editMode = false, defaultGui = false, defaultItems = false, buildMode = false, pack = false;
 
   //  >>>>>>>> VOICE <<<<<<<<
+  @Getter @Setter
   private boolean voiceMode, voiceWallMode;
+  @Getter @Setter
   private int voiceDistanceMax;
+
+
 
   public Codex(FileConfiguration config) {
     this.config = config;
@@ -73,7 +90,8 @@ public class Codex {
     defaultGui = getBool("mcTools.defaultGui");
     defaultItems = getBool("mcTools.defaultItems");
     buildMode = getBool("mcTools.buildMode");
-    ressourcepack = getBool("mcTools.ressourcepack");
+    pack = getBool("mcTools.ressourcepack");
+    defaultLang = Lang.valueOf(getStr("mcTools.defaultLang"));
   }
 
   private void initVoice(){
@@ -95,90 +113,4 @@ public class Codex {
   public FileConfiguration getConfig() {
     return config;
   }
-
-  //  >>>>>>> PLUGIN <<<<<<<
-  public String getPluginName() {
-    return pluginName;
-  }
-  public String getPrefix() {
-    return prefix;
-  }
-  public String getBroadcastprefix() {
-    return broadcastprefix;
-  }
-
-  //  >>>>>> MESSAGE <<<<<<
-  public String getErrorConsole() {
-    return errorConsole;
-  }
-  public String getErrorCommand() {
-    return errorCommand;
-  }
-
-  //  >>>>>> PERMISSION <<<<<<
-  public String getPermHote() {
-    return permHote;
-  }
-  public String getPermDev() {
-    return permDev;
-  }
-
-  //  >>>>>>>> GUI <<<<<<<<
-  public String getPrefixGUIName() {
-    return prefixGUIName;
-  }
-  public String setPrefixGUIName(String prefixGUIName) {
-    return this.prefixGUIName = prefixGUIName;
-  }
-
-  //  >>>>>>>> SQL <<<<<<<<
-  public String getHost() {
-    return host;
-  }
-  public String getDbName() {
-    return dbName;
-  }
-  public String getUsername() {
-    return username;
-  }
-  public String getPassword() {
-    return password;
-  }
-  public String getDefaultPrefix() {
-    return defaultPrefix;
-  }
-  public int getPort() {
-    return port;
-  }
-
-  //  >>>>>>>> API <<<<<<<<
-
-  public boolean isEditMode() {
-    return editMode;
-  }
-  public boolean isDefaultGui() {
-    return defaultGui;
-  }
-  public boolean isDefaultItems() {
-    return defaultItems;
-  }
-  public boolean isBuildMode() {
-    return buildMode;
-  }
-  public boolean isRessourcepack() {
-    return ressourcepack;
-  }
-
-
-  //  >>>>>>>> VOICE <<<<<<<<
-  public boolean isVoiceWallMode() {
-    return voiceWallMode;
-  }
-  public boolean isVoiceMode() {
-    return voiceMode;
-  }
-  public int getVoiceDistanceMax() {
-    return voiceDistanceMax;
-  }
-
 }

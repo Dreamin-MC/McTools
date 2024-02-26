@@ -25,7 +25,7 @@ import java.util.List;
 
 public class CommandTag implements CommandExecutor, TabCompleter {
 
-  private static final String PREFIX = McTools.getCodex().getPrefix();
+  private static final String PREFIX = McTools.getCodex().getBroadcastprefix();
   private static final int MAX_TAG_LENGTH = 16;
 
   @Override

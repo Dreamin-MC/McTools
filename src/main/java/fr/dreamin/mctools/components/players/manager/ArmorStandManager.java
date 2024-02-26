@@ -457,7 +457,7 @@ public class ArmorStandManager {
 
   public void setInvisibleArmorStand(boolean setInvisibleArmorStand) {
     this.setInvisibleArmorStand = setInvisibleArmorStand;
-    MTPlayer.getPlayer().sendMessage(McTools.getCodex().getPrefix() + CustomChatColor.GRAY.getColorWithText("Default ArmorStand : ") + (setInvisibleArmorStand ? CustomChatColor.RED.getColorWithText("invisible") : CustomChatColor.GREEN.getColorWithText("visible")));
+    MTPlayer.getPlayer().sendMessage(McTools.getCodex().getBroadcastprefix() + CustomChatColor.GRAY.getColorWithText("Default ArmorStand : ") + (setInvisibleArmorStand ? CustomChatColor.RED.getColorWithText("invisible") : CustomChatColor.GREEN.getColorWithText("visible")));
   }
 
 }

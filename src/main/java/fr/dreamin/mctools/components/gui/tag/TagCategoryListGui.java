@@ -19,7 +19,7 @@ public class TagCategoryListGui implements GuiBuilder {
 
   @Override
   public String name(Player player) {
-    return McTools.getCodex().isRessourcepack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_36.getName()) : "Tag Category List";
+    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_36.getName()) : "Tag Category List";
   }
 
   @Override

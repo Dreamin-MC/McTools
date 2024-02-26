@@ -23,14 +23,14 @@ public class CommandDV implements CommandExecutor, TabCompleter {
   @Override
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     if (!(sender instanceof Player)) {
-      sender.sendMessage(McTools.getCodex().getPrefix() + McTools.getCodex().getErrorConsole());
+      sender.sendMessage(McTools.getCodex().getBroadcastprefix() + McTools.getCodex().getErrorConsole());
       return true;
     }
 
     Player player = (Player) sender;
     MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-    if (player.hasPermission(McTools.getCodex().getPermHote())) {
+    if (player.hasPermission(PlayerPerm.HOTE.getPerm())) {
 
       switch (args[0]) {
         case "listplayers":

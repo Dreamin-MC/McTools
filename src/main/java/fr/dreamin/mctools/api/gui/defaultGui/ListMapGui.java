@@ -28,7 +28,7 @@ public class ListMapGui implements GuiBuilder {
 
   @Override
   public String name(Player player) {
-    return McTools.getCodex().isRessourcepack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_36.getName()) : "List Maps";
+    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_36.getName()) : "List Maps";
   }
 
   @Override
