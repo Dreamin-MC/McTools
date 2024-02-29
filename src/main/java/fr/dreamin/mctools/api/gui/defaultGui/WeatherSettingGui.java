@@ -1,13 +1,11 @@
 package fr.dreamin.mctools.api.gui.defaultGui;
 
 import fr.dreamin.mctools.McTools;
-import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.GuiBuilder;
 import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.PaginationManager;
 import fr.dreamin.mctools.api.gui.GuiItems;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
-import fr.dreamin.mctools.api.player.manager.MessageManager;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
@@ -24,8 +22,8 @@ public class WeatherSettingGui implements GuiBuilder {
   private static DayType dayType = DayType.SUN;
 
   @Override
-  public String name(Player player) {
-    return LangMsg.WEATHERSETTINGS_TITLE.getMsg(McTools.getService(PlayersService.class).getPlayer(player).getLang());
+  public String name(MTPlayer mtPlayer) {
+    return mtPlayer.getMsg(LangMsg.GUI_WEATHERSETTINGS_TITLE, "");
   }
 
   @Override
@@ -34,15 +32,15 @@ public class WeatherSettingGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(Player player, Inventory inv) {
+  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
     return null;
   }
 
   @Override
   public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems items) {
     items.createList("", Material.BLACK_STAINED_GLASS_PANE, new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 26, 27, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44});
-    items.create(LangMsg.WEATHERSETTINGS_WEATHER.getMsg(mtPlayer.getLang(), weatherType.getName(mtPlayer)), weatherType.getMaterial(), 21);
-    items.create(LangMsg.WEATHERSETTINGS_DAY.getMsg(mtPlayer.getLang(), dayType.getName()), dayType.getMaterial(), 23);
+    items.create(mtPlayer.getMsg(LangMsg.GUI_WEATHERSETTINGS_WEATHER, weatherType.getName(mtPlayer)), weatherType.getMaterial(), 21);
+    items.create(mtPlayer.getMsg(LangMsg.GUI_WEATHERSETTINGS_DAY, dayType.getName(mtPlayer)), dayType.getMaterial(), 23);
     items.create(ItemsPreset.arrowBackWard.getItem(), 31);
   }
 
@@ -64,7 +62,7 @@ public class WeatherSettingGui implements GuiBuilder {
         if (McTools.getService(GuiManager.class).getGuiConfig().getMainGui() != null)
           McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), McTools.getService(GuiManager.class).getGuiConfig().getMainGui().getClass());
         else {
-          mtPlayer.getPlayer().sendMessage(LangMsg.MAINGUI_NOTSET.getMsg(mtPlayer.getLang()));
+          mtPlayer.getPlayer().sendMessage(mtPlayer.getMsg(LangMsg.ERROR_MAINGUI_NOTSET, ""));
           mtPlayer.getPlayer().closeInventory();
         }
         break;
@@ -73,7 +71,7 @@ public class WeatherSettingGui implements GuiBuilder {
 
   private static enum WeatherType {
 
-    THUNDER(LangMsg.WEATHERSETTINGS_THUNDER, null, Material.BLAZE_ROD) {
+    THUNDER(LangMsg.GUI_WEATHERSETTINGS_WEATHER_THUNDER, null, Material.BLAZE_ROD) {
       @Override
       public void setWeather() {
         Bukkit.getWorlds().forEach(world -> {
@@ -83,7 +81,7 @@ public class WeatherSettingGui implements GuiBuilder {
         });
       }
     },
-    RAIN(LangMsg.WEATHERSETTINGS_THUNDER, THUNDER, Material.WATER_BUCKET) {
+    RAIN(LangMsg.GUI_WEATHERSETTINGS_WEATHER_RAIN, THUNDER, Material.WATER_BUCKET) {
       @Override
       public void setWeather() {
         Bukkit.getWorlds().forEach(world -> {
@@ -95,7 +93,7 @@ public class WeatherSettingGui implements GuiBuilder {
     },
 
 
-    CLEAR(LangMsg.WEATHERSETTINGS_THUNDER, RAIN, Material.BUCKET) {
+    CLEAR(LangMsg.GUI_WEATHERSETTINGS_WEATHER_CLEAR, RAIN, Material.BUCKET) {
       @Override
       public void setWeather() {
         Bukkit.getWorlds().forEach(world -> {
@@ -139,7 +137,7 @@ public class WeatherSettingGui implements GuiBuilder {
   }
   private static enum DayType {
 
-    MIDNIGHT(CustomChatColor.DARKBLUE.getColorWithText("Midnight"), null, Material.ORANGE_TULIP) {
+    MIDNIGHT(LangMsg.GUI_WEATHERSETTINGS_DAY_MIDNIGHT, null, Material.ORANGE_TULIP) {
       @Override
       public void setTime() {
         Bukkit.getWorlds().forEach(world -> {
@@ -147,7 +145,7 @@ public class WeatherSettingGui implements GuiBuilder {
         });
       }
     },
-    MOON(CustomChatColor.DARKBLUE.getColorWithText("Night"), MIDNIGHT, Material.WITHER_ROSE) {
+    MOON(LangMsg.GUI_WEATHERSETTINGS_DAY_MOON, MIDNIGHT, Material.WITHER_ROSE) {
       @Override
       public void setTime() {
         Bukkit.getWorlds().forEach(world -> {
@@ -155,7 +153,7 @@ public class WeatherSettingGui implements GuiBuilder {
         });
       }
     },
-    SUN(CustomChatColor.YELLOW.getColorWithText("Day"), MOON, Material.SUNFLOWER) {
+    SUN(LangMsg.GUI_WEATHERSETTINGS_DAY_SUN, MOON, Material.SUNFLOWER) {
       @Override
       public void setTime() {
         Bukkit.getWorlds().forEach(world -> {
@@ -163,7 +161,7 @@ public class WeatherSettingGui implements GuiBuilder {
         });
       }
     },
-    MORNING(CustomChatColor.YELLOW.getColorWithText("Morning"), SUN, Material.CORNFLOWER) {
+    MORNING(LangMsg.GUI_WEATHERSETTINGS_DAY_MORNING, SUN, Material.CORNFLOWER) {
       @Override
       public void setTime() {
         Bukkit.getWorlds().forEach(world -> {
@@ -172,12 +170,12 @@ public class WeatherSettingGui implements GuiBuilder {
       }
     };
 
-    private final String name;
+    private final LangMsg msg;
     private DayType nextDayType;
     private final Material material;
 
-    DayType(String name, DayType nextDayType, Material material) {
-      this.name = name;
+    DayType(LangMsg msg, DayType nextDayType, Material material) {
+      this.msg = msg;
       this.nextDayType = nextDayType;
       this.material = material;
     }
@@ -186,8 +184,8 @@ public class WeatherSettingGui implements GuiBuilder {
       MIDNIGHT.setNextDayType(MORNING);
     }
 
-    public String getName() {
-      return name;
+    public String getName(MTPlayer mtPlayer) {
+      return this.msg.getMsg(mtPlayer.getLang());
     }
 
     public Material getMaterial() {

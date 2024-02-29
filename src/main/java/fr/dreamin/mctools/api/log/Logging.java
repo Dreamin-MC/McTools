@@ -74,7 +74,7 @@ public class Logging extends Service {
     this.error("##");
     this.error("## Version information:");
     this.error("##\tPlugin Version: %s".formatted(this.plugin.getDescription().getVersion()));
-    this.error("##\tDreaminTools Version: %s".formatted(McTools.getInstance().getDescription().getVersion()));
+    this.error("##\tMcTools Version: %s".formatted(McTools.getInstance().getDescription().getVersion()));
     this.error("##\tMinecraft: %s".formatted(Version.getVersion().name().replaceAll("_", ".")));
     this.error("##");
   }

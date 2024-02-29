@@ -7,9 +7,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 public interface GuiBuilder {
-  public abstract String name(Player player);
+  public abstract String name(MTPlayer mtPlayer);
   public abstract int getLines();
-  public abstract PaginationManager getPaginationManager(Player player, Inventory inv);
+  public abstract PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv);
   public abstract void contents(MTPlayer mtPlayer, Inventory inv, GuiItems items);
   public abstract void onClick(MTPlayer mtPlayer, Inventory inv, ItemStack current, int slot, ClickType action, int indexPagination);
 

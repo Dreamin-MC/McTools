@@ -30,8 +30,8 @@ public class ListMapGui implements GuiBuilder {
   }
 
   @Override
-  public String name(Player player) {
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_36.getName()) : LangMsg.LISTMAP_TITLE.getMsg(McTools.getService(PlayersService.class).getPlayer(player).getLang());
+  public String name(MTPlayer mtPlayer) {
+    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_36.getName()) : mtPlayer.getMsg(LangMsg.GUI_LISTMAP_TITLE, "");
   }
 
   @Override
@@ -40,7 +40,7 @@ public class ListMapGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(Player player, Inventory inv) {
+  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
     return new PaginationManager(new ItemStack(Material.ARROW), 19, new ItemStack(Material.ARROW), 25, 10, 16, PaginationType.LOOP_LINE, items, List.of() ,false);
   }
 

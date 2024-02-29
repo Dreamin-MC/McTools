@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class LanguageConfifGui implements GuiBuilder {
 
   @Override
-  public String name(Player player) {
+  public String name(MTPlayer mtPlayer) {
     return "§6Configuration de la langue";
   }
 
@@ -27,7 +27,7 @@ public class LanguageConfifGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(Player player, Inventory inv) {
+  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
     return new PaginationManager(new ItemBuilder(Material.ARROW).toItemStack(), 28, new ItemBuilder(Material.ARROW).toItemStack(), 34, 21, 23, PaginationType.LOOP_LINE, McTools.getInstance().getTritonManager().getAllItemsLanguage(), new ArrayList<>(), false);
   }
 

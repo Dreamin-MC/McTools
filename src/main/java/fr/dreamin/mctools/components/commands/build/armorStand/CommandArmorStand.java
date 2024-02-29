@@ -8,6 +8,8 @@ import fr.dreamin.mctools.components.gui.armorStand.ArmorStandListLockedGui;
 import fr.dreamin.mctools.components.gui.armorStand.ArmorStandListRadiusGui;
 import fr.dreamin.mctools.components.gui.armorStand.ArmorStandListSelectedGui;
 import fr.dreamin.mctools.components.gui.armorStand.ArmorStandMenuGui;
+import fr.dreamin.mctools.components.lang.Lang;
+import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Location;
@@ -33,7 +35,7 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
     if (!(sender instanceof Player)) {
-      sender.sendMessage("Cette commande ne peut être utilisée que par un joueur.");
+      sender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(Lang.en_US));
       return true;
     }
 
@@ -41,10 +43,10 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
 
     if (player.hasPermission(PlayerPerm.BUILD.getPerm())) {
 
-      MTPlayer mTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+      MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-      if (mTPlayer == null) {
-        MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Une erreur est survenue, veuillez réeesayer.");
+      if (mtPlayer == null) {
+        mtPlayer.sendMsg(LangMsg.ERROR_OCCURRED, "");
         return true;
       }
 
@@ -54,27 +56,27 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
         switch (args[0]) {
           case "set":
             if (args.length <= 1) {
-              MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Merci de mettre une valeur");
+              mtPlayer.sendMsg(LangMsg.ERROR_PUTVALUE, "");
               return false;
             }
             switch (args[1]) {
 
               case "helmet":
-                mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {armorStand.setHelmet(player.getItemInHand());});
+                mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {armorStand.setHelmet(player.getItemInHand());});
                 break;
               case "weapon":
-                mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {armorStand.setItem((mTPlayer.getArmorStandManager().isLeftArmPos() ? EquipmentSlot.OFF_HAND : EquipmentSlot.HAND), player.getItemInHand());});
+                mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {armorStand.setItem((mtPlayer.getArmorStandManager().isLeftArmPos() ? EquipmentSlot.OFF_HAND : EquipmentSlot.HAND), player.getItemInHand());});
                 break;
               case "invisible":
-                mTPlayer.getArmorStandManager().setInvisibleArmorStand(!mTPlayer.getArmorStandManager().isSetInvisibleArmorStand());
+                mtPlayer.getArmorStandManager().setInvisibleArmorStand(!mtPlayer.getArmorStandManager().isSetInvisibleArmorStand());
                 break;
               case "move":
-                mTPlayer.getArmorStandManager().setDistanceMoveArmorStand(Double.valueOf(args[1]));
+                mtPlayer.getArmorStandManager().setDistanceMoveArmorStand(Double.valueOf(args[1]));
                 break;
               case "shulker":
-                mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
+                mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
                   // Spawn the Shulker and disable its AI
-                  Shulker shulkerSet = (Shulker) mTPlayer.getPlayer().getWorld().spawnEntity(armorStand.getLocation(), EntityType.SHULKER);
+                  Shulker shulkerSet = (Shulker) mtPlayer.getPlayer().getWorld().spawnEntity(armorStand.getLocation(), EntityType.SHULKER);
                   shulkerSet.setAI(false);
 
                   shulkerSet.setBodyYaw(90);
@@ -90,17 +92,17 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
               case "rotate":
                 switch (args[2]) {
                   case "armorstand":
-                    mTPlayer.getArmorStandManager().setArmorStandRotation(Float.valueOf(args[1]));
+                    mtPlayer.getArmorStandManager().setArmorStandRotation(Float.valueOf(args[1]));
                     break;
                   case "arm":
-                    mTPlayer.getArmorStandManager().setArmRotate(Double.valueOf(args[1]));
+                    mtPlayer.getArmorStandManager().setArmRotate(Double.valueOf(args[1]));
                     break;
                 }
             }
             break;
           case "list":
             if (args.length <= 1) {
-              MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Merci de mettre une valeur");
+              mtPlayer.sendMsg(LangMsg.ERROR_PUTVALUE, "");
               return false;
             }
             switch (args[1]) {
@@ -117,7 +119,7 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
             break;
           case "remove":
             if (args.length <= 1) {
-              MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Merci de mettre une valeur");
+              mtPlayer.sendMsg(LangMsg.ERROR_PUTVALUE, "");
               return false;
             }
             switch (args[1]) {
@@ -125,10 +127,10 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
 
                 switch (args[2]) {
                   case "locked":
-                    mTPlayer.getArmorStandManager().removeAllArmorStandLocked(true);
+                    mtPlayer.getArmorStandManager().removeAllArmorStandLocked(true);
                     break;
                   case "selected":
-                    mTPlayer.getArmorStandManager().removeAllArmorStandSelected(true);
+                    mtPlayer.getArmorStandManager().removeAllArmorStandSelected(true);
                     break;
                 }
 
@@ -137,48 +139,48 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
             break;
           case "get":
             if (args.length <= 1) {
-              MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Merci de mettre une valeur");
+              mtPlayer.sendMsg(LangMsg.ERROR_PUTVALUE, "");
               return false;
             }
             switch (args[1]) {
               case "rotation":
-                for (int i = 0; i < mTPlayer.getArmorStandManager().getArmorStandSelected().size(); i++) {
-                  player.sendMessage("ArmorStand : "+ i +" | Yaw: " + mTPlayer.getArmorStandManager().getArmorStandSelected().get(i).getLocation().getYaw());
+                for (int i = 0; i < mtPlayer.getArmorStandManager().getArmorStandSelected().size(); i++) {
+                  player.sendMessage("ArmorStand : "+ i +" | Yaw: " + mtPlayer.getArmorStandManager().getArmorStandSelected().get(i).getLocation().getYaw());
                 }
                 break;
               case "radius":
-                if (args.length <= 1) {
-                  MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Merci de mettre une valeur");
+                if (args.length <= 2) {
+                  mtPlayer.sendMsg(LangMsg.ERROR_PUTVALUE, "");
                   return false;
                 }
 
-                mTPlayer.getArmorStandManager().getArmorStandRadius().clear();
+                mtPlayer.getArmorStandManager().getArmorStandRadius().clear();
 
                 try {
                   int v = Integer.parseInt(args[2]);
 
-                  mTPlayer.getArmorStandManager().getArmorStandRadius().addAll(getNearbyArmorStands(mTPlayer, v));
+                  mtPlayer.getArmorStandManager().getArmorStandRadius().addAll(getNearbyArmorStands(mtPlayer, v));
                   McTools.getService(GuiManager.class).open(player, ArmorStandListRadiusGui.class);
 
                 } catch (NumberFormatException e) {
-                  player.sendMessage("§cErreur : §7Veuillez entrer un nombre valide.");
-                  return true;
+                  mtPlayer.sendMsg(LangMsg.ERROR_VALIDNUMBER, "");
+                  return false;
                 }
                 break;
             }
             break;
           case "add":
             if (args.length <= 1) {
-              MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), "Merci de mettre une valeur");
+              mtPlayer.sendMsg(LangMsg.ERROR_PUTVALUE, "");
               return false;
             }
             switch (args[1]) {
               case "lock":
-                mTPlayer.getArmorStandManager().addAllArmorStandLocked(mTPlayer.getArmorStandManager().getArmorStandSelected());
-                mTPlayer.getArmorStandManager().removeAllArmorStandSelected(false);
+                mtPlayer.getArmorStandManager().addAllArmorStandLocked(mtPlayer.getArmorStandManager().getArmorStandSelected());
+                mtPlayer.getArmorStandManager().removeAllArmorStandSelected(false);
                 break;
               case "shulker":
-                Location location = mTPlayer.getPlayer().getLocation();
+                Location location = mtPlayer.getPlayer().getLocation();
 
                 // Arrondir les coordonnées
                 long x = Math.round(location.getX());
@@ -189,11 +191,11 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
                 Location roundedLocation = new Location(location.getWorld(), x, y, z, 90,0).add(0.5, 0, 0.5);
 
                 // Spawn the Shulker and disable its AI
-                Shulker shulker = (Shulker) mTPlayer.getPlayer().getWorld().spawnEntity(roundedLocation, EntityType.SHULKER);
+                Shulker shulker = (Shulker) mtPlayer.getPlayer().getWorld().spawnEntity(roundedLocation, EntityType.SHULKER);
                 shulker.setAI(false);
                 shulker.setBodyYaw(90);
 
-                ArmorStand armorStand = Objects.requireNonNull(mTPlayer.getPlayer().getWorld()).spawn(roundedLocation, ArmorStand.class);
+                ArmorStand armorStand = Objects.requireNonNull(mtPlayer.getPlayer().getWorld()).spawn(roundedLocation, ArmorStand.class);
 
                 // Rendre le Shulker invisible
                 shulker.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1, false, false));

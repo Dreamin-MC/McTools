@@ -6,12 +6,10 @@ import fr.dreamin.mctools.api.gui.GuiBuilder;
 import fr.dreamin.mctools.api.gui.GuiItems;
 import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.PaginationManager;
-import fr.dreamin.mctools.components.lang.Lang;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -19,8 +17,8 @@ import org.bukkit.inventory.ItemStack;
 public class ListPlayerGui implements GuiBuilder {
 
   @Override
-  public String name(Player player) {
-    return LangMsg.VOICE_LISTPLAYER_TITLE.getMsg(McTools.getService(PlayersService.class).getPlayer(player).getLang());
+  public String name(MTPlayer mtPlayer) {
+    return mtPlayer.getMsg(LangMsg.GUI_VOICE_LISTPLAYER_TITLE, "");
   }
 
   @Override
@@ -30,7 +28,7 @@ public class ListPlayerGui implements GuiBuilder {
 
 
   @Override
-  public PaginationManager getPaginationManager(Player player, Inventory inv) {
+  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
     return null;
   }
 
@@ -46,28 +44,28 @@ public class ListPlayerGui implements GuiBuilder {
       if (mPlayer.getVoiceManager().getClient().isConnected())
         guiItems.create(CustomChatColor.GREEN.getColorWithText(mPlayer.getPlayer().getName()), mPlayer.getPlayer().getName(), GuiItems.PlayerHeadMethod.PLAYER_NAME, i,
           "§7",
-          LangMsg.VOICE_LISTPLAYER_LORE_MODIFPLAYER.getMsg(mtPlayer.getLang(), mPlayer.getPlayer().getName()),
+          mtPlayer.getMsg(LangMsg.GUI_VOICE_LISTPLAYER_LORE_MODIFPLAYER, mPlayer.getPlayer().getName()),
           "§7",
-          LangMsg.INFORMATION.getMsg(mPlayer.getLang()) + " :",
-          LangMsg.VOICE_LISTPLAYER_LORE_CONNECTIONSTATUS.getMsg(mtPlayer.getLang(), LangMsg.YES.getMsg(mtPlayer.getLang())),
-          LangMsg.VOICE_LISTPLAYER_LORE_CLIENTVOLUME.getMsg(mtPlayer.getLang(), mPlayer.getVoiceManager().getClient().getVolume() + "%"),
-          LangMsg.VOICE_LISTPLAYER_LORE_MICROSTATUS.getMsg(mtPlayer.getLang(), (mPlayer.getVoiceManager().getClient().isMicrophoneActive() ? LangMsg.ENABLED.getMsg(mtPlayer.getLang()) : LangMsg.DISABLED.getMsg(mtPlayer.getLang()))),
-          LangMsg.VOICE_LISTPLAYER_LORE_FORCEDMUTESTATUS.getMsg(mtPlayer.getLang(), mPlayer.getVoiceManager().isForcedMute() ? LangMsg.ENABLED.getMsg(mtPlayer.getLang()) : LangMsg.DISABLED.getMsg(mtPlayer.getLang()))
+          mtPlayer.getMsg(LangMsg.GENERAL_INFORMATION, "") + " :",
+          mtPlayer.getMsg(LangMsg.GUI_VOICE_LISTPLAYER_LORE_CONNECTIONSTATUS, LangMsg.GENERAL_YES),
+          mtPlayer.getMsg(LangMsg.GUI_VOICE_LISTPLAYER_LORE_CLIENTVOLUME, mPlayer.getVoiceManager().getClient().getVolume() + "%"),
+          mtPlayer.getMsg(LangMsg.GUI_VOICE_LISTPLAYER_LORE_MICROSTATUS, (mPlayer.getVoiceManager().getClient().isMicrophoneActive() ? LangMsg.GENERAL_ENABLED : LangMsg.GENERAL_DISABLED)),
+          mtPlayer.getMsg(LangMsg.GUI_VOICE_LISTPLAYER_LORE_FORCEDMUTESTATUS, (mPlayer.getVoiceManager().isForcedMute() ? LangMsg.GENERAL_ENABLED : LangMsg.GENERAL_DISABLED))
         );
       else
         guiItems.create(CustomChatColor.RED.getColorWithText(mPlayer.getPlayer().getName()), mPlayer.getPlayer().getName(), GuiItems.PlayerHeadMethod.PLAYER_NAME, i,
           "§7",
-          LangMsg.VOICE_LISTPLAYER_LORE_MODIFPLAYER.getMsg(mtPlayer.getLang(), mPlayer.getPlayer().getName()),
+          mtPlayer.getMsg(LangMsg.GUI_VOICE_LISTPLAYER_LORE_MODIFPLAYER, mtPlayer.getPlayer().getName()),
           "§7",
-          LangMsg.INFORMATION.getMsg(mPlayer.getLang()) + " :",
-          LangMsg.VOICE_LISTPLAYER_LORE_CONNECTIONSTATUS.getMsg(mtPlayer.getLang(), LangMsg.NO.getMsg(mtPlayer.getLang()))
+          mtPlayer.getMsg(LangMsg.GENERAL_INFORMATION, "") + " :",
+          mtPlayer.getMsg(LangMsg.GUI_VOICE_LISTPLAYER_LORE_CONNECTIONSTATUS, LangMsg.GENERAL_NO)
         );
 
       i++;
     }
 
-    guiItems.create(CustomChatColor.YELLOW.getColorWithText(LangMsg.VOICE_LISTPLAYER_MUTEALL.getMsg(mtPlayer.getLang())), Material.BARRIER, 2, 21);
-    guiItems.create(CustomChatColor.YELLOW.getColorWithText(LangMsg.VOICE_LISTPLAYER_UNMUTEALL.getMsg(mtPlayer.getLang())), Material.BARRIER, 1, 23);
+    guiItems.create(CustomChatColor.YELLOW.getColorWithText(mtPlayer.getMsg(LangMsg.GUI_VOICE_LISTPLAYER_MUTEALL, "")), Material.BARRIER, 2, 21);
+    guiItems.create(CustomChatColor.YELLOW.getColorWithText(mtPlayer.getMsg(LangMsg.GUI_VOICE_LISTPLAYER_UNMUTEALL, "")), Material.BARRIER, 1, 23);
 
   }
 

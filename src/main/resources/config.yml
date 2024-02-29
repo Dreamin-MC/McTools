@@ -17,10 +17,6 @@ mcTools:
   voiceWallMode: false #true = enable voice mode, false = disable voice mode
   voiceDistanceMax: 10 #max distance for voiceWallMode
 
-  message:
-
-
-
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #>>       DATABASE INFORMATION       >>
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

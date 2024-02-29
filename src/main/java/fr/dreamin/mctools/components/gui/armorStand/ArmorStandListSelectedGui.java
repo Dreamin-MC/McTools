@@ -4,6 +4,7 @@ import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
+import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
@@ -18,9 +19,8 @@ import java.util.ArrayList;
 public class ArmorStandListSelectedGui implements GuiBuilder {
 
   @Override
-  public String name(Player player) {
-
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.ARMOR_LIST.getName()) : "ArmorStand list selected";
+  public String name(MTPlayer mtPlayer) {
+    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.ARMOR_LIST.getName()) : mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_LISTSELECTED_TITLE, "");
   }
 
   @Override
@@ -29,21 +29,16 @@ public class ArmorStandListSelectedGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(Player player, Inventory inventory) {
-
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
-
-    return new PaginationManager(ItemsPreset.arrowPrevious.getItem(), 45, ItemsPreset.arrowNext.getItem(), 53, 0, 35, PaginationType.PAGE, MTPlayer.getArmorStandManager().getArmorStandSelectedItemStack(), new ArrayList<>(), false);
+  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
+    return new PaginationManager(ItemsPreset.arrowPrevious.getItem(), 45, ItemsPreset.arrowNext.getItem(), 53, 0, 35, PaginationType.PAGE, mtPlayer.getArmorStandManager().getArmorStandSelectedItemStack(), new ArrayList<>(), false);
   }
 
   @Override
   public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems guiItems) {
-
-    guiItems.create("§cDétruir les armors stands", Material.IRON_AXE, 48, "§7Détruire tous les armor stands de votre liste sélectionné.");
-    guiItems.create("Retour en arrière", Material.NAME_TAG, 3, 46, "§7Retourner au menu armor stands.");
-    guiItems.create("Quitter", Material.NAME_TAG, 4, 52, "§7Fermer le menu.");
-    guiItems.create("Supprimer la liste", Material.NAME_TAG,  4, 49, "§7Supprimer tous les armor stands de votre liste sélectionné.");
-
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_DESTROYARMORSTAND, ""), Material.IRON_AXE, 48);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_BACK, ""), Material.NAME_TAG, 3, 46);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_LEAVE, ""), Material.NAME_TAG, 4, 52);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_DELETELIST, ""), Material.NAME_TAG,  4, 49);
   }
 
   @Override
@@ -53,7 +48,7 @@ public class ArmorStandListSelectedGui implements GuiBuilder {
       case 48:
         mtPlayer.getArmorStandManager().dispawnAllArmorStandSelected();
         mtPlayer.getPlayer().closeInventory();
-        mtPlayer.getPlayer().sendMessage("§aVous avez détruit tous les armorstand sélectioné.");
+        mtPlayer.getPlayer().sendMessage(mtPlayer.getMsg(LangMsg.GENERAL_HAVEALLARMORSTAND, ""), LangMsg.GENERAL_DESTROY.getMsg(mtPlayer.getLang(), mtPlayer.getMsg(LangMsg.GENERAL_SELECTED, "")));
         break;
       case 46:
         McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMenuGui.class);
@@ -66,8 +61,8 @@ public class ArmorStandListSelectedGui implements GuiBuilder {
         mtPlayer.getPlayer().closeInventory();
         break;
       default:
-        if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(mtPlayer.getPlayer(), inv), slot)) {
-          int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(mtPlayer.getPlayer(), getPaginationManager(mtPlayer.getPlayer(), inv), slot, getClass());
+        if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(mtPlayer, inv), slot)) {
+          int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(mtPlayer.getPlayer(), getPaginationManager(mtPlayer, inv), slot, getClass());
 
           ArmorStand armorStand = mtPlayer.getArmorStandManager().getArmorStandSelected().get(index);
 
@@ -75,16 +70,16 @@ public class ArmorStandListSelectedGui implements GuiBuilder {
             mtPlayer.getArmorStandManager().removeArmorStandSelected(armorStand, true);
 
             McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandListSelectedGui.class);
-            mtPlayer.getPlayer().sendMessage("§cVous avez supprimé l'armor stand de votre sélection.");
+            mtPlayer.getPlayer().sendMessage(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_HAVEAARMORSTANDSELECTED, LangMsg.GENERAL_REMOVED));
           }
           else if(action.equals(ClickType.SHIFT_RIGHT)) {
             mtPlayer.getPlayer().teleport(armorStand.getLocation());
             mtPlayer.getPlayer().closeInventory();
-            mtPlayer.getPlayer().sendMessage("§aVous avez été téléporté à l'armor stand.");
+            mtPlayer.getPlayer().sendMessage(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_TELEPORTTOARMORSTAND, ""));
           }
           else if (action.equals(ClickType.MIDDLE)) {
             if (!armorStand.getHelmet().getType().equals(Material.AIR)) mtPlayer.getPlayer().getInventory().addItem(armorStand.getHelmet());
-            else mtPlayer.getPlayer().sendMessage("§cErreur : §7Cet armor stand n'a pas d'item en tête.");
+            else mtPlayer.getPlayer().sendMessage(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_ERROR_NOTITEMHEAD, ""));
           }
 
         }

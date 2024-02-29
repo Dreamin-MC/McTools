@@ -1,7 +1,6 @@
 package fr.dreamin.mctools.components.commands;
 
 import fr.dreamin.mctools.McTools;
-import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.defaultGui.ListMapGui;
 import fr.dreamin.mctools.api.player.PlayerPerm;
@@ -27,18 +26,18 @@ public class CommandMT implements CommandExecutor, TabCompleter {
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
 
     if (!(commandSender instanceof Player)) {
-      commandSender.sendMessage(McTools.getCodex().getBroadcastprefix() + McTools.getCodex().getErrorConsole());
+      commandSender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(Lang.en_US));
       return true;
     }
 
     Player player = (Player) commandSender;
 
-    MTPlayer dTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
     if (player.hasPermission(PlayerPerm.BUILD.getPerm())) {
 
       if (args.length < 1) {
-        player.sendMessage(McTools.getCodex().getBroadcastprefix() + "Merci de préciser une sous-commande.");
+        mtPlayer.sendMsg(LangMsg.ERROR_PUTVALUE, "");
         return false;
       }
 
@@ -48,18 +47,10 @@ public class CommandMT implements CommandExecutor, TabCompleter {
           break;
         case "editmode":
           if (!McTools.getCodex().isEditMode()) {
-            player.sendMessage(McTools.getCodex().getBroadcastprefix() + "§cLe mode édition n'est pas activé.");
+            mtPlayer.sendMsg(LangMsg.ERROR_EDITMODE_NOTENABLED, "");
             return false;
           }
-          if (dTPlayer.isEditMode()) {
-            dTPlayer.setEditMode(false);
-            player.sendMessage(McTools.getCodex().getBroadcastprefix() + "§aVous avez désactivé le mode édition.");
-          }
-          else {
-            dTPlayer.setEditMode(true);
-            player.sendMessage(McTools.getCodex().getBroadcastprefix() + "§aVous avez activé le mode édition.");
-
-          }
+          mtPlayer.setEditMode(!mtPlayer.isEditMode());
           break;
         case "listmap":
           McTools.getService(GuiManager.class).open(player, ListMapGui.class);
@@ -68,33 +59,28 @@ public class CommandMT implements CommandExecutor, TabCompleter {
           switch (args[1]) {
             case "pack":
               McTools.getCodex().setPack(!McTools.getCodex().isPack());
-              player.sendMessage(McTools.getCodex().getBroadcastprefix() + CustomChatColor.WHITE.getColorWithText("Vous avez ") + (McTools.getCodex().isPack()? CustomChatColor.GREEN.getColorWithText("activé") : CustomChatColor.RED.getColorWithText("désactivé")) + CustomChatColor.WHITE.getColorWithText(" le pack."));
+              mtPlayer.sendMsg(LangMsg.CMD_MT_SETPACK, McTools.getCodex().isPack() ? LangMsg.GENERAL_ENABLED : LangMsg.GENERAL_DISABLED);
               break;
             case "lang":
               Lang lang = Lang.getLangByName(args[2]);
 
               if (lang != null) {
-                dTPlayer.setLang(lang);
-                player.sendMessage(LangMsg.UPDATE_LANG.getMsg(lang, lang.getName()));
+                mtPlayer.setLang(lang);
+                mtPlayer.sendMsg(LangMsg.PLAYER_UPDATE_LANG, "");
                 return true;
               }
               else {
-                player.sendMessage(McTools.getCodex().getBroadcastprefix() + "Merci de préciser une langue valide.");
+                mtPlayer.sendMsg(LangMsg.CMD_MT_ERROR_VALIDLANG, "");
                 return false;
               }
 
             default:
-              player.sendMessage(McTools.getCodex().getBroadcastprefix() + "Merci de préciser une sous-commande valide.");
+              mtPlayer.sendMsg(LangMsg.ERROR_VALIDPUTVALUE, "");
               return false;
           }
           break;
-        case "test":
-          player.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(dTPlayer.getLang()));
-          player.sendMessage(LangMsg.ERROR_PERM.getMsg(dTPlayer.getLang()));
-//          player.sendMessage(LangMsg.getConfig().getString("error.console.fr_FR"));
-          break;
         default:
-          player.sendMessage(McTools.getCodex().getBroadcastprefix() + "Merci de préciser une sous-commande valide.");
+          mtPlayer.sendMsg(LangMsg.ERROR_VALIDPUTVALUE, "");
           return false;
       }
     }

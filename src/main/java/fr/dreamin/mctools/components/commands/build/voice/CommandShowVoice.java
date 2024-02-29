@@ -1,6 +1,8 @@
 package fr.dreamin.mctools.components.commands.build.voice;
 
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.components.lang.Lang;
+import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.command.Command;
@@ -14,35 +16,35 @@ public class CommandShowVoice implements CommandExecutor {
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
     if (!(commandSender instanceof Player)) {
-      commandSender.sendMessage("Cette commande ne peut être utilisée que par un joueur.");
+      commandSender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(Lang.en_US));
       return true;
     }
 
     Player player = (Player) commandSender;
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
     if (strings.length > 0) {
 
       if (strings.length == 2) {
         try {
           double y = Double.parseDouble(strings[1]);
-          MTPlayer.getVoiceConfManager().setY(y);
-          MTPlayer.getVoiceConfManager().setVoice(true);
+          mtPlayer.getVoiceConfManager().setY(y);
+          mtPlayer.getVoiceConfManager().setVoice(true);
         } catch (NumberFormatException e) {
-          player.sendMessage("§cErreur : §7Veuillez entrer un nombre valide.");
+          mtPlayer.sendMsg(LangMsg.ERROR_VALIDNUMBER, "");
           return true;
         }
       }
 
       try {
         int radius = Integer.parseInt(strings[0]);
-        MTPlayer.getVoiceConfManager().setRadius(radius);
-        MTPlayer.getVoiceConfManager().setVoice(true);
+        mtPlayer.getVoiceConfManager().setRadius(radius);
+        mtPlayer.getVoiceConfManager().setVoice(true);
       } catch (NumberFormatException e) {
-        player.sendMessage("§cErreur : §7Veuillez entrer un nombre valide.");
+        mtPlayer.sendMsg(LangMsg.ERROR_VALIDNUMBER, "");
         return true;
       }
-    } else MTPlayer.getVoiceConfManager().setVoice(false);
+    } else mtPlayer.getVoiceConfManager().setVoice(false);
 
     return true;
   }

@@ -5,6 +5,8 @@ import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
+import fr.dreamin.mctools.components.lang.Lang;
+import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Location;
@@ -20,10 +22,8 @@ import org.jetbrains.annotations.NotNull;
 public class ArmorStandMoveRotateGui implements GuiBuilder {
 
   @Override
-  public String name(Player player) {
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
-
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.ARMOR_MOVE_ROTATE.getName())) : "ArmorStand Move Rotate";
+  public String name(MTPlayer mtPlayer) {
+    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText((mtPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.ARMOR_MOVE_ROTATE.getName())) : mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_MOVEANDROTATE_TITLE, "");
   }
 
   @Override
@@ -32,38 +32,38 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(Player player, Inventory inventory) {
+  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
     return null;
   }
 
   @Override
   public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems guiItems) {
 
-    guiItems.create("Rotation (90) " + (mtPlayer.getArmorStandManager().getArmorStandRotation() == 90f ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 90f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 0, "§7Rotation de 90°.");
-    guiItems.create("Rotation (45) " + (mtPlayer.getArmorStandManager().getArmorStandRotation() == 45f ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 45f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 9, "§7Rotation de 45°.");
-    guiItems.create("Rotation (22.5) " + (mtPlayer.getArmorStandManager().getArmorStandRotation() == 22.5f ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 22.5f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 18, "§7Rotation de 22.5°.");
-    guiItems.create("Rotation (0.5) " + (mtPlayer.getArmorStandManager().getArmorStandRotation() == 0.5f ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 0.5f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 27, "§7Rotation de 0.5°.");
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_ROTATION, "(90)", (mtPlayer.getArmorStandManager().getArmRotate() == 90f ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang()) +")" : "")), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 90f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 0);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_ROTATION, "(45)", (mtPlayer.getArmorStandManager().getArmRotate() == 45f ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang()) +")" : "")), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 45f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 9);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_ROTATION, "(22.5)", (mtPlayer.getArmorStandManager().getArmRotate() == 22.5f ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang()) +")" : "")), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 22.5f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_ROTATION, "(0.5)", (mtPlayer.getArmorStandManager().getArmRotate() == 0.5f ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang()) +")" : "")), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 0.5f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 27);
 
-    guiItems.create("Distance déplacement (1) " + (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 1 ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 1 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 1, "§7Distance de déplacement de 1.");
-    guiItems.create("Distance déplacement (0.1) " + (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.1 ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.1 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 10, "§7Distance de déplacement de 0.1.");
-    guiItems.create("Distance déplacement (0.05) " + (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.05 ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.05 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 19, "§7Distance de déplacement de 0.05.");
-    guiItems.create("Distance déplacement (0.01) " + (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.01 ? "(Active)" : ""), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.01 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 28, "§7Distance de déplacement de 0.01.");
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_TRAVELDISTANCE, "(1)", (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 1 ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang()) +")" : "")), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 1 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 1);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_TRAVELDISTANCE, "(0.1)", (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.1 ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang()) +")" : "")), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.1 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 10);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_TRAVELDISTANCE, "(0.05)", (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.05 ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang()) +")" : "")), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.05 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 19);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_TRAVELDISTANCE, "(0.01)", (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.01 ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang()) +")" : "")), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.01 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 28);
 
-    guiItems.create(new ItemBuilder(ItemsPreset.arrowForWard.getItem()).setName("Avant").toItemStack(), 4, "§7Déplacer les armor stands vers l'avant.");
-    guiItems.create(new ItemBuilder(ItemsPreset.arrowLeft.getItem()).setName("Gauche").toItemStack(), 12, "§7Déplacer les armor stands vers la gauche.");
-    guiItems.create(new ItemBuilder(ItemsPreset.arrowRight.getItem()).setName("Droite").toItemStack(), 14, "§7Déplacer les armor stands vers la droite.");
-    guiItems.create(new ItemBuilder(ItemsPreset.arrowBackWard.getItem()).setName("Arrière").toItemStack(), 22, "§7Déplacer les armor stands vers l'arrière.");
+    guiItems.create(new ItemBuilder(ItemsPreset.arrowForWard.getItem()).setName(mtPlayer.getMsg(LangMsg.GENERAL_FORWARD, "")).toItemStack(), 4);
+    guiItems.create(new ItemBuilder(ItemsPreset.arrowLeft.getItem()).setName(mtPlayer.getMsg(LangMsg.GENERAL_LEFT, "")).toItemStack(), 12);
+    guiItems.create(new ItemBuilder(ItemsPreset.arrowRight.getItem()).setName(mtPlayer.getMsg(LangMsg.GENERAL_RIGHT, "")).toItemStack(), 14);
+    guiItems.create(new ItemBuilder(ItemsPreset.arrowBackWard.getItem()).setName(mtPlayer.getMsg(LangMsg.GENERAL_BACKWARD, "")).toItemStack(), 22);
 
-    guiItems.create(new ItemBuilder(ItemsPreset.arrowUp.getItem()).setName("En haut").toItemStack(), 7, "§7Déplacer les armor stands vers le haut.");
-    guiItems.create(new ItemBuilder(ItemsPreset.arrowDown.getItem()).setName("En bas").toItemStack(), 25, "§7Déplacer les armor stands vers le bas.");
+    guiItems.create(new ItemBuilder(ItemsPreset.arrowUp.getItem()).setName(mtPlayer.getMsg(LangMsg.GENERAL_UP, "")).toItemStack(), 7);
+    guiItems.create(new ItemBuilder(ItemsPreset.arrowDown.getItem()).setName(mtPlayer.getMsg(LangMsg.GENERAL_DOWN, "")).toItemStack(), 25);
 
-    guiItems.create((mtPlayer.getArmorStandManager().isInvisibleGui() ? "Passage Visible" : "Passage Invisible"), Material.NAME_TAG, (mtPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 40, "§7Rendre le menu visible ou invisible.");
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_GUIIN, (mtPlayer.getArmorStandManager().isInvisibleGui() ? LangMsg.GENERAL_VISIBLE : LangMsg.GENERAL_INVISIBLE)), Material.NAME_TAG, (mtPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 40);
 
-    guiItems.create(new ItemBuilder(ItemsPreset.arrowPrevious.getItem()).setName("Rotation gauche").toItemStack(), 41, "§7Rotation de 0.5° vers la gauche.");
-    guiItems.create(new ItemBuilder(ItemsPreset.arrowNext.getItem()).setName("Rotation droite").toItemStack(), 42, "§7Rotation de 0.5° vers la droite.");
+    guiItems.create(new ItemBuilder(ItemsPreset.arrowPrevious.getItem()).setName(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_MOVEANDROTATE_ROTATELEFT, "")).toItemStack(), 41);
+    guiItems.create(new ItemBuilder(ItemsPreset.arrowNext.getItem()).setName(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_MOVEANDROTATE_ROTATERIGHT, "")).toItemStack(), 42);
 
-    guiItems.create("Retourner au menu", Material.NAME_TAG, 3, 36, "§7Retourner au menu des armor stands.");
-    guiItems.create("Quitter", Material.NAME_TAG, 4, 44, "§7Fermer le menu.");
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_BACK, ""), Material.NAME_TAG, 3, 36);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_LEAVE, ""), Material.NAME_TAG, 4, 44);
 
   }
 

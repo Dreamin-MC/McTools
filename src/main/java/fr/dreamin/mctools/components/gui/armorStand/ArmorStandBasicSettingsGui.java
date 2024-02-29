@@ -3,10 +3,9 @@ package fr.dreamin.mctools.components.gui.armorStand;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.*;
+import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
-import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -14,11 +13,8 @@ import org.bukkit.inventory.ItemStack;
 public class ArmorStandBasicSettingsGui implements GuiBuilder {
 
   @Override
-  public String name(Player player) {
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
-
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText((MTPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.GENERIC_27.getName())) : "ArmorStand Basic Settings";
-
+  public String name(MTPlayer mtPlayer) {
+    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText((mtPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.GENERIC_27.getName())) : "ArmorStand Basic Settings";
   }
 
 
@@ -28,27 +24,26 @@ public class ArmorStandBasicSettingsGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(Player player, Inventory inventory) {
+  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
     return null;
   }
 
   @Override
   public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems guiItems) {
 
-    guiItems.create("Bras", Material.IRON_SWORD, 0);
-    guiItems.create("Base Armor stand visible", Material.STONE_SLAB, 1, "Changer entre visible et invisible");
-    guiItems.create("Base Armor stand invisible", Material.STONE_SLAB, 2, "Changer entre visible et invisible");
-    guiItems.create("Gravité off", Material.FEATHER, 3, "Changer entre gravité ou non");
-    guiItems.create("Gravité on", Material.FEATHER, 4, "Changer entre gravité ou non");
-    guiItems.create("Invisible", Material.GLASS, 5, "Changer entre visible ou non");
-    guiItems.create("Taille", Material.OAK_PLANKS, 6, "Mettre une taille normale ou petite");
-    guiItems.create("Invulnerable", Material.OBSIDIAN, 7, "Invicible ou non");
-    guiItems.create("Glowing", Material.GLOWSTONE_DUST, 8, "Glowing ou non");
-    guiItems.create((mtPlayer.getArmorStandManager().isInvisibleGui() ? "Passage Visible" : "Passage Invisible"), Material.NAME_TAG, (mtPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 22);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_ARM, ""), Material.IRON_SWORD, 0);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_BASICSETTINGS_BASEARMORSTAND, LangMsg.GENERAL_VISIBLE), Material.STONE_SLAB, 1);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_BASICSETTINGS_BASEARMORSTAND, LangMsg.GENERAL_INVISIBLE), Material.STONE_SLAB, 2);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_BASICSETTINGS_GRAVITY, LangMsg.GENERAL_ENABLED), Material.FEATHER, 3);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_BASICSETTINGS_GRAVITY, LangMsg.GENERAL_DISABLED), Material.FEATHER, 4);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_INVISIBLE, ""), Material.GLASS, 5);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_SIZE, ""), Material.OAK_PLANKS, 6);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_INVULNERABLE,""), Material.OBSIDIAN, 7);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_GLOWING, ""), Material.GLOWSTONE_DUST, 8);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_GUIIN, (mtPlayer.getArmorStandManager().isInvisibleGui() ? LangMsg.GENERAL_VISIBLE : LangMsg.GENERAL_INVISIBLE)), Material.NAME_TAG, (mtPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 40);
 
-    guiItems.create("Retour en arrière", Material.NAME_TAG, 3, 18);
-    guiItems.create("Quitter", Material.NAME_TAG, 4, 26);
-
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_RETURNMENU, ""), Material.NAME_TAG, 3, 18);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_LEAVE, ""), Material.NAME_TAG, 4, 26);
   }
 
   @Override

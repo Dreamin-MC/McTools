@@ -2,6 +2,8 @@ package fr.dreamin.mctools.components.commands.build.models;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.items.ItemBuilder;
+import fr.dreamin.mctools.components.lang.Lang;
+import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
@@ -17,15 +19,15 @@ public class CommandCoal implements CommandExecutor {
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
     if (!(sender instanceof Player)) {
-      sender.sendMessage("Cette commande ne peut être utilisée que par un joueur.");
+      sender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(Lang.en_US));
       return true;
     }
 
     Player player = (Player) sender;
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
     if (args.length == 0) {
-      player.sendMessage("§cErreur : §7Veuillez entrer un nombre valide.");
+      mtPlayer.sendMsg(LangMsg.ERROR_PUTVALUE, "");
       return true;
     }
     else if (args.length == 1) {
@@ -37,7 +39,7 @@ public class CommandCoal implements CommandExecutor {
         player.getInventory().addItem(itemBuilder.toItemStack());
 
       } catch (NumberFormatException e) {
-        player.sendMessage("§cErreur : §7Veuillez entrer un nombre valide.");
+        mtPlayer.sendMsg(LangMsg.ERROR_VALIDNUMBER, "");
         return true;
       }
     }
@@ -48,7 +50,7 @@ public class CommandCoal implements CommandExecutor {
         int id2 = Integer.parseInt(args[1]);
 
         if (id2 < id1) {
-          player.sendMessage("§cErreur : §7Veuillez entrer une tranche d'id normal.");
+          mtPlayer.sendMsg(LangMsg.ERROR_RANGEID, "");
           return true;
         }
 
@@ -59,7 +61,7 @@ public class CommandCoal implements CommandExecutor {
         }
 
       } catch (NumberFormatException e) {
-        player.sendMessage("§cErreur : §7Veuillez entrer un nombre valide.");
+        mtPlayer.sendMsg(LangMsg.ERROR_VALIDNUMBER, "");
         return true;
       }
     }

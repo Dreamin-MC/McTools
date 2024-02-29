@@ -4,6 +4,7 @@ import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.interact.Interact;
 import fr.dreamin.mctools.api.player.PlayerPerm;
 import fr.dreamin.mctools.components.game.manager.InteractManager;
+import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.mysql.fetcher.interactFetcher.InteractFetcher;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
@@ -32,10 +33,10 @@ public class CommandInteract implements CommandExecutor, TabCompleter {
     }
 
     Player player = (Player) sender;
-    MTPlayer dTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
     if (args.length == 0) {
-      player.sendMessage("Merci de préciser une sous-commande.");
+      mtPlayer.sendMsg(LangMsg.ERROR_PUTVALUE, "");
       return false;
     }
 
@@ -53,7 +54,7 @@ public class CommandInteract implements CommandExecutor, TabCompleter {
         spawnAllInteracts();
         break;
       default:
-        player.sendMessage("Merci de préciser une sous-commande.");
+        mtPlayer.sendMsg(LangMsg.ERROR_VALIDPUTVALUE, "");
         break;
     }
 

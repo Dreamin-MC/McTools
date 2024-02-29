@@ -6,6 +6,7 @@ import fr.dreamin.mctools.api.log.Logging;
 import fr.dreamin.mctools.api.minecraft.Minecraft;
 import fr.dreamin.mctools.api.player.PlayerPerm;
 import fr.dreamin.mctools.components.lang.Lang;
+import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.manager.*;
 import fr.dreamin.mctools.mysql.fetcher.UserFetcher.UserFetcher;
 import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
@@ -17,18 +18,32 @@ import org.bukkit.inventory.ItemStack;
 
 public class MTPlayer {
 
+  @Getter @Setter
   private final Player player;
+  @Getter @Setter
   private PlayerPerm perm;
+  @Getter
   private boolean isEditMode;
+
+  @Getter
   private final BuildPlayerManager buildManager = new BuildPlayerManager();
+  @Getter
   private final ArmorStandManager armorStandManager;
+  @Getter
   private final VoiceConfPlayerManager voiceConfManager = new VoiceConfPlayerManager();
+  @Getter
   private final HudPlayerManager hudPlayerManager;
+  @Getter
   private final TritonPlayerManager tritonManager;
+  @Getter
   private final PlayerTickManager playerTickManager;
+  @Getter
   private VoicePlayerManager voiceManager;
+  @Getter
   private final ItemStack itemStats;
+  @Getter
   private String skinBase64 = null;
+  @Getter
   private boolean isCanMove = true;
 
   @Getter @Setter
@@ -70,20 +85,11 @@ public class MTPlayer {
 
   }
 
-  public Player getPlayer() {
-    return player;
-  }
-
-  public boolean isEditMode() {
-    return isEditMode;
-  }
-
   public void setEditMode(boolean isEditMode) {
-    this.isEditMode = isEditMode;
-  }
+    if (isEditMode) player.sendMessage(LangMsg.CMD_MT_SETEDITMODE.getMsg(getLang(), LangMsg.GENERAL_ENABLED.getMsg(getLang())));
+    else player.sendMessage(LangMsg.CMD_MT_SETEDITMODE.getMsg(getLang(), LangMsg.GENERAL_DISABLED.getMsg(getLang())));
 
-  public boolean isCanMove() {
-    return isCanMove;
+    this.isEditMode = isEditMode;
   }
 
   public void setCanMove(boolean isCanMove) {
@@ -91,44 +97,19 @@ public class MTPlayer {
     if (!isCanMove()) player.setGravity(false);
     else player.setGravity(true);
   }
-
-  public PlayerPerm getPerm() {
-    return perm;
+  public String getMsg(LangMsg msg, String... args) {
+    return msg.getMsg(getLang(), args);
+  }
+  public String getMsg(LangMsg msg, LangMsg... args) {
+    return msg.getMsg_(getLang(), args);
   }
 
-  public PlayerTickManager getPlayerTickManager() {
-    return playerTickManager;
+  public void sendMsg(LangMsg msg, String... args) {
+    player.sendMessage(msg.getMsg(getLang(), args));
   }
 
-  public BuildPlayerManager getBuildManager() {
-    return buildManager;
+  public void sendMsg(LangMsg msg, LangMsg... args) {
+    player.sendMessage(msg.getMsg_(getLang(), args));
   }
 
-  public ArmorStandManager getArmorStandManager() {
-    return armorStandManager;
-  }
-
-  public HudPlayerManager getHudPlayerManager() {
-    return hudPlayerManager;
-  }
-
-  public VoiceConfPlayerManager getVoiceConfManager() {
-    return voiceConfManager;
-  }
-
-  public TritonPlayerManager getTritonManager() {
-    return tritonManager;
-  }
-
-  public VoicePlayerManager getVoiceManager() {
-    return voiceManager;
-  }
-
-  public ItemStack getItemStats() {
-    return itemStats;
-  }
-
-  public String getSkinBase64() {
-    return skinBase64;
-  }
 }

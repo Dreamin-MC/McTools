@@ -5,6 +5,7 @@ import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.components.game.manager.BuildManager;
+import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
@@ -18,8 +19,8 @@ import java.util.Arrays;
 public class TagCategoryListGui implements GuiBuilder {
 
   @Override
-  public String name(Player player) {
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_36.getName()) : "Tag Category List";
+  public String name(MTPlayer mtPlayer) {
+    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_36.getName()) : LangMsg.GUI_TAGCATEGORY_TITLE.getMsg(mtPlayer.getLang());
   }
 
   @Override
@@ -28,7 +29,7 @@ public class TagCategoryListGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(Player player, Inventory inv) {
+  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
     return new PaginationManager(new ItemBuilder(Material.ARROW).toItemStack(), 27, new ItemBuilder(Material.ARROW).toItemStack(), 35, 0, 26, PaginationType.PAGE, BuildManager.getTagCategoryItemStacks(), Arrays.asList(), false);
   }
 

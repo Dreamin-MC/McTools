@@ -6,9 +6,9 @@ import fr.dreamin.mctools.mysql.fetcher.buildCategoryFetcher.BuildCategoryFetche
 import fr.dreamin.mctools.mysql.fetcher.buildTagFetcher.BuildTagFetcher;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public class DTGame {
+public class MTGame {
 
-  public DTGame(JavaPlugin plugin) {
+  public MTGame(JavaPlugin plugin) {
 
     BuildManager.getTagCategorys().addAll(BuildCategoryFetcher.getAllCategory());
     BuildManager.getTags().addAll(BuildTagFetcher.getAllTag());

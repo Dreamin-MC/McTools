@@ -22,7 +22,7 @@ import fr.dreamin.mctools.components.commands.build.voice.CommandShowVoice;
 import fr.dreamin.mctools.components.commands.CommandMT;
 import fr.dreamin.mctools.api.commands.SimpleCommand;
 import fr.dreamin.mctools.components.commands.voice.CommandDV;
-import fr.dreamin.mctools.components.game.DTGame;
+import fr.dreamin.mctools.components.game.MTGame;
 import fr.dreamin.mctools.api.armorPose.ArmorManager;
 import fr.dreamin.mctools.components.game.manager.DoorManager;
 import fr.dreamin.mctools.components.game.manager.InteractManager;
@@ -49,7 +49,7 @@ public final class McTools extends JavaPlugin{
   @Getter
   private static LangMsg langMsg;
   private DatabaseManager databaseDreaminVoice;
-  private static DTGame dtGame;
+  private static MTGame dtGame;
   private final ServiceManager serviceManager = new ServiceManager();
 
   private boolean isDisabled = false;
@@ -69,7 +69,7 @@ public final class McTools extends JavaPlugin{
     getDatabase().connection();
 //    DatabaseCodex.checkIfExist();
 
-    dtGame = new DTGame(this);
+    dtGame = new MTGame(this);
 
     getServiceManager().loadServices(Logging.class, GuiManager.class, PaperDependencyService.class, PlayersService.class, TimerManager.class, CooldownManager.class, GlowingEntities.class, GlowingBlocks.class);
 
@@ -125,7 +125,7 @@ public final class McTools extends JavaPlugin{
   public static Codex getCodex() {
     return codex;
   }
-  public static DTGame getGame() {
+  public static MTGame getGame() {
     return dtGame;
   }
 

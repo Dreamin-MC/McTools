@@ -11,7 +11,6 @@ import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -19,17 +18,15 @@ import org.bukkit.inventory.ItemStack;
 public class ConfigPlayerGui implements GuiBuilder {
 
   @Override
-  public String name(Player player) {
+  public String name(MTPlayer mtPlayer) {
 
     String name = "NULL";
 
-    for (MTPlayer mtPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+    for (MTPlayer mtPlayer1 : McTools.getService(PlayersService.class).getDTPlayers()) {
 
-      if (mtPlayer.getVoiceManager().isSelected()) name = mtPlayer.getPlayer().getName();
-
-      return LangMsg.VOICE_CONFIGPLAYER_TITLE.getMsg(mtPlayer.getLang(), name);
+      if (mtPlayer1.getVoiceManager().isSelected()) name = mtPlayer1.getPlayer().getName();
     }
-    return LangMsg.VOICE_CONFIGPLAYER_TITLE.getMsg(Lang.en_US, name);
+    return mtPlayer.getMsg(LangMsg.GUI_VOICE_CONFIGPLAYER_TITLE, name);
   }
 
   @Override
@@ -38,7 +35,7 @@ public class ConfigPlayerGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(Player player, Inventory inv) {
+  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
     return null;
   }
 
@@ -57,7 +54,7 @@ public class ConfigPlayerGui implements GuiBuilder {
           CustomChatColor.RED.getColorWithText(mTPlayer.getPlayer().getName())),
           mTPlayer.getPlayer().getName(), GuiItems.PlayerHeadMethod.PLAYER_NAME, 4);
 
-        if (mTPlayer.getVoiceManager().getClient().isConnected()) guiItems.create(LangMsg.VOICE_CONFIGPLAYER_FORCEDMUTE.getMsg(mTPlayer.getLang(), mTPlayer.getVoiceManager().isForcedMute() ? LangMsg.ENABLED.getMsg(mTPlayer.getLang()) : LangMsg.DISABLED.getMsg(mTPlayer.getLang())), Material.BARRIER, 2, 40);
+        if (mTPlayer.getVoiceManager().getClient().isConnected()) guiItems.create(mtPlayer.getMsg(LangMsg.GUI_VOICE_CONFIGPLAYER_FORCEDMUTE, mTPlayer.getVoiceManager().isForcedMute() ? LangMsg.GENERAL_ENABLED : LangMsg.GENERAL_DISABLED), Material.BARRIER, 2, 40);
       }
 
     }

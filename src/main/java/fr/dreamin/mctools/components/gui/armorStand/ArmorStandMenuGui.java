@@ -4,6 +4,7 @@ import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.components.gui.tag.TagCategoryListGui;
+import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
@@ -16,8 +17,8 @@ public class ArmorStandMenuGui implements GuiBuilder {
 
 
   @Override
-  public String name(Player player) {
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.ARMORS.getName()) : "ArmorStand Menu";
+  public String name(MTPlayer mtPlayer) {
+    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.ARMORS.getName()) : mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_MAIN_TITLE, "");
   }
 
   @Override
@@ -26,24 +27,22 @@ public class ArmorStandMenuGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(Player player, Inventory inventory) {
+  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
     return null;
   }
 
   @Override
   public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems guiItems) {
 
-    guiItems.create("Paramètres de base", Material.ARMOR_STAND, 2, "Simple modifications pour l'armor stand");
-    guiItems.create("Paramètres du corps", Material.STONE_SLAB, 3, "Simple ajustement du corps de l'armor stand");
-    guiItems.create("Mouvement et rotation", Material.GLOWSTONE_DUST, 5, "Mauvaise position ? Déplacez et faites simplement pivoter l'armor stand");
-    guiItems.create("Poses prédéfinies", Material.IRON_SWORD, 6, "Vous voulez juste du beau truc sans trop réfléchir ?");
-    guiItems.create("Liste Armor Stand", Material.PAPER, 13, "Liste de tous les armors stand séléctionné");
-    guiItems.create("Tag", Material.NAME_TAG, 18, "List des Catégories et des tags");
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_MAIN_BASICSETTINGS, ""), Material.ARMOR_STAND, 2);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_MAIN_BODYSETTINGS, ""), Material.STONE_SLAB, 3);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_MAIN_MOVEANDROTATE, ""), Material.GLOWSTONE_DUST, 5);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_MAIN_SETPOSE, ""), Material.IRON_SWORD, 6);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_MAIN_LISTARMORSTAND, ""), Material.PAPER, 13);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_MAIN_TAG, ""), Material.NAME_TAG, 18);
 
-    guiItems.create("Quitter", Material.NAME_TAG, 4, 26);
-    guiItems.create((mtPlayer.getArmorStandManager().isInvisibleGui() ? "Passage Visible" : "Passage Invisible"), Material.NAME_TAG, (mtPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 22);
-
-
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_LEAVE, ""), Material.NAME_TAG, 4, 26);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_GUIIN, (mtPlayer.getArmorStandManager().isInvisibleGui() ? LangMsg.GENERAL_VISIBLE : LangMsg.GENERAL_INVISIBLE)), Material.NAME_TAG, (mtPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 22);
   }
 
   @Override

@@ -91,26 +91,15 @@ public class VoiceWallManager extends Service {
       MTPlayer otherMTPlayer = playersService.getPlayer(possibleSpeaker);
 
       if (!playersService.getSpectators().contains(MTPlayer) && !playersService.getSpectators().contains(otherMTPlayer)) {
-        if (MTPlayer.getVoiceManager().getDTPlayersSpeaker().contains(otherMTPlayer)) {
-          Bukkit.broadcastMessage(listener.getName() + " " + "can hear" + " " + possibleSpeaker.getName());
-          return true;
-        }
-        else {
-          return false;
-        }
+        if (MTPlayer.getVoiceManager().getDTPlayersSpeaker().contains(otherMTPlayer)) return true;
+        else return false;
       }
-      else {
-        return true;
-      }
+      else return true;
     });
   }
 
   public void stopRunTask() {
-    if (bukkitTask != null) {
-      bukkitTask.cancel();
-    }
+    if (bukkitTask != null) bukkitTask.cancel();
   }
-
-
 
 }

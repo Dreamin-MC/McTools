@@ -6,6 +6,7 @@ import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.components.build.Tag;
 import fr.dreamin.mctools.components.game.manager.BuildManager;
+import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
@@ -19,8 +20,8 @@ import java.util.Arrays;
 public class TagListGui implements GuiBuilder {
 
   @Override
-  public String name(Player player) {
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45.getName()) : "Tag List";
+  public String name(MTPlayer mtPlayer) {
+    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45.getName()) : LangMsg.GUI_TAG_TITLE.getMsg(mtPlayer.getLang());
   }
 
   @Override
@@ -29,8 +30,8 @@ public class TagListGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(Player player, Inventory inv) {
-    return new PaginationManager(new ItemBuilder(Material.ARROW).toItemStack(), 36, new ItemBuilder(Material.ARROW).toItemStack(), 44, 0, 35, PaginationType.PAGE, BuildManager.getTagItemStacks(McTools.getService(PlayersService.class).getPlayer(player)), Arrays.asList(), false);
+  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
+    return new PaginationManager(new ItemBuilder(Material.ARROW).toItemStack(), 36, new ItemBuilder(Material.ARROW).toItemStack(), 44, 0, 35, PaginationType.PAGE, BuildManager.getTagItemStacks(mtPlayer), Arrays.asList(), false);
   }
 
   @Override

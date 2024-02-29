@@ -1,19 +1,83 @@
 error:
   console:
     lang:
-      fr_FR : "%BROADCAST%[color]RED[color] Vous ne pouvez pas exécuter cette commande dans la console :("
+      fr_FR : "%BROADCAST%[color]RED[color]Vous ne pouvez pas exécuter cette commande dans la console :("
       en_US : "%BROADCAST%[color]RED[color]You cannot execute this command in the console :("
   perm:
     lang:
       fr_FR : "%BROADCAST%[color]RED[color]Vous n'avez pas la permission d'exécuter cette commande"
       en_US : "%BROADCAST%[color]RED[color]You don't have the permission to execute this command"
+  occurred:
+    lang:
+      fr_FR : "%BROADCAST%[color]RED[color]Une erreur est survenue lors de l'exécution de cette commande"
+      en_US : "%BROADCAST%[color]RED[color]An error occurred while executing this command"
+  putValue:
+    lang:
+      fr_FR : "%BROADCAST%[color]RED[color]Merci de mettre une valeur"
+      en_US : "%BROADCAST%[color]RED[color]Please put a value"
+  validPutValue:
+    lang:
+      fr_FR : "%BROADCAST%[color]RED[color]Merci de mettre un argument valide"
+      en_US : "%BROADCAST%[color]RED[color]Please provide a valid argument"
+  mainGui:
+    notSet:
+      lang:
+        fr_FR: "%BROADCAST%[color]RED[color]Aucune GUI principale n'est définie"
+        en_US: "%BROADCAST%[color]RED[color]No main GUI is defined"
+
+  validNumber:
+    lang:
+      fr_FR : "%BROADCAST%[color]RED[color]Merci de mettre un nombre valide"
+      en_US : "%BROADCAST%[color]RED[color]Please put a valid number"
+  rangeId:
+    lang:
+      fr_FR : "%BROADCAST%[color]RED[color]Merci de mettre une tranche d'id correct."
+      en_US : "%BROADCAST%[color]RED[color]Please put a valid id range."
+  itemHand:
+    lang:
+      fr_FR : "%BROADCAST%[color]RED[color]Merci de tenir un item en main."
+      en_US : "%BROADCAST%[color]RED[color]Please hold an item in hand."
+  itemId:
+    lang:
+      fr_FR : "%BROADCAST%[color]RED[color]Cet objet n'a pas d'id personnalisé."
+      en_US : "%BROADCAST%[color]RED[color]This item does not have a custom ID."
+    editModeNotEnalbe:
+      lang:
+        fr_FR : "%BROADCAST%[color]RED[color]Le mode édition n'est pas activé."
+        en_US : "%BROADCAST%[color]RED[color]The edit mode is not enabled"
 
 player:
   update:
     lang:
       fr_FR : "%BROADCAST%[color]WHITE[color]Modification de votre langue par : [color]GOLD[color]%0%"
       en_US : "%BROADCAST%[color]WHITE[color]Update your language to : [color]GOLD[color]%0%"
-
+  armorStand:
+    lore:
+      general:
+        leftClickAdd:
+          lang:
+            fr_FR : "[color]WHITE[color]Clique gauche pour ajouter à la liste"
+            en_US : "[color]WHITE[color]Left click to add to list"
+        rightClickRemove:
+          lang:
+            fr_FR : "[color]WHITE[color]Clique droit pour le supprimer de la liste"
+            en_US : "[color]WHITE[color]Right click to remove from the list"
+        shiftClickTp:
+          lang:
+            fr_FR : "[color]WHITE[color]Maj-Clique pour se teleporter"
+            en_US : "[color]WHITE[color]Shift click to teleport"
+        shiftLeftClickTp:
+          lang:
+            fr_FR : "[color]WHITE[color]Maj-Clique gauche pour se teleporter"
+            en_US : "[color]WHITE[color]Shift left click to teleport"
+        shiftRightClickShow:
+          lang:
+            fr_FR : "[color]WHITE[color]Maj-Clique droit pour afficher"
+            en_US : "[color]WHITE[color]Shift right click to show"
+        clickWheelModel:
+          lang:
+            fr_FR : "[color]WHITE[color]Cliquez molette pour récupérer le modèle"
+            en_US : "[color]WHITE[color]Click the wheel to retrieve the model"
 general:
   yes:
     lang:
@@ -39,12 +103,126 @@ general:
     lang:
       fr_FR: "[color]WHITE[color]Informations"
       en_US: "[color]WHITE[color]Informations"
-  mainGui:
-    notSet:
-      lang:
-        fr_FR: "%BROADCAST%[color]RED[color]Aucune GUI principale n'est définie"
-        en_US: "%BROADCAST%[color]RED[color]No main GUI is defined"
-
+  returnMenu:
+    lang:
+      fr_FR: "[color]WHITE[color]Retour au menu"
+      en_US: "[color]WHITE[color]Return to menu"
+  leave:
+    lang:
+      fr_FR: "[color]WHITE[color]Quitter"
+      en_US: "[color]WHITE[color]Quit"
+  invisible:
+    lang:
+      fr_FR: "[color]WHITE[color]Invisible"
+      en_US: "[color]WHITE[color]Invisible"
+  visible:
+    lang:
+      fr_FR: "[color]WHITE[color]Visible"
+      en_US: "[color]WHITE[color]Visible"
+  guiIn:
+    lang:
+      fr_FR: "[color]WHITE[color]GUI en %0"
+      en_US: "[color]WHITE[color]GUI in %0"
+  activate:
+    lang:
+      fr_FR: "[color]WHITE[color]Activer"
+      en_US: "[color]WHITE[color]Activate"
+  left:
+    lang:
+      fr_FR: "Gauche"
+      en_US: "Left"
+  right:
+    lang:
+      fr_FR: "Droite"
+      en_US: "Right"
+  up:
+    lang:
+      fr_FR: "Haut"
+      en_US: "Up"
+  down:
+    lang:
+      fr_FR: "Bas"
+      en_US: "Down"
+  back:
+    lang:
+      fr_FR: "[color]WHITE[color]Retour"
+      en_US: "[color]WHITE[color]Back"
+  next:
+    lang:
+      fr_FR: "[color]WHITE[color]Suivant"
+      en_US: "[color]WHITE[color]Next"
+  previous:
+    lang:
+      fr_FR: "[color]WHITE[color]Précédent"
+      en_US: "[color]WHITE[color]Previous"
+  backward:
+    lang:
+      fr_FR: "Arrière"
+      en_US: "Backward"
+  forward:
+    lang:
+      fr_FR: "Avant"
+      en_US: "Forward"
+  arm:
+    lang:
+      fr_FR: "[color]WHITE[color]Bras"
+      en_US: "[color]WHITE[color]Arm"
+  move:
+    lang:
+      fr_FR: "[color]WHITE[color]Déplacer"
+      en_US: "[color]WHITE[color]Move"
+  size:
+    lang:
+      fr_FR: "[color]WHITE[color]Taille"
+      en_US: "[color]WHITE[color]Size"
+  invulnerable:
+    lang:
+      fr_FR: "[color]WHITE[color]invulnérable"
+      en_US: "[color]WHITE[color]Invulnerable"
+  glowing:
+    lang:
+      fr_FR: "[color]WHITE[color]Brillant"
+      en_US: "[color]WHITE[color]Glowing"
+  removeAll:
+    lang:
+      fr_FR: "[color]RED[color]Supprimer tous"
+      en_US: "[color]RED[color]Remove all"
+  addAll:
+    lang:
+      fr_FR: "[color]GREEN[color]Ajouter tous"
+      en_US: "[color]GREEN[color]Add all"
+  removed:
+    lang:
+      fr_FR: "[color]RED[color]supprimé"
+      en_US: "[color]RED[color]removed"
+  added:
+    lang:
+      fr_FR: "[color]GREEN[color]ajouté"
+      en_US: "[color]GREEN[color]added"
+  destroy:
+    lang:
+      fr_FR: "[color]RED[color]détruit"
+      en_US: "[color]RED[color]destroy"
+  selected:
+    lang:
+      fr_FR: "[color]GREEN[color]sélectionné"
+      en_US: "[color]GREEN[color]selected"
+  haveAllArmorStand:
+    lang:
+      fr_FR: "[color]WHITE[color]Vous avez %0 tous les portes armures %1"
+      en_US: "[color]WHITE[color]You have %0 all %1 armor stand"
+  haveArmorStand:
+    lang:
+      fr_FR: "[color]WHITE[color]Vous avez %0 un porte armure %1"
+      en_US: "[color]WHITE[color]You have %0 a %1 armor stand"
+  locked:
+    lang:
+      fr_FR: "[color]WHITE[color]verrouillé"
+      en_US: "[color]WHITE[color]locked"
+  radius:
+    lang:
+      fr_FR: "[color]WHITE[color]rayon"
+      en_US: "[color]WHITE[color]radius"
 
 gui:
   voice:
@@ -114,7 +292,232 @@ gui:
         lang:
           fr_FR: "[color]YELLOW[color]Pluie"
           en_US: "[color]YELLOW[color]Rain"
+      clear:
+        lang:
+          fr_FR: "[color]GREEN[color]Clair"
+          en_US: "[color]GREEN[color]Clear"
     day:
       lang:
         fr_FR: "[color]WHITE[color]Jour : %0%"
         en_US: "[color]WHITE[color]Day : %0%"
+      midnight:
+        lang:
+          fr_FR: "[color]DARKBLUE[color]Minuit"
+          en_US: "[color]DARKBLUE[color]Midnight"
+      night:
+        lang:
+          fr_FR: "[color]DARKRED[color]Nuit"
+          en_US: "[color]DARKRED[color]Night"
+      sun:
+        lang:
+          fr_FR: "[color]YELLOW[color]Jour"
+          en_US: "[color]YELLOW[color]Day"
+      morning:
+        lang:
+          fr_FR: "[color]YELLOW[color]Matin"
+          en_US: "[color]YELLOW[color]Morning"
+  armorStand:
+    general:
+      rotation:
+        lang:
+          fr_FR: "[color]WHITE[color]Rotation %0 %1"
+          en_US: "[color]WHITE[color]Rotation %0 %1"
+      travalDistance:
+        lang:
+          fr_FR: "[color]WHITE[color]Distance de déplacement %0 %1"
+          en_US: "[color]WHITE[color]Travel distance %0 %1"
+      destroyArmorStand:
+        lang:
+          fr_FR: "[color]RED[color]Détruir les portes armures"
+          en_US: "[color]RED[color]Destroy armorStand"
+      haveAArmorStandSelected:
+        lang:
+          fr_FR: "[color]WHITE[color]Vous avez %0 un porte armure à votre séléction"
+          en_US: "[color]WHITE[color]You have %0 an armor holder to your selection"*
+      teleportToArmorStand:
+        lang:
+          fr_FR: "[color]WHITE[color]Vous avez été téléporté au porte armure."
+          en_US: "[color]WHITE[color]You have been teleported to the armor stand."
+      deleteList:
+        lang:
+          fr_FR: "[color]RED[color]Supprimer la liste"
+          en_US: "[color]RED[color]Delete the list"
+    error:
+      notItemHead:
+        lang:
+          fr_FR: "%BROADCAST%Cet armor stand n'a pas d'item sur sa tête."
+          en_US: "%BROADCAST%This armor stand does not have an item on its head."
+    main:
+      title:
+        lang:
+          fr_FR: "Porte armure menu"
+          en_US: "Armor stand menu"
+      basicSettings:
+        lang:
+          fr_FR: "[color]WHITE[color]Paramètres de base"
+          en_US: "[color]WHITE[color]Base settings"
+      bodySettings:
+        lang:
+          fr_FR: "[color]WHITE[color]Paramètres du corps"
+          en_US: "[color]WHITE[color]Body settings"
+      moveAndRotate:
+        lang:
+          fr_FR: "[color]WHITE[color]Déplacer et faire pivoter"
+          en_US: "[color]WHITE[color]Move and rotate"
+      setPose:
+        lang:
+          fr_FR: "[color]WHITE[color]Définir la position"
+          en_US: "[color]WHITE[color]Set position"
+      listArmorStand:
+        lang:
+          fr_FR: "[color]WHITE[color]Liste des portes armures"
+          en_US: "[color]WHITE[color]List of armor stands"
+      tag:
+        lang:
+          fr_FR: "[color]WHITE[color]Etiquette"
+          en_US: "[color]WHITE[color]Tag"
+    moveAndRotate:
+      title:
+        lang:
+          fr_FR: "[color]WHITE[color]Déplacer et faire pivoter"
+          en_US: "[color]WHITE[color]Move and rotate"
+      rotateLeft:
+        lang:
+          fr_FR: "[color]WHITE[color]Rotation gauche"
+          en_US: "[color]WHITE[color]Rotate left"
+      rotateRight:
+        lang:
+          fr_FR: "[color]WHITE[color]Rotation droite"
+          en_US: "[color]WHITE[color]Rotate right"
+    armsSettings:
+      title:
+        lang:
+          fr_FR: "Paramètres des bras"
+          en_US: "Arms Settings"
+      arm:
+        lang:
+          fr_FR: "[color]WHITE[color]Bras : %1"
+          en_US: "[color]WHITE[color]Arm : %1"
+      move:
+        lang:
+          fr_FR: "[color]WHITE[color]Déplacer l'axe %0: %1"
+          en_US: "[color]WHITE[color]Move the axis %0 : %1"
+    basicSettings:
+      title:
+        lang:
+          fr_FR: "Paramètres de l'armure"
+          en_US: "Basic Settings"
+      invisibleOrVisible:
+        lang:
+          fr_FR: "[color]WHITE[color]Invisible ou visible"
+          en_US: "[color]WHITE[color]Invisible or visible"
+      gravity:
+        lang:
+          fr_FR: "[color]WHITE[color]Gravité : %0"
+          en_US: "[color]WHITE[color]Gravity : %0"
+      baseArmorStand:
+        lang:
+          fr_FR: "[color]WHITE[color]Base de l'armure %0"
+          en_US: "[color]WHITE[color]Base of the armure %0"
+    listLocked:
+      title:
+        lang:
+          fr_FR: "Liste verrouillée"
+          en_US: "List locked"
+    listRadius:
+      title:
+        lang:
+          fr_FR: "Liste rayon"
+          en_US: "List radius"
+    listSelected:
+      title:
+        lang:
+          fr_FR: "Liste sélectionnée"
+          en_US: "List selected"
+    presetPoses:
+      title:
+        lang:
+          fr_FR: "Liste des poses"
+          en_US: "List of poses"
+      poses:
+        - 1:
+          lang:
+            fr_FR: "[color]WHITE[color]Pose 1"
+            en_US: "[color]WHITE[color]Pose 1"
+          value:
+            rightArm:
+              roll: 0
+              yaw: 0
+              pitch: 0
+            leftArm:
+              roll: 0
+              yaw: 0
+              pitch: 0
+            rightLeg:
+              roll: 0
+              yaw: 0
+              pitch: 0
+            leftLeg:
+              roll: 0
+              yaw: 0
+              pitch: 0
+            head:
+              roll: 0
+              yaw: 0
+              pitch: 0
+            body:
+              roll: 0
+              yaw: 0
+              pitch: 0
+
+  tag:
+    title:
+      lang:
+        fr_FR: "List des étiquettes"
+        en_US: "List of tags"
+  tagCategory:
+    title:
+      lang:
+        fr_FR: "List des catégories d'étiquette"
+        en_US: "List of tag categories"
+cmd:
+  tag:
+    error:
+      tagCategory:
+        lang:
+          fr_FR: "%BROADCAST%[color]RED[color]Merci de sélectionner une catégorie de tag"
+          en_US: "%BROADCAST%[color]RED[color]Please select a tag category"
+      selectTag:
+        lang:
+          fr_FR: "%BROADCAST%[color]RED[color]Merci de sélectionner un tag."
+          en_US: "%BROADCAST%[color]RED[color]Please select a tag."
+      setTagAndValue:
+        lang:
+          fr_FR: "%BROADCAST%[color]RED[color]Merci de mettre un nom et une valeur de tag."
+          en_US: "%BROADCAST%[color]RED[color]Please enter a tag name and value."
+      tagCharLimit:
+        lang:
+          fr_FR: "%BROADCAST%[color]RED[color]Merci de mettre un nom ou une valeur de tag inférieur à 16 caractères."
+          en_US: "%BROADCAST%[color]RED[color]Please enter a tag name or value shorter than 16 characters."
+      putCategoryValue:
+        lang:
+          fr_FR: "%BROADCAST%[color]RED[color]Merci de mettre une valeur de catégorie."
+          en_US: "%BROADCAST%[color]RED[color]Please enter a tag category value."
+      categoryCharLimit:
+        lang:
+          fr_FR: "%BROADCAST%[color]RED[color]Merci de mettre un nom de catégorie inférieur à 16 caractères."
+          en_US: "%BROADCAST%[color]RED[color]Please enter a category name of less than 16 characters."
+  mt:
+    error:
+      validLang:
+        lang:
+          fr_FR: "%BROADCAST%[color]RED[color]Merci de sélectionner une langue valide."
+          en_US: "%BROADCAST%[color]RED[color]Please select a valid language."
+    setEditMode:
+      lang:
+        fr_FR: "%BROADCAST%[color]WHITE[color]Vous avez %0% [color]WHITE[color]le mode édition."
+        en_US: "%BROADCAST%[color]WHITE[color]You have %0% [color]WHITE[color]edit mode."
+    setPack:
+      lang:
+        fr_FR: "%BROADCAST%[color]WHITE[color]Vous avez %0% [color]WHITE[color]le pack."
+        en_US: "%BROADCAST%[color]WHITE[color]You have %0 [color]WHITE[color]the pack."
