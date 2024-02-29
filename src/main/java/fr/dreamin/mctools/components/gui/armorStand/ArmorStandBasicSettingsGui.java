@@ -40,7 +40,7 @@ public class ArmorStandBasicSettingsGui implements GuiBuilder {
     guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_SIZE, ""), Material.OAK_PLANKS, 6);
     guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_INVULNERABLE,""), Material.OBSIDIAN, 7);
     guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_GLOWING, ""), Material.GLOWSTONE_DUST, 8);
-    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_GUIIN, (mtPlayer.getArmorStandManager().isInvisibleGui() ? LangMsg.GENERAL_VISIBLE : LangMsg.GENERAL_INVISIBLE)), Material.NAME_TAG, (mtPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 40);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_GUIIN, (mtPlayer.getArmorStandManager().isInvisibleGui() ? LangMsg.GENERAL_VISIBLE : LangMsg.GENERAL_INVISIBLE)), Material.NAME_TAG, (mtPlayer.getArmorStandManager().isInvisibleGui() ? 3 : 4), 22);
 
     guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_RETURNMENU, ""), Material.NAME_TAG, 3, 18);
     guiItems.create(mtPlayer.getMsg(LangMsg.GENERAL_LEAVE, ""), Material.NAME_TAG, 4, 26);

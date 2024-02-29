@@ -57,15 +57,14 @@ public class ArmorStandPresetPosesGui implements GuiBuilder {
       return;
     }
 
-    //TODO à refaire
     switch (slot) {
       case 31:
         mtPlayer.getArmorStandManager().setInvisibleGui(!mtPlayer.getArmorStandManager().isInvisibleGui());
         break;
-      case 27:
+      case 28:
         McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMenuGui.class);
         break;
-      case 35:
+      case 34:
         mtPlayer.getPlayer().closeInventory();
         break;
     }
