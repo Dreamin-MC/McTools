@@ -5,6 +5,7 @@ import fr.dreamin.mctools.api.colors.CustomChatColor;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.regex.Matcher;
@@ -51,7 +52,7 @@ public enum LangMsg {
   GENERAL_HAVEARMORSTAND("general.haveArmorStand.lang.", "[color]WHITE[color]You have %0 a %1 armor stand"),
 
   //------ERROR------//
-  ERROR_CONSOLE("error.console.lang.", "%BROADCAST%[color]RED[color] Vous ne pouvez pas exécuter cette commande dans la console :("),
+  ERROR_CONSOLE("error.console.lang.", "%BROADCAST%[color]RED[color]You cannot execute this command in the console :("),
   ERROR_PERM("error.perm.lang.", "%BROADCAST%[color]RED[color]You don't have the permission to execute this command"),
   ERROR_MAINGUI_NOTSET("error.mainGui.notSet.lang.", "%BROADCAST%[color]RED[color]No main GUI is defined"),
   ERROR_OCCURRED("error.occurred.lang.", "%BROADCAST%[color]RED[color]An error occurred while executing this command"),
@@ -64,12 +65,11 @@ public enum LangMsg {
   ERROR_EDITMODE_NOTENABLED("error.editModeNotEnalbe.lang.", "%BROADCAST%[color]RED[color]The edit mode is not enabled"),
 
   //------PLAYER------//
-  PLAYER_UPDATE_LANG("player.update.lang.", "%BROADCAST%[color]WHITE[color]Update your language to : [color]GOLD[color]%0%"),
+  PLAYER_UPDATE_LANG("player.update.lang.", "%BROADCAST%[color]WHITE[color]Update your language to : [color]GOLD[color]%0"),
 
   //armorStand
-
-  PLAYER_ARMORSTAND_LORE_GENERAL_LEFTCLICKADD("player.armorStand.lore.leftClickAdd.lang.", "[color]WHITE[color]Left click to add to list"),
-  PLAYER_ARMORSTAND_LORE_GENERAL_RIGHTCLICKREMOVE("player.armorStand.lore.rightClickRemove.lang.", "[color]WHITE[color]Right click to remove from the list"),
+  PLAYER_ARMORSTAND_LORE_GENERAL_LEFTCLICKADD("player.armorStand.lore.general.leftClickAdd.lang.", "[color]WHITE[color]Left click to add to list"),
+  PLAYER_ARMORSTAND_LORE_GENERAL_RIGHTCLICKREMOVE("player.armorStand.lore.general.rightClickRemove.lang.", "[color]WHITE[color]Right click to remove from the list"),
   PLAYER_ARMORSTAND_LORE_GENERAL_SHIFTCLICKTP("player.armorStand.lore.general.shiftClickTp.lang.", "[color]WHITE[color]Shift click to teleport"),
   PLAYER_ARMORSTAND_LORE_GENERAL_CLICKWHEELMODEL("player.armorStand.lore.general.clickWheelModel.lang.", "[color]WHITE[color]Click the wheel to retrieve the model"),
   PLAYER_ARMORSTAND_LORE_GENERAL_SHIFTLEFTCLICKTP("player.armorStand.lore.general.shiftLeftClickTp.lang." ,"[color]WHITE[color]Shift left click to teleport"),
@@ -78,16 +78,16 @@ public enum LangMsg {
   //------GUI------//
 
   //configPlayer
-  GUI_VOICE_CONFIGPLAYER_TITLE("gui.voice.configPlayer.title.lang.", "Modification of %0%"),
-  GUI_VOICE_CONFIGPLAYER_FORCEDMUTE("gui.voice.configPlayer.forcedMute.lang.", "Forced Mute : %0%"),
+  GUI_VOICE_CONFIGPLAYER_TITLE("gui.voice.configPlayer.title.lang.", "Modification of %0"),
+  GUI_VOICE_CONFIGPLAYER_FORCEDMUTE("gui.voice.configPlayer.forcedMute.lang.", "Forced Mute : %0"),
 
   //listPlayer
   GUI_VOICE_LISTPLAYER_TITLE("gui.voice.listPlayer.title.lang.", "Modification of"),
-  GUI_VOICE_LISTPLAYER_LORE_MODIFPLAYER("gui.voice.listPlayer.lore.modifPlayer.lang.", "\"[color]WHITE[color]Click to modify the parameters of : %0%"),
-  GUI_VOICE_LISTPLAYER_LORE_CONNECTIONSTATUS("gui.voice.listPlayer.lore.connectionStatus.lore.", "[color]WHITE[color]Connection status : %0%"),
-  GUI_VOICE_LISTPLAYER_LORE_CLIENTVOLUME("gui.voice.listPlayer.lore.clientVolume.lang.", "[color]WHITE[color]Client volume : %0%"),
-  GUI_VOICE_LISTPLAYER_LORE_MICROSTATUS("gui.voice.listPlayer.lore.microStatus.lang.", "[color]WHITE[color]Microphone status : %0%"),
-  GUI_VOICE_LISTPLAYER_LORE_FORCEDMUTESTATUS("gui.voice.listPlayer.lore.forcedMuteStatus.lang.", "[color]WHITE[color]Forced mute status : %0%"),
+  GUI_VOICE_LISTPLAYER_LORE_MODIFPLAYER("gui.voice.listPlayer.lore.modifPlayer.lang.", "\"[color]WHITE[color]Click to modify the parameters of : %0"),
+  GUI_VOICE_LISTPLAYER_LORE_CONNECTIONSTATUS("gui.voice.listPlayer.lore.connectionStatus.lore.", "[color]WHITE[color]Connection status : %0"),
+  GUI_VOICE_LISTPLAYER_LORE_CLIENTVOLUME("gui.voice.listPlayer.lore.clientVolume.lang.", "[color]WHITE[color]Client volume : %0"),
+  GUI_VOICE_LISTPLAYER_LORE_MICROSTATUS("gui.voice.listPlayer.lore.microStatus.lang.", "[color]WHITE[color]Microphone status : %0"),
+  GUI_VOICE_LISTPLAYER_LORE_FORCEDMUTESTATUS("gui.voice.listPlayer.lore.forcedMuteStatus.lang.", "[color]WHITE[color]Forced mute status : %0"),
   GUI_VOICE_LISTPLAYER_MUTEALL("gui.voice.listPlayer.muteAll.lang.", "Mute everyone"),
   GUI_VOICE_LISTPLAYER_UNMUTEALL("gui.voice.listPlayer.unmuteAll.lang.", "Unmute everyone"),
 
@@ -96,7 +96,7 @@ public enum LangMsg {
 
   //weatherSettings
   GUI_WEATHERSETTINGS_TITLE("gui.weatherSettings.title.lang.", "Weather Settings"),
-  GUI_WEATHERSETTINGS_WEATHER("gui.weatherSettings.weather.lang.", "[color]WHITE[color]Weather : [color]GOLD[color]%0%"),
+  GUI_WEATHERSETTINGS_WEATHER("gui.weatherSettings.weather.lang.", "[color]WHITE[color]Weather : [color]GOLD[color]%0"),
   GUI_WEATHERSETTINGS_WEATHER_THUNDER("gui.weatherSettings.weather.thunder.lang.", "[color]YELLOW[color]Thunder"),
   GUI_WEATHERSETTINGS_WEATHER_RAIN("gui.weatherSettings.weather.rain.lang.", "[color]YELLOW[color]Rain"),
   GUI_WEATHERSETTINGS_WEATHER_CLEAR("gui.weatherSettings.weather.clear.lang.", "[color]GREEN[color]Clear"),
@@ -167,7 +167,7 @@ public enum LangMsg {
   //------CMD------//
 
   //mt
-  CMD_MT_SETEDITMODE("cmd.mt.setEditMode.lang.", "%BROADCAST%[color]WHITE[color]You have %0% [color]WHITE[color]edit mode."),
+  CMD_MT_SETEDITMODE("cmd.mt.setEditMode.lang.", "%BROADCAST%[color]WHITE[color]You have %0 [color]WHITE[color]edit mode."),
   CMD_MT_ERROR_VALIDLANG("cmd.mt.error.validLang.lang.", "%BROADCAST%[color]RED[color]Please select a valid language."),
   CMD_MT_SETPACK("cmd.mt.setPack.lang.", "%BROADCAST%[color]WHITE[color]You have %0 [color]WHITE[color]the pack."),
 
@@ -258,12 +258,12 @@ public enum LangMsg {
     return msg;
   }
 
-  public String getMsg_(Lang lang, LangMsg... args) {
+  public String getMsg(Lang lang, LangMsg... args) {
 
     String msg = getStr(this.path + lang.name(), this.dflValue);
 
     for (int i = 0; i < args.length; i++) {
-      if (msg.contains("%" + i)) msg = msg.replace("%" + i, args[i].getMsg(lang));
+      if (msg.contains("%" + i)) msg = msg.replace("%" + i, args[i].getMsg(lang, ""));
     }
 
     //replace white prefix

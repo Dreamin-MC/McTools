@@ -119,7 +119,7 @@ public class WeatherSettingGui implements GuiBuilder {
     }
 
     public String getName(MTPlayer mtPlayer) {
-      return this.msg.getMsg(mtPlayer.getLang());
+      return mtPlayer.getMsg(msg, "");
     }
 
     public Material getMaterial() {
@@ -185,7 +185,7 @@ public class WeatherSettingGui implements GuiBuilder {
     }
 
     public String getName(MTPlayer mtPlayer) {
-      return this.msg.getMsg(mtPlayer.getLang());
+      return mtPlayer.getMsg(this.msg, "");
     }
 
     public Material getMaterial() {

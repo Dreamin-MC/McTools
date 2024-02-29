@@ -49,8 +49,8 @@ error:
 player:
   update:
     lang:
-      fr_FR : "%BROADCAST%[color]WHITE[color]Modification de votre langue par : [color]GOLD[color]%0%"
-      en_US : "%BROADCAST%[color]WHITE[color]Update your language to : [color]GOLD[color]%0%"
+      fr_FR : "%BROADCAST%[color]WHITE[color]Modification de votre langue par : [color]GOLD[color]%0"
+      en_US : "%BROADCAST%[color]WHITE[color]Update your language to : [color]GOLD[color]%0"
   armorStand:
     lore:
       general:
@@ -229,12 +229,12 @@ gui:
     configPlayer:
       title:
         lang:
-          fr_FR: "Modification de %0%"
-          en_US: "Modification of %0%"
+          fr_FR: "Modification de %0"
+          en_US: "Modification of %0"
       forcedMute:
         lang:
-          fr_FR: "Mute Forcé : %0%"
-          en_US: "Forced Mute : %0%"
+          fr_FR: "Mute Forcé : %0"
+          en_US: "Forced Mute : %0"
     listPlayer:
       title:
         lang:
@@ -252,24 +252,24 @@ gui:
       lore:
         modifPlayer:
           lang:
-            fr_FR: "[color]WHITE[color]Cliquez pour modifier les paramètres de : [color]GOLD[color]%0%"
-            en_US: "[color]WHITE[color]Click to modify the parameters of : [color]GOLD[color]%0%"
+            fr_FR: "[color]WHITE[color]Cliquez pour modifier les paramètres de : [color]GOLD[color]%0"
+            en_US: "[color]WHITE[color]Click to modify the parameters of : [color]GOLD[color]%0"
         connectionStatus:
           lang:
-            fr_FR: "[color]WHITE[color]Statut de la connexion : %0%"
-            en_US: "[color]WHITE[color]Connection status : %0%"
+            fr_FR: "[color]WHITE[color]Statut de la connexion : %0"
+            en_US: "[color]WHITE[color]Connection status : %0"
         clientVolume:
           lang:
-            fr_FR: "[color]WHITE[color]Volume du client : [color]GOLD[color]%0%"
-            en_US: "[color]WHITE[color]Client volume : [color]GOLD[color]%0%"
+            fr_FR: "[color]WHITE[color]Volume du client : [color]GOLD[color]%0"
+            en_US: "[color]WHITE[color]Client volume : [color]GOLD[color]%0"
         microStatus:
           lang:
-            fr_FR: "[color]WHITE[color]Statut du micro : %0%"
-            en_US: "[color]WHITE[color]Microphone status : %0%"
+            fr_FR: "[color]WHITE[color]Statut du micro : %0"
+            en_US: "[color]WHITE[color]Microphone status : %0"
         forcedMuteStatus:
           lang:
-            fr_FR: "[color]WHITE[color]Status du mute forcé : %0%"
-            en_US: "[color]WHITE[color]Forced mute status : %0%"
+            fr_FR: "[color]WHITE[color]Status du mute forcé : %0"
+            en_US: "[color]WHITE[color]Forced mute status : %0"
   listMap:
     title:
       lang:
@@ -282,8 +282,8 @@ gui:
         en_US: "Weather settings"
     weather:
       lang:
-        fr_FR: "[color]WHITE[color]Météo : %0%"
-        en_US: "[color]WHITE[color]Weather : %0%"
+        fr_FR: "[color]WHITE[color]Météo : %0"
+        en_US: "[color]WHITE[color]Weather : %0"
       thunder:
         lang:
           fr_FR: "[color]YELLOW[color]Tonnerre"
@@ -298,8 +298,8 @@ gui:
           en_US: "[color]GREEN[color]Clear"
     day:
       lang:
-        fr_FR: "[color]WHITE[color]Jour : %0%"
-        en_US: "[color]WHITE[color]Day : %0%"
+        fr_FR: "[color]WHITE[color]Jour : %0"
+        en_US: "[color]WHITE[color]Day : %0"
       midnight:
         lang:
           fr_FR: "[color]DARKBLUE[color]Minuit"
@@ -333,7 +333,7 @@ gui:
       haveAArmorStandSelected:
         lang:
           fr_FR: "[color]WHITE[color]Vous avez %0 un porte armure à votre séléction"
-          en_US: "[color]WHITE[color]You have %0 an armor holder to your selection"*
+          en_US: "[color]WHITE[color]You have %0 an armor holder to your selection"
       teleportToArmorStand:
         lang:
           fr_FR: "[color]WHITE[color]Vous avez été téléporté au porte armure."
@@ -515,9 +515,9 @@ cmd:
           en_US: "%BROADCAST%[color]RED[color]Please select a valid language."
     setEditMode:
       lang:
-        fr_FR: "%BROADCAST%[color]WHITE[color]Vous avez %0% [color]WHITE[color]le mode édition."
-        en_US: "%BROADCAST%[color]WHITE[color]You have %0% [color]WHITE[color]edit mode."
+        fr_FR: "%BROADCAST%[color]WHITE[color]Vous avez %0 [color]WHITE[color]le mode édition."
+        en_US: "%BROADCAST%[color]WHITE[color]You have %0 [color]WHITE[color]edit mode."
     setPack:
       lang:
-        fr_FR: "%BROADCAST%[color]WHITE[color]Vous avez %0% [color]WHITE[color]le pack."
+        fr_FR: "%BROADCAST%[color]WHITE[color]Vous avez %0 [color]WHITE[color]le pack."
         en_US: "%BROADCAST%[color]WHITE[color]You have %0 [color]WHITE[color]the pack."

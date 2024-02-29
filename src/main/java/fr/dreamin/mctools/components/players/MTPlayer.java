@@ -12,6 +12,7 @@ import fr.dreamin.mctools.mysql.fetcher.UserFetcher.UserFetcher;
 import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -77,17 +78,17 @@ public class MTPlayer {
     }
     else this.voiceManager = null;
 
-    try {
-      this.skinBase64 = Minecraft.getSkinBase64(player.getUniqueId().toString());
-    } catch (Exception e) {
-      throw new RuntimeException(e);
-    }
+//    try {
+//      this.skinBase64 = Minecraft.getSkinBase64(player.getUniqueId().toString());
+//    } catch (Exception e) {
+//      throw new RuntimeException(e);
+//    }
 
   }
 
   public void setEditMode(boolean isEditMode) {
-    if (isEditMode) player.sendMessage(LangMsg.CMD_MT_SETEDITMODE.getMsg(getLang(), LangMsg.GENERAL_ENABLED.getMsg(getLang())));
-    else player.sendMessage(LangMsg.CMD_MT_SETEDITMODE.getMsg(getLang(), LangMsg.GENERAL_DISABLED.getMsg(getLang())));
+    if (isEditMode) getMsg(LangMsg.CMD_MT_SETEDITMODE, LangMsg.GENERAL_ENABLED);
+    else getMsg(LangMsg.CMD_MT_SETEDITMODE, LangMsg.GENERAL_DISABLED);
 
     this.isEditMode = isEditMode;
   }
@@ -101,7 +102,7 @@ public class MTPlayer {
     return msg.getMsg(getLang(), args);
   }
   public String getMsg(LangMsg msg, LangMsg... args) {
-    return msg.getMsg_(getLang(), args);
+    return msg.getMsg(getLang(), args);
   }
 
   public void sendMsg(LangMsg msg, String... args) {
@@ -109,7 +110,7 @@ public class MTPlayer {
   }
 
   public void sendMsg(LangMsg msg, LangMsg... args) {
-    player.sendMessage(msg.getMsg_(getLang(), args));
+    player.sendMessage(msg.getMsg(getLang(), args));
   }
 
 }

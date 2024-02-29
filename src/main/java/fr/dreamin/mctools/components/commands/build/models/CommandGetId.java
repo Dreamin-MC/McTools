@@ -18,7 +18,7 @@ public class CommandGetId implements CommandExecutor {
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
     if (!(sender instanceof Player)) {
-      sender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(Lang.en_US));
+      sender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(Lang.en_US, ""));
       return true;
     }
 

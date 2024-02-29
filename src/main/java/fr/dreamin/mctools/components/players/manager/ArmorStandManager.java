@@ -12,6 +12,7 @@ import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import lombok.Getter;
 import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -60,24 +61,19 @@ public class ArmorStandManager {
 
       ItemBuilder itemBuilder = new ItemBuilder(armorStand.getHelmet());
 
-      if (armorStand.getPassenger() != null) {
-        itemBuilder.setType(Material.SHULKER_BOX);
-      }
-      else if (itemBuilder.toItemStack().getType().equals(Material.AIR))
+      if (armorStand.getPassenger() != null) itemBuilder.setType(Material.SHULKER_BOX);
+      else if (itemBuilder.toItemStack().getType().equals(Material.AIR)) itemBuilder.setType(Material.ARMOR_STAND);
 
-        itemBuilder.setType(Material.ARMOR_STAND);
-
-      itemBuilder.setName("");
-      itemBuilder.setLore(
+      itemStacks.add(itemBuilder.setName(" ").setLore(
         "Map : " + armorStand.getWorld().getName(),
         "§fx :" + armorStand.getLocation().getX(),
         "§fy : " + armorStand.getLocation().getY(),
         "§fz : " + armorStand.getLocation().getZ(),
         mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_RIGHTCLICKREMOVE, ""),
         mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_SHIFTCLICKTP, ""),
-        mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_CLICKWHEELMODEL, ""));
-
-      itemStacks.add(itemBuilder.toItemStack());
+        mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_CLICKWHEELMODEL, ""))
+        .toItemStack()
+      );
     }
     return itemStacks;
   }
@@ -192,15 +188,10 @@ public class ArmorStandManager {
 
       ItemBuilder itemBuilder = new ItemBuilder(armorStand.getHelmet());
 
-      if (armorStand.getPassenger() != null) {
-        itemBuilder.setType(Material.SHULKER_BOX);
-      }
-      else if (itemBuilder.toItemStack().getType().equals(Material.AIR))
+      if (armorStand.getPassenger() != null) itemBuilder.setType(Material.SHULKER_BOX);
+      else if (itemBuilder.toItemStack().getType().equals(Material.AIR)) itemBuilder.setType(Material.ARMOR_STAND);
 
-        itemBuilder.setType(Material.ARMOR_STAND);
-
-      itemBuilder.setName("");
-      itemBuilder.setLore(
+      itemStacks.add(itemBuilder.setName(" ").setLore(
         "Map : " + armorStand.getWorld().getName(),
         "§fx :" + armorStand.getLocation().getX(),
         "§fy : " + armorStand.getLocation().getY(),
@@ -209,9 +200,9 @@ public class ArmorStandManager {
         mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_RIGHTCLICKREMOVE, ""),
         mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_SHIFTLEFTCLICKTP, ""),
         mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_SHIFTRIGHTCLICKSHOW, ""),
-        mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_CLICKWHEELMODEL, ""));
-
-      itemStacks.add(itemBuilder.toItemStack());
+        mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_CLICKWHEELMODEL, ""))
+        .toItemStack()
+      );
     }
     return itemStacks;
   }
@@ -288,8 +279,7 @@ public class ArmorStandManager {
       if (armorStand.getPassenger() != null) itemBuilder.setType(Material.SHULKER_BOX);
       else if (itemBuilder.toItemStack().getType().equals(Material.AIR)) itemBuilder.setType(Material.ARMOR_STAND);
 
-      itemBuilder.setName("");
-      itemBuilder.setLore(
+      itemStacks.add(itemBuilder.setName(" ").setLore(
         "Map : " + armorStand.getWorld().getName(),
         "§fx : " + armorStand.getLocation().getX(),
         "§fy : " + armorStand.getLocation().getY(),
@@ -297,9 +287,9 @@ public class ArmorStandManager {
         mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_LEFTCLICKADD, ""),
         mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_RIGHTCLICKREMOVE, ""),
         mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_SHIFTCLICKTP, ""),
-        mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_CLICKWHEELMODEL, ""));
-
-      itemStacks.add(itemBuilder.toItemStack());
+        mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_CLICKWHEELMODEL, ""))
+        .toItemStack()
+      );
     }
     return itemStacks;
   }

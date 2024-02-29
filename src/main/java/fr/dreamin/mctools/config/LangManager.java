@@ -52,54 +52,54 @@ public class LangManager {
     // Chargement de la configuration YAML depuis le fichier
     langConfig = YamlConfiguration.loadConfiguration(langFile);
 
-    if (langConfig.contains("gui.armorStand.presetPoses.poses")) {
-      List<Map<?, ?>> poses = langConfig.getMapList("gui.armorStand.presetPoses.poses");
-
-      // Parcourir chaque pose
-      for (Map<?, ?> pose : poses) {
-        for (Map.Entry<?, ?> entry : pose.entrySet()) {
-          String poseId = entry.getKey().toString();
-          ConfigurationSection poseData = (ConfigurationSection) entry.getValue();
-
-          System.out.println("Pose ID: " + poseId);
-
-          // Vérifier si la pose contient la clé "value"
-          if (poseData.contains("value")) {
-            ConfigurationSection valueSection = poseData.getConfigurationSection("value");
-            String langPath = "poses." + poseId + ".lang.";
-            double rightArmRoll = 0; double rightArmYaw = 0;double rightArmPitch = 0;double leftArmRoll = 0;double leftArmYaw = 0;double leftArmPitch = 0;double rightLegRoll = 0;double rightLegYaw = 0;double rightLegPitch = 0;double leftLegRoll = 0;double LeftLegYaw = 0;double leftLegPitch = 0;double headRoll = 0;double headYaw = 0;double headPitch = 0;double bodyRoll = 0;double bodyYaw = 0;double bodyPitch = 0;
-
-            // Parcourir les données de chaque pose
-            for (String key : valueSection.getKeys(false)) {
-              ConfigurationSection subSection = valueSection.getConfigurationSection(key);
-              if (subSection != null) {
-                System.out.println("Subsection: " + key);
-                // Récupérer les valeurs pour chaque partie du corps
-                rightArmRoll = subSection.getDouble("rightArm.roll", 0);
-                rightArmYaw = subSection.getDouble("rightArm.yaw", 0);
-                rightArmPitch = subSection.getDouble("rightArm.pitch", 0);
-                leftArmRoll = subSection.getDouble("leftArm.roll", 0);
-                leftArmYaw = subSection.getDouble("leftArm.yaw", 0);
-                leftArmPitch = subSection.getDouble("leftArm.pitch", 0);
-                rightLegRoll = subSection.getDouble("rightLeg.roll", 0);
-                rightLegYaw = subSection.getDouble("rightLeg.yaw", 0);
-                rightLegPitch = subSection.getDouble("rightLeg.pitch", 0);
-                leftLegRoll = subSection.getDouble("leftLeg.roll", 0);
-                LeftLegYaw = subSection.getDouble("leftLeg.yaw", 0);
-                leftLegPitch = subSection.getDouble("leftLeg.pitch", 0);
-                headRoll = subSection.getDouble("head.roll", 0);
-                headYaw = subSection.getDouble("head.yaw", 0);
-                headPitch = subSection.getDouble("head.pitch", 0);
-                bodyRoll = subSection.getDouble("body.roll", 0);
-                bodyYaw = subSection.getDouble("body.yaw", 0);
-                bodyPitch = subSection.getDouble("body.pitch", 0);
-              }
-            }
-            armorPresetPoseLists.add(new ArmorPresetPose(langPath, rightArmRoll, rightArmYaw, rightArmPitch, leftArmRoll, leftArmYaw, leftArmPitch, rightLegRoll, rightLegYaw, rightLegPitch, leftLegRoll, LeftLegYaw, leftLegPitch, headRoll, headYaw, headPitch, bodyRoll, bodyYaw, bodyPitch));
-          }
-        }
-      }
-    }
+//    if (langConfig.contains("gui.armorStand.presetPoses.poses")) {
+//      List<Map<?, ?>> poses = langConfig.getMapList("gui.armorStand.presetPoses.poses");
+//
+//      // Parcourir chaque pose
+//      for (Map<?, ?> pose : poses) {
+//        for (Map.Entry<?, ?> entry : pose.entrySet()) {
+//          String poseId = entry.getKey().toString();
+//          ConfigurationSection poseData = (ConfigurationSection) entry.getValue();
+//
+//          System.out.println("Pose ID: " + poseId);
+//
+//          // Vérifier si la pose contient la clé "value"
+//          if (poseData.contains("value")) {
+//            ConfigurationSection valueSection = poseData.getConfigurationSection("value");
+//            String langPath = "poses." + poseId + ".lang.";
+//            double rightArmRoll = 0; double rightArmYaw = 0;double rightArmPitch = 0;double leftArmRoll = 0;double leftArmYaw = 0;double leftArmPitch = 0;double rightLegRoll = 0;double rightLegYaw = 0;double rightLegPitch = 0;double leftLegRoll = 0;double LeftLegYaw = 0;double leftLegPitch = 0;double headRoll = 0;double headYaw = 0;double headPitch = 0;double bodyRoll = 0;double bodyYaw = 0;double bodyPitch = 0;
+//
+//            // Parcourir les données de chaque pose
+//            for (String key : valueSection.getKeys(false)) {
+//              ConfigurationSection subSection = valueSection.getConfigurationSection(key);
+//              if (subSection != null) {
+//                System.out.println("Subsection: " + key);
+//                // Récupérer les valeurs pour chaque partie du corps
+//                rightArmRoll = subSection.getDouble("rightArm.roll", 0);
+//                rightArmYaw = subSection.getDouble("rightArm.yaw", 0);
+//                rightArmPitch = subSection.getDouble("rightArm.pitch", 0);
+//                leftArmRoll = subSection.getDouble("leftArm.roll", 0);
+//                leftArmYaw = subSection.getDouble("leftArm.yaw", 0);
+//                leftArmPitch = subSection.getDouble("leftArm.pitch", 0);
+//                rightLegRoll = subSection.getDouble("rightLeg.roll", 0);
+//                rightLegYaw = subSection.getDouble("rightLeg.yaw", 0);
+//                rightLegPitch = subSection.getDouble("rightLeg.pitch", 0);
+//                leftLegRoll = subSection.getDouble("leftLeg.roll", 0);
+//                LeftLegYaw = subSection.getDouble("leftLeg.yaw", 0);
+//                leftLegPitch = subSection.getDouble("leftLeg.pitch", 0);
+//                headRoll = subSection.getDouble("head.roll", 0);
+//                headYaw = subSection.getDouble("head.yaw", 0);
+//                headPitch = subSection.getDouble("head.pitch", 0);
+//                bodyRoll = subSection.getDouble("body.roll", 0);
+//                bodyYaw = subSection.getDouble("body.yaw", 0);
+//                bodyPitch = subSection.getDouble("body.pitch", 0);
+//              }
+//            }
+//            armorPresetPoseLists.add(new ArmorPresetPose(langPath, rightArmRoll, rightArmYaw, rightArmPitch, leftArmRoll, leftArmYaw, leftArmPitch, rightLegRoll, rightLegYaw, rightLegPitch, leftLegRoll, LeftLegYaw, leftLegPitch, headRoll, headYaw, headPitch, bodyRoll, bodyYaw, bodyPitch));
+//          }
+//        }
+//      }
+//    }
 
     LangMsg.setConfig(langConfig);
   }

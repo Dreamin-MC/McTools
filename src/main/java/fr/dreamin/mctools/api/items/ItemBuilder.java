@@ -2,10 +2,7 @@ package fr.dreamin.mctools.api.items;
 
 
 import fr.dreamin.mctools.McTools;
-import org.bukkit.Color;
-import org.bukkit.DyeColor;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -16,6 +13,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataType;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 
 public class ItemBuilder {
@@ -27,6 +25,8 @@ public class ItemBuilder {
 
   public ItemBuilder(ItemStack is) {
     this.is = new ItemStack(is);
+
+    if (is.getLore() != null && !is.getLore().isEmpty()) this.is.setLore(is.getLore());
   }
 
   public ItemBuilder(Material m, int amount) {
@@ -177,6 +177,13 @@ public class ItemBuilder {
   public ItemBuilder setLore(String... lore) {
     ItemMeta im = is.getItemMeta();
     im.setLore(Arrays.asList(lore));
+    is.setItemMeta(im);
+    return this;
+  }
+
+  public ItemBuilder setLore(List<String> lore) {
+    ItemMeta im = is.getItemMeta();
+    im.setLore(lore);
     is.setItemMeta(im);
     return this;
   }

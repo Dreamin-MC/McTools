@@ -1,6 +1,7 @@
 package fr.dreamin.mctools.api.gui;
 
 import fr.dreamin.mctools.api.items.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -17,7 +18,9 @@ public class GuiItems {
   //Create itemStack
 
   public void create(ItemStack itemStack, int slot, String...lore) {
-    ItemBuilder it = new ItemBuilder(itemStack).setLore(lore);
+    ItemBuilder it = new ItemBuilder(itemStack);
+
+    if (lore.length > 0) it.setLore(lore);
     inv.setItem(slot, it.toItemStack());
   }
 

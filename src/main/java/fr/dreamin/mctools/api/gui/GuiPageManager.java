@@ -18,7 +18,6 @@ public class GuiPageManager {
   }
 
   public void addGuiPage(Player player, String name, int page) {
-
     if (!guiPage.containsKey(player)) guiPage.put(player, new HashMap<>());
     guiPage.get(player).put(name, page);
   }
