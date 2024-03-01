@@ -25,4 +25,13 @@ public enum Lang {
     return Arrays.asList(Lang.values()).stream().filter(lang -> lang.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
   }
 
+  public static boolean isValidLanguage(String languageCode) {
+    for (Lang lang : Lang.values()) {
+      if (lang.name().equalsIgnoreCase(languageCode)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
 }

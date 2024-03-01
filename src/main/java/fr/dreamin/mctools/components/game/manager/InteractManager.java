@@ -2,7 +2,7 @@ package fr.dreamin.mctools.components.game.manager;
 
 import com.ticxo.modelengine.api.model.ActiveModel;
 import fr.dreamin.mctools.api.interact.Interact;
-import fr.dreamin.mctools.mysql.fetcher.interactFetcher.InteractFetcher;
+import fr.dreamin.mctools.database.fetcher.interactFetcher.InteractFetcher;
 import org.bukkit.Location;
 
 import java.util.ArrayList;

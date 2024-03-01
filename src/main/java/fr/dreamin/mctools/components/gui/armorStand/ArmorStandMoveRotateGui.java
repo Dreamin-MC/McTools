@@ -39,15 +39,15 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
   @Override
   public void contents(MTPlayer mtPlayer, Inventory inv, GuiItems guiItems) {
 
-    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_ROTATION, "(90)", (mtPlayer.getArmorStandManager().getArmRotate() == 90f ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") +")" : "")), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 90f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 0);
-    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_ROTATION, "(45)", (mtPlayer.getArmorStandManager().getArmRotate() == 45f ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") +")" : "")), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 45f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 9);
-    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_ROTATION, "(22.5)", (mtPlayer.getArmorStandManager().getArmRotate() == 22.5f ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") +")" : "")), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 22.5f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0);
-    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_ROTATION, "(0.5)", (mtPlayer.getArmorStandManager().getArmRotate() == 0.5f ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") +")" : "")), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 0.5f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0, 27);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_ROTATION, "(90)", (mtPlayer.getArmorStandManager().getArmorStandRotation() == 90f ? LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") : "")), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 90f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 0);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_ROTATION, "(45)", (mtPlayer.getArmorStandManager().getArmorStandRotation() == 45f ? LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") : "")), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 45f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 9);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_ROTATION, "(22.5)", (mtPlayer.getArmorStandManager().getArmorStandRotation() == 22.5f ? LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") : "")), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 22.5f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 18);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_ROTATION, "(0.5)", (mtPlayer.getArmorStandManager().getArmorStandRotation() == 0.5f ? LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") : "")), (mtPlayer.getArmorStandManager().getArmorStandRotation() == 0.5f ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 27);
 
-    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_TRAVELDISTANCE, "(1)", (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 1 ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") +")" : "")), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 1 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 1);
-    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_TRAVELDISTANCE, "(0.1)", (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.1 ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") +")" : "")), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.1 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 10);
-    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_TRAVELDISTANCE, "(0.05)", (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.05 ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") +")" : "")), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.05 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 19);
-    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_TRAVELDISTANCE, "(0.01)", (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.01 ? "("+  LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") +")" : "")), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.01 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1, 28);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_TRAVELDISTANCE, "(1)", (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 1 ? LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") : "")), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 1 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 1);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_TRAVELDISTANCE, "(0.1)", (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.1 ? LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") : "")), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.1 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 10);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_TRAVELDISTANCE, "(0.05)", (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.05 ? LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") : "")), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.05 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 19);
+    guiItems.create(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_TRAVELDISTANCE, "(0.01)", (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.01 ? LangMsg.GENERAL_ACTIVATE.getMsg(mtPlayer.getLang(), "") : "")), (mtPlayer.getArmorStandManager().getDistanceMoveArmorStand() == 0.01 ? Material.BLUE_TERRACOTTA : Material.ORANGE_TERRACOTTA), 28);
 
     guiItems.create(new ItemBuilder(ItemsPreset.arrowForWard.getItem()).setName(mtPlayer.getMsg(LangMsg.GENERAL_FORWARD, "")).toItemStack(), 4);
     guiItems.create(new ItemBuilder(ItemsPreset.arrowLeft.getItem()).setName(mtPlayer.getMsg(LangMsg.GENERAL_LEFT, "")).toItemStack(), 12);
@@ -72,36 +72,36 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
 
     switch (slot) {
       case 0:
-        mtPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.1);
+        mtPlayer.getArmorStandManager().setArmorStandRotation(90f);
         McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
       case 9:
-        mtPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.01);
+        mtPlayer.getArmorStandManager().setArmorStandRotation(45f);
         McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
       case 18:
-        mtPlayer.getArmorStandManager().setDistanceMoveArmorStand(1);
+        mtPlayer.getArmorStandManager().setArmorStandRotation(22.5f);
         McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
       case 27:
-        mtPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.05);
+        mtPlayer.getArmorStandManager().setArmorStandRotation(0.5f);
         McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
 
       case 1:
-        mtPlayer.getArmorStandManager().setArmorStandRotation((float)90);
+        mtPlayer.getArmorStandManager().setDistanceMoveArmorStand(1);
         McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
       case 10:
-        mtPlayer.getArmorStandManager().setArmorStandRotation((float)45);
+        mtPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.1);
         McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
       case 19:
-        mtPlayer.getArmorStandManager().setArmorStandRotation((float)22.5);
+        mtPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.05);
         McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
       case 28:
-        mtPlayer.getArmorStandManager().setArmorStandRotation((float)0.5);
+        mtPlayer.getArmorStandManager().setDistanceMoveArmorStand(0.01);
         McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandMoveRotateGui.class);
         return;
 

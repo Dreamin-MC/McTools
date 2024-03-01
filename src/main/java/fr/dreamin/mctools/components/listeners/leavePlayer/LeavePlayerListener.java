@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 public class LeavePlayerListener implements Listener {
 
   @EventHandler
-  public void onJoin(PlayerQuitEvent event) {
+  public void onQuit(PlayerQuitEvent event) {
     LeavePlayerManager.removePlayer(event.getPlayer());
   }
 

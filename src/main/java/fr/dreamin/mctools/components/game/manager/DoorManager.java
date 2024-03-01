@@ -3,7 +3,7 @@ package fr.dreamin.mctools.components.game.manager;
 import com.ticxo.modelengine.api.model.ActiveModel;
 import fr.dreamin.mctools.api.cuboide.Cuboide;
 import fr.dreamin.mctools.api.door.Door;
-import fr.dreamin.mctools.mysql.fetcher.doorFetcher.DoorFetcher;
+import fr.dreamin.mctools.database.fetcher.doorFetcher.DoorFetcher;
 import org.bukkit.Location;
 
 import java.util.ArrayList;

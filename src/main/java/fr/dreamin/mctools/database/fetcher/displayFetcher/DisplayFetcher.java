@@ -1,7 +1,8 @@
-package fr.dreamin.mctools.mysql.fetcher.displayFetcher;
+package fr.dreamin.mctools.database.fetcher.displayFetcher;
 
 import fr.dreamin.mctools.McTools;
-import fr.dreamin.mctools.mysql.DatabaseManager;
+import fr.dreamin.mctools.database.DatabaseManager;
+import fr.dreamin.mctools.database.DatabaseType;
 import org.bukkit.Location;
 
 import java.sql.PreparedStatement;

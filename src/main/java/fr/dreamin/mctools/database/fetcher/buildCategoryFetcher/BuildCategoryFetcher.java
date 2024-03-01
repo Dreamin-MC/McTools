@@ -1,8 +1,10 @@
-package fr.dreamin.mctools.mysql.fetcher.buildCategoryFetcher;
+package fr.dreamin.mctools.database.fetcher.buildCategoryFetcher;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.components.build.TagCategory;
-import fr.dreamin.mctools.mysql.DatabaseManager;
+import fr.dreamin.mctools.database.DatabaseManager;
+import fr.dreamin.mctools.database.DatabaseType;
+import fr.dreamin.mctools.database.mysql.MysqlManager;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

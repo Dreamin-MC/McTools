@@ -34,9 +34,10 @@ import fr.dreamin.mctools.api.service.Service;
 import fr.dreamin.mctools.api.service.ServiceManager;
 import fr.dreamin.mctools.config.LangManager;
 import fr.dreamin.mctools.components.lang.LangMsg;
-import fr.dreamin.mctools.mysql.DatabaseManager;
+import fr.dreamin.mctools.database.mysql.MysqlManager;
 import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
+import fr.dreamin.mctools.database.sqlLite.SqlLiteManager;
 import lombok.Getter;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -48,7 +49,6 @@ public final class McTools extends JavaPlugin{
 
   @Getter
   private static LangMsg langMsg;
-  private DatabaseManager databaseDreaminVoice;
   private static MTGame dtGame;
   private final ServiceManager serviceManager = new ServiceManager();
 
@@ -64,10 +64,6 @@ public final class McTools extends JavaPlugin{
     codex = new Codex(getConfig());
 
     langManager = new LangManager(this);
-
-    setDatabase(new DatabaseManager(codex.getHost(), codex.getPort(), codex.getDbName(), codex.getUsername(), codex.getPassword()));
-    getDatabase().connection();
-//    DatabaseCodex.checkIfExist();
 
     dtGame = new MTGame(this);
 
@@ -128,14 +124,6 @@ public final class McTools extends JavaPlugin{
   public static MTGame getGame() {
     return dtGame;
   }
-
-  public DatabaseManager getDatabase() {
-    return databaseDreaminVoice;
-  }
-  public void setDatabase(DatabaseManager databaseDreaminVoice) {
-    this.databaseDreaminVoice = databaseDreaminVoice;
-  }
-
 
   private void loadGui() {
     GuiManager guiManager = getService(GuiManager.class);

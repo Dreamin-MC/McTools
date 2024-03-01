@@ -5,6 +5,8 @@ mcTools:
   prefix: "§8» §f" #player's msg
   broadcastprefix: "[§c§lMcTools§r] " #global's & console's msg
 
+  ipApiKey: ""
+
   ressourcepack: false
 
   defaultLang: fr_FR
@@ -20,7 +22,18 @@ mcTools:
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #>>       DATABASE INFORMATION       >>
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-sql:
+
+# How Plugin Should Store Data
+#  Database type. Currently, only supports MySQL and SQLite.
+#  Current options: SQLite or MYSQL
+databaseType: SQLite
+
+# When using SQLite, the database will be stored in the plugin's data folder.
+#  What should the database file be named?
+sqlLite:
+  name: database
+
+mysql:
   host:
   port: 3306
   dbName: ""

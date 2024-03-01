@@ -1,8 +1,9 @@
-package fr.dreamin.mctools.mysql.fetcher.buildTagFetcher;
+package fr.dreamin.mctools.database.fetcher.buildTagFetcher;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.components.build.Tag;
-import fr.dreamin.mctools.mysql.DatabaseManager;
+import fr.dreamin.mctools.database.DatabaseManager;
+import fr.dreamin.mctools.database.DatabaseType;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

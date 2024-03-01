@@ -1,8 +1,7 @@
 package fr.dreamin.mctools.api.hologram;
 
 import com.google.gson.Gson;
-import fr.dreamin.mctools.McTools;
-import fr.dreamin.mctools.mysql.fetcher.displayFetcher.DisplayFetcher;
+import fr.dreamin.mctools.database.fetcher.displayFetcher.DisplayFetcher;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.ItemDisplay;

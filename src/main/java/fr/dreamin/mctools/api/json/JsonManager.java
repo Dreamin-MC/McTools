@@ -3,10 +3,18 @@ package fr.dreamin.mctools.api.json;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.cuboide.Cuboide;
 import org.bukkit.Location;
 import org.bukkit.World;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,6 +101,52 @@ public class JsonManager {
       new Location(world, locB.get("x").getAsDouble(), locB.get("y").getAsDouble(), locB.get("z").getAsDouble()),
       saveBlock
     );
+  }
+
+  public static String getLanguageFromIP(String ipAddress) {
+
+    if (McTools.getCodex().getIpApiKey() != null) {
+
+      String apiKey = McTools.getCodex().getIpApiKey();
+      String apiUrl = "https://api.ipgeolocation.io/ipgeo?apiKey=" + apiKey + "&ip=" + ipAddress;
+
+      URL url = null;
+      try {
+        url = new URL(apiUrl);
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestMethod("GET");
+
+        int responseCode = connection.getResponseCode();
+        if (responseCode == HttpURLConnection.HTTP_OK) {
+          BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+          String inputLine;
+          StringBuilder response = new StringBuilder();
+
+          while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine);
+          }
+          in.close();
+
+          Gson gson = new Gson();
+          JsonObject jsonObject = gson.fromJson(response.toString(), JsonObject.class);
+          String language = jsonObject.get("languages").getAsString();
+
+          String split = language.split(",")[0];
+
+          return split.split("-")[0] + "_" + split.split("-")[1];
+        } else if (responseCode == HttpURLConnection.HTTP_UNAVAILABLE) return McTools.getCodex().getDefaultLang().name();
+        else return McTools.getCodex().getDefaultLang().name();
+      } catch (ProtocolException e) {
+        return McTools.getCodex().getDefaultLang().name();
+      } catch (MalformedURLException e) {
+        return McTools.getCodex().getDefaultLang().name();
+      } catch (IOException e) {
+        return McTools.getCodex().getDefaultLang().name();
+      }
+    }
+    else return McTools.getCodex().getDefaultLang().name();
+
   }
 
 }

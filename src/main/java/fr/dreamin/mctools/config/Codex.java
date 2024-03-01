@@ -1,7 +1,8 @@
 package fr.dreamin.mctools.config;
 
-import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.components.lang.Lang;
+import fr.dreamin.mctools.database.DatabaseManager;
+import fr.dreamin.mctools.database.DatabaseType;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
@@ -22,17 +23,23 @@ public class Codex {
   @Getter @Setter
   private String prefixGUIName = "";
 
-  //  >>>>>>>> SQL <<<<<<<<
+  //  >>>>>>>> DATABASE <<<<<<<<
+  @Getter @Setter
+  private DatabaseType databaseType;
   @Getter @Setter
   private String host, dbName, username, password, defaultPrefix;
   @Getter @Setter
   private int port;
   @Getter @Setter
   private Lang defaultLang;
+  @Getter @Setter
+  private String sqlName;
 
   // >>>>>>>> API <<<<<<<<
   @Getter @Setter
   private boolean editMode = false, defaultGui = false, defaultItems = false, buildMode = false, pack = false;
+  @Getter @Setter
+  private String ipApiKey;
 
   //  >>>>>>>> VOICE <<<<<<<<
   @Getter @Setter
@@ -72,12 +79,23 @@ public class Codex {
   }
 
   private void initSQLData() {
-    host = getStr("sql.host");
-    port = getInt("sql.port");
-    dbName = getStr("sql.dbName");
-    username = getStr("sql.username");
-    password = getStr("sql.password");
-    defaultPrefix = getStr("sql.defaultPrefix");
+
+    DatabaseType dbType =  DatabaseType.getByName(getStr("databaseType", "SQLite"));
+    if (dbType != null) databaseType = dbType;
+    else databaseType = DatabaseType.SQLITE;
+
+    sqlName = getStr("sqlLite.name", "database");
+    host = getStr("mysql.host");
+    port = getInt("mysql.port");
+    dbName = getStr("mysql.dbName");
+    username = getStr("mysql.username");
+    password = getStr("mysql.password");
+    defaultPrefix = getStr("mysql.defaultPrefix");
+
+    DatabaseManager.closeAllConnection();
+
+    DatabaseManager.setConnection(this, databaseType);
+
   }
 
   private void initApi() {
@@ -86,6 +104,7 @@ public class Codex {
     defaultItems = getBool("mcTools.defaultItems", false);
     buildMode = getBool("mcTools.buildMode", false);
     pack = getBool("mcTools.ressourcepack", false);
+    ipApiKey = getStr("mcTools.ipApiKey", null);
     defaultLang = Lang.valueOf(getStr("mcTools.defaultLang", "en_US"));
   }
 
@@ -116,4 +135,9 @@ public class Codex {
   public FileConfiguration getConfig() {
     return config;
   }
+
+  public String getDefaultPrefix() {
+    return (getDatabaseType().equals(DatabaseType.MYSQL)? getDefaultPrefix() :  "");
+  }
+
 }

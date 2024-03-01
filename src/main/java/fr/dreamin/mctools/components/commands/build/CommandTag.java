@@ -158,7 +158,7 @@ public class CommandTag implements CommandExecutor, TabCompleter {
   public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
     if (args.length == 1)
-      return Arrays.asList("set", "remove", "create", "createCategory");
+      return Arrays.asList("set", "remove", "create");
     else if (args.length == 2) {
       switch (args[0]) {
         case "create":

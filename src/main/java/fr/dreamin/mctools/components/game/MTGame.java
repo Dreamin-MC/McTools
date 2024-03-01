@@ -2,8 +2,8 @@ package fr.dreamin.mctools.components.game;
 
 import fr.dreamin.mctools.components.game.manager.BuildManager;
 import fr.dreamin.mctools.components.listeners.ListenerManager;
-import fr.dreamin.mctools.mysql.fetcher.buildCategoryFetcher.BuildCategoryFetcher;
-import fr.dreamin.mctools.mysql.fetcher.buildTagFetcher.BuildTagFetcher;
+import fr.dreamin.mctools.database.fetcher.buildCategoryFetcher.BuildCategoryFetcher;
+import fr.dreamin.mctools.database.fetcher.buildTagFetcher.BuildTagFetcher;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class MTGame {

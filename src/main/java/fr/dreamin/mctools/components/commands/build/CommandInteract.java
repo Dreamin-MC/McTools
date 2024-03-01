@@ -6,7 +6,7 @@ import fr.dreamin.mctools.api.player.PlayerPerm;
 import fr.dreamin.mctools.components.game.manager.InteractManager;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
-import fr.dreamin.mctools.mysql.fetcher.interactFetcher.InteractFetcher;
+import fr.dreamin.mctools.database.fetcher.interactFetcher.InteractFetcher;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Bukkit;
 import org.bukkit.World;

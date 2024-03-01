@@ -3,6 +3,7 @@ package fr.dreamin.mctools.components.listeners.leavePlayer;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
+import fr.dreamin.mctools.database.fetcher.UserFetcher.UserFetcher;
 import org.bukkit.entity.Player;
 
 public class LeavePlayerManager {
@@ -11,10 +12,12 @@ public class LeavePlayerManager {
 
     PlayersService playersService = McTools.getService(PlayersService.class);
 
-    MTPlayer MTPlayer = playersService.getPlayer(player);
+    MTPlayer mtPlayer = playersService.getPlayer(player);
 
-    if (MTPlayer != null)
-      playersService.removeDTPlayer(MTPlayer);
+    if (mtPlayer != null) {
+      playersService.removeDTPlayer(mtPlayer);
+      UserFetcher.updatePlayer(mtPlayer);
+    }
   }
 
 }

@@ -1,9 +1,10 @@
-package fr.dreamin.mctools.mysql.fetcher.interactFetcher;
+package fr.dreamin.mctools.database.fetcher.interactFetcher;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.json.JsonManager;
 import fr.dreamin.mctools.components.game.manager.InteractManager;
-import fr.dreamin.mctools.mysql.DatabaseManager;
+import fr.dreamin.mctools.database.DatabaseManager;
+import fr.dreamin.mctools.database.DatabaseType;
 import org.bukkit.Location;
 import org.bukkit.World;
 

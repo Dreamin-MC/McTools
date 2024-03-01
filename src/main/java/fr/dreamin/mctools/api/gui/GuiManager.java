@@ -70,10 +70,14 @@ public class GuiManager extends Service implements Listener{
         PaginationManager paginationManager = m.getPaginationManager(mtPlayer, inv);
 
         if (paginationManager != null) {
-          if (event.getSlot() == paginationManager.getSlotNext() && current.getItemMeta().getDisplayName().equals(paginationManager.getNext().getItemMeta().getDisplayName())) paginationManager.getType().setNext(player, paginationManager, m.getClass());
-          else if (event.getSlot() == paginationManager.getSlotPrevious() && current.getItemMeta().getDisplayName().equals(paginationManager.getPrevious().getItemMeta().getDisplayName())) paginationManager.getType().setPrevious(player, paginationManager, m.getClass());
+          if (event.getSlot() == paginationManager.getSlotNext() && Minecraft.compareItem(paginationManager.getNext(), current)) paginationManager.getType().setNext(player, paginationManager, m.getClass());
+          else if (event.getSlot() == paginationManager.getSlotPrevious() && Minecraft.compareItem(paginationManager.getPrevious(), current)) paginationManager.getType().setPrevious(player, paginationManager, m.getClass());
+
+          Bukkit.broadcastMessage("- : "+ indexPagination.get());
 
           if (getGuiConfig().getGuiPageManager().containsItemInPagination(paginationManager, event.getSlot())) indexPagination.set(getGuiConfig().getGuiPageManager().getIdItemInPagination(mtPlayer.getPlayer(), paginationManager, event.getSlot(), m.getClass()));
+
+          Bukkit.broadcastMessage("- : "+ indexPagination.get());
         }
 
         m.onClick(mtPlayer, inv, current, event.getSlot(), event.getClick(), indexPagination.get());

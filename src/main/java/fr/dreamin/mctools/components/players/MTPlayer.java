@@ -3,16 +3,14 @@ package fr.dreamin.mctools.components.players;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.api.log.Logging;
-import fr.dreamin.mctools.api.minecraft.Minecraft;
 import fr.dreamin.mctools.api.player.PlayerPerm;
 import fr.dreamin.mctools.components.lang.Lang;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.manager.*;
-import fr.dreamin.mctools.mysql.fetcher.UserFetcher.UserFetcher;
+import fr.dreamin.mctools.database.fetcher.UserFetcher.UserFetcher;
 import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -24,22 +22,22 @@ public class MTPlayer {
   @Getter @Setter
   private PlayerPerm perm;
   @Getter
-  private boolean isEditMode;
+  private boolean isEditMode = false;
 
   @Getter
   private final BuildPlayerManager buildManager = new BuildPlayerManager();
   @Getter
-  private final ArmorStandManager armorStandManager;
+  private ArmorStandManager armorStandManager = null;
   @Getter
   private final VoiceConfPlayerManager voiceConfManager = new VoiceConfPlayerManager();
   @Getter
-  private final HudPlayerManager hudPlayerManager;
+  private HudPlayerManager hudPlayerManager = null;
   @Getter
-  private final TritonPlayerManager tritonManager;
+  private TritonPlayerManager tritonManager = null;
   @Getter
   private final PlayerTickManager playerTickManager;
   @Getter
-  private VoicePlayerManager voiceManager;
+  private VoicePlayerManager voiceManager = null;
   @Getter
   private final ItemStack itemStats;
   @Getter
@@ -48,35 +46,30 @@ public class MTPlayer {
   private boolean isCanMove = true;
 
   @Getter @Setter
-  private Lang lang = McTools.getCodex().getDefaultLang();
+  private Lang lang;
 
   public MTPlayer(Player player) {
     this.player = player;
-    this.isEditMode = false;
-    this.armorStandManager = new ArmorStandManager(this);
-    this.hudPlayerManager = new HudPlayerManager(this);
+
+    if (McTools.getCodex().isBuildMode()) this.armorStandManager = new ArmorStandManager(this);
+
+//    this.hudPlayerManager = new HudPlayerManager(this);
+
     this.playerTickManager = new PlayerTickManager(this);
     this.itemStats = new ItemBuilder(Material.PLAYER_HEAD).setPlayerHFromName(player.getName()).setName("§eStatistique de " + player.getName()).toItemStack();
 
     this.perm = PlayerPerm.getTopPerm(player);
 
     if (McTools.getService(PaperDependencyService.class).isPluginEnabled("Triton")) this.tritonManager = new TritonPlayerManager(player);
-    else {
-      McTools.getService(Logging.class).warn("§cTriton is not enabled, some features will not be available.");
-      this.tritonManager = null;
-    }
+    else McTools.getService(Logging.class).warn("§cTriton is not enabled, some features will not be available.");
+
 
     if (McTools.getCodex().isVoiceMode()) {
       if (McTools.getService(PaperDependencyService.class).isPluginEnabled("OpenAudioMc")) {
         this.voiceManager = new VoicePlayerManager(this);
-        UserFetcher.getIfInsert(this);
       }
-      else {
-        McTools.getService(Logging.class).warn("§cOpenAudio is not enabled, some features will note be available.");
-        this.voiceManager = null;
-      }
+      else McTools.getService(Logging.class).warn("§cOpenAudio is not enabled, some features will note be available.");
     }
-    else this.voiceManager = null;
 
 //    try {
 //      this.skinBase64 = Minecraft.getSkinBase64(player.getUniqueId().toString());

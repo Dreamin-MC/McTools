@@ -1,10 +1,11 @@
-package fr.dreamin.mctools.mysql.fetcher.doorFetcher;
+package fr.dreamin.mctools.database.fetcher.doorFetcher;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.cuboide.Cuboide;
 import fr.dreamin.mctools.api.json.JsonManager;
 import fr.dreamin.mctools.components.game.manager.DoorManager;
-import fr.dreamin.mctools.mysql.DatabaseManager;
+import fr.dreamin.mctools.database.DatabaseManager;
+import fr.dreamin.mctools.database.DatabaseType;
 import org.bukkit.Location;
 import org.bukkit.World;
 

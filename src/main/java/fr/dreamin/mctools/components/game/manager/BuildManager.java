@@ -4,8 +4,8 @@ import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.components.build.Tag;
 import fr.dreamin.mctools.components.build.TagCategory;
 import fr.dreamin.mctools.components.players.MTPlayer;
-import fr.dreamin.mctools.mysql.fetcher.buildCategoryFetcher.BuildCategoryFetcher;
-import fr.dreamin.mctools.mysql.fetcher.buildTagFetcher.BuildTagFetcher;
+import fr.dreamin.mctools.database.fetcher.buildCategoryFetcher.BuildCategoryFetcher;
+import fr.dreamin.mctools.database.fetcher.buildTagFetcher.BuildTagFetcher;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
