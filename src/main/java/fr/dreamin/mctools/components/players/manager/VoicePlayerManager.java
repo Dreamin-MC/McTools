@@ -7,6 +7,8 @@ import com.craftmend.openaudiomc.generic.client.objects.ClientConnection;
 import com.craftmend.openaudiomc.generic.networking.interfaces.NetworkingService;
 import fr.dreamin.mctools.api.player.SoundType;
 import fr.dreamin.mctools.components.players.MTPlayer;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -15,7 +17,7 @@ import java.util.List;
 public class VoicePlayerManager {
 
   private Player player;
-  private boolean isSelected = false;
+  @Getter @Setter private MTPlayer selected;
   private boolean isForcedMute = false;
   private Client client;
   private final ClientConnection clientConnection;
@@ -32,14 +34,6 @@ public class VoicePlayerManager {
 
   public Client getClient() {
     return client;
-  }
-
-  public boolean isSelected() {
-    return isSelected;
-  }
-
-  public void setSelected(boolean selected) {
-    isSelected = selected;
   }
 
   public boolean isForcedMute() {

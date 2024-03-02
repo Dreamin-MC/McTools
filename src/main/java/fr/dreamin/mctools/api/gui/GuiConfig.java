@@ -3,6 +3,8 @@ package fr.dreamin.mctools.api.gui;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -15,28 +17,13 @@ import java.util.UUID;
 
 public class GuiConfig {
 
-  private GuiBuilder mainGui;
-  private GuiPageManager guiPageManager = new GuiPageManager();
-  private HashMap<Integer, Material> defaultItems = new HashMap<>();
+  @Getter @Setter private GuiBuilder mainGui;
+  @Getter private GuiPageManager guiPageManager = new GuiPageManager();
+  @Getter @Setter private HashMap<Integer, Material> defaultItems = new HashMap<>();
   private HashMap<UUID, Class<? extends GuiBuilder>> guiOpen = new HashMap<>();
   private List<Class<? extends GuiBuilder>> notAccountDefaultItems = new ArrayList<>();
-  private int defaultLines = 5;
 
-
-  public GuiConfig() {
-  }
-
-  public void setMainGui(GuiBuilder mainGui) {
-    this.mainGui = mainGui;
-  }
-
-  public GuiBuilder getMainGui() {
-    return mainGui;
-  }
-
-  public GuiPageManager getGuiPageManager() {
-    return guiPageManager;
-  }
+  @Getter @Setter private int defaultLines = 5;
 
   //GuiOpen
   public void addGuiOpen(Player player, Class<? extends GuiBuilder> gClass) {
@@ -65,7 +52,7 @@ public class GuiConfig {
   }
 
   public void openGuiForAll(Class<? extends GuiBuilder> gClass) {
-    for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+    for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getMtPlayers()) {
 
       Player player = MTPlayer.getPlayer();
 
@@ -79,14 +66,6 @@ public class GuiConfig {
 
   //DefaultItems
 
-  public HashMap<Integer, Material> getDefaultItems() {
-    return defaultItems;
-  }
-
-  public void setDefaultItems(HashMap<Integer, Material> defaultItems) {
-    this.defaultItems = defaultItems;
-  }
-
   public void setDefaultItem(int slot, Material material) {
     defaultItems.put(slot, material);
   }
@@ -96,9 +75,7 @@ public class GuiConfig {
   }
 
   public void setGuiDefaultItems(Inventory inv) {
-    for (int slot : defaultItems.keySet()) {
-      inv.setItem(slot, new ItemStack(defaultItems.get(slot)));
-    }
+    defaultItems.forEach((slot, material) -> inv.setItem(slot, new ItemStack(material)));
   }
 
 
@@ -118,16 +95,5 @@ public class GuiConfig {
 
   public boolean containsNotAccountDefaultItem(Class<? extends GuiBuilder> gClass) {
     return notAccountDefaultItems.contains(gClass);
-  }
-
-
-  //DefaultLines
-
-  public int getDefaultLines() {
-    return defaultLines;
-  }
-
-  public void setDefaultLines(int defaultLines) {
-    this.defaultLines = defaultLines;
   }
 }

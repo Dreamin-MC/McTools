@@ -1,37 +1,87 @@
 package fr.dreamin.mctools.components.lang;
 
+import fr.dreamin.mctools.McTools;
 import lombok.Getter;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public enum Lang {
+public class Lang {
 
-  fr_FR("Français"),
-  en_US("English");
+  @Getter private String nameCode;
+  @Getter private List<String> codes = new ArrayList<>();
+  @Getter private String displayName;
 
-  @Getter
-  private String name;
-
-  Lang(String name) {
-    this.name = name;
+  public Lang(String nameCode, String displayName, List<String> codes) {
+    this.nameCode = nameCode;
+    this.displayName = displayName;
+    this.codes.addAll(codes);
   }
 
-  public static List<String> getLangs() {
-    return Arrays.asList(Lang.values()).stream().map(lang -> lang.getName()).toList();
-  }
 
-  public static Lang getLangByName(String name) {
-    return Arrays.asList(Lang.values()).stream().filter(lang -> lang.getName().equalsIgnoreCase(name)).findFirst().orElse(null);
-  }
-
-  public static boolean isValidLanguage(String languageCode) {
-    for (Lang lang : Lang.values()) {
-      if (lang.name().equalsIgnoreCase(languageCode)) {
-        return true;
+  public static boolean contains(List<Lang> langs, String nameCode) {
+    for (Lang lang : langs) {
+      if (lang.getNameCode().equalsIgnoreCase(nameCode)) return true;
+      for (String code : lang.getCodes()) {
+        if (code.equalsIgnoreCase(nameCode)) return true;
       }
     }
     return false;
+  }
+
+  public static boolean contains(String nameCode) {
+    for (Lang lang : McTools.getCodex().getLangs()) {
+      if (lang.getNameCode().equalsIgnoreCase(nameCode)) return true;
+      for (String code : lang.getCodes()) {
+        if (code.equalsIgnoreCase(nameCode)) return true;
+      }
+    }
+    return false;
+  }
+
+  public static Lang getLang(List<Lang> langs, String nameCode) {
+    for (Lang lang : langs) {
+      if (lang.getNameCode().equalsIgnoreCase(nameCode)) return lang;
+      for (String code : lang.getCodes()) {
+        if (code.equalsIgnoreCase(nameCode)) return lang;
+      }
+    }
+    return null;
+  }
+
+  public static Lang getLang(String nameCode) {
+    for (Lang lang : McTools.getCodex().getLangs()) {
+      if (lang.getNameCode().equalsIgnoreCase(nameCode)) return lang;
+      for (String code : lang.getCodes()) {
+        if (code.equalsIgnoreCase(nameCode)) return lang;
+      }
+    }
+
+    return null;
+  }
+
+  public static Lang getLangByDisplayName(String displayName) {
+    for (Lang lang : McTools.getCodex().getLangs()) {
+      if (lang.getDisplayName().equalsIgnoreCase(displayName)) return lang;
+    }
+
+    return null;
+  }
+
+  public static Lang getLangByName(String nameCode) {
+    for (Lang lang : McTools.getCodex().getLangs()) {
+      if (lang.getNameCode().equalsIgnoreCase(nameCode)) return lang;
+      for (String code : lang.getCodes()) {
+        if (code.equalsIgnoreCase(nameCode)) return lang;
+      }
+    }
+
+    return null;
+  }
+
+  public static boolean isValidLanguage(String nameCode) {
+    return contains(nameCode);
   }
 
 }

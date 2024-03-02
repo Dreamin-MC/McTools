@@ -30,7 +30,7 @@ public class CommandTag implements CommandExecutor, TabCompleter {
   @Override
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
     if (!(sender instanceof Player)) {
-      sender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(Lang.en_US, ""));
+      sender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(McTools.getCodex().getDefaultLang(), ""));
       return true;
     }
 

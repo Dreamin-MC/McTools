@@ -1,6 +1,5 @@
 package fr.dreamin.mctools.api.gui;
 
-import com.rexcantor64.triton.api.language.Language;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.minecraft.Minecraft;
 import fr.dreamin.mctools.api.service.Service;
@@ -73,12 +72,11 @@ public class GuiManager extends Service implements Listener{
           if (event.getSlot() == paginationManager.getSlotNext() && Minecraft.compareItem(paginationManager.getNext(), current)) paginationManager.getType().setNext(player, paginationManager, m.getClass());
           else if (event.getSlot() == paginationManager.getSlotPrevious() && Minecraft.compareItem(paginationManager.getPrevious(), current)) paginationManager.getType().setPrevious(player, paginationManager, m.getClass());
 
-          Bukkit.broadcastMessage("- : "+ indexPagination.get());
+          if (getGuiConfig().getGuiPageManager().containsItemInPagination(paginationManager, event.getSlot())) indexPagination.set(getGuiConfig().getGuiPageManager().getIdItemInPagination(mtPlayer.getPlayer(), paginationManager, event.getSlot(), m));
 
-          if (getGuiConfig().getGuiPageManager().containsItemInPagination(paginationManager, event.getSlot())) indexPagination.set(getGuiConfig().getGuiPageManager().getIdItemInPagination(mtPlayer.getPlayer(), paginationManager, event.getSlot(), m.getClass()));
-
-          Bukkit.broadcastMessage("- : "+ indexPagination.get());
         }
+
+        if (indexPagination.get() < -1) indexPagination.set(-1);
 
         m.onClick(mtPlayer, inv, current, event.getSlot(), event.getClick(), indexPagination.get());
         event.setCancelled(true);
@@ -151,11 +149,10 @@ public class GuiManager extends Service implements Listener{
 
       if (paginationManager != null) {
 
-        if (!paginationManager.isSync()) {
+        if (!paginationManager.isSync())
           if (!getGuiConfig().getGuiPageManager().containsGuiPage(player, menu.getClass().getSimpleName())) getGuiConfig().getGuiPageManager().addGuiPage(player, menu.getClass().getSimpleName(), 1);
-        }
         else {
-         for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+         for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getMtPlayers()) {
            if (!getGuiConfig().getGuiPageManager().containsGuiPage(MTPlayer.getPlayer(), menu.getClass().getSimpleName())) getGuiConfig().getGuiPageManager().addGuiPage(MTPlayer.getPlayer(), menu.getClass().getSimpleName(), 1);
          }
         }

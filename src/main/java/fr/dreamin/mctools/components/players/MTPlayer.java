@@ -17,36 +17,22 @@ import org.bukkit.inventory.ItemStack;
 
 public class MTPlayer {
 
-  @Getter @Setter
-  private final Player player;
-  @Getter @Setter
-  private PlayerPerm perm;
-  @Getter
-  private boolean isEditMode = false;
+  @Getter @Setter private final Player player;
+  @Getter @Setter private PlayerPerm perm;
+  @Getter private boolean isEditMode = false;
+  @Getter private final ItemStack itemStats;
+  @Getter private String skinBase64 = null;
+  @Getter private boolean isCanMove = true;
+  @Getter @Setter private Lang lang;
+  @Getter @Setter private String ip = "";
 
-  @Getter
-  private final BuildPlayerManager buildManager = new BuildPlayerManager();
-  @Getter
-  private ArmorStandManager armorStandManager = null;
-  @Getter
-  private final VoiceConfPlayerManager voiceConfManager = new VoiceConfPlayerManager();
-  @Getter
-  private HudPlayerManager hudPlayerManager = null;
-  @Getter
-  private TritonPlayerManager tritonManager = null;
-  @Getter
-  private final PlayerTickManager playerTickManager;
-  @Getter
-  private VoicePlayerManager voiceManager = null;
-  @Getter
-  private final ItemStack itemStats;
-  @Getter
-  private String skinBase64 = null;
-  @Getter
-  private boolean isCanMove = true;
-
-  @Getter @Setter
-  private Lang lang;
+  @Getter private final BuildPlayerManager buildManager = new BuildPlayerManager();
+  @Getter private ArmorStandManager armorStandManager = null;
+  @Getter private final VoiceConfPlayerManager voiceConfManager = new VoiceConfPlayerManager();
+  @Getter private HudPlayerManager hudPlayerManager = null;
+  @Getter private TritonPlayerManager tritonManager = null;
+  @Getter private final PlayerTickManager playerTickManager;
+  @Getter private VoicePlayerManager voiceManager = null;
 
   public MTPlayer(Player player) {
     this.player = player;

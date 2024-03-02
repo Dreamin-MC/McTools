@@ -16,7 +16,7 @@ public class CommandShowVoice implements CommandExecutor {
   @Override
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
     if (!(commandSender instanceof Player)) {
-      commandSender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(Lang.en_US, ""));
+      commandSender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(McTools.getCodex().getDefaultLang(), ""));
       return true;
     }
 

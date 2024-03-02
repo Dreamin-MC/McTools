@@ -35,7 +35,7 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
 
     if (!(sender instanceof Player)) {
-      sender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(Lang.en_US, ""));
+      sender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(McTools.getCodex().getDefaultLang(), ""));
       return true;
     }
 
@@ -160,8 +160,8 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
                   int v = Integer.parseInt(args[2]);
 
                   mtPlayer.getArmorStandManager().getArmorStandRadius().addAll(getNearbyArmorStands(mtPlayer, v));
-                  McTools.getService(GuiManager.class).open(player, ArmorStandListRadiusGui.class);
                   McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removeGuiPage(player, ArmorStandListRadiusGui.class.getSimpleName());
+                  McTools.getService(GuiManager.class).open(player, ArmorStandListRadiusGui.class);
 
                 } catch (NumberFormatException e) {
                   mtPlayer.sendMsg(LangMsg.ERROR_VALIDNUMBER, "");

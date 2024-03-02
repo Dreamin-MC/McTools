@@ -65,30 +65,26 @@ public class ArmorStandListLockedGui implements GuiBuilder {
         mtPlayer.getPlayer().sendMessage(mtPlayer.getMsg(LangMsg.GENERAL_HAVEALLARMORSTAND, LangMsg.GENERAL_DESTROY, LangMsg.GENERAL_SELECTED));
         break;
       default:
-        if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(mtPlayer, inv), slot)) {
-          int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(mtPlayer.getPlayer(), getPaginationManager(mtPlayer, inv), slot, getClass());
+        ArmorStand armorStand = mtPlayer.getArmorStandManager().getArmorStandLocked().get(indexPagination);
 
-          ArmorStand armorStand = mtPlayer.getArmorStandManager().getArmorStandLocked().get(index);
+        if (action.equals(ClickType.LEFT)) {
+          mtPlayer.getArmorStandManager().removeArmorStandLocked(armorStand, false);
+          mtPlayer.getArmorStandManager().addArmorStandSelected(armorStand);
 
-          if (action.equals(ClickType.LEFT)) {
-            mtPlayer.getArmorStandManager().removeArmorStandLocked(armorStand, false);
-            mtPlayer.getArmorStandManager().addArmorStandSelected(armorStand);
+          McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandListLockedGui.class);
+          mtPlayer.getPlayer().sendMessage(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_HAVEAARMORSTANDSELECTED, LangMsg.GENERAL_ADDED));
+        }
+        else if (action.equals(ClickType.RIGHT)) {
 
-            McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandListLockedGui.class);
-            mtPlayer.getPlayer().sendMessage(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_GENERAL_HAVEAARMORSTANDSELECTED, LangMsg.GENERAL_ADDED));
-          }
-          else if (action.equals(ClickType.RIGHT)) {
+          mtPlayer.getArmorStandManager().removeArmorStandLocked(armorStand, true);
 
-            mtPlayer.getArmorStandManager().removeArmorStandLocked(armorStand, true);
-
-            McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandListLockedGui.class);
-            mtPlayer.getPlayer().sendMessage(mtPlayer.getMsg(LangMsg.GENERAL_HAVEARMORSTAND, LangMsg.GENERAL_REMOVED, LangMsg.GENERAL_LOCKED));
-          }
-          else if (action.equals(ClickType.SHIFT_LEFT) || action.equals(ClickType.SHIFT_RIGHT)) mtPlayer.getPlayer().teleport(armorStand.getLocation());
-          else if (action.equals(ClickType.MIDDLE)) {
-            if (!armorStand.getHelmet().getType().equals(Material.AIR)) mtPlayer.getPlayer().getInventory().addItem(armorStand.getHelmet());
-            else mtPlayer.getPlayer().sendMessage(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_ERROR_NOTITEMHEAD, ""));
-          }
+          McTools.getService(GuiManager.class).open(mtPlayer.getPlayer(), ArmorStandListLockedGui.class);
+          mtPlayer.getPlayer().sendMessage(mtPlayer.getMsg(LangMsg.GENERAL_HAVEARMORSTAND, LangMsg.GENERAL_REMOVED, LangMsg.GENERAL_LOCKED));
+        }
+        else if (action.equals(ClickType.SHIFT_LEFT) || action.equals(ClickType.SHIFT_RIGHT)) mtPlayer.getPlayer().teleport(armorStand.getLocation());
+        else if (action.equals(ClickType.MIDDLE)) {
+          if (!armorStand.getHelmet().getType().equals(Material.AIR)) mtPlayer.getPlayer().getInventory().addItem(armorStand.getHelmet());
+          else mtPlayer.getPlayer().sendMessage(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_ERROR_NOTITEMHEAD, ""));
         }
         break;
     }

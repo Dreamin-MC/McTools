@@ -15,9 +15,9 @@ public class SqlLiteManager {
   @Getter
   private static Connection connection;
 
-  public SqlLiteManager(Codex codex, String path) {
+  public SqlLiteManager(Codex codex) {
     try {
-      connection = DriverManager.getConnection("jdbc:sqlite:" + path + "/" + codex.getSqlName() + ".db");
+      connection = DriverManager.getConnection("jdbc:sqlite:" + McTools.getInstance().getDataFolder().getAbsolutePath() + "/" + codex.getSqlName() + ".db");
       SqlLiteCodex.checkIfExist();
     } catch (SQLException e) {
       e.printStackTrace();

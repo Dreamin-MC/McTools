@@ -11,6 +11,8 @@ mcTools:
 
   defaultLang: fr_FR
 
+  doubleCount: true
+
   buildMode: false
   editMode: false
   defaultGui: false
@@ -18,6 +20,14 @@ mcTools:
   voiceMode: false
   voiceWallMode: false #true = enable voice mode, false = disable voice mode
   voiceDistanceMax: 10 #max distance for voiceWallMode
+
+lang:
+  fr_FR:
+    display-name: "Français"
+    langCode: [fr_FR, fr_CA]
+  en_GB:
+    display-name: "English"
+    langCode: [ en_GB, en_AU, en_CA, en_NZ, en_PT, en_UD, en_US ]
 
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #>>       DATABASE INFORMATION       >>

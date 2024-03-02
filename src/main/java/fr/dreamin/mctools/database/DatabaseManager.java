@@ -5,7 +5,7 @@ import fr.dreamin.mctools.config.Codex;
 import fr.dreamin.mctools.database.mysql.MysqlManager;
 import fr.dreamin.mctools.database.sqlLite.SqlLiteManager;
 import lombok.Getter;
-import lombok.Setter;
+import org.bukkit.Bukkit;
 
 import java.sql.Connection;
 
@@ -17,13 +17,19 @@ public class DatabaseManager {
   public static void setConnection(Codex codex, DatabaseType type) {
     switch (type) {
       case MYSQL:
-        new MysqlManager(codex.getHost(), codex.getPort(), codex.getDbName(), codex.getUsername(), codex.getPassword());
+
+        if (codex.getHost() == null || codex.getUsername() == null || codex.getPassword() == null || codex.getDefaultPrefix() == null) {
+          Bukkit.getConsoleSender().sendMessage(codex.getBroadcastprefix()+"§cErreur connection database.");
+          Bukkit.getPluginManager().disablePlugin(McTools.getInstance());
+        }
+
+        new MysqlManager(codex);
 
         connection = MysqlManager.getConnection();
         break;
       case SQLITE:
         if (!McTools.getInstance().getDataFolder().exists()) McTools.getInstance().getDataFolder().mkdirs();
-        new SqlLiteManager(codex, McTools.getInstance().getDataFolder().getAbsolutePath());
+        new SqlLiteManager(codex);
 
         connection = SqlLiteManager.getConnection();
         break;

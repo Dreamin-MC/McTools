@@ -63,6 +63,7 @@ public enum LangMsg {
   ERROR_ITEMHAND("error.itemHand.lang.", "%BROADCAST%[color]RED[color]Please hold an item in hand."),
   ERROR_ITEMID("error.itemId.lang.", "%BROADCAST%[color]RED[color]This item does not have a custom ID."),
   ERROR_EDITMODE_NOTENABLED("error.editModeNotEnalbe.lang.", "%BROADCAST%[color]RED[color]The edit mode is not enabled"),
+  ERROR_DOUBLECOUNT("error.doubleCount.lang.", "[color]RED[color]Double counting is not allowed."),
 
   //------PLAYER------//
   PLAYER_UPDATE_LANG("player.update.lang.", "%BROADCAST%[color]WHITE[color]Update your language to : [color]GOLD[color]%0"),
@@ -197,7 +198,7 @@ public enum LangMsg {
 
   public String getMsg(Lang lang, String... args) {
 
-    String msg = getStr(this.path + lang.name(), this.dflValue);
+    String msg = getStr(this.path + lang.getNameCode(), this.dflValue);
 
     for (int i = 0; i < args.length; i++) {
       if (msg.contains("%" + i)) msg = msg.replace("%" + i, args[i]);
@@ -260,7 +261,7 @@ public enum LangMsg {
 
   public String getMsg(Lang lang, LangMsg... args) {
 
-    String msg = getStr(this.path + lang.name(), this.dflValue);
+    String msg = getStr(this.path + lang.getNameCode(), this.dflValue);
 
     for (int i = 0; i < args.length; i++) {
       if (msg.contains("%" + i)) msg = msg.replace("%" + i, args[i].getMsg(lang, ""));
@@ -323,7 +324,7 @@ public enum LangMsg {
 
   public static String getMsg(String path, String dflValue, Lang lang, String... args) {
 
-    String msg = getStr(path + lang.name(), dflValue);
+    String msg = getStr(path + lang.getNameCode(), dflValue);
 
     for (int i = 0; i < args.length; i++) {
       if (msg.contains("%" + i)) msg = msg.replace("%" + i, args[i]);

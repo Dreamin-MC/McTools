@@ -45,7 +45,7 @@ public class BreakListener implements Listener {
         if (lastDamager.containsKey(armorStandId)) {
           Player player = lastDamager.get(armorStandId);
 
-          for (MTPlayer bPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+          for (MTPlayer bPlayer : McTools.getService(PlayersService.class).getMtPlayers()) {
 
             for (ArmorStand armorStand1 : bPlayer.getArmorStandManager().getArmorStandSelected()) {
               if (armorStand1.getUniqueId().equals(armorStandId)) {

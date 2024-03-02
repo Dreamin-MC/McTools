@@ -34,6 +34,7 @@ import fr.dreamin.mctools.api.service.Service;
 import fr.dreamin.mctools.api.service.ServiceManager;
 import fr.dreamin.mctools.config.LangManager;
 import fr.dreamin.mctools.components.lang.LangMsg;
+import fr.dreamin.mctools.database.DatabaseManager;
 import fr.dreamin.mctools.database.mysql.MysqlManager;
 import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
@@ -103,6 +104,8 @@ public final class McTools extends JavaPlugin{
   @Override
   public void onDisable() {
     isDisabled = true;
+
+    DatabaseManager.closeAllConnection();
 
     ArmorManager.getArmors().forEach(armorPose -> armorPose.remove());
 

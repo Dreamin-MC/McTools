@@ -65,8 +65,8 @@ public class ArmorStandManager {
       else if (itemBuilder.toItemStack().getType().equals(Material.AIR)) itemBuilder.setType(Material.ARMOR_STAND);
 
       itemStacks.add(itemBuilder.setName(" ").setLore(
-        "Map : " + armorStand.getWorld().getName(),
-        "§fx :" + armorStand.getLocation().getX(),
+        "§fMap : " + armorStand.getWorld().getName(),
+        "§fx : " + armorStand.getLocation().getX(),
         "§fy : " + armorStand.getLocation().getY(),
         "§fz : " + armorStand.getLocation().getZ(),
         mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_RIGHTCLICKREMOVE, ""),
@@ -124,7 +124,6 @@ public class ArmorStandManager {
       } catch (ReflectiveOperationException e) {
         throw new RuntimeException(e);
       }
-    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(mtPlayer.getPlayer(), ArmorStandListSelectedGui.class.getSimpleName(), 1);
   }
 
   public void removeAllArmorStandSelected(boolean removeGlowing) {
@@ -192,8 +191,8 @@ public class ArmorStandManager {
       else if (itemBuilder.toItemStack().getType().equals(Material.AIR)) itemBuilder.setType(Material.ARMOR_STAND);
 
       itemStacks.add(itemBuilder.setName(" ").setLore(
-        "Map : " + armorStand.getWorld().getName(),
-        "§fx :" + armorStand.getLocation().getX(),
+        "§fMap : " + armorStand.getWorld().getName(),
+        "§fx : " + armorStand.getLocation().getX(),
         "§fy : " + armorStand.getLocation().getY(),
         "§fz : " + armorStand.getLocation().getZ(),
         mtPlayer.getMsg(LangMsg.PLAYER_ARMORSTAND_LORE_GENERAL_LEFTCLICKADD, ""),
@@ -231,7 +230,6 @@ public class ArmorStandManager {
         throw new RuntimeException(e);
       }
     this.armorStandRadius.remove(armorStand);
-    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(mtPlayer.getPlayer(), ArmorStandListRadiusGui.class.getSimpleName(), 1);
   }
 
   public void removeAllArmorStandRadius(boolean removeGlowing) {
@@ -280,7 +278,7 @@ public class ArmorStandManager {
       else if (itemBuilder.toItemStack().getType().equals(Material.AIR)) itemBuilder.setType(Material.ARMOR_STAND);
 
       itemStacks.add(itemBuilder.setName(" ").setLore(
-        "Map : " + armorStand.getWorld().getName(),
+        "§fMap : " + armorStand.getWorld().getName(),
         "§fx : " + armorStand.getLocation().getX(),
         "§fy : " + armorStand.getLocation().getY(),
         "§fz : " + armorStand.getLocation().getZ(),
@@ -336,7 +334,6 @@ public class ArmorStandManager {
         throw new RuntimeException(e);
       }
     this.armorStandLocked.remove(armorStand);
-    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(mtPlayer.getPlayer(), ArmorStandListLockedGui.class.getSimpleName(), 1);
   }
 
   public void removeAllArmorStandLocked(boolean removeGlowing) {

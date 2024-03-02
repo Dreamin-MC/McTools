@@ -27,7 +27,7 @@ public class CommandMT implements CommandExecutor, TabCompleter {
   public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
 
     if (!(commandSender instanceof Player)) {
-      commandSender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(Lang.en_US, ""));
+      commandSender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(McTools.getCodex().getDefaultLang(), ""));
       return true;
     }
 
@@ -63,11 +63,11 @@ public class CommandMT implements CommandExecutor, TabCompleter {
               mtPlayer.sendMsg(LangMsg.CMD_MT_SETPACK, (McTools.getCodex().isPack() ? LangMsg.GENERAL_ENABLED : LangMsg.GENERAL_DISABLED));
               break;
             case "lang":
-              Lang lang = Lang.getLangByName(args[2]);
+              Lang lang = Lang.getLangByDisplayName(args[2]);
 
               if (lang != null) {
                 mtPlayer.setLang(lang);
-                mtPlayer.sendMsg(LangMsg.PLAYER_UPDATE_LANG, lang.getName());
+                mtPlayer.sendMsg(LangMsg.PLAYER_UPDATE_LANG, lang.getDisplayName());
                 return true;
               }
               else {
@@ -116,8 +116,11 @@ public class CommandMT implements CommandExecutor, TabCompleter {
         }
       case 3:
         switch (args[1]) {
-          case "lang": listArgs = new ArrayList<>(Lang.getLangs());
-          return listArgs;
+
+          case "lang":
+            List<String> finalListArgs = listArgs;
+            McTools.getCodex().getLangs().forEach(lang -> finalListArgs.add(lang.getDisplayName()));
+          return finalListArgs;
         }
     }
     return listArgs;

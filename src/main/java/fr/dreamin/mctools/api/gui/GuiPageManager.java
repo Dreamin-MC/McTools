@@ -13,9 +13,8 @@ import java.util.List;
 public class GuiPageManager {
 
   private HashMap<Player, HashMap<String, Integer>> guiPage = new HashMap<>();
-  public HashMap<Player, HashMap<String, Integer>> getGuiPage() {
-    return guiPage;
-  }
+
+  public HashMap<Player, HashMap<String, Integer>> getTest() {return guiPage;}
 
   public void addGuiPage(Player player, String name, int page) {
     if (!guiPage.containsKey(player)) guiPage.put(player, new HashMap<>());
@@ -23,7 +22,7 @@ public class GuiPageManager {
   }
 
   public void addGuiPageForAll(String name, int page) {
-    for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+    for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getMtPlayers()) {
       addGuiPage(MTPlayer.getPlayer(), name, page);
     }
   }
@@ -35,7 +34,7 @@ public class GuiPageManager {
   }
 
   public void addPageForAll(String name) {
-    for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+    for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getMtPlayers()) {
       addPage(MTPlayer.getPlayer(), name);
     }
   }
@@ -47,7 +46,7 @@ public class GuiPageManager {
   }
 
   public void removePageForAll(String name) {
-    for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getDTPlayers()) {
+    for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getMtPlayers()) {
       removePage(MTPlayer.getPlayer(), name);
     }
   }
@@ -63,8 +62,7 @@ public class GuiPageManager {
   }
 
   public int getGuiPage(Player player, String name) {
-    if (!guiPage.containsKey(player)) return 0;
-    if (!guiPage.get(player).containsKey(name)) return 0;
+    if (!containsGuiPage(player, name)) return -1;
     return guiPage.get(player).get(name);
   }
 
@@ -79,14 +77,16 @@ public class GuiPageManager {
     return false;
   }
 
-  public int getIdItemInPagination(Player player, PaginationManager paginationManager, int slot, Class<? extends GuiBuilder> gClass) {
+  public static int getIdItemInPagination(Player player, PaginationManager paginationManager, int slot, GuiBuilder menu) {
 
     int index = 0;
 
     if (paginationManager.getType().equals(PaginationType.PAGE) || paginationManager.getType().equals(PaginationType.LOOP_PAGE)) {
-      int page = getGuiPage(player, gClass.getSimpleName());
+      int page = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
       int itemsPerPage = paginationManager.getItemsPerPage();
       int slotStart = paginationManager.getSlotStart();
+
+      if (page == -1) return -1;
 
       List<Integer> notAccountSlots = paginationManager.getNotAccountSlots();
 
@@ -98,10 +98,14 @@ public class GuiPageManager {
 
       // Calcul ajusté pour l'index dans la pagination
       index = (page - 1) * itemsPerPage + adjustedIndex;
-    } else if (paginationManager.getType().equals(PaginationType.LINE)) {
 
-      int indexStart = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, gClass.getSimpleName());
+    }
+    else if (paginationManager.getType().equals(PaginationType.LINE)) {
+
+      int indexStart = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
       int slotStart = paginationManager.getSlotStart();
+
+      if (indexStart == -1) return -1;
 
       List<ItemStack> items = Math.reorderItems(paginationManager.getItems(), indexStart - 1);
 
@@ -123,10 +127,13 @@ public class GuiPageManager {
           if (item.equals(paginationManager.getItems().get(i))) index = i;
         }
       }
-    } else if (paginationManager.getType().equals(PaginationType.LOOP_LINE)) {
+    }
+    else if (paginationManager.getType().equals(PaginationType.LOOP_LINE)) {
 
-      int indexStart = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, gClass.getSimpleName());
+      int indexStart = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
       int slotStart = paginationManager.getSlotStart();
+
+      if (indexStart == -1) return -1;
 
       List<ItemStack> items = Math.reorderItemsAZ(paginationManager.getItems(), indexStart - 1);
 
@@ -156,4 +163,5 @@ public class GuiPageManager {
     }
     return index;
   }
+
 }

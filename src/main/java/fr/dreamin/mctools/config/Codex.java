@@ -6,7 +6,13 @@ import fr.dreamin.mctools.database.DatabaseType;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class Codex {
   private FileConfiguration config;
@@ -14,6 +20,12 @@ public class Codex {
   //  >>>>>>> PLUGIN <<<<<<<
   @Getter @Setter
   private String pluginName, prefix, broadcastprefix;
+
+  @Getter @Setter private Lang defaultLang;
+
+  @Getter private List<Lang> langs = new ArrayList<>();
+
+  @Getter @Setter private boolean doubleCount;
 
   //  >>>>>> MESSAGE <<<<<<
   @Getter @Setter
@@ -30,8 +42,6 @@ public class Codex {
   private String host, dbName, username, password, defaultPrefix;
   @Getter @Setter
   private int port;
-  @Getter @Setter
-  private Lang defaultLang;
   @Getter @Setter
   private String sqlName;
 
@@ -75,7 +85,25 @@ public class Codex {
     prefix = getStr("mcTools.prefix", "§8» §f");
     broadcastprefix = getStr("mcTools.broadcastprefix", "[§c§lMcTools§r] ");
 
+    doubleCount = getBool("mcTools.doubleCount", true);
 
+    if (config.contains("lang")) {
+      ConfigurationSection langSection = config.getConfigurationSection("lang");
+
+      for (String langKey : langSection.getKeys(false)) {
+        ConfigurationSection langInfo = langSection.getConfigurationSection(langKey);
+        String displayName = langInfo.getString("display-name", null);
+        List<String> langCode = langInfo.getStringList("langCode");
+
+        if (displayName != null && langCode != null && !langCode.isEmpty()) langs.add(new Lang(langKey, displayName, langCode));
+      }
+    }
+    else langs.add(new Lang("en_GB", "English", List.of("en_GB", "en_AU", "en_CA", "en_NZ", "en_PT", "en_UD", "en_US")));
+
+    if (langs.isEmpty()) langs.add(new Lang("en_GB", "English", List.of("en_GB", "en_AU", "en_CA", "en_NZ", "en_PT", "en_UD", "en_US")));
+
+    if (Lang.contains(langs, getStr("mcTools.defaultLang", "en_GB"))) defaultLang = Lang.getLang(langs, getStr("mcTools.defaultLang", "en_GB"));
+    else defaultLang = Lang.getLang(langs,"en_GB");
   }
 
   private void initSQLData() {
@@ -105,7 +133,6 @@ public class Codex {
     buildMode = getBool("mcTools.buildMode", false);
     pack = getBool("mcTools.ressourcepack", false);
     ipApiKey = getStr("mcTools.ipApiKey", null);
-    defaultLang = Lang.valueOf(getStr("mcTools.defaultLang", "en_US"));
   }
 
   private void initVoice(){
@@ -137,7 +164,7 @@ public class Codex {
   }
 
   public String getDefaultPrefix() {
-    return (getDatabaseType().equals(DatabaseType.MYSQL)? getDefaultPrefix() :  "");
+    return (getDatabaseType().equals(DatabaseType.MYSQL)? defaultPrefix :  "");
   }
 
 }

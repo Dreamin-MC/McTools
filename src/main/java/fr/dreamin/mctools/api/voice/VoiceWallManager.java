@@ -43,8 +43,8 @@ public class VoiceWallManager extends Service {
 
       PlayersService playersService = McTools.getService(PlayersService.class);
 
-      for (MTPlayer MTPlayer : playersService.getDTPlayers()) {
-        for (MTPlayer otherMTPlayer : playersService.getDTPlayers()) {
+      for (MTPlayer MTPlayer : playersService.getMtPlayers()) {
+        for (MTPlayer otherMTPlayer : playersService.getMtPlayers()) {
           if (otherMTPlayer.equals(MTPlayer)) continue;
 
           //get if player is dead and the otherPlayer is not dead

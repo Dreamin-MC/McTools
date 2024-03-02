@@ -2,7 +2,7 @@ package fr.dreamin.mctools.components.commands.voice;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.gui.GuiManager;
-import fr.dreamin.mctools.api.gui.defaultGui.voice.ListPlayerGui;
+import fr.dreamin.mctools.api.gui.defaultGui.voice.VoiceListPlayerGui;
 import fr.dreamin.mctools.api.player.PlayerPerm;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import fr.dreamin.mctools.components.players.MTPlayer;
@@ -34,7 +34,7 @@ public class CommandDV implements CommandExecutor, TabCompleter {
 
       switch (args[0]) {
         case "listplayers":
-          if (player.hasPermission(PlayerPerm.HOTE.getPerm())) McTools.getService(GuiManager.class).open(player, ListPlayerGui.class);
+          if (player.hasPermission(PlayerPerm.HOTE.getPerm())) McTools.getService(GuiManager.class).open(player, VoiceListPlayerGui.class);
           break;
       }
 

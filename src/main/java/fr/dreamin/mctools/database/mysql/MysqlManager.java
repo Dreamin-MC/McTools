@@ -1,6 +1,7 @@
 package fr.dreamin.mctools.database.mysql;
 
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.config.Codex;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 
@@ -9,7 +10,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class MysqlManager {
-  private final McTools main;
   private final String host;
   private final String userName;
   private final String database;
@@ -18,24 +18,23 @@ public class MysqlManager {
   @Getter
   private static Connection connection;
 
-  public MysqlManager(String host, Integer port, String database, String userName, String password) {
-    this.main = McTools.getInstance();
-    this.host = host;
-    this.port = port;
-    this.userName = userName;
-    this.password = password;
-    this.database = database;
+  public MysqlManager(Codex codex) {
+    this.host = codex.getHost();
+    this.port = codex.getPort();
+    this.userName = codex.getUsername();
+    this.password = codex.getPassword();
+    this.database = codex.getDbName();
 
     if (!isOnline()) {
       try {
         connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" +this.database, this.userName, this.password);
-        Bukkit.getConsoleSender().sendMessage(McTools.getCodex().getBroadcastprefix()+"§aDatabase : Ok");
+        Bukkit.getConsoleSender().sendMessage(codex.getBroadcastprefix()+"§aDatabase : Ok");
 
-        MysqlCodex.checkIfExist();
+        MysqlCodex.checkIfExist(codex);
 
       } catch (SQLException e) {
         e.printStackTrace();
-        Bukkit.getConsoleSender().sendMessage(McTools.getCodex().getBroadcastprefix()+"§cErreur de connexion à la database, le plugin va s'éteindre.");
+        Bukkit.getConsoleSender().sendMessage(codex.getBroadcastprefix()+"§cErreur de connexion à la database, le plugin va s'éteindre.");
         Bukkit.getPluginManager().disablePlugins();
       }
     }

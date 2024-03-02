@@ -61,10 +61,8 @@ public class ArmorStandListSelectedGui implements GuiBuilder {
         mtPlayer.getPlayer().closeInventory();
         break;
       default:
-        if (McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().containsItemInPagination(getPaginationManager(mtPlayer, inv), slot)) {
-          int index = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getIdItemInPagination(mtPlayer.getPlayer(), getPaginationManager(mtPlayer, inv), slot, getClass());
-
-          ArmorStand armorStand = mtPlayer.getArmorStandManager().getArmorStandSelected().get(index);
+        if (indexPagination > -1) {
+          ArmorStand armorStand = mtPlayer.getArmorStandManager().getArmorStandSelected().get(indexPagination);
 
           if (action.equals(ClickType.RIGHT)) {
             mtPlayer.getArmorStandManager().removeArmorStandSelected(armorStand, true);
@@ -81,7 +79,6 @@ public class ArmorStandListSelectedGui implements GuiBuilder {
             if (!armorStand.getHelmet().getType().equals(Material.AIR)) mtPlayer.getPlayer().getInventory().addItem(armorStand.getHelmet());
             else mtPlayer.getPlayer().sendMessage(mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_ERROR_NOTITEMHEAD, ""));
           }
-
         }
         break;
     }

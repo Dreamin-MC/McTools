@@ -7,7 +7,7 @@ public class SqlLiteCodex {
 
   public static void checkIfExist() {
     try(Statement statement = SqlLiteManager.getConnection().createStatement()){
-      statement.execute("CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, uuid TEXT NOT NULL, lang TEXT NOT NULL, volAction INTEGER NOT NULL DEFAULT 80,  volAmbien INTEGER NOT NULL DEFAULT 80, volEvent INTEGER NOT NULL DEFAULT 80)");
+      statement.execute("CREATE TABLE IF NOT EXISTS user (id INTEGER PRIMARY KEY AUTOINCREMENT, uuid TEXT NOT NULL, ip TEXT NOT NULL, lang TEXT NOT NULL, volAction INTEGER NOT NULL DEFAULT 80,  volAmbien INTEGER NOT NULL DEFAULT 80, volEvent INTEGER NOT NULL DEFAULT 80)");
 
       statement.execute("CREATE TABLE IF NOT EXISTS buildtag (id INTEGER PRIMARY KEY AUTOINCREMENT, keyName TEXT NOT NULL DEFAULT 16, value TEXT NOT NULL DEFAULT 16, categoryId INTEGER NOT NULL)");
 

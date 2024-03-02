@@ -135,17 +135,17 @@ public class JsonManager {
           String split = language.split(",")[0];
 
           return split.split("-")[0] + "_" + split.split("-")[1];
-        } else if (responseCode == HttpURLConnection.HTTP_UNAVAILABLE) return McTools.getCodex().getDefaultLang().name();
-        else return McTools.getCodex().getDefaultLang().name();
+        } else if (responseCode == HttpURLConnection.HTTP_UNAVAILABLE) return McTools.getCodex().getDefaultLang().getNameCode();
+        else return McTools.getCodex().getDefaultLang().getNameCode();
       } catch (ProtocolException e) {
-        return McTools.getCodex().getDefaultLang().name();
+        return McTools.getCodex().getDefaultLang().getNameCode();
       } catch (MalformedURLException e) {
-        return McTools.getCodex().getDefaultLang().name();
+        return McTools.getCodex().getDefaultLang().getNameCode();
       } catch (IOException e) {
-        return McTools.getCodex().getDefaultLang().name();
+        return McTools.getCodex().getDefaultLang().getNameCode();
       }
     }
-    else return McTools.getCodex().getDefaultLang().name();
+    else return McTools.getCodex().getDefaultLang().getNameCode();
 
   }
 
