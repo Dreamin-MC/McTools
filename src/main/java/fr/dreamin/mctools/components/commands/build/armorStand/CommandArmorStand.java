@@ -19,6 +19,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.jetbrains.annotations.NotNull;
@@ -40,15 +41,14 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
     }
 
     Player player = (Player) sender;
+    MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+
+    if (mtPlayer == null) {
+      player.sendMessage(LangMsg.ERROR_OCCURRED.getMsg(McTools.getCodex().getDefaultLang(), ""));
+      return true;
+    }
 
     if (player.hasPermission(PlayerPerm.BUILD.getPerm())) {
-
-      MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
-
-      if (mtPlayer == null) {
-        mtPlayer.sendMsg(LangMsg.ERROR_OCCURRED, "");
-        return true;
-      }
 
       if (args.length == 0) McTools.getService(GuiManager.class).open(player, ArmorStandMenuGui.class);
       else {
@@ -98,6 +98,14 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
                     mtPlayer.getArmorStandManager().setArmRotate(Double.valueOf(args[1]));
                     break;
                 }
+                break;
+              case "tag":
+                if (mtPlayer.getBuildManager().getTag() == null) {
+                  mtPlayer.sendMsg(LangMsg.CMD_TAG_ERROR_SELECTTAG, "");
+                  return true;
+                }
+                mtPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {if (!armorStand.getPersistentDataContainer().has(mtPlayer.getBuildManager().getTag().getNamespacedKey())) armorStand.getPersistentDataContainer().set(mtPlayer.getBuildManager().getTag().getNamespacedKey(), PersistentDataType.STRING, mtPlayer.getBuildManager().getTag().getValue());});
+                break;
             }
             break;
           case "list":
@@ -149,23 +157,26 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
                 }
                 break;
               case "radius":
-                if (args.length <= 2) {
-                  mtPlayer.sendMsg(LangMsg.ERROR_PUTVALUE, "");
-                  return false;
-                }
 
                 mtPlayer.getArmorStandManager().getArmorStandRadius().clear();
 
-                try {
-                  int v = Integer.parseInt(args[2]);
-
-                  mtPlayer.getArmorStandManager().getArmorStandRadius().addAll(getNearbyArmorStands(mtPlayer, v));
+                if (args.length <= 2) {
+                  mtPlayer.getArmorStandManager().getArmorStandRadius().addAll(getNearbyArmorStands(mtPlayer, 1));
                   McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removeGuiPage(player, ArmorStandListRadiusGui.class.getSimpleName());
                   McTools.getService(GuiManager.class).open(player, ArmorStandListRadiusGui.class);
+                }
+                else {
+                  try {
+                    int v = Integer.parseInt(args[2]);
 
-                } catch (NumberFormatException e) {
-                  mtPlayer.sendMsg(LangMsg.ERROR_VALIDNUMBER, "");
-                  return false;
+                    mtPlayer.getArmorStandManager().getArmorStandRadius().addAll(getNearbyArmorStands(mtPlayer, v));
+                    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removeGuiPage(player, ArmorStandListRadiusGui.class.getSimpleName());
+                    McTools.getService(GuiManager.class).open(player, ArmorStandListRadiusGui.class);
+
+                  } catch (NumberFormatException e) {
+                    mtPlayer.sendMsg(LangMsg.ERROR_VALIDNUMBER, "");
+                    return false;
+                  }
                 }
                 break;
             }
@@ -210,10 +221,7 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
 
       return false;
     }
-    else {
-      MessageManager.sendError(player, McTools.getCodex().getBroadcastprefix(), McTools.getCodex().getErrorCommand());
-      return false;
-    }
+    return true;
   }
 
   @Override
@@ -227,7 +235,7 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
         case 1: return Arrays.asList("set", "list", "remove", "get", "add");
         case 2:
           switch (args[0]) {
-            case "set": return Arrays.asList("helmet", "weapon", "rotate", "move", "shulker", "invisible");
+            case "set": return Arrays.asList("helmet", "weapon", "rotate", "move", "shulker", "invisible", "tag");
             case "list": return Arrays.asList("radius", "locked", "selected");
             case "remove": return Arrays.asList("all");
             case "get": return Arrays.asList("rotation", "radius");

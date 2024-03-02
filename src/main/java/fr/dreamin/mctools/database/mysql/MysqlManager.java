@@ -19,11 +19,11 @@ public class MysqlManager {
   private static Connection connection;
 
   public MysqlManager(Codex codex) {
-    this.host = codex.getHost();
-    this.port = codex.getPort();
-    this.userName = codex.getUsername();
-    this.password = codex.getPassword();
-    this.database = codex.getDbName();
+    this.host = codex.getMysqlHost();
+    this.port = codex.getMysqlPort();
+    this.userName = codex.getMysqlUsername();
+    this.password = codex.getMysqlPassword();
+    this.database = codex.getMysqlDbName();
 
     if (!isOnline()) {
       try {

@@ -5,6 +5,7 @@ import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.defaultGui.voice.VoiceListPlayerGui;
 import fr.dreamin.mctools.api.player.PlayerPerm;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
+import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -23,12 +24,12 @@ public class CommandDV implements CommandExecutor, TabCompleter {
   @Override
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
     if (!(sender instanceof Player)) {
-      sender.sendMessage(McTools.getCodex().getBroadcastprefix() + McTools.getCodex().getErrorConsole());
+      sender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(McTools.getCodex().getDefaultLang(), ""));
       return true;
     }
 
     Player player = (Player) sender;
-    MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+    MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
     if (player.hasPermission(PlayerPerm.HOTE.getPerm())) {
 
@@ -40,7 +41,7 @@ public class CommandDV implements CommandExecutor, TabCompleter {
 
     }
     else {
-      player.sendMessage(McTools.getCodex().getErrorCommand());
+      mtPlayer.sendMsg(LangMsg.ERROR_OCCURRED, "");
       return false;
     }
     return false;

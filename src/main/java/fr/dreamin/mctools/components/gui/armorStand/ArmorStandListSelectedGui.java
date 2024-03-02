@@ -20,7 +20,7 @@ public class ArmorStandListSelectedGui implements GuiBuilder {
 
   @Override
   public String name(MTPlayer mtPlayer) {
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.ARMOR_LIST.getName()) : mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_LISTSELECTED_TITLE, "");
+    return McTools.getCodex().isResourcePack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.ARMOR_LIST.getName()) : mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_LISTSELECTED_TITLE, "");
   }
 
   @Override

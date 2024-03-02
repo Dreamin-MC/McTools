@@ -56,9 +56,23 @@ public class PlayersService extends Service {
     return null;
   }
 
+  public MTPlayer getPlayerByName(String name) {
+    for (MTPlayer dTPlayer : getMtPlayers()) {
+      if (dTPlayer.getPlayer().getName().equals(name)) return dTPlayer;
+    }
+    return null;
+  }
+
   public boolean contains(Player player) {
     for (MTPlayer MTPlayer : getMtPlayers()) {
       if (MTPlayer.getPlayer().equals(player)) return true;
+    }
+    return false;
+  }
+
+  public boolean containsByName(String name) {
+    for (MTPlayer MTPlayer : getMtPlayers()) {
+      if (MTPlayer.getPlayer().getName().equals(name)) return true;
     }
     return false;
   }
@@ -112,6 +126,24 @@ public class PlayersService extends Service {
           );
       }
 
+    });
+    return list;
+  }
+
+  public List<String> getPlayersNameNotFreeze() {
+    List<String> list = new ArrayList<>();
+
+    getMtPlayers().forEach(mtPlayer -> {
+      if (mtPlayer.isCanMove()) list.add(mtPlayer.getPlayer().getName());
+    });
+    return list;
+  }
+
+  public List<String> getPlayersNameFreeze() {
+    List<String> list = new ArrayList<>();
+
+    getMtPlayers().forEach(mtPlayer -> {
+      if (!mtPlayer.isCanMove()) list.add(mtPlayer.getPlayer().getName());
     });
     return list;
   }

@@ -21,7 +21,7 @@ public class ArmorStandListRadiusGui implements GuiBuilder {
 
   @Override
   public String name(MTPlayer mtPlayer) {
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45.getName()) : mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_LISTRADIUS_TITLE, "");
+    return McTools.getCodex().isResourcePack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45.getName()) : mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_LISTRADIUS_TITLE, "");
   }
 
   @Override

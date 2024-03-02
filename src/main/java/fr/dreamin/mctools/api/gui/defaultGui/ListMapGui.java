@@ -31,7 +31,7 @@ public class ListMapGui implements GuiBuilder {
 
   @Override
   public String name(MTPlayer mtPlayer) {
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_36.getName()) : mtPlayer.getMsg(LangMsg.GUI_LISTMAP_TITLE, "");
+    return McTools.getCodex().isResourcePack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_36.getName()) : mtPlayer.getMsg(LangMsg.GUI_LISTMAP_TITLE, "");
   }
 
   @Override

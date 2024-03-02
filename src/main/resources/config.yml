@@ -1,27 +1,79 @@
-#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-#>>       PLUGIN CONFIGURATION       >>
-#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-mcTools:
-  prefix: "§8» §f" #player's msg
-  broadcastprefix: "[§c§lMcTools§r] " #global's & console's msg
+####################################################################################################
+#                                 __  __   _______          _                                      #
+#                                |  \/  | |__   __|        | |                                     #
+#                                | \  / | ___| | ___   ___ | |___                                  #
+#                                | |\/| |/ __| |/ _ \ / _ \| / __|                                 #
+#                                | |  | | (__| | (_) | (_) | \__ \                                 #
+#                                \_|  |_/\___\_/\___/ \___/|_|___/                                 #
+#                              Developer's : Dreamin discord.gg/dreamin                            #
+####################################################################################################
 
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#>>       GENERAL CONFIGURATION      >>
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+general:
+
+  # Do not change this unless you know what you are doing.
+  version: "0.0.1"
+
+  # The prefix of the plugin
+  prefix: "§8» §f"
+
+  # The broadcast prefix of the plugin
+  broadcastprefix: "[§c§lMcTools§r] "
+
+  #The API key https://ipgeolocation.io to obtain information to set the player's language according to their IP
   ipApiKey: ""
 
-  ressourcepack: false
+  #if activated the plugin takes into account that there is a resource pack, for customs/items guis and other, if deactivated it sets the guis by default
+  resourcepack: false
 
-  defaultLang: fr_FR
+  #Url of resource pack, set on joining the server
+  resourcepackUrl: ""
 
+  #if activated, authorization to be able to connect with several accounts on the same IP, if deactivated authorization of one IP per account
   doubleCount: true
 
+  #if activated, the plugin allows the player to use all the tools for the build (Management of armor stands and items)
+  #the player must be op or have mctools.build permission to use this service
   buildMode: false
-  editMode: false
-  defaultGui: false
-  defaultItems: false
-  voiceMode: false
-  voiceWallMode: false #true = enable voice mode, false = disable voice mode
-  voiceDistanceMax: 10 #max distance for voiceWallMode
 
-lang:
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#>>        VOICE CONFIGURATION       >>
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+voice:
+
+  #Don't forget to add the OpenAudioMc plugin if activated
+  #true = enable voice mode, false = disable voice mode
+  enable: false
+
+  #wallMode if enabled, ensures that if a wall more than 2 blocks high is between two people, then the two cannot hear each other.
+  #Don't forget to add the OpenAudioMc plugin if activated, and set enabled to true
+  #true = enable wall mode, false = disable wall mode
+  wallMode: false
+
+  #distanceMax defines the maximum distance between two people for wallMode.
+  distanceMax: 10
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#>>        STAFF CONFIGURATION       >>
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#>>      LANGUAGE CONFIGURATION      >>
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+#Default langauge on the server if
+defaultLang: fr_FR
+
+#if enabled, set the player's language at first connection relative to their IP, if disabled set the player's language at first connection relative to the default language
+langByIp: false
+
+#List of server languages that can be used
+#Possibility to add more, but don't forget any information. Also put the default code in langCode
+langs:
   fr_FR:
     display-name: "Français"
     langCode: [fr_FR, fr_CA]
@@ -33,20 +85,23 @@ lang:
 #>>       DATABASE INFORMATION       >>
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
-# How Plugin Should Store Data
-#  Database type. Currently, only supports MySQL and SQLite.
-#  Current options: SQLite or MYSQL
-databaseType: SQLite
+database:
 
-# When using SQLite, the database will be stored in the plugin's data folder.
-#  What should the database file be named?
-sqlLite:
-  name: database
+  # How Plugin Should Store Data
+  #  Database type. Currently, only supports MySQL and SQLite.
+  #  Current options: SQLite or MYSQL
+  type: SQLite
 
-mysql:
-  host:
-  port: 3306
-  dbName: ""
-  username: ""
-  password: ""
-  defaultPrefix: ""
+  # When using SQLite, the database will be stored in the plugin's data folder.
+  #  What should the database file be named ?
+  sqlLite:
+    name: database
+
+  # When using MySQL, the database will be stored on a MySQL server.
+  mysql:
+    host:
+    port: 3306
+    dbName: ""
+    username: ""
+    password: ""
+    defaultPrefix: ""

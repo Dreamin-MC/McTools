@@ -18,7 +18,7 @@ public class ArmorStandListLockedGui implements GuiBuilder {
 
   @Override
   public String name(MTPlayer mtPlayer) {
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45) : mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_LISTLOCKED_TITLE, "");
+    return McTools.getCodex().isResourcePack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45) : mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_LISTLOCKED_TITLE, "");
   }
 
   @Override

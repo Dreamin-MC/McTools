@@ -18,7 +18,7 @@ public class DatabaseManager {
     switch (type) {
       case MYSQL:
 
-        if (codex.getHost() == null || codex.getUsername() == null || codex.getPassword() == null || codex.getDefaultPrefix() == null) {
+        if (codex.getMysqlHost() == null || codex.getMysqlUsername() == null || codex.getMysqlPassword() == null || codex.getDefaultPrefix() == null) {
           Bukkit.getConsoleSender().sendMessage(codex.getBroadcastprefix()+"§cErreur connection database.");
           Bukkit.getPluginManager().disablePlugin(McTools.getInstance());
         }

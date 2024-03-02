@@ -16,7 +16,7 @@ public class ArmorStandArmsSettingsGui implements GuiBuilder {
 
   @Override
   public String name(MTPlayer mtPlayer) {
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText((mtPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.ARMOR_MOVE_ROTATE.getName())) : mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_ARMSSETTINGS_TITLE, "");
+    return McTools.getCodex().isResourcePack() ? CustomChatColor.WHITE.getColorWithText((mtPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.ARMOR_MOVE_ROTATE.getName())) : mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_ARMSSETTINGS_TITLE, "");
   }
 
 

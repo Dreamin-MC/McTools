@@ -92,10 +92,6 @@ public class UserFetcher {
     if (Lang.isValidLanguage(languageCode)) mtPlayer.setLang(Lang.getLangByName(languageCode));
     else mtPlayer.setLang(McTools.getCodex().getDefaultLang());
 
-
-    Bukkit.broadcastMessage("double : " + McTools.getCodex().isDoubleCount());
-    Bukkit.broadcastMessage("exist : " + getIfIpExist(mtPlayer));
-
     if (!McTools.getCodex().isDoubleCount())
       if (getIfIpExist(mtPlayer)) {
         mtPlayer.getPlayer().kickPlayer(mtPlayer.getMsg(LangMsg.ERROR_DOUBLECOUNT, ""));
@@ -116,7 +112,6 @@ public class UserFetcher {
         mtPlayer.getVoiceManager().setVolumeAmbien(80);
         mtPlayer.getVoiceManager().setVolumeEvent(80);
       }
-
 
       preparedStatement.execute();
       preparedStatement.close();
@@ -145,7 +140,6 @@ public class UserFetcher {
       }
 
       preparedStatement.close();
-
 
     } catch (SQLException e) {
       e.printStackTrace();

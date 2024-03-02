@@ -21,12 +21,14 @@ import fr.dreamin.mctools.components.commands.build.models.CommandGetId;
 import fr.dreamin.mctools.components.commands.build.voice.CommandShowVoice;
 import fr.dreamin.mctools.components.commands.CommandMT;
 import fr.dreamin.mctools.api.commands.SimpleCommand;
+import fr.dreamin.mctools.components.commands.staff.CommandStaff;
 import fr.dreamin.mctools.components.commands.voice.CommandDV;
 import fr.dreamin.mctools.components.game.MTGame;
 import fr.dreamin.mctools.api.armorPose.ArmorManager;
 import fr.dreamin.mctools.components.game.manager.DoorManager;
 import fr.dreamin.mctools.components.game.manager.InteractManager;
 import fr.dreamin.mctools.components.gui.armorStand.*;
+import fr.dreamin.mctools.components.gui.staff.FreezeGui;
 import fr.dreamin.mctools.components.gui.tag.TagCategoryListGui;
 import fr.dreamin.mctools.components.gui.tag.TagListGui;
 import fr.dreamin.mctools.config.Codex;
@@ -40,6 +42,7 @@ import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import fr.dreamin.mctools.database.sqlLite.SqlLiteManager;
 import lombok.Getter;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -62,7 +65,12 @@ public final class McTools extends JavaPlugin{
 
     loadGui();
     saveDefaultConfig();
+
+    System.out.println("============Test==========");
+
     codex = new Codex(getConfig());
+
+    System.out.println("======================");
 
     langManager = new LangManager(this);
 
@@ -148,9 +156,13 @@ public final class McTools extends JavaPlugin{
 
       //tag
       new TagCategoryListGui(),
-      new TagListGui()
+      new TagListGui(),
+
+      //staff
+      new FreezeGui()
     );
   }
+
   public boolean isDisabled() {
     return isDisabled;
   }
@@ -202,6 +214,9 @@ public final class McTools extends JavaPlugin{
       SimpleCommand.createCommand("door", new CommandDoor(), "door");
       SimpleCommand.createCommand("interact", new CommandInteract(), "interact");
     }
+
+    SimpleCommand.createCommand("staff", new CommandStaff());
+
 
   }
 

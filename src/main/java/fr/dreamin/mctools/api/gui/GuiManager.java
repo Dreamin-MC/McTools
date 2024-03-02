@@ -3,6 +3,7 @@ package fr.dreamin.mctools.api.gui;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.minecraft.Minecraft;
 import fr.dreamin.mctools.api.service.Service;
+import fr.dreamin.mctools.components.gui.staff.FreezeGui;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Bukkit;
@@ -66,6 +67,7 @@ public class GuiManager extends Service implements Listener{
       GuiBuilder m = guiPlayer.get(inv);
 
       if (m != null) {
+
         PaginationManager paginationManager = m.getPaginationManager(mtPlayer, inv);
 
         if (paginationManager != null) {
@@ -101,9 +103,29 @@ public class GuiManager extends Service implements Listener{
     }
   }
 
+  @EventHandler
   public void onCloseInventory(InventoryCloseEvent event) {
 
     Player player = (Player) event.getPlayer();
+
+    Inventory close = event.getInventory();
+
+    HashMap<Inventory, GuiBuilder> guiPlayer = getRegisteredPlayers().get(player);
+
+    if (guiPlayer != null) {
+      GuiBuilder m = guiPlayer.get(close);
+
+      if (m != null) {
+        MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+
+        if (!mtPlayer.isCanMove())
+          if (m.getClass().getSimpleName().equals("FreezeGui")) open(player, FreezeGui.class);
+      }
+      else
+        if (!(event.getReason().equals(InventoryCloseEvent.Reason.OPEN_NEW))) McTools.getService(GuiManager.class).getGuiConfig().getGuiOpen().remove(player.getUniqueId());
+    }
+    else if (!(event.getReason().equals(InventoryCloseEvent.Reason.OPEN_NEW))) McTools.getService(GuiManager.class).getGuiConfig().getGuiOpen().remove(player.getUniqueId());
+
     if (!(event.getReason().equals(InventoryCloseEvent.Reason.OPEN_NEW))) McTools.getService(GuiManager.class).getGuiConfig().getGuiOpen().remove(player.getUniqueId());
   }
 

@@ -21,7 +21,7 @@ public class TagListGui implements GuiBuilder {
 
   @Override
   public String name(MTPlayer mtPlayer) {
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45.getName()) : LangMsg.GUI_TAG_TITLE.getMsg(mtPlayer.getLang(), "");
+    return McTools.getCodex().isResourcePack() ? CustomChatColor.WHITE.getColorWithText(PictureGui.GENERIC_45.getName()) : LangMsg.GUI_TAG_TITLE.getMsg(mtPlayer.getLang(), "");
   }
 
   @Override

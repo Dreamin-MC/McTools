@@ -22,7 +22,7 @@ public class ArmorStandPresetPosesGui implements GuiBuilder {
 
   @Override
   public String name(MTPlayer mtPlayer) {
-    return McTools.getCodex().isPack() ? CustomChatColor.WHITE.getColorWithText((mtPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.ARMOR_POSE.getName())) : mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_PRESETPOSES_TITLE, "");
+    return McTools.getCodex().isResourcePack() ? CustomChatColor.WHITE.getColorWithText((mtPlayer.getArmorStandManager().isInvisibleGui() ? " " : PictureGui.ARMOR_POSE.getName())) : mtPlayer.getMsg(LangMsg.GUI_ARMORSTAND_PRESETPOSES_TITLE, "");
   }
 
   @Override

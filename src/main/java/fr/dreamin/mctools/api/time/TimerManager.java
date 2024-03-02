@@ -1,65 +1,106 @@
 package fr.dreamin.mctools.api.time;
 
+import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.player.ActionPlayerKey;
 import fr.dreamin.mctools.api.service.Service;
+import fr.dreamin.mctools.api.time.event.CooldownCallback;
+import fr.dreamin.mctools.api.time.event.TimerCallback;
+import org.bukkit.Bukkit;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 public class TimerManager extends Service {
+  private final Map<ActionPlayerKey, Integer> actionTimerTasks = new HashMap<>();
+  private final Map<String, Integer> stringTimerTasks = new HashMap<>();
+  private final Map<Object, TimerCallback> timerCallbacks = new HashMap<>();
+  private final Map<Object, Long> timerTicks = new HashMap<>();
 
-  private static class ActionKey {
-    private final UUID playerId;
-    private final String action;
+  // Définit un timer avec un callback à chaque tick
+  public void setTimer(ActionPlayerKey key, TimerCallback callback) {
+    setTimerInternal(key, callback);
+  }
 
-    public ActionKey(UUID playerId, String action) {
-      this.playerId = playerId;
-      this.action = action;
+  public void setTimer(String key, TimerCallback callback) {
+    setTimerInternal(key, callback);
+  }
+
+  private void setTimerInternal(Object key, TimerCallback callback) {
+
+    // Supprime le timer actuel s'il existe
+    if (isTimerInternal(key)) removeTimerInternal(key);
+
+    // Initialiser le tick pour ce timer
+    timerTicks.put(key, 0L);
+
+    // Planifie une tâche qui s'exécute chaque tick
+    int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(McTools.getInstance(), () -> {
+      // Incrémente le tick pour ce timer
+      long currentTick = timerTicks.get(key);
+      currentTick++;
+
+      // Mettre à jour le tick pour ce timer
+      timerTicks.put(key, currentTick);
+
+      // Appeler le callback
+      if (callback != null) callback.onTick(key, currentTick);
+
+    }, 0L, 1L); // Exécute la tâche à chaque tick
+
+    // Stocke le taskId et le callback
+    timerCallbacks.put(key, callback);
+    if (key instanceof ActionPlayerKey) actionTimerTasks.put((ActionPlayerKey) key, taskId);
+    else if (key instanceof String) stringTimerTasks.put((String) key, taskId);
+
+  }
+
+  // Vérifie si un timer est actif
+  public boolean isTimerActive(ActionPlayerKey key) {
+    return actionTimerTasks.containsKey(key);
+  }
+
+  public boolean isTimerActive(String key) {
+    return stringTimerTasks.containsKey(key);
+  }
+
+  // Supprime un timer actif
+  public void removeTimer(ActionPlayerKey key) {
+    removeTimerInternal(key);
+  }
+
+  public void removeTimer(String key) {
+    removeTimerInternal(key);
+  }
+
+  private void removeTimerInternal(Object key) {
+    Integer taskId;
+    if (key instanceof ActionPlayerKey) taskId = actionTimerTasks.remove(key);
+    else if (key instanceof String) taskId = stringTimerTasks.remove(key);
+    else taskId = null;
+
+    if (taskId != null) {
+      Bukkit.getScheduler().cancelTask(taskId);
+      timerCallbacks.remove(key);
+      timerTicks.remove(key);
     }
-
-    @Override
-    public boolean equals(Object o) {
-      if (this == o) return true;
-      if (o == null || getClass() != o.getClass()) return false;
-      ActionKey that = (ActionKey) o;
-      return playerId.equals(that.playerId) && action.equals(that.action);
-    }
-
-    @Override
-    public int hashCode() {
-      return 31 * playerId.hashCode() + action.hashCode();
-    }
   }
 
-  private final Map<ActionKey, Long> startTimes = new HashMap<>();
-
-  public void startTimer(UUID playerId, String action) {
-    long startTime = System.currentTimeMillis();
-    startTimes.put(new ActionKey(playerId, action), startTime);
+  // Vérifie si un timer est actif pour une clé d'action de joueur
+  public boolean isTimer(ActionPlayerKey key) {
+    return isTimerInternal(key);
   }
 
-  public String getElapsedTime(UUID playerId, String action) {
-    Long startTime = startTimes.get(new ActionKey(playerId, action));
-    if (startTime == null) return "Timer non démarré";
-
-    long elapsedTimeMillis = System.currentTimeMillis() - startTime;
-    long minutes = (elapsedTimeMillis / 1000) / 60;
-    long seconds = (elapsedTimeMillis / 1000) % 60;
-
-    return String.format("%d minute%s et %d seconde%s",
-      minutes, minutes > 1 ? "s" : "",
-      seconds, seconds > 1 ? "s" : "");
+  // Vérifie si un timer est actif pour une clé de chaîne
+  public boolean isTimer(String key) {
+    return isTimerInternal(key);
   }
 
-
-  public int getElapsedSeconds(UUID playerId, String action) {
-    Long startTime = startTimes.get(new ActionKey(playerId, action));
-    if (startTime == null) return 0; // Le timer n'a pas été démarré
-
-    long elapsedTimeMillis = System.currentTimeMillis() - startTime;
-    return (int) (elapsedTimeMillis / 1000); // Convertit le temps écoulé en secondes
+  // Méthode interne pour vérifier si un timer est actif pour une clé donnée
+  private boolean isTimerInternal(Object key) {
+    if (key instanceof ActionPlayerKey) return actionTimerTasks.containsKey(key);
+    else if (key instanceof String) return stringTimerTasks.containsKey(key);
+    else return false;
   }
-  public void removeTimer(UUID playerId, String action) {
-    startTimes.remove(new ActionKey(playerId, action));
-  }
+
 }

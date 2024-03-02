@@ -33,6 +33,7 @@ public class MTPlayer {
   @Getter private TritonPlayerManager tritonManager = null;
   @Getter private final PlayerTickManager playerTickManager;
   @Getter private VoicePlayerManager voiceManager = null;
+  @Getter private StaffPlayerManager staffPlayerManager = null;
 
   public MTPlayer(Player player) {
     this.player = player;
@@ -40,6 +41,7 @@ public class MTPlayer {
     if (McTools.getCodex().isBuildMode()) this.armorStandManager = new ArmorStandManager(this);
 
 //    this.hudPlayerManager = new HudPlayerManager(this);
+    this.staffPlayerManager = new StaffPlayerManager(this);
 
     this.playerTickManager = new PlayerTickManager(this);
     this.itemStats = new ItemBuilder(Material.PLAYER_HEAD).setPlayerHFromName(player.getName()).setName("§eStatistique de " + player.getName()).toItemStack();

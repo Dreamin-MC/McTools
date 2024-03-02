@@ -6,9 +6,10 @@ public enum PlayerPerm {
 
   PLAYER("mctools.player"),
   HOTE("mctools.hote"),
-  MODO("mctools.modo"),
   BUILD("mctools.build"),
   DEV("mctools.dev"),
+  STAFF("mctools.staff"),
+  MODO("mctools.modo"),
   ADMIN("mctools.admin");
 
   private String perm;

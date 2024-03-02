@@ -10,85 +10,84 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class Codex {
   private FileConfiguration config;
 
-  //  >>>>>>> PLUGIN <<<<<<<
-  @Getter @Setter
-  private String pluginName, prefix, broadcastprefix;
+  //  >>>>>>> GENERAL <<<<<<<
 
+  @Getter @Setter private String pluginName, prefix, broadcastprefix, version, ipApiKey, resourcePackUrl;
+  @Getter @Setter private boolean resourcePack, doubleCount, buildMode;
+
+  // >>>>>>> LANG <<<<<<<
   @Getter @Setter private Lang defaultLang;
-
+  @Getter @Setter private boolean langByIp = false;
   @Getter private List<Lang> langs = new ArrayList<>();
 
-  @Getter @Setter private boolean doubleCount;
-
-  //  >>>>>> MESSAGE <<<<<<
-  @Getter @Setter
-  private String errorConsole, errorCommand;
-
-  //  >>>>>>>> GUI <<<<<<<<
-  @Getter @Setter
-  private String prefixGUIName = "";
-
   //  >>>>>>>> DATABASE <<<<<<<<
-  @Getter @Setter
-  private DatabaseType databaseType;
-  @Getter @Setter
-  private String host, dbName, username, password, defaultPrefix;
-  @Getter @Setter
-  private int port;
-  @Getter @Setter
-  private String sqlName;
+  @Getter @Setter private DatabaseType databaseType;
+  @Getter @Setter private String mysqlHost, mysqlDbName, mysqlUsername, mysqlPassword, mysqlDefaultPrefix;
+  @Getter @Setter private int mysqlPort;
+  @Getter @Setter private String sqlName;
 
   // >>>>>>>> API <<<<<<<<
-  @Getter @Setter
-  private boolean editMode = false, defaultGui = false, defaultItems = false, buildMode = false, pack = false;
-  @Getter @Setter
-  private String ipApiKey;
+  @Getter @Setter private boolean editMode = false, defaultGui = false, defaultItems = false;
 
   //  >>>>>>>> VOICE <<<<<<<<
-  @Getter @Setter
-  private boolean voiceMode, voiceWallMode;
-  @Getter @Setter
-  private int voiceDistanceMax;
-
-
+  @Getter @Setter private boolean voiceMode, voiceWallMode;
+  @Getter @Setter private int voiceDistanceMax;
 
   public Codex(FileConfiguration config) {
     this.config = config;
     pluginName = "McTools";
 
+    System.out.println("=============================");
+
     initGlobal();
-    initSQLData();
-    initApi();
     initVoice();
+    initLang();
+    initSQLData();
+
+    System.out.println("=============================");
   }
 
   public void loadConf() {
     Bukkit.broadcastMessage(pluginName + " >> §r§aReload de la configuration...");
 
     initGlobal();
-    initSQLData();
-    initApi();
     initVoice();
+    initLang();
+    initSQLData();
 
     Bukkit.broadcastMessage(pluginName + " >> §r§aConfiguration chargé");
   }
 
 
   private void initGlobal(){
-    prefix = getStr("mcTools.prefix", "§8» §f");
-    broadcastprefix = getStr("mcTools.broadcastprefix", "[§c§lMcTools§r] ");
+    version = getStr("general.version", null);
+    prefix = getStr("general.prefix", "§8» §f");
+    broadcastprefix = getStr("general.broadcastprefix", "[§c§lMcTools§r] ");
+    ipApiKey = getStr("general.ipApiKey", null);
+    resourcePack = getBool("general.resourcepack", false);
+    resourcePackUrl = getStr("general.resourcepackUrl", null);
+    doubleCount = getBool("general.doubleCount", true);
+    buildMode = getBool("general.buildMode", false);
+    System.out.println("buildMode : " + buildMode);
+  }
 
-    doubleCount = getBool("mcTools.doubleCount", true);
+  private void initVoice(){
+    voiceMode = getBool("voice.enable", false);
+    voiceWallMode = getBool("voice.wallMode", false);
+    voiceDistanceMax = getInt("voice.distanceMax", 10);
+  }
 
-    if (config.contains("lang")) {
-      ConfigurationSection langSection = config.getConfigurationSection("lang");
+  private void initLang() {
+
+    langByIp = getBool("langByip", false);
+
+    if (config.contains("langs")) {
+      ConfigurationSection langSection = config.getConfigurationSection("langs");
 
       for (String langKey : langSection.getKeys(false)) {
         ConfigurationSection langInfo = langSection.getConfigurationSection(langKey);
@@ -102,45 +101,29 @@ public class Codex {
 
     if (langs.isEmpty()) langs.add(new Lang("en_GB", "English", List.of("en_GB", "en_AU", "en_CA", "en_NZ", "en_PT", "en_UD", "en_US")));
 
-    if (Lang.contains(langs, getStr("mcTools.defaultLang", "en_GB"))) defaultLang = Lang.getLang(langs, getStr("mcTools.defaultLang", "en_GB"));
+    if (Lang.contains(langs, getStr("defaultLang", "en_GB"))) defaultLang = Lang.getLang(langs, getStr("mcTools.defaultLang", "en_GB"));
     else defaultLang = Lang.getLang(langs,"en_GB");
   }
 
   private void initSQLData() {
 
-    DatabaseType dbType =  DatabaseType.getByName(getStr("databaseType", "SQLite"));
+    DatabaseType dbType =  DatabaseType.getByName(getStr("database.type", "SQLite"));
     if (dbType != null) databaseType = dbType;
     else databaseType = DatabaseType.SQLITE;
 
-    sqlName = getStr("sqlLite.name", "database");
-    host = getStr("mysql.host");
-    port = getInt("mysql.port");
-    dbName = getStr("mysql.dbName");
-    username = getStr("mysql.username");
-    password = getStr("mysql.password");
-    defaultPrefix = getStr("mysql.defaultPrefix");
+    sqlName = getStr("database.sqlLite.name", "database");
+    mysqlHost = getStr("database.mysql.host", null);
+    mysqlPort = getInt("database.mysql.port");
+    mysqlDbName = getStr("database.mysql.dbName", null);
+    mysqlUsername = getStr("database.mysql.username", null);
+    mysqlPassword = getStr("database.mysql.password", null);
+    mysqlDefaultPrefix = getStr("database.mysql.defaultPrefix", null);
 
     DatabaseManager.closeAllConnection();
 
     DatabaseManager.setConnection(this, databaseType);
 
   }
-
-  private void initApi() {
-    editMode = getBool("mcTools.editMode", false);
-    defaultGui = getBool("mcTools.defaultGui", false);
-    defaultItems = getBool("mcTools.defaultItems", false);
-    buildMode = getBool("mcTools.buildMode", false);
-    pack = getBool("mcTools.ressourcepack", false);
-    ipApiKey = getStr("mcTools.ipApiKey", null);
-  }
-
-  private void initVoice(){
-    voiceMode = getBool("mcTools.voiceMode", false);
-    voiceWallMode = getBool("mcTools.voiceWallMode", false);
-    voiceDistanceMax = getInt("mcTools.voiceDistanceMax", 10);
-  }
-
 
   private String getStr(String path) {
     return (config.getString(path));
@@ -164,7 +147,7 @@ public class Codex {
   }
 
   public String getDefaultPrefix() {
-    return (getDatabaseType().equals(DatabaseType.MYSQL)? defaultPrefix :  "");
+    return (getDatabaseType().equals(DatabaseType.MYSQL)? mysqlDefaultPrefix :  "");
   }
 
 }

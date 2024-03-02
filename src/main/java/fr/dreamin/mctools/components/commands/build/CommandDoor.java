@@ -29,7 +29,7 @@ public class CommandDoor implements CommandExecutor, TabCompleter {
   @Override
   public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
     if (!(sender instanceof Player)) {
-      sender.sendMessage(PREFIX + McTools.getCodex().getErrorConsole());
+      sender.sendMessage(LangMsg.ERROR_CONSOLE.getMsg(McTools.getCodex().getDefaultLang(), ""));
       return true;
     }
 

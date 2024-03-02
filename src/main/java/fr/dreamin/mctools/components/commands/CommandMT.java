@@ -59,10 +59,16 @@ public class CommandMT implements CommandExecutor, TabCompleter {
         case "set":
           switch (args[1]) {
             case "pack":
-              McTools.getCodex().setPack(!McTools.getCodex().isPack());
-              mtPlayer.sendMsg(LangMsg.CMD_MT_SETPACK, (McTools.getCodex().isPack() ? LangMsg.GENERAL_ENABLED : LangMsg.GENERAL_DISABLED));
+              McTools.getCodex().setResourcePack(!McTools.getCodex().isResourcePack());
+              mtPlayer.sendMsg(LangMsg.CMD_MT_SETPACK, (McTools.getCodex().isResourcePack() ? LangMsg.GENERAL_ENABLED : LangMsg.GENERAL_DISABLED));
               break;
             case "lang":
+
+              if (args.length <= 2) {
+                mtPlayer.sendMsg(LangMsg.ERROR_PUTVALUE, "");
+                return false;
+              }
+
               Lang lang = Lang.getLangByDisplayName(args[2]);
 
               if (lang != null) {
@@ -86,7 +92,7 @@ public class CommandMT implements CommandExecutor, TabCompleter {
       }
     }
     else {
-      player.sendMessage(McTools.getCodex().getErrorCommand());
+      mtPlayer.sendMsg(LangMsg.ERROR_OCCURRED, "");
       return false;
     }
 
