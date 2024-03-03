@@ -1,6 +1,7 @@
 package fr.dreamin.mctools.components.listeners;
 
 import fr.dreamin.mctools.components.listeners.breakListener.BreakListener;
+import fr.dreamin.mctools.components.listeners.chatListener.ChatListener;
 import fr.dreamin.mctools.components.listeners.damage.DamageListener;
 import fr.dreamin.mctools.components.listeners.interact.InteractListener;
 import fr.dreamin.mctools.components.listeners.joinPlayer.JoinPlayerListener;
@@ -36,6 +37,9 @@ public class ListenerManager {
 
     //mov
     pm.registerEvents(new MoveListener(), plugin);
+
+    //chat
+    pm.registerEvents(new ChatListener(), plugin);
   }
 
 }

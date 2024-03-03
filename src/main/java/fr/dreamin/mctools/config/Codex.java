@@ -20,6 +20,15 @@ public class Codex {
   @Getter @Setter private String pluginName, prefix, broadcastprefix, version, ipApiKey, resourcePackUrl;
   @Getter @Setter private boolean resourcePack, doubleCount, buildMode;
 
+  //  >>>>>>>> VOICE <<<<<<<<
+  @Getter @Setter private boolean voiceMode, voiceWallMode;
+  @Getter @Setter private int voiceDistanceMax;
+
+  // >>>>>>> STAFF <<<<<<<
+
+  @Getter @Setter private boolean staffMode, staffChatMode, staffFreeze;
+  @Getter private String staffChatPrefix, staffBroadcastPrefix;
+
   // >>>>>>> LANG <<<<<<<
   @Getter @Setter private Lang defaultLang;
   @Getter @Setter private boolean langByIp = false;
@@ -34,9 +43,7 @@ public class Codex {
   // >>>>>>>> API <<<<<<<<
   @Getter @Setter private boolean editMode = false, defaultGui = false, defaultItems = false;
 
-  //  >>>>>>>> VOICE <<<<<<<<
-  @Getter @Setter private boolean voiceMode, voiceWallMode;
-  @Getter @Setter private int voiceDistanceMax;
+
 
   public Codex(FileConfiguration config) {
     this.config = config;
@@ -46,6 +53,7 @@ public class Codex {
 
     initGlobal();
     initVoice();
+    initStaff();
     initLang();
     initSQLData();
 
@@ -57,6 +65,7 @@ public class Codex {
 
     initGlobal();
     initVoice();
+    initStaff();
     initLang();
     initSQLData();
 
@@ -80,6 +89,14 @@ public class Codex {
     voiceMode = getBool("voice.enable", false);
     voiceWallMode = getBool("voice.wallMode", false);
     voiceDistanceMax = getInt("voice.distanceMax", 10);
+  }
+
+  private void initStaff() {
+    staffMode = getBool("staff.enable", false);
+    staffFreeze = getBool("staff.freeze", false);
+    staffBroadcastPrefix = getStr("staff.broadcastPrefix", "[Staff] ");
+    staffChatMode = getBool("staff.chat.enable", false);
+    staffChatPrefix = getStr("staff.chat.prefix", "!");
   }
 
   private void initLang() {

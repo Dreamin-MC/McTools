@@ -67,6 +67,8 @@ public class JoinPlayerManager {
       player.getInventory().setItem(8, new ItemBuilder(mtPlayer.getItemStats()).setName(CustomChatColor.YELLOW.getColorWithText("[lang]default.item.stats[/lang]")).toItemStack());
     }
 
+    player.setGravity(true);
+
     McTools.getService(PlayersService.class).addDTPlayer(mtPlayer);
 
     UserFetcher.getIfInsert(mtPlayer);

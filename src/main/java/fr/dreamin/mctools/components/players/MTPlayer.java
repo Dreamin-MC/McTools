@@ -28,7 +28,7 @@ public class MTPlayer {
 
   @Getter private final BuildPlayerManager buildManager = new BuildPlayerManager();
   @Getter private ArmorStandManager armorStandManager = null;
-  @Getter private final VoiceConfPlayerManager voiceConfManager = new VoiceConfPlayerManager();
+  @Getter private VoiceConfPlayerManager voiceConfManager;
   @Getter private HudPlayerManager hudPlayerManager = null;
   @Getter private TritonPlayerManager tritonManager = null;
   @Getter private final PlayerTickManager playerTickManager;
@@ -44,6 +44,7 @@ public class MTPlayer {
     this.staffPlayerManager = new StaffPlayerManager(this);
 
     this.playerTickManager = new PlayerTickManager(this);
+    this.voiceConfManager = new VoiceConfPlayerManager(this);
     this.itemStats = new ItemBuilder(Material.PLAYER_HEAD).setPlayerHFromName(player.getName()).setName("§eStatistique de " + player.getName()).toItemStack();
 
     this.perm = PlayerPerm.getTopPerm(player);

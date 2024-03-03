@@ -1,5 +1,8 @@
 package fr.dreamin.mctools.components.players.manager;
 
+import fr.dreamin.mctools.components.players.MTPlayer;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -8,9 +11,18 @@ import org.bukkit.entity.Player;
 public class VoiceConfPlayerManager {
 
 
-  private boolean isVoice = false;
-  private int radius = 5;
-  private double y = 0.5;
+  @Getter @Setter private boolean isVoice = false;
+  @Getter @Setter private int radius = 5;
+  @Getter @Setter private double y = 0.5;
+  @Getter private MTPlayer mtPlayer;
+
+  public VoiceConfPlayerManager(MTPlayer mtPlayer) {
+    this.mtPlayer = mtPlayer;
+
+    mtPlayer.getPlayerTickManager().addFilter((mtPlayer1, tick) -> {
+      if (isVoice()) drawParticleCircles(mtPlayer.getPlayer());
+    });
+  }
 
   private void drawCircle(Location center, double radius, Particle particle, Particle.DustOptions options) {
     int points = 50; // Nombre de points dans le cercle
@@ -40,30 +52,6 @@ public class VoiceConfPlayerManager {
     drawCircle(center, greenRadius, Particle.REDSTONE, greenOptions);
     drawCircle(center, orangeRadius, Particle.REDSTONE, orangeOptions);
     drawCircle(center, redRadius, Particle.REDSTONE, redOptions);
-  }
-
-  public boolean isVoice() {
-    return isVoice;
-  }
-
-  public void setVoice(boolean isVoice) {
-    this.isVoice = isVoice;
-  }
-
-  public int getRadius() {
-    return radius;
-  }
-
-  public void setRadius(int radius) {
-    this.radius = radius;
-  }
-
-  public double getY() {
-    return y;
-  }
-
-  public void setY(double y) {
-    this.y = y;
   }
 
 }

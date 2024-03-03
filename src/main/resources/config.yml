@@ -61,6 +61,27 @@ voice:
 #>>        STAFF CONFIGURATION       >>
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
+staff:
+
+  #if activated, the plugin allows the player to use all the tools for the staff
+  #the player must be op or have mctools.staff permission to use this service
+  enable: false
+
+  #if activated, the plugin allows the player to use the cmd to freeze or unfreeze a player
+  freeze: false
+
+  # The broadcast prefix of the plugin for the staff
+  broadcastprefix: "[Staff] "
+
+  chat:
+
+    #if activated, the plugin allows the player to use chat between staff members
+    enable: false
+
+    #the prefix to put in front of the message
+    #ex: !Hello staff
+    prefix: "!"
+
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #>>      LANGUAGE CONFIGURATION      >>
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

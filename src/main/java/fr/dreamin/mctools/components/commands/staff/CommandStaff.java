@@ -41,39 +41,35 @@ public class CommandStaff implements CommandExecutor, TabCompleter {
 
       switch (args[0]) {
         case "freeze":
+          if (McTools.getCodex().isStaffFreeze()) {
+            String playerFreeze = args[1];
 
-          String playerFreeze = args[1];
+            String sentenceFreeze = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
 
-          String sentenceFreeze = String.join(" ", Arrays.copyOfRange(args, 2, args.length));
+            if (sentenceFreeze == null) {
 
-          if (sentenceFreeze == null) {
+              //TODO LangMsg à faire
+              player.sendMessage(LangMsg.ERROR_OCCURRED.getMsg(McTools.getCodex().getDefaultLang(), ""));
+              return true;
+            }
 
-            //TODO LangMsg à faire
-            player.sendMessage(LangMsg.ERROR_OCCURRED.getMsg(McTools.getCodex().getDefaultLang(), ""));
-            return true;
+            if (playersService.containsByName(playerFreeze)) {
+              MTPlayer mtPlayer1 = playersService.getPlayerByName(playerFreeze);
+
+              if (!mtPlayer.equals(mtPlayer1)) mtPlayer.getStaffPlayerManager().freezePlayer(mtPlayer1, sentenceFreeze);
+              else player.sendMessage("Vous ne pouvez pas vous freeze vous même");
+            }
           }
-
-
-
-          if (playersService.containsByName(playerFreeze)) {
-            MTPlayer mtPlayer1 = playersService.getPlayerByName(playerFreeze);
-
-            if (!mtPlayer.equals(mtPlayer1)) mtPlayer.getStaffPlayerManager().freezePlayer(mtPlayer1, sentenceFreeze);
-            else player.sendMessage("Vous ne pouvez pas vous freeze vous même");
-          }
-
           break;
 
         case "unfreeze":
-
-          String playerUnFreeze = args[1];
-
-          if (playersService.containsByName(playerUnFreeze)) {
-            MTPlayer mtPlayer1 = playersService.getPlayerByName(playerUnFreeze);
-
-            mtPlayer.getStaffPlayerManager().unFreezePlayer(mtPlayer1);
+          if (McTools.getCodex().isStaffFreeze()) {
+            String playerUnFreeze = args[1];
+            if (playersService.containsByName(playerUnFreeze)) {
+              MTPlayer mtPlayer1 = playersService.getPlayerByName(playerUnFreeze);
+              mtPlayer.getStaffPlayerManager().unFreezePlayer(mtPlayer1);
+            }
           }
-
           break;
       }
 
@@ -90,7 +86,15 @@ public class CommandStaff implements CommandExecutor, TabCompleter {
     if (player.hasPermission(PlayerPerm.STAFF.getPerm())) {
 
       switch (args.length) {
-        case 1: return Arrays.asList("freeze", "unfreeze");
+        case 1:
+          List<String> list = new ArrayList<>();
+
+          if (McTools.getCodex().isStaffFreeze()) {
+            list.add("freeze");
+            list.add("unfreeze");
+          }
+
+          return list;
         case 2:
           switch (args[0]) {
             case "freeze": return McTools.getService(PlayersService.class).getPlayersNameNotFreeze();
