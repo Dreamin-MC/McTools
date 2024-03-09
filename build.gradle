@@ -71,7 +71,6 @@ dependencies {
     implementation 'com.github.tritonmc:Triton:3.9.4'
     implementation files('libs/openaudiomc.jar')
     implementation 'com.ticxo.modelengine:ModelEngine:R4.0.4'
-    implementation 'net.wesjd:anvilgui:1.9.2-SNAPSHOT'
     implementation 'org.xerial:sqlite-jdbc:3.45.1.0'
 
 }
