@@ -17,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class MTPlayer {
 
-  @Getter @Setter private final Player player;
+  @Getter @Setter private Player player;
   @Getter @Setter private PlayerPerm perm;
   @Getter private boolean isEditMode = false;
   @Getter private final ItemStack itemStats;

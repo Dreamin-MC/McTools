@@ -35,6 +35,8 @@ general:
   #if activated, authorization to be able to connect with several accounts on the same IP, if deactivated authorization of one IP per account
   double-count: true
 
+  remove-player: true
+
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #>>         CHAT CONFIGURATION       >>
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

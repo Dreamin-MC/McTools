@@ -40,7 +40,12 @@ public class JoinPlayerManager {
         e.printStackTrace(); // Gérer les erreurs de création d'instance
       }
     } else {
-      mtPlayer = new MTPlayer(player);
+      if (!McTools.getCodex().isRemovePlayer()) {
+        mtPlayer = McTools.getService(PlayersService.class).getPlayerByName(player.getName());
+        mtPlayer.setPlayer(player);
+      }
+      else mtPlayer = new MTPlayer(player);
+      if (mtPlayer == null) new MTPlayer(player);
     }
 
     if (McTools.getCodex().isDefaultItems()) {
@@ -69,7 +74,7 @@ public class JoinPlayerManager {
 
     if (McTools.getCodex().isResourcePack() && McTools.getCodex().getResourcePackUrl() != null) player.setResourcePack(McTools.getCodex().getResourcePackUrl());
 
-    McTools.getService(PlayersService.class).addDTPlayer(mtPlayer);
+    if (McTools.getCodex().isRemovePlayer()) McTools.getService(PlayersService.class).addDTPlayer(mtPlayer);
     UserFetcher.getIfInsert(mtPlayer);
   }
 }

@@ -15,7 +15,7 @@ public class LeavePlayerManager {
     MTPlayer mtPlayer = playersService.getPlayer(player);
 
     if (mtPlayer != null) {
-      playersService.removeDTPlayer(mtPlayer);
+      if (McTools.getCodex().isRemovePlayer()) playersService.removeDTPlayer(mtPlayer);
       UserFetcher.updatePlayer(mtPlayer);
     }
   }

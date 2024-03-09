@@ -58,6 +58,8 @@ public class GuiManager extends Service implements Listener{
             else if (event.getSlot() == paginationManager.getSlotPrevious() && Minecraft.compareItem(paginationManager.getPrevious(), current)) paginationManager.getType().setPrevious(player, paginationManager, menu.getClass());
           }
 
+
+
           menu.onClick(mtPlayer, inv, current, event.getSlot(), event.getClick(), indexPagination.get());
           event.setCancelled(true);
         });

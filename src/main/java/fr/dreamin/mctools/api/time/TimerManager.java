@@ -16,6 +16,7 @@ public class TimerManager extends Service {
   private final Map<String, Integer> stringTimerTasks = new HashMap<>();
   private final Map<Object, TimerCallback> timerCallbacks = new HashMap<>();
   private final Map<Object, Long> timerTicks = new HashMap<>();
+  private final Map<Object, Boolean> timerPaused = new HashMap<>();
 
   // Définit un timer avec un callback à chaque tick
   public void setTimer(ActionPlayerKey key, TimerCallback callback) {
@@ -33,18 +34,22 @@ public class TimerManager extends Service {
 
     // Initialiser le tick pour ce timer
     timerTicks.put(key, 0L);
+    timerPaused.put(key, false);
 
     // Planifie une tâche qui s'exécute chaque tick
     int taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(McTools.getInstance(), () -> {
-      // Incrémente le tick pour ce timer
-      long currentTick = timerTicks.get(key);
-      currentTick++;
+      // Vérifier si le timer est en pause
+      if (!timerPaused.get(key)) {
+        // Incrémente le tick pour ce timer
+        long currentTick = timerTicks.get(key);
+        currentTick++;
 
-      // Mettre à jour le tick pour ce timer
-      timerTicks.put(key, currentTick);
+        // Mettre à jour le tick pour ce timer
+        timerTicks.put(key, currentTick);
+      }
 
       // Appeler le callback
-      if (callback != null) callback.onTick(key, currentTick);
+      if (callback != null) callback.onTick(key, timerTicks.get(key));
 
     }, 0L, 1L); // Exécute la tâche à chaque tick
 
@@ -62,6 +67,36 @@ public class TimerManager extends Service {
 
   public boolean isTimerActive(String key) {
     return stringTimerTasks.containsKey(key);
+  }
+
+  // Pause a timer
+  public void pauseTimer(ActionPlayerKey key) {
+    pauseTimerInternal(key);
+  }
+
+  public void pauseTimer(String key) {
+    pauseTimerInternal(key);
+  }
+
+  private void pauseTimerInternal(Object key) {
+    if (isTimerInternal(key)) {
+      timerPaused.put(key, true);
+    }
+  }
+
+  // Resume a timer
+  public void resumeTimer(ActionPlayerKey key) {
+    resumeTimerInternal(key);
+  }
+
+  public void resumeTimer(String key) {
+    resumeTimerInternal(key);
+  }
+
+  private void resumeTimerInternal(Object key) {
+    if (isTimerInternal(key)) {
+      timerPaused.put(key, false);
+    }
   }
 
   // Supprime un timer actif
@@ -83,6 +118,7 @@ public class TimerManager extends Service {
       Bukkit.getScheduler().cancelTask(taskId);
       timerCallbacks.remove(key);
       timerTicks.remove(key);
+      timerPaused.remove(key);
     }
   }
 
@@ -102,5 +138,4 @@ public class TimerManager extends Service {
     else if (key instanceof String) return stringTimerTasks.containsKey(key);
     else return false;
   }
-
 }

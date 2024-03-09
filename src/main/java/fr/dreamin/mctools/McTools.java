@@ -44,7 +44,7 @@ import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class McTools extends JavaPlugin{
-  private static McTools instance;
+  @Getter private static McTools instance;
   private static Codex codex;
   private static LangManager langManager;
 
@@ -63,7 +63,7 @@ public final class McTools extends JavaPlugin{
     loadGui();
     saveDefaultConfig();
 
-    codex = new Codex(getConfig());
+    codex = new Codex();
 
     langManager = new LangManager(this);
 
@@ -119,10 +119,6 @@ public final class McTools extends JavaPlugin{
 
     InteractManager.getInteracts().forEach(Interact::remove);
 
-  }
-
-  public static McTools getInstance() {
-    return instance;
   }
   public static Codex getCodex() {
     return codex;

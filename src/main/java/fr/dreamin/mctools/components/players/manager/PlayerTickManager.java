@@ -3,6 +3,8 @@ package fr.dreamin.mctools.components.players.manager;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.components.players.filter.tick.CustomFilterTick;
+import lombok.Getter;
+import lombok.Setter;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -11,11 +13,12 @@ import java.util.List;
 
 public class PlayerTickManager {
 
+  @Getter
   private final MTPlayer MTPlayer;
-  private BukkitTask tickTask;
-  private boolean isPaused = false;
-  private int actualTick = -1;
-  private List<CustomFilterTick> customTicks = new ArrayList<>();
+  @Getter @Setter private BukkitTask tickTask;
+  @Getter @Setter private boolean isPaused = false;
+  @Getter @Setter private int actualTick = -1;
+  @Getter private List<CustomFilterTick> customTicks = new ArrayList<>();
 
   public PlayerTickManager(MTPlayer MTPlayer) {
     this.MTPlayer = MTPlayer;
@@ -35,41 +38,12 @@ public class PlayerTickManager {
 
   public void startBukkitTask() {
     if (this.tickTask != null) tickTask.cancel();
+    this.actualTick = -1;
     this.tickTask = Bukkit.getScheduler().runTaskTimer(McTools.getInstance(), this::tick, 1, 1);
   }
 
   public void stopBukkitTask() {
     if (this.tickTask != null) tickTask.cancel();
-  }
-
-  //------GETTER------//
-  public MTPlayer getDTPlayer() {
-    return MTPlayer;
-  }
-
-  public int getActualTick() {
-    return actualTick;
-  }
-
-  public BukkitTask getTickTask() {
-    return tickTask;
-  }
-
-  public boolean isPaused() {
-    return isPaused;
-  }
-
-  public List<CustomFilterTick> getCustomTicks() {
-    return customTicks;
-  }
-
-  //------SETTER------//
-  public void setActualTick(int actualTick) {
-    this.actualTick = actualTick;
-  }
-
-  public void setPaused(boolean paused) {
-    isPaused = paused;
   }
 
   //------ADDER------//

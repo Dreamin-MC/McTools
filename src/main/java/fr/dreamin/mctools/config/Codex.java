@@ -1,5 +1,6 @@
 package fr.dreamin.mctools.config;
 
+import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.components.lang.Lang;
 import fr.dreamin.mctools.database.DatabaseManager;
 import fr.dreamin.mctools.database.DatabaseType;
@@ -13,12 +14,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Codex {
-  private FileConfiguration config;
+  @Getter private FileConfiguration config;
 
   //  >>>>>>> GENERAL <<<<<<<
 
   @Getter @Setter private String pluginName, prefix, broadcastprefix, version, ipApiKey, resourcePackUrl;
-  @Getter @Setter private boolean resourcePack, doubleCount;
+  @Getter @Setter private boolean resourcePack, doubleCount, removePlayer;
 
   //  >>>>>>>> VOICE <<<<<<<<
   @Getter @Setter private boolean voiceMode, voiceWallMode;
@@ -54,8 +55,8 @@ public class Codex {
   // >>>>>>>> API <<<<<<<<
   @Getter @Setter private boolean editMode = false, defaultGui = false, defaultItems = false;
 
-  public Codex(FileConfiguration config) {
-    this.config = config;
+  public Codex() {
+    this.config = McTools.getInstance().getConfig();
     pluginName = "McTools";
     initGlobal();
     initVoice();
@@ -70,6 +71,7 @@ public class Codex {
   public void loadConf() {
     Bukkit.broadcastMessage(pluginName + " >> §r§aReload de la configuration...");
 
+    this.config = McTools.getInstance().getConfig();
     initGlobal();
     initVoice();
     initBuild();
@@ -84,49 +86,50 @@ public class Codex {
 
 
   private void initGlobal() {
-    version = getStr("general.version", null);
-    prefix = getStr("general.prefix", "§8» §f");
-    broadcastprefix = getStr("general.broadcast-prefix", "[§c§lMcTools§r] ");
-    ipApiKey = getStr("general.ip-api-key", null);
-    resourcePack = getBool("general.resourcepack", false);
-    resourcePackUrl = getStr("general.resourcepack-url", null);
+    version = config.getString("general.version", null);
+    prefix = config.getString("general.prefix", "§8» §f");
+    broadcastprefix = config.getString("general.broadcast-prefix", "[§c§lMcTools§r] ");
+    ipApiKey = config.getString("general.ip-api-key", null);
+    resourcePack = config.getBoolean("general.resourcepack", false);
+    resourcePackUrl = config.getString("general.resourcepack-url", null);
     if (resourcePackUrl.isEmpty()) resourcePackUrl = null;
-    doubleCount = getBool("general.double-count", true);
+    doubleCount = config.getBoolean("general.double-count", true);
+    removePlayer = config.getBoolean("general.remove-player", true);
   }
 
   private void initVoice(){
-    voiceMode = getBool("voice.enable", false);
-    voiceWallMode = getBool("voice.wall-mode", false);
-    voiceDistanceMax = getInt("voice.distance-max", 10);
+    voiceMode = config.getBoolean("voice.enable", false);
+    voiceWallMode = config.getBoolean("voice.wall-mode", false);
+    voiceDistanceMax = config.getInt("voice.distance-max", 10);
   }
 
   private void initBuild() {
-    buildMode = getBool("build.enable", false);
-    buildArmorStand = getBool("build.armor-stand", false);
+    buildMode = config.getBoolean("build.enable", false);
+    buildArmorStand = config.getBoolean("build.armor-stand", false);
   }
 
   private void initDoor() {
-    doorMode = getBool("door.enable", false);
-    doorAnimOpen = getStr("door.anim-open", "anim_open");
-    doorAnimClose = getStr("door.anim-close", "anim_close");
+    doorMode = config.getBoolean("door.enable", false);
+    doorAnimOpen = config.getString("door.anim-open", "anim_open");
+    doorAnimClose = config.getString("door.anim-close", "anim_close");
   }
 
   private void initInteract() {
-    interactMode = getBool("interact.enable", false);
-    interactAnimInteract = getStr("interact.anim-interact", "anim_interact");
+    interactMode = config.getBoolean("interact.enable", false);
+    interactAnimInteract = config.getString("interact.anim-interact", "anim_interact");
   }
 
   private void initStaff() {
-    staffMode = getBool("staff.enable", false);
-    staffFreeze = getBool("staff.freeze", false);
-    staffBroadcastPrefix = getStr("staff.broadcast-prefix", "[Staff] ");
-    staffChatMode = getBool("staff.chat.enable", false);
-    staffChatPrefix = getStr("staff.chat.prefix", "!");
+    staffMode = config.getBoolean("staff.enable", false);
+    staffFreeze = config.getBoolean("staff.freeze", false);
+    staffBroadcastPrefix = config.getString("staff.broadcast-prefix", "[Staff] ");
+    staffChatMode = config.getBoolean("staff.chat.enable", false);
+    staffChatPrefix = config.getString("staff.chat.prefix", "!");
   }
 
   private void initLang() {
 
-    langByIp = getBool("lang-by-ip", false);
+    langByIp = config.getBoolean("lang-by-ip", false);
 
     if (config.contains("langs")) {
       ConfigurationSection langSection = config.getConfigurationSection("langs");
@@ -143,49 +146,28 @@ public class Codex {
 
     if (langs.isEmpty()) langs.add(new Lang("en_GB", "English", List.of("en_GB", "en_AU", "en_CA", "en_NZ", "en_PT", "en_UD", "en_US")));
 
-    if (Lang.contains(langs, getStr("default-lang", "en_GB"))) defaultLang = Lang.getLang(langs, getStr("mcTools.defaultLang", "en_GB"));
+    if (Lang.contains(langs, config.getString("default-lang", "en_GB"))) defaultLang = Lang.getLang(langs, config.getString("mcTools.defaultLang", "en_GB"));
     else defaultLang = Lang.getLang(langs,"en_GB");
   }
 
   private void initSQLData() {
 
-    DatabaseType dbType =  DatabaseType.getByName(getStr("database.type", "SQLite"));
+    DatabaseType dbType =  DatabaseType.getByName(config.getString("database.type", "SQLite"));
     if (dbType != null) databaseType = dbType;
     else databaseType = DatabaseType.SQLITE;
 
-    sqlName = getStr("database.sqlLite.name", "database");
-    mysqlHost = getStr("database.mysql.host", null);
-    mysqlPort = getInt("database.mysql.port");
-    mysqlDbName = getStr("database.mysql.dbName", null);
-    mysqlUsername = getStr("database.mysql.username", null);
-    mysqlPassword = getStr("database.mysql.password", null);
-    mysqlDefaultPrefix = getStr("database.mysql.defaultPrefix", null);
+    sqlName = config.getString("database.sqlLite.name", "database");
+    mysqlHost = config.getString("database.mysql.host", null);
+    mysqlPort = config.getInt("database.mysql.port");
+    mysqlDbName = config.getString("database.mysql.dbName", null);
+    mysqlUsername = config.getString("database.mysql.username", null);
+    mysqlPassword = config.getString("database.mysql.password", null);
+    mysqlDefaultPrefix = config.getString("database.mysql.defaultPrefix", null);
 
     DatabaseManager.closeAllConnection();
 
     DatabaseManager.setConnection(this, databaseType);
 
-  }
-
-  private String getStr(String path) {
-    return (config.getString(path));
-  }
-  private String getStr(String path, String dflValue) {
-    return (config.getString(path, dflValue));
-  }
-
-  private int getInt(String path) {
-    return (config.getInt(path));
-  }
-  private int getInt(String path, Integer dflValue) {
-    return (config.getInt(path, dflValue));
-  }
-
-  private boolean getBool(String path) {return (config.getBoolean(path));}
-  private boolean getBool(String path, Boolean dflValue) {return (config.getBoolean(path, dflValue));}
-
-  public FileConfiguration getConfig() {
-    return config;
   }
 
   public String getDefaultPrefix() {
