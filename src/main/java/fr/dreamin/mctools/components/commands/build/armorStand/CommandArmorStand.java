@@ -2,23 +2,25 @@ package fr.dreamin.mctools.components.commands.build.armorStand;
 
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.gui.GuiManager;
+import fr.dreamin.mctools.api.items.ItemBuilder;
+import fr.dreamin.mctools.api.minecraft.Minecraft;
 import fr.dreamin.mctools.api.player.PlayerPerm;
 import fr.dreamin.mctools.api.player.manager.MessageManager;
-import fr.dreamin.mctools.components.gui.armorStand.ArmorStandListLockedGui;
-import fr.dreamin.mctools.components.gui.armorStand.ArmorStandListRadiusGui;
-import fr.dreamin.mctools.components.gui.armorStand.ArmorStandListSelectedGui;
-import fr.dreamin.mctools.components.gui.armorStand.ArmorStandMenuGui;
+import fr.dreamin.mctools.components.gui.armorStand.*;
 import fr.dreamin.mctools.components.lang.Lang;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -49,6 +51,12 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
     }
 
     if (player.hasPermission(PlayerPerm.BUILD.getPerm())) {
+
+      if (!McTools.getCodex().isBuildArmorStand()) {
+        //TODO lang à faire
+        player.sendMessage("Cette fonctionnalité n'est pas activé");
+        return true;
+      }
 
       if (args.length == 0) McTools.getService(GuiManager.class).open(player, ArmorStandMenuGui.class);
       else {
@@ -161,7 +169,7 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
                 mtPlayer.getArmorStandManager().getArmorStandRadius().clear();
 
                 if (args.length <= 2) {
-                  mtPlayer.getArmorStandManager().getArmorStandRadius().addAll(getNearbyArmorStands(mtPlayer, 1));
+                  mtPlayer.getArmorStandManager().getArmorStandRadius().addAll(Minecraft.getNearbyArmorStands(mtPlayer, 1));
                   McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removeGuiPage(player, ArmorStandListRadiusGui.class.getSimpleName());
                   McTools.getService(GuiManager.class).open(player, ArmorStandListRadiusGui.class);
                 }
@@ -169,9 +177,38 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
                   try {
                     int v = Integer.parseInt(args[2]);
 
-                    mtPlayer.getArmorStandManager().getArmorStandRadius().addAll(getNearbyArmorStands(mtPlayer, v));
+                    mtPlayer.getArmorStandManager().getArmorStandRadius().addAll(Minecraft.getNearbyArmorStands(mtPlayer, v));
                     McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removeGuiPage(player, ArmorStandListRadiusGui.class.getSimpleName());
                     McTools.getService(GuiManager.class).open(player, ArmorStandListRadiusGui.class);
+
+                  } catch (NumberFormatException e) {
+                    mtPlayer.sendMsg(LangMsg.ERROR_VALIDNUMBER, "");
+                    return false;
+                  }
+                }
+                break;
+              case "id":
+
+                mtPlayer.getArmorStandManager().getArmorStandId().clear();
+
+                if (args.length <= 2) {
+                }
+                else {
+                  try {
+                    Material material = Material.valueOf(args[2].toUpperCase());
+                    int v = Integer.parseInt(args[3]);
+
+                    ItemStack item = new ItemBuilder(material).setCustomMeta(v).toItemStack();
+
+                    player.getWorld().getEntities().forEach(entity -> {
+
+                      if (entity instanceof ArmorStand) {
+                        if (Minecraft.compareItem(((ArmorStand) entity).getHelmet(), item)) mtPlayer.getArmorStandManager().getArmorStandId().add((ArmorStand) entity);
+                      }
+                    });
+
+                    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().removeGuiPage(player, ArmorStandListIdsGui.class.getSimpleName());
+                    McTools.getService(GuiManager.class).open(player, ArmorStandListIdsGui.class);
 
                   } catch (NumberFormatException e) {
                     mtPlayer.sendMsg(LangMsg.ERROR_VALIDNUMBER, "");
@@ -231,24 +268,26 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
 
     if (player.hasPermission(PlayerPerm.BUILD.getPerm())) {
 
-      switch (args.length) {
-        case 1: return Arrays.asList("set", "list", "remove", "get", "add");
-        case 2:
-          switch (args[0]) {
-            case "set": return Arrays.asList("helmet", "weapon", "rotate", "move", "shulker", "invisible", "tag");
-            case "list": return Arrays.asList("radius", "locked", "selected");
-            case "remove": return Arrays.asList("all");
-            case "get": return Arrays.asList("rotation", "radius");
-            case "add": return Arrays.asList("lock", "shulker");
-          }
-          break;
-        case 3:
-          switch (args[1]) {
-            case "all": return Arrays.asList("locked", "selected");
-            case "radius": return Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20", "30", "40", "50", "100");
-            case "rotate": return Arrays.asList("armorstand", "arm");
-          }
-          break;
+      if (McTools.getCodex().isBuildArmorStand()) {
+        switch (args.length) {
+          case 1: return Arrays.asList("set", "list", "remove", "get", "add");
+          case 2:
+            switch (args[0]) {
+              case "set": return Arrays.asList("helmet", "weapon", "rotate", "move", "shulker", "invisible", "tag");
+              case "list": return Arrays.asList("radius", "locked", "selected");
+              case "remove": return Arrays.asList("all");
+              case "get": return Arrays.asList("rotation", "radius", "id");
+              case "add": return Arrays.asList("lock", "shulker");
+            }
+            break;
+          case 3:
+            switch (args[1]) {
+              case "all": return Arrays.asList("locked", "selected");
+              case "radius": return Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "20", "30", "40", "50", "100");
+              case "rotate": return Arrays.asList("armorstand", "arm");
+            }
+            break;
+        }
       }
     }
     else return Arrays.asList("Error");
@@ -256,26 +295,5 @@ public class CommandArmorStand implements CommandExecutor, TabCompleter {
 
     return new ArrayList<>();
   }
-
-  private List<ArmorStand> getNearbyArmorStands(MTPlayer MTPlayer, double radius) {
-    // Récupère toutes les entités dans le rayon spécifié autour du joueur
-    List<Entity> nearbyEntities = MTPlayer.getPlayer().getNearbyEntities(radius, radius, radius);
-
-    List<ArmorStand> armorStands = new ArrayList<>(); // Créer une liste d'armor stand
-
-    // Parcourt chaque entité pour vérifier si c'est un armor stand
-    for (Entity entity : nearbyEntities) {
-      if (entity instanceof ArmorStand) {
-
-        ArmorStand armorStand = (ArmorStand) entity; // Cast l'entité en armor stand
-
-        if (MTPlayer.getArmorStandManager().getIfArmorStandSelected(armorStand) == null) armorStands.add((ArmorStand) entity); // Ajoute l'armor stand à la liste
-
-      }
-    }
-
-    return armorStands; // Retourne la liste d'armor stand
-  }
-
 }
 

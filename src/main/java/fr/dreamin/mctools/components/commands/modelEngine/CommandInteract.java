@@ -1,15 +1,14 @@
-package fr.dreamin.mctools.components.commands.build;
+package fr.dreamin.mctools.components.commands.modelEngine;
 
 import fr.dreamin.mctools.McTools;
-import fr.dreamin.mctools.api.door.Door;
+import fr.dreamin.mctools.api.modelEngine.Interact;
 import fr.dreamin.mctools.api.player.PlayerPerm;
-import fr.dreamin.mctools.components.game.manager.DoorManager;
+import fr.dreamin.mctools.components.game.manager.InteractManager;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
-import fr.dreamin.mctools.database.fetcher.doorFetcher.DoorFetcher;
+import fr.dreamin.mctools.database.fetcher.interactFetcher.InteractFetcher;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -22,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommandDoor implements CommandExecutor, TabCompleter {
+public class CommandInteract implements CommandExecutor, TabCompleter {
 
   private static final String PREFIX = McTools.getCodex().getBroadcastprefix();
 
@@ -33,78 +32,68 @@ public class CommandDoor implements CommandExecutor, TabCompleter {
       return true;
     }
 
+
     Player player = (Player) sender;
     MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+
+    if (mtPlayer == null) {
+      player.sendMessage(LangMsg.ERROR_OCCURRED.getMsg(McTools.getCodex().getDefaultLang(), ""));
+      return true;
+    }
 
     if (args.length == 0) {
       mtPlayer.sendMsg(LangMsg.ERROR_PUTVALUE, "");
       return false;
     }
 
-    switch (args[0]) {
-      case "add":
-        addDoor(args, player);
-        break;
-      case "reload":
-        reloadDoors();
-        break;
-      case "dispawnall":
-        despawnAllDoors();
-        break;
-      case "spawnall":
-        spawnAllDoors();
-        break;
-      case "lockall":
-        lockAllDoors();
-        break;
-      case "unlockall":
-        unlockAllDoors();
-        break;
-      default:
-        mtPlayer.sendMsg(LangMsg.ERROR_VALIDPUTVALUE, "");
-        break;
+    if (player.hasPermission(PlayerPerm.MODO.getPerm())) {
+
+      if (!McTools.getCodex().isInteractMode()) {
+        player.sendMessage("Cette fonctionnalité n'est pas activé");
+        return false;
+      }
+
+      switch (args[0]) {
+        case "add":
+          addInteract(args, player);
+          break;
+        case "reload":
+          reloadInteracts();
+          break;
+        case "dispawnall":
+          despawnAllInteracts();
+          break;
+        case "spawnall":
+          spawnAllInteracts();
+          break;
+        default:
+          mtPlayer.sendMsg(LangMsg.ERROR_VALIDPUTVALUE, "");
+          break;
+      }
     }
 
     return true;
   }
 
-  private void addDoor(String[] args, Player player) {
-    //TODO voir comment faire ça
-//        DoorManager.newDoor(args[1], player.getLocation(), true, true);
+  private void addInteract(String[] args, Player player) {
+    InteractManager.newInteract(args[1], player.getLocation(), true, true);
   }
 
-  private void reloadDoors() {
+  private void reloadInteracts() {
     for (World world : Bukkit.getWorlds()) {
-      DoorManager.getDoors().stream()
-        .filter(door -> door.getCuboide() != null)
-        .forEach(door -> door.getCuboide().replaceType(Material.BARRIER, Material.AIR));
-      DoorFetcher.getAllDoorByWorld(world);
+      InteractManager.getInteracts().forEach(Interact::remove);
+      InteractFetcher.getAllInteractByWorld(world);
     }
   }
 
-  private void despawnAllDoors() {
-    DoorManager.getDoors().stream()
-      .filter(door -> door.getCuboide() != null)
-      .forEach(door -> door.getCuboide().replaceType(Material.BARRIER, Material.AIR));
-    DoorManager.getDoors().forEach(Door::remove);
+  private void despawnAllInteracts() {
+    InteractManager.getInteracts().forEach(Interact::remove);
   }
 
-  private void spawnAllDoors() {
+  private void spawnAllInteracts() {
     for (World world : Bukkit.getWorlds()) {
-      DoorFetcher.getAllDoorByWorld(world);
+      InteractFetcher.getAllInteractByWorld(world);
     }
-  }
-
-  private void lockAllDoors() {
-    DoorManager.getDoors().stream()
-      .filter(Door::isCanByLocked)
-      .forEach(door -> door.setLocked(true));
-  }
-
-  private void unlockAllDoors() {
-    DoorManager.getDoors().stream()
-      .filter(Door::isCanByLocked)
-      .forEach(door -> door.setLocked(false));
   }
 
   @Override
@@ -124,8 +113,6 @@ public class CommandDoor implements CommandExecutor, TabCompleter {
         listArgs.add("reload");
         listArgs.add("dispawnall");
         listArgs.add("spawnall");
-        listArgs.add("lockall");
-        listArgs.add("unlockall");
       }
     }
 

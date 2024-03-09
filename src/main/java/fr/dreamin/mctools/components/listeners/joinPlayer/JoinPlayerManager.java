@@ -25,8 +25,6 @@ import java.net.*;
 
 public class JoinPlayerManager {
 
-  private static int i = 0;
-
   public static void addPlayer(Player player) {
 
     MTPlayer mtPlayer = null;
@@ -69,9 +67,9 @@ public class JoinPlayerManager {
 
     player.setGravity(true);
 
+    if (McTools.getCodex().isResourcePack() && McTools.getCodex().getResourcePackUrl() != null) player.setResourcePack(McTools.getCodex().getResourcePackUrl());
+
     McTools.getService(PlayersService.class).addDTPlayer(mtPlayer);
-
     UserFetcher.getIfInsert(mtPlayer);
-
   }
 }

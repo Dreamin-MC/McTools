@@ -4,5 +4,5 @@ import fr.dreamin.mctools.components.players.MTPlayer;
 
 public interface CustomFilterTick {
 
-  void actualTick(MTPlayer MTPlayer, Integer tick);
+  void actualTick(Integer tick);
 }

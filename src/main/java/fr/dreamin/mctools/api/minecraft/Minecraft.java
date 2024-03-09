@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.cuboide.Cuboide;
+import fr.dreamin.mctools.components.players.MTPlayer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Bisected;
@@ -618,5 +619,26 @@ public class Minecraft {
     armorStand.setHeadPose(headEulerAngle);
 
   }
+
+  public static List<ArmorStand> getNearbyArmorStands(MTPlayer MTPlayer, double radius) {
+    // Récupère toutes les entités dans le rayon spécifié autour du joueur
+    List<Entity> nearbyEntities = MTPlayer.getPlayer().getNearbyEntities(radius, radius, radius);
+
+    List<ArmorStand> armorStands = new ArrayList<>(); // Créer une liste d'armor stand
+
+    // Parcourt chaque entité pour vérifier si c'est un armor stand
+    for (Entity entity : nearbyEntities) {
+      if (entity instanceof ArmorStand) {
+
+        ArmorStand armorStand = (ArmorStand) entity; // Cast l'entité en armor stand
+
+        if (MTPlayer.getArmorStandManager().getIfArmorStandSelected(armorStand) == null) armorStands.add((ArmorStand) entity); // Ajoute l'armor stand à la liste
+
+      }
+    }
+
+    return armorStands; // Retourne la liste d'armor stand
+  }
+
 
 }

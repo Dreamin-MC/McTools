@@ -19,7 +19,7 @@ public class VoiceConfPlayerManager {
   public VoiceConfPlayerManager(MTPlayer mtPlayer) {
     this.mtPlayer = mtPlayer;
 
-    mtPlayer.getPlayerTickManager().addFilter((mtPlayer1, tick) -> {
+    mtPlayer.getPlayerTickManager().addFilter(tick -> {
       if (isVoice()) drawParticleCircles(mtPlayer.getPlayer());
     });
   }

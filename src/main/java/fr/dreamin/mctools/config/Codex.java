@@ -18,11 +18,22 @@ public class Codex {
   //  >>>>>>> GENERAL <<<<<<<
 
   @Getter @Setter private String pluginName, prefix, broadcastprefix, version, ipApiKey, resourcePackUrl;
-  @Getter @Setter private boolean resourcePack, doubleCount, buildMode;
+  @Getter @Setter private boolean resourcePack, doubleCount;
 
   //  >>>>>>>> VOICE <<<<<<<<
   @Getter @Setter private boolean voiceMode, voiceWallMode;
   @Getter @Setter private int voiceDistanceMax;
+
+  //  >>>>>>>> BUILD <<<<<<<<
+  @Getter @Setter private boolean buildMode, buildArmorStand;
+
+  // >>>>>>>> DOOR <<<<<<<<
+  @Getter @Setter private boolean doorMode;
+  @Getter @Setter private String doorAnimOpen, doorAnimClose;
+
+  // >>>>>>>> INTERACT <<<<<<<<
+  @Getter @Setter private boolean interactMode;
+  @Getter @Setter private String interactAnimInteract;
 
   // >>>>>>> STAFF <<<<<<<
 
@@ -43,21 +54,17 @@ public class Codex {
   // >>>>>>>> API <<<<<<<<
   @Getter @Setter private boolean editMode = false, defaultGui = false, defaultItems = false;
 
-
-
   public Codex(FileConfiguration config) {
     this.config = config;
     pluginName = "McTools";
-
-    System.out.println("=============================");
-
     initGlobal();
     initVoice();
+    initBuild();
+    initDoor();
+    initInteract();
     initStaff();
     initLang();
     initSQLData();
-
-    System.out.println("=============================");
   }
 
   public void loadConf() {
@@ -65,6 +72,9 @@ public class Codex {
 
     initGlobal();
     initVoice();
+    initBuild();
+    initDoor();
+    initInteract();
     initStaff();
     initLang();
     initSQLData();
@@ -73,35 +83,50 @@ public class Codex {
   }
 
 
-  private void initGlobal(){
+  private void initGlobal() {
     version = getStr("general.version", null);
     prefix = getStr("general.prefix", "§8» §f");
-    broadcastprefix = getStr("general.broadcastprefix", "[§c§lMcTools§r] ");
-    ipApiKey = getStr("general.ipApiKey", null);
+    broadcastprefix = getStr("general.broadcast-prefix", "[§c§lMcTools§r] ");
+    ipApiKey = getStr("general.ip-api-key", null);
     resourcePack = getBool("general.resourcepack", false);
-    resourcePackUrl = getStr("general.resourcepackUrl", null);
-    doubleCount = getBool("general.doubleCount", true);
-    buildMode = getBool("general.buildMode", false);
-    System.out.println("buildMode : " + buildMode);
+    resourcePackUrl = getStr("general.resourcepack-url", null);
+    if (resourcePackUrl.isEmpty()) resourcePackUrl = null;
+    doubleCount = getBool("general.double-count", true);
   }
 
   private void initVoice(){
     voiceMode = getBool("voice.enable", false);
-    voiceWallMode = getBool("voice.wallMode", false);
-    voiceDistanceMax = getInt("voice.distanceMax", 10);
+    voiceWallMode = getBool("voice.wall-mode", false);
+    voiceDistanceMax = getInt("voice.distance-max", 10);
+  }
+
+  private void initBuild() {
+    buildMode = getBool("build.enable", false);
+    buildArmorStand = getBool("build.armor-stand", false);
+  }
+
+  private void initDoor() {
+    doorMode = getBool("door.enable", false);
+    doorAnimOpen = getStr("door.anim-open", "anim_open");
+    doorAnimClose = getStr("door.anim-close", "anim_close");
+  }
+
+  private void initInteract() {
+    interactMode = getBool("interact.enable", false);
+    interactAnimInteract = getStr("interact.anim-interact", "anim_interact");
   }
 
   private void initStaff() {
     staffMode = getBool("staff.enable", false);
     staffFreeze = getBool("staff.freeze", false);
-    staffBroadcastPrefix = getStr("staff.broadcastPrefix", "[Staff] ");
+    staffBroadcastPrefix = getStr("staff.broadcast-prefix", "[Staff] ");
     staffChatMode = getBool("staff.chat.enable", false);
     staffChatPrefix = getStr("staff.chat.prefix", "!");
   }
 
   private void initLang() {
 
-    langByIp = getBool("langByip", false);
+    langByIp = getBool("lang-by-ip", false);
 
     if (config.contains("langs")) {
       ConfigurationSection langSection = config.getConfigurationSection("langs");
@@ -109,7 +134,7 @@ public class Codex {
       for (String langKey : langSection.getKeys(false)) {
         ConfigurationSection langInfo = langSection.getConfigurationSection(langKey);
         String displayName = langInfo.getString("display-name", null);
-        List<String> langCode = langInfo.getStringList("langCode");
+        List<String> langCode = langInfo.getStringList("lang-code");
 
         if (displayName != null && langCode != null && !langCode.isEmpty()) langs.add(new Lang(langKey, displayName, langCode));
       }
@@ -118,7 +143,7 @@ public class Codex {
 
     if (langs.isEmpty()) langs.add(new Lang("en_GB", "English", List.of("en_GB", "en_AU", "en_CA", "en_NZ", "en_PT", "en_UD", "en_US")));
 
-    if (Lang.contains(langs, getStr("defaultLang", "en_GB"))) defaultLang = Lang.getLang(langs, getStr("mcTools.defaultLang", "en_GB"));
+    if (Lang.contains(langs, getStr("default-lang", "en_GB"))) defaultLang = Lang.getLang(langs, getStr("mcTools.defaultLang", "en_GB"));
     else defaultLang = Lang.getLang(langs,"en_GB");
   }
 

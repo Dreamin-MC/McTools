@@ -1,4 +1,4 @@
-package fr.dreamin.mctools.api.door;
+package fr.dreamin.mctools.api.modelEngine;
 
 import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.animation.handler.AnimationHandler;
@@ -69,8 +69,8 @@ public class Door {
   public void open() {
     AnimationHandler animOpen = getActiveModel().getAnimationHandler();
 
-    animOpen.stopAnimation("anim_close");
-    animOpen.playAnimation("anim_open", 0, 0, 1, true);
+    animOpen.stopAnimation(McTools.getCodex().getDoorAnimClose());
+    animOpen.playAnimation(McTools.getCodex().getDoorAnimOpen(), 0, 0, 1, true);
 
     if (canByBlocked && cuboide != null) cuboide.replaceType(Material.BARRIER, Material.AIR);
 
@@ -79,8 +79,8 @@ public class Door {
   public void close() {
     AnimationHandler animOpen = getActiveModel().getAnimationHandler();
 
-    animOpen.stopAnimation("anim_open");
-    animOpen.playAnimation("anim_close", 0, 0, 1, true);
+    animOpen.stopAnimation(McTools.getCodex().getDoorAnimOpen());
+    animOpen.playAnimation(McTools.getCodex().getDoorAnimClose(), 0, 0, 1, true);
 
     if (canByBlocked && cuboide != null) cuboide.replaceType(Material.AIR, Material.BARRIER);
 

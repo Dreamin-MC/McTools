@@ -8,7 +8,7 @@ commands:
     aliases: ["staff"]
   mt:
     description: "McTools"
-    aliases: "mctools"
+    aliases: ["mctools", "mt"]
   dv:
     description: "dv"
     aliases: ["dreaminvoice"]

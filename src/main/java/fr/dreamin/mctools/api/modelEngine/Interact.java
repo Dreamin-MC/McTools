@@ -1,4 +1,4 @@
-package fr.dreamin.mctools.api.interact;
+package fr.dreamin.mctools.api.modelEngine;
 
 import com.ticxo.modelengine.api.ModelEngineAPI;
 import com.ticxo.modelengine.api.animation.handler.AnimationHandler;
@@ -56,7 +56,7 @@ public class Interact {
 
   public void setInteract() {
     AnimationHandler animOpen = getActiveModel().getAnimationHandler();
-    animOpen.playAnimation("anim_interact", 0, 0, 1, true);
+    animOpen.playAnimation(McTools.getCodex().getInteractAnimInteract(), 0, 0, 1, true);
   }
 
 

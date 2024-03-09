@@ -86,11 +86,12 @@ public class UserFetcher {
 
   public static void newUser(MTPlayer mtPlayer){
 
-    String languageCode = JsonManager.getLanguageFromIP(mtPlayer.getPlayer().getAddress().getAddress().getHostAddress());
+    String languageCode = McTools.getCodex().getDefaultLang().getNameCode();
     mtPlayer.setIp(mtPlayer.getPlayer().getAddress().getAddress().getHostAddress() + ",");
 
+    if (McTools.getCodex().getIpApiKey() != null) languageCode = JsonManager.getLanguageFromIP(mtPlayer.getPlayer().getAddress().getAddress().getHostAddress());
+
     if (Lang.isValidLanguage(languageCode)) mtPlayer.setLang(Lang.getLangByName(languageCode));
-    else mtPlayer.setLang(McTools.getCodex().getDefaultLang());
 
     if (!McTools.getCodex().isDoubleCount())
       if (getIfIpExist(mtPlayer)) {

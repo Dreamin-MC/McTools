@@ -77,32 +77,20 @@ public class ArmorStandArmsSettingsGui implements GuiBuilder {
         return;
       case 12:
         mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
-          if (mTPlayer.getArmorStandManager().isLeftArmPos()) {
-            armorStand.setLeftArmPose(armorStand.getLeftArmPose().setX(armorStand.getLeftArmPose().getX() + mTPlayer.getArmorStandManager().getArmRotate()));
-          }
-          else {
-            armorStand.setRightArmPose(armorStand.getRightArmPose().setX(armorStand.getRightArmPose().getX() + mTPlayer.getArmorStandManager().getArmRotate()));
-          }
+          if (mTPlayer.getArmorStandManager().isLeftArmPos()) armorStand.setLeftArmPose(armorStand.getLeftArmPose().setX(armorStand.getLeftArmPose().getX() + mTPlayer.getArmorStandManager().getArmRotate()));
+          else armorStand.setRightArmPose(armorStand.getRightArmPose().setX(armorStand.getRightArmPose().getX() + mTPlayer.getArmorStandManager().getArmRotate()));
         });
         return;
       case 13:
         mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
-          if (mTPlayer.getArmorStandManager().isLeftArmPos()) {
-            armorStand.setLeftArmPose(armorStand.getLeftArmPose().setY(armorStand.getLeftArmPose().getY() + mTPlayer.getArmorStandManager().getArmRotate()));
-          }
-          else {
-            armorStand.setRightArmPose(armorStand.getRightArmPose().setY(armorStand.getRightArmPose().getY() + mTPlayer.getArmorStandManager().getArmRotate()));
-          }
+          if (mTPlayer.getArmorStandManager().isLeftArmPos()) armorStand.setLeftArmPose(armorStand.getLeftArmPose().setY(armorStand.getLeftArmPose().getY() + mTPlayer.getArmorStandManager().getArmRotate()));
+          else armorStand.setRightArmPose(armorStand.getRightArmPose().setY(armorStand.getRightArmPose().getY() + mTPlayer.getArmorStandManager().getArmRotate()));
         });
         return;
       case 14:
         mTPlayer.getArmorStandManager().getArmorStandSelected().forEach(armorStand -> {
-          if (mTPlayer.getArmorStandManager().isLeftArmPos()) {
-            armorStand.setLeftArmPose(armorStand.getLeftArmPose().setZ(armorStand.getLeftArmPose().getZ() + mTPlayer.getArmorStandManager().getArmRotate()));
-          }
-          else {
-            armorStand.setRightArmPose(armorStand.getRightArmPose().setZ(armorStand.getRightArmPose().getZ() + mTPlayer.getArmorStandManager().getArmRotate()));
-          }
+          if (mTPlayer.getArmorStandManager().isLeftArmPos()) armorStand.setLeftArmPose(armorStand.getLeftArmPose().setZ(armorStand.getLeftArmPose().getZ() + mTPlayer.getArmorStandManager().getArmRotate()));
+          else armorStand.setRightArmPose(armorStand.getRightArmPose().setZ(armorStand.getRightArmPose().getZ() + mTPlayer.getArmorStandManager().getArmRotate()));
         });
         return;
 

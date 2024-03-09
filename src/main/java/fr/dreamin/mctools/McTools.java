@@ -6,19 +6,19 @@ import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.defaultGui.LanguageConfifGui;
 import fr.dreamin.mctools.api.gui.defaultGui.ListMapGui;
 import fr.dreamin.mctools.api.gui.defaultGui.WeatherSettingGui;
-import fr.dreamin.mctools.api.interact.Interact;
+import fr.dreamin.mctools.api.modelEngine.Interact;
 import fr.dreamin.mctools.api.log.Logging;
 import fr.dreamin.mctools.api.time.CooldownManager;
 import fr.dreamin.mctools.api.time.TimerManager;
 import fr.dreamin.mctools.api.triton.TritonManager;
 import fr.dreamin.mctools.api.voice.VoiceWallManager;
-import fr.dreamin.mctools.components.commands.build.CommandInteract;
-import fr.dreamin.mctools.components.commands.build.CommandDoor;
+import fr.dreamin.mctools.components.commands.modelEngine.CommandInteract;
+import fr.dreamin.mctools.components.commands.modelEngine.CommandDoor;
 import fr.dreamin.mctools.components.commands.build.CommandTag;
 import fr.dreamin.mctools.components.commands.build.armorStand.CommandArmorStand;
 import fr.dreamin.mctools.components.commands.build.models.CommandCoal;
 import fr.dreamin.mctools.components.commands.build.models.CommandGetId;
-import fr.dreamin.mctools.components.commands.build.voice.CommandShowVoice;
+import fr.dreamin.mctools.components.commands.voice.CommandShowVoice;
 import fr.dreamin.mctools.components.commands.CommandMT;
 import fr.dreamin.mctools.api.commands.SimpleCommand;
 import fr.dreamin.mctools.components.commands.staff.CommandStaff;
@@ -37,12 +37,9 @@ import fr.dreamin.mctools.api.service.ServiceManager;
 import fr.dreamin.mctools.config.LangManager;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.database.DatabaseManager;
-import fr.dreamin.mctools.database.mysql.MysqlManager;
 import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
-import fr.dreamin.mctools.database.sqlLite.SqlLiteManager;
 import lombok.Getter;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -66,17 +63,15 @@ public final class McTools extends JavaPlugin{
     loadGui();
     saveDefaultConfig();
 
-    System.out.println("============Test==========");
-
     codex = new Codex(getConfig());
-
-    System.out.println("======================");
 
     langManager = new LangManager(this);
 
     dtGame = new MTGame(this);
 
     getServiceManager().loadServices(Logging.class, GuiManager.class, PaperDependencyService.class, PlayersService.class, TimerManager.class, CooldownManager.class, GlowingEntities.class, GlowingBlocks.class);
+
+    getService(GuiManager.class).
 
     getService(PaperDependencyService.class)
       .ifPluginEnabled("FastAsyncWorldEdit", (pluginName, plugin) -> {
@@ -151,6 +146,7 @@ public final class McTools extends JavaPlugin{
       new ArmorStandListLockedGui(),
       new ArmorStandPresetPosesGui(),
       new ArmorStandListRadiusGui(),
+      new ArmorStandListIdsGui(),
       new ArmorStandArmsSettingsGui(),
       new ArmorStandListSelectedGui(),
 
@@ -202,7 +198,7 @@ public final class McTools extends JavaPlugin{
   }
 
   private void loadCommands() {
-    SimpleCommand.createCommand("mt", new CommandMT(), "mctools");
+    SimpleCommand.createCommand("mt", new CommandMT(), "mctools", "mt");
     SimpleCommand.createCommand("dv", new CommandDV());
 
     if (getCodex().isBuildMode()) {

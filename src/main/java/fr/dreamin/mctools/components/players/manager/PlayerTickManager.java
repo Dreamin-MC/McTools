@@ -28,9 +28,7 @@ public class PlayerTickManager {
   public void tick() {
     if (this.isPaused) return;
 
-    for (CustomFilterTick customTick : customTicks) {
-      customTick.actualTick(MTPlayer, actualTick);
-    }
+    customTicks.forEach(customTick -> customTick.actualTick(actualTick));
 
     actualTick++;
   }

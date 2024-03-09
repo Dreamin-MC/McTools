@@ -1,7 +1,6 @@
-package fr.dreamin.mctools.components.commands.build.voice;
+package fr.dreamin.mctools.components.commands.voice;
 
 import fr.dreamin.mctools.McTools;
-import fr.dreamin.mctools.components.lang.Lang;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;

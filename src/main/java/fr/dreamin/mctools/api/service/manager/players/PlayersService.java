@@ -18,11 +18,9 @@ import java.util.List;
 
 public class PlayersService extends Service {
 
-  @Getter @Setter
-  private Class<? extends MTPlayer> playerClass = null;
+  @Getter @Setter private Class<? extends MTPlayer> playerClass = null;
 
-  @Getter @Setter
-  private List<MTPlayer> MtPlayers = new ArrayList<>(), spectators = new ArrayList<>();
+  @Getter @Setter private List<MTPlayer> MtPlayers = new ArrayList<>(), spectators = new ArrayList<>();
 
   //------ADDER------//
 
