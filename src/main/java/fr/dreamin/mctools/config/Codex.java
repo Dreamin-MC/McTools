@@ -146,7 +146,7 @@ public class Codex {
 
     if (langs.isEmpty()) langs.add(new Lang("en_GB", "English", List.of("en_GB", "en_AU", "en_CA", "en_NZ", "en_PT", "en_UD", "en_US")));
 
-    if (Lang.contains(langs, config.getString("default-lang", "en_GB"))) defaultLang = Lang.getLang(langs, config.getString("mcTools.defaultLang", "en_GB"));
+    if (Lang.contains(langs, config.getString("default-lang", "en_GB"))) defaultLang = Lang.getLang(langs, config.getString("default-lang", "en_GB"));
     else defaultLang = Lang.getLang(langs,"en_GB");
   }
 

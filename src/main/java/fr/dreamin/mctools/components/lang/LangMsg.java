@@ -5,7 +5,6 @@ import fr.dreamin.mctools.api.colors.CustomChatColor;
 import lombok.Getter;
 import lombok.Setter;
 import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.util.regex.Matcher;
@@ -181,7 +180,7 @@ public enum LangMsg {
   CMD_TAG_ERROR_TAGCATEGORY("cmd.tag.error.tagCategory.lang.", "%BROADCAST%[color]RED[color]Please select a tag category");
 
   @Getter @Setter
-  private static YamlConfiguration config;
+  private static YamlConfiguration lang;
   @Getter
   private String path;
   @Getter
@@ -192,13 +191,9 @@ public enum LangMsg {
     this.dflValue = dflValue;
   }
 
-  private static String getStr(String path, String dflValue) {
-    return (config.getString(path, dflValue));
-  }
-
   public String getMsg(Lang lang, String... args) {
 
-    String msg = getStr(this.path + lang.getNameCode(), this.dflValue);
+    String msg = LangMsg.lang.getString(this.path + lang.getNameCode(), this.dflValue);
 
     for (int i = 0; i < args.length; i++) {
       if (msg.contains("%" + i)) msg = msg.replace("%" + i, args[i]);
@@ -261,7 +256,7 @@ public enum LangMsg {
 
   public String getMsg(Lang lang, LangMsg... args) {
 
-    String msg = getStr(this.path + lang.getNameCode(), this.dflValue);
+    String msg = LangMsg.lang.getString(this.path + lang.getNameCode(), this.dflValue);
 
     for (int i = 0; i < args.length; i++) {
       if (msg.contains("%" + i)) msg = msg.replace("%" + i, args[i].getMsg(lang, ""));
@@ -324,7 +319,73 @@ public enum LangMsg {
 
   public static String getMsg(String path, String dflValue, Lang lang, String... args) {
 
-    String msg = getStr(path + lang.getNameCode(), dflValue);
+    String msg = LangMsg.lang.getString(path + lang.getNameCode(), dflValue);
+
+    for (int i = 0; i < args.length; i++) {
+      if (msg.contains("%" + i)) msg = msg.replace("%" + i, args[i]);
+    }
+
+    //replace white prefix
+    if (msg.contains("%PREFIX%")) msg = msg.replace("%PREFIX%", McTools.getCodex().getPrefix());
+    //replace white broadcast
+    if (msg.contains("%BROADCAST%")) msg = msg.replace("%BROADCAST%", McTools.getCodex().getBroadcastprefix());
+
+    // Expression régulière pour détecter "[color]COULEUR[color]" avec une couleur en nom
+    String nameRegex = "\\[color\\](\\w+)\\[color\\]";
+
+    // Expression régulière pour détecter "[color]HEXA[color]" avec une couleur hexadécimale
+    String hexRegex = "\\[color\\]#?([0-9A-Fa-f]{1,6})\\[color\\]";
+
+    // Création des patterns
+    Pattern namePattern = Pattern.compile(nameRegex);
+    Pattern hexPattern = Pattern.compile(hexRegex);
+
+    // Création des matchers
+    Matcher nameMatcher = namePattern.matcher(msg);
+    Matcher hexMatcher = hexPattern.matcher(msg);
+
+    // Remplacement des couleurs en nom
+    while (nameMatcher.find()) {
+      // Récupération de la couleur en nom
+      String colorName = nameMatcher.group(1);
+
+      try {
+        CustomChatColor customColor = CustomChatColor.valueOf(colorName.toUpperCase()); // Conversion du nom en enum
+        msg = msg.replaceFirst("\\[color\\]" + colorName + "\\[color\\]", customColor.getColor().toString());
+      } catch (IllegalArgumentException e) {
+        // Si le nom de couleur n'existe pas dans l'enum, on le remplace par une couleur d'erreur
+        msg = msg.replaceFirst("\\[color\\]" + colorName + "\\[color\\]", CustomChatColor.WHITE.getColor().toString());
+      }
+
+    }
+
+    // Remplacement des couleurs hexadécimales
+    while (hexMatcher.find()) {
+      // Récupération de la couleur hexadécimale
+      String hexColor = hexMatcher.group(1);
+
+      // Vérification si le caractère '#' est manquant
+      if (!hexColor.startsWith("#")) hexColor = "#" + hexColor;
+
+      // Si la longueur de la chaîne hexadécimale est inférieure à 6 caractères, compléter avec des zéros
+      if (hexColor.length() < 7) msg = msg.replaceFirst("\\[color\\]" + hexColor + "\\[color\\]",CustomChatColor.WHITE.getColor().toString());
+        // Replace l'hexa par la couleur
+      else {
+        ChatColor color = CustomChatColor.CUSTOM(hexColor);
+        msg = msg.replaceFirst("\\[color\\]" + hexColor + "\\[color\\]", color != null ? color.toString() : CustomChatColor.WHITE.getColor().toString());
+      }
+
+    }
+
+    return msg;
+  }
+
+  public static String getMsg(YamlConfiguration file, String path, String dflValue, Lang lang, String... args) {
+
+
+    if (file == null) return null;
+
+    String msg = file.getString(path + lang.getNameCode(), dflValue);
 
     for (int i = 0; i < args.length; i++) {
       if (msg.contains("%" + i)) msg = msg.replace("%" + i, args[i]);

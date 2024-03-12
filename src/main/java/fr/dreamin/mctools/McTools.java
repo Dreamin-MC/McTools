@@ -71,8 +71,6 @@ public final class McTools extends JavaPlugin{
 
     getServiceManager().loadServices(Logging.class, GuiManager.class, PaperDependencyService.class, PlayersService.class, TimerManager.class, CooldownManager.class, GlowingEntities.class, GlowingBlocks.class);
 
-    getService(GuiManager.class).
-
     getService(PaperDependencyService.class)
       .ifPluginEnabled("FastAsyncWorldEdit", (pluginName, plugin) -> {
         getService(Logging.class).info("FastAsyncWorldEdit is detected !");})

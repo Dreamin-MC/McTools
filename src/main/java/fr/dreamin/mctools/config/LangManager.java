@@ -6,7 +6,6 @@ import fr.dreamin.mctools.components.lang.Lang;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import lombok.Getter;
 import org.bukkit.Material;
-import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -14,7 +13,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class LangManager {
   private File langFile;
@@ -101,7 +99,7 @@ public class LangManager {
 //      }
 //    }
 
-    LangMsg.setConfig(langConfig);
+    LangMsg.setLang(langConfig);
   }
 
   public static List<ItemStack> getPoseStack(Lang lang) {

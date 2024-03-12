@@ -98,14 +98,13 @@ public class ItemBuilder {
     return this;
   }
 
-  public ItemBuilder setCustomTag(String tagName, String value) {
+  public ItemBuilder setCustomTag(String tagName, PersistentDataType type, Object value) {
     ItemMeta im = is.getItemMeta();
     NamespacedKey key = new NamespacedKey(McTools.getInstance(), tagName);
-    im.getPersistentDataContainer().set(key, PersistentDataType.STRING, value);
+    im.getPersistentDataContainer().set(key, type, value);
     is.setItemMeta(im);
     return this;
   }
-
 
   //setEnchantments
   public ItemBuilder setEnchant(Enchantment ench, int level) {

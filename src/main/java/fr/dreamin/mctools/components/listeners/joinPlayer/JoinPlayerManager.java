@@ -1,12 +1,10 @@
 package fr.dreamin.mctools.components.listeners.joinPlayer;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.items.ItemBuilder;
+import fr.dreamin.mctools.api.listener.join.OnMtPlayerJoin;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
-import fr.dreamin.mctools.components.lang.Lang;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import fr.dreamin.mctools.database.fetcher.UserFetcher.UserFetcher;
@@ -14,14 +12,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.entity.Player;
-import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.net.*;
 
 public class JoinPlayerManager {
 
@@ -37,12 +30,14 @@ public class JoinPlayerManager {
         mtPlayer = constructor.newInstance(player);
 
       } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+        player.kick();
         e.printStackTrace(); // Gérer les erreurs de création d'instance
       }
     } else {
       if (!McTools.getCodex().isRemovePlayer()) {
         mtPlayer = McTools.getService(PlayersService.class).getPlayerByName(player.getName());
         mtPlayer.setPlayer(player);
+        mtPlayer.getPlayerTickManager().startBukkitTask();
       }
       else mtPlayer = new MTPlayer(player);
       if (mtPlayer == null) new MTPlayer(player);
@@ -76,5 +71,7 @@ public class JoinPlayerManager {
 
     if (McTools.getCodex().isRemovePlayer()) McTools.getService(PlayersService.class).addDTPlayer(mtPlayer);
     UserFetcher.getIfInsert(mtPlayer);
+
+    OnMtPlayerJoin.callEvent(mtPlayer);
   }
 }

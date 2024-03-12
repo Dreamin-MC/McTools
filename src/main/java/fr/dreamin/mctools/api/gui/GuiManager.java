@@ -1,6 +1,8 @@
 package fr.dreamin.mctools.api.gui;
 
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.listener.gui.OnGuiClose;
+import fr.dreamin.mctools.api.listener.gui.OnGuiOpen;
 import fr.dreamin.mctools.api.minecraft.Minecraft;
 import fr.dreamin.mctools.api.service.Service;
 import fr.dreamin.mctools.components.gui.staff.FreezeGui;
@@ -120,8 +122,9 @@ public class GuiManager extends Service implements Listener{
       if (m != null) {
         MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-        if (!mtPlayer.isCanMove())
-          if (m.getClass().getSimpleName().equals("FreezeGui")) open(player, FreezeGui.class);
+        if (!mtPlayer.isCanMove()) if (m.getClass().getSimpleName().equals("FreezeGui")) open(player, FreezeGui.class);
+
+        OnGuiClose.callEvent(mtPlayer, m, close);
       }
       else
         if (!(event.getReason().equals(InventoryCloseEvent.Reason.OPEN_NEW))) McTools.getService(GuiManager.class).getGuiConfig().getGuiOpen().remove(player.getUniqueId());
@@ -129,6 +132,8 @@ public class GuiManager extends Service implements Listener{
     else if (!(event.getReason().equals(InventoryCloseEvent.Reason.OPEN_NEW))) McTools.getService(GuiManager.class).getGuiConfig().getGuiOpen().remove(player.getUniqueId());
 
     if (!(event.getReason().equals(InventoryCloseEvent.Reason.OPEN_NEW))) McTools.getService(GuiManager.class).getGuiConfig().getGuiOpen().remove(player.getUniqueId());
+
+
   }
 
   public void addMenu(GuiBuilder m){
@@ -213,6 +218,9 @@ public class GuiManager extends Service implements Listener{
           getRegisteredPlayers().put(player, items);
         }
         else getRegisteredPlayers().put(player, items);
+
+        OnGuiOpen.callEvent(mtPlayer, finalGui, finalInv);
+
       }
 
     }.runTaskLater(McTools.getInstance(), 1);

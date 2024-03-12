@@ -1,15 +1,15 @@
 package fr.dreamin.mctools.api.time;
 
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.listener.time.TimeEventAction;
+import fr.dreamin.mctools.api.listener.time.timer.OnTimerEvent;
 import fr.dreamin.mctools.api.player.ActionPlayerKey;
 import fr.dreamin.mctools.api.service.Service;
-import fr.dreamin.mctools.api.time.event.CooldownCallback;
 import fr.dreamin.mctools.api.time.event.TimerCallback;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 public class TimerManager extends Service {
   private final Map<ActionPlayerKey, Integer> actionTimerTasks = new HashMap<>();
@@ -58,6 +58,8 @@ public class TimerManager extends Service {
     if (key instanceof ActionPlayerKey) actionTimerTasks.put((ActionPlayerKey) key, taskId);
     else if (key instanceof String) stringTimerTasks.put((String) key, taskId);
 
+    OnTimerEvent.callEvent(key, TimeEventAction.CREATE);
+
   }
 
   // Vérifie si un timer est actif
@@ -81,6 +83,7 @@ public class TimerManager extends Service {
   private void pauseTimerInternal(Object key) {
     if (isTimerInternal(key)) {
       timerPaused.put(key, true);
+      OnTimerEvent.callEvent(key, TimeEventAction.PAUSE);
     }
   }
 
@@ -96,6 +99,7 @@ public class TimerManager extends Service {
   private void resumeTimerInternal(Object key) {
     if (isTimerInternal(key)) {
       timerPaused.put(key, false);
+      OnTimerEvent.callEvent(key, TimeEventAction.RESUME);
     }
   }
 
@@ -119,6 +123,7 @@ public class TimerManager extends Service {
       timerCallbacks.remove(key);
       timerTicks.remove(key);
       timerPaused.remove(key);
+      OnTimerEvent.callEvent(key, TimeEventAction.REMOVE);
     }
   }
 

@@ -1,6 +1,8 @@
 package fr.dreamin.mctools.api.time;
 
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.listener.time.TimeEventAction;
+import fr.dreamin.mctools.api.listener.time.cooldown.OnCooldownEvent;
 import fr.dreamin.mctools.api.player.ActionPlayerKey;
 import fr.dreamin.mctools.api.service.Service;
 import fr.dreamin.mctools.api.time.event.CooldownCallback;
@@ -40,10 +42,14 @@ public class CooldownManager extends Service {
       if (callback != null) callback.onCooldownEnd(key);
       removeCooldownInternal(key);
 
+      OnCooldownEvent.callEvent(key, cooldownTick, TimeEventAction.FINISH);
+
     }, cooldownTick);
 
     cooldownTasks.put(key, taskId);
     cooldownCallbacks.put(key, callback);
+
+    OnCooldownEvent.callEvent(key, cooldownTick, TimeEventAction.CREATE);
   }
 
 
@@ -126,6 +132,8 @@ public class CooldownManager extends Service {
       cooldownTasks.remove(key);
     }
     cooldownCallbacks.remove(key);
+
+    OnCooldownEvent.callEvent(key, 0, TimeEventAction.REMOVE);
   }
 }
 
