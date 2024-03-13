@@ -15,14 +15,17 @@ public class MoveListener implements Listener {
   public void onMove(PlayerMoveEvent event) {
     Player player = event.getPlayer();
     if (McTools.getService(PlayersService.class).contains(player)) {
-      MTPlayer MTPlayer = McTools.getService(PlayersService.class).getPlayer(player);
+      MTPlayer mtPlayer = McTools.getService(PlayersService.class).getPlayer(player);
 
-      if (!MTPlayer.isCanMove()) {
-        if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getY() != event.getTo().getY() || event.getFrom().getZ() != event.getTo().getZ()) {
-          Location loc = event.getFrom();
-          event.getPlayer().teleport(loc.setDirection(event.getTo().getDirection()));
+      if (mtPlayer != null) {
+        if (!mtPlayer.isCanMove()) {
+          if (event.getFrom().getX() != event.getTo().getX() || event.getFrom().getY() != event.getTo().getY() || event.getFrom().getZ() != event.getTo().getZ()) {
+            Location loc = event.getFrom();
+            event.getPlayer().teleport(loc.setDirection(event.getTo().getDirection()));
+          }
         }
       }
+
     }
   }
 }

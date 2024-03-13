@@ -33,7 +33,8 @@ public class JoinPlayerManager {
         player.kick();
         e.printStackTrace(); // Gérer les erreurs de création d'instance
       }
-    } else {
+    }
+    else {
       if (!McTools.getCodex().isRemovePlayer()) {
         mtPlayer = McTools.getService(PlayersService.class).getPlayerByName(player.getName());
         mtPlayer.setPlayer(player);
