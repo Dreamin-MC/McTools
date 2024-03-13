@@ -24,6 +24,9 @@ public class OnTimerEvent extends Event {
     return HANDLERS;
   }
 
+  public static HandlerList getHandlerList() {
+    return HANDLERS;
+  }
   public static void callEvent(Object key, TimeEventAction action) {
     Bukkit.getPluginManager().callEvent(new OnTimerEvent(key, action));
   }

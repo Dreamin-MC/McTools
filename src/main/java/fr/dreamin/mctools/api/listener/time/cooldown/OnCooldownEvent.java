@@ -26,7 +26,9 @@ public class OnCooldownEvent extends Event {
     return HANDLERS;
   }
 
-
+  public static HandlerList getHandlerList() {
+    return HANDLERS;
+  }
   public static void callEvent(Object key, int cooldownTick, TimeEventAction action) {
     Bukkit.getPluginManager().callEvent(new OnCooldownEvent(key, cooldownTick, action));
   }

@@ -20,6 +20,10 @@ public class OnMtPlayerLeave extends Event {
     return this.mtPlayer;
   }
 
+  public static HandlerList getHandlerList() {
+    return HANDLERS;
+  }
+  
   @Override
   public @NotNull HandlerList getHandlers() {
     return HANDLERS;
