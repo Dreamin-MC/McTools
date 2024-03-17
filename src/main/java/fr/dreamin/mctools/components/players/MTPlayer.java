@@ -4,11 +4,10 @@ import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.api.log.Logging;
 import fr.dreamin.mctools.api.player.PlayerPerm;
+import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
 import fr.dreamin.mctools.components.lang.Lang;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.manager.*;
-import fr.dreamin.mctools.database.fetcher.UserFetcher.UserFetcher;
-import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Material;
@@ -18,9 +17,11 @@ import org.bukkit.inventory.ItemStack;
 public class MTPlayer {
 
   @Getter @Setter private Player player;
+  @Getter private PlayerTickManager playerTickManager = new PlayerTickManager(this);
+
   @Getter @Setter private PlayerPerm perm;
   @Getter private boolean isEditMode = false;
-  @Getter private final ItemStack itemStats;
+  @Getter private ItemStack itemStats;
   @Getter private String skinBase64 = null;
   @Getter private boolean isCanMove = true;
   @Getter @Setter private Lang lang;
@@ -28,12 +29,12 @@ public class MTPlayer {
 
   @Getter private final BuildPlayerManager buildManager = new BuildPlayerManager();
   @Getter private ArmorStandManager armorStandManager = null;
-  @Getter private VoiceConfPlayerManager voiceConfManager;
-  @Getter private HudPlayerManager hudPlayerManager = null;
-  @Getter private TritonPlayerManager tritonManager = null;
-  @Getter private final PlayerTickManager playerTickManager;
+  @Getter private VoiceConfPlayerManager voiceConfManager = new VoiceConfPlayerManager(this);
+  @Getter private final HudPlayerManager hudPlayerManager = null;
+  @Getter private TritonPlayerManager tritonManager;
   @Getter private VoicePlayerManager voiceManager = null;
-  @Getter private StaffPlayerManager staffPlayerManager = null;
+  @Getter private StaffPlayerManager staffPlayerManager = new StaffPlayerManager(this);
+  @Getter private SelectObjectManager selectObjectManager = new SelectObjectManager(this);
 
   public MTPlayer(Player player) {
     this.player = player;
@@ -41,23 +42,24 @@ public class MTPlayer {
     if (McTools.getCodex().isBuildMode()) this.armorStandManager = new ArmorStandManager(this);
 
 //    this.hudPlayerManager = new HudPlayerManager(this);
-    this.staffPlayerManager = new StaffPlayerManager(this);
 
-    this.playerTickManager = new PlayerTickManager(this);
-    this.voiceConfManager = new VoiceConfPlayerManager(this);
     this.itemStats = new ItemBuilder(Material.PLAYER_HEAD).setPlayerHFromName(player.getName()).setName("§eStatistique de " + player.getName()).toItemStack();
 
     this.perm = PlayerPerm.getTopPerm(player);
 
-    if (McTools.getService(PaperDependencyService.class).isPluginEnabled("Triton")) this.tritonManager = new TritonPlayerManager(player);
-    else McTools.getService(Logging.class).warn("§cTriton is not enabled, some features will not be available.");
-
-
     if (McTools.getCodex().isVoiceMode()) {
-      if (McTools.getService(PaperDependencyService.class).isPluginEnabled("OpenAudioMc")) {
-        this.voiceManager = new VoicePlayerManager(this);
+      if (McTools.getService(PaperDependencyService.class).isPluginEnabled("OpenAudioMc")) this.voiceManager = new VoicePlayerManager(this);
+      else {
+        McTools.getService(Logging.class).warn("§cOpenAudio is not enabled, some features will note be available.");
+        this.voiceManager = null;
       }
-      else McTools.getService(Logging.class).warn("§cOpenAudio is not enabled, some features will note be available.");
+
+      if (McTools.getService(PaperDependencyService.class).isPluginEnabled("Triton")) this.tritonManager = new TritonPlayerManager(player);
+      else {
+        McTools.getService(Logging.class).warn("§cTriton is not enabled, some features will not be available.");
+        this.tritonManager = null;
+      }
+
     }
 
 //    try {
@@ -66,6 +68,10 @@ public class MTPlayer {
 //      throw new RuntimeException(e);
 //    }
 
+  }
+
+  public MTPlayer(TritonPlayerManager tritonManager) {
+    this.tritonManager = tritonManager;
   }
 
   public void setEditMode(boolean isEditMode) {

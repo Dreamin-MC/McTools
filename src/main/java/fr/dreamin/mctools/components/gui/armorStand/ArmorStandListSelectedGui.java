@@ -6,10 +6,8 @@ import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
-import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -29,8 +27,8 @@ public class ArmorStandListSelectedGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
-    return new PaginationManager(ItemsPreset.arrowPrevious.getItem(), 45, ItemsPreset.arrowNext.getItem(), 53, 0, 44, PaginationType.PAGE, mtPlayer.getArmorStandManager().getArmorStandSelectedItemStack(), new ArrayList<>(), false);
+  public GuiPaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
+    return new GuiPaginationManager(ItemsPreset.arrowPrevious.getItem(), 45, ItemsPreset.arrowNext.getItem(), 53, 0, 44, GuiPaginationType.PAGE, mtPlayer.getArmorStandManager().getArmorStandSelectedItemStack(), new ArrayList<>(), false);
   }
 
   @Override

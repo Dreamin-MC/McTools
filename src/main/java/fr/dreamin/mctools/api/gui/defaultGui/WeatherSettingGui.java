@@ -3,15 +3,13 @@ package fr.dreamin.mctools.api.gui.defaultGui;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.gui.GuiBuilder;
 import fr.dreamin.mctools.api.gui.GuiManager;
-import fr.dreamin.mctools.api.gui.PaginationManager;
+import fr.dreamin.mctools.api.gui.GuiPaginationManager;
 import fr.dreamin.mctools.api.gui.GuiItems;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
-import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -32,7 +30,7 @@ public class WeatherSettingGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
+  public GuiPaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
     return null;
   }
 

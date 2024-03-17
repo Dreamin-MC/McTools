@@ -28,6 +28,9 @@ public class Codex {
   //  >>>>>>>> BUILD <<<<<<<<
   @Getter @Setter private boolean buildMode, buildArmorStand;
 
+  // >>>>>>>> INTERFACE <<<<<<<<
+  @Getter @Setter private boolean interactRaycast;
+
   // >>>>>>>> DOOR <<<<<<<<
   @Getter @Setter private boolean doorMode;
   @Getter @Setter private String doorAnimOpen, doorAnimClose;
@@ -61,6 +64,7 @@ public class Codex {
     initGlobal();
     initVoice();
     initBuild();
+    initInterface();
     initDoor();
     initInteract();
     initStaff();
@@ -75,6 +79,7 @@ public class Codex {
     initGlobal();
     initVoice();
     initBuild();
+    initInterface();
     initDoor();
     initInteract();
     initStaff();
@@ -106,6 +111,10 @@ public class Codex {
   private void initBuild() {
     buildMode = config.getBoolean("build.enable", false);
     buildArmorStand = config.getBoolean("build.armor-stand", false);
+  }
+
+  private void initInterface() {
+    interactRaycast = config.getBoolean("interface.raycast", false);
   }
 
   private void initDoor() {

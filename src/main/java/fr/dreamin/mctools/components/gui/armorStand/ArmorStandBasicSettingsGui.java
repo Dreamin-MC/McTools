@@ -24,7 +24,7 @@ public class ArmorStandBasicSettingsGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
+  public GuiPaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
     return null;
   }
 

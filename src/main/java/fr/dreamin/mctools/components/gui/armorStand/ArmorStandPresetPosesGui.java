@@ -4,14 +4,11 @@ import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.armorPose.ArmorPresetPose;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.*;
-import fr.dreamin.mctools.api.minecraft.Minecraft;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
-import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import fr.dreamin.mctools.config.LangManager;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -31,8 +28,8 @@ public class ArmorStandPresetPosesGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
-    return new PaginationManager(ItemsPreset.arrowPrevious.getItem(), 27, ItemsPreset.arrowNext.getItem(), 35, 0, 26, PaginationType.PAGE, LangManager.getPoseStack(mtPlayer.getLang()), Arrays.asList(), false);
+  public GuiPaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
+    return new GuiPaginationManager(ItemsPreset.arrowPrevious.getItem(), 27, ItemsPreset.arrowNext.getItem(), 35, 0, 26, GuiPaginationType.PAGE, LangManager.getPoseStack(mtPlayer.getLang()), Arrays.asList(), false);
   }
 
   @Override

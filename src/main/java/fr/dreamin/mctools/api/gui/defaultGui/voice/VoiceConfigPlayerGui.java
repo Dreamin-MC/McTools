@@ -5,7 +5,7 @@ import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.GuiBuilder;
 import fr.dreamin.mctools.api.gui.GuiItems;
 import fr.dreamin.mctools.api.gui.GuiManager;
-import fr.dreamin.mctools.api.gui.PaginationManager;
+import fr.dreamin.mctools.api.gui.GuiPaginationManager;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import org.bukkit.Material;
@@ -31,7 +31,7 @@ public class VoiceConfigPlayerGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
+  public GuiPaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
     return null;
   }
 

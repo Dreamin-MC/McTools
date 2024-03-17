@@ -91,6 +91,16 @@ build:
 
   armor-stand: false
 
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#>>      INTERFACE CONFIGURATION     >>
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+interface:
+
+  #if activated, the plugin start raycast for get if selected a object in interface
+  raycast: false
+
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 #>>         DOOR CONFIGURATION       >>
 #>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>

@@ -31,8 +31,8 @@ public class ArmorStandListIdsGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
-    return new PaginationManager(ItemsPreset.arrowPrevious.getItem(), 36, ItemsPreset.arrowNext.getItem(), 44, 0, 35, PaginationType.PAGE, mtPlayer.getArmorStandManager().getArmorStandIdItemStack(), new ArrayList<>(), false);
+  public GuiPaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
+    return new GuiPaginationManager(ItemsPreset.arrowPrevious.getItem(), 36, ItemsPreset.arrowNext.getItem(), 44, 0, 35, GuiPaginationType.PAGE, mtPlayer.getArmorStandManager().getArmorStandIdItemStack(), new ArrayList<>(), false);
   }
 
   @Override

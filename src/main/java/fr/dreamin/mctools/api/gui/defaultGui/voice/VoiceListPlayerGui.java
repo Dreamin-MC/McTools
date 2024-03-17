@@ -28,8 +28,8 @@ public class VoiceListPlayerGui implements GuiBuilder {
 
 
   @Override
-  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
-    return new PaginationManager(ItemsPreset.arrowPrevious.getItem(), 18, ItemsPreset.arrowNext.getItem(), 26, 0, 17, PaginationType.PAGE, McTools.getService(PlayersService.class).getPlayersStackForVoice(), Arrays.asList(), false);
+  public GuiPaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
+    return new GuiPaginationManager(ItemsPreset.arrowPrevious.getItem(), 18, ItemsPreset.arrowNext.getItem(), 26, 0, 17, GuiPaginationType.PAGE, McTools.getService(PlayersService.class).getPlayersStackForVoice(), Arrays.asList(), false);
   }
 
   @Override

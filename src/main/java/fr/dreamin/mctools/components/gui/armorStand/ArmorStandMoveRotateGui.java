@@ -5,14 +5,11 @@ import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
-import fr.dreamin.mctools.components.lang.Lang;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
-import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Player;
 import org.bukkit.entity.Shulker;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
@@ -32,7 +29,7 @@ public class ArmorStandMoveRotateGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
+  public GuiPaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
     return null;
   }
 

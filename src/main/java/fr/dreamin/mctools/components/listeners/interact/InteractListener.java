@@ -112,6 +112,7 @@ public class InteractListener implements Listener {
     if (event.getBlock().getType() == Material.NOTE_BLOCK) {
       // Annule l'événement pour empêcher de changer la note
       event.setCancelled(true);
+
     }
   }
 

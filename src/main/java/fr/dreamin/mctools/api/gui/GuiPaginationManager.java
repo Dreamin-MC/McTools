@@ -4,20 +4,20 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public class PaginationManager {
+public class GuiPaginationManager {
 
   private ItemStack previous;
   private int slotPrevious;
   private ItemStack next;
   private int slotNext;
-  private PaginationType type;
+  private GuiPaginationType type;
   private List<ItemStack> items;
   private List<Integer> notAccountSlots;
   private int slotStart;
   private int slotEnd;
   private boolean sync = false;
 
-  public PaginationManager(ItemStack previous, int slotPrevious, ItemStack next, int slotNext, int slotStart, int slotEnd, PaginationType type, List<ItemStack> items, List<Integer> notAccountSlots, boolean sync) {
+  public GuiPaginationManager(ItemStack previous, int slotPrevious, ItemStack next, int slotNext, int slotStart, int slotEnd, GuiPaginationType type, List<ItemStack> items, List<Integer> notAccountSlots, boolean sync) {
     this.previous = previous;
     this.slotPrevious = slotPrevious;
     this.next = next;
@@ -47,11 +47,11 @@ public class PaginationManager {
     this.next = next;
   }
 
-  public PaginationType getType() {
+  public GuiPaginationType getType() {
     return type;
   }
 
-  public void setType(PaginationType type) {
+  public void setType(GuiPaginationType type) {
     this.type = type;
   }
 

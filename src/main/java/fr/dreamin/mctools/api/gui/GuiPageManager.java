@@ -71,24 +71,24 @@ public class GuiPageManager {
     return guiPage.get(player).containsKey(name);
   }
 
-  public boolean containsItemInPagination(PaginationManager paginationmanager, int slot) {
+  public boolean containsItemInPagination(GuiPaginationManager paginationmanager, int slot) {
     if (paginationmanager.getNotAccountSlots().contains(slot)) return false;
     if (slot >= paginationmanager.getSlotStart() && slot <= paginationmanager.getSlotEnd()) return true;
     return false;
   }
 
-  public static int getIdItemInPagination(Player player, PaginationManager paginationManager, int slot, GuiBuilder menu) {
+  public static int getIdItemInPagination(Player player, GuiPaginationManager GUiPaginationManager, int slot, GuiBuilder menu) {
 
     int index = 0;
 
-    if (paginationManager.getType().equals(PaginationType.PAGE) || paginationManager.getType().equals(PaginationType.LOOP_PAGE)) {
+    if (GUiPaginationManager.getType().equals(GuiPaginationType.PAGE) || GUiPaginationManager.getType().equals(GuiPaginationType.LOOP_PAGE)) {
       int page = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
-      int itemsPerPage = paginationManager.getItemsPerPage();
-      int slotStart = paginationManager.getSlotStart();
+      int itemsPerPage = GUiPaginationManager.getItemsPerPage();
+      int slotStart = GUiPaginationManager.getSlotStart();
 
       if (page == -1) return -1;
 
-      List<Integer> notAccountSlots = paginationManager.getNotAccountSlots();
+      List<Integer> notAccountSlots = GUiPaginationManager.getNotAccountSlots();
 
       // Filtrer pour ajuster l'index basé sur les slots exclus
       int adjustedIndex = 0;
@@ -100,16 +100,16 @@ public class GuiPageManager {
       index = (page - 1) * itemsPerPage + adjustedIndex;
 
     }
-    else if (paginationManager.getType().equals(PaginationType.LINE)) {
+    else if (GUiPaginationManager.getType().equals(GuiPaginationType.LINE)) {
 
       int indexStart = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
-      int slotStart = paginationManager.getSlotStart();
+      int slotStart = GUiPaginationManager.getSlotStart();
 
       if (indexStart == -1) return -1;
 
-      List<ItemStack> items = Math.reorderItems(paginationManager.getItems(), indexStart - 1);
+      List<ItemStack> items = Math.reorderItems(GUiPaginationManager.getItems(), indexStart - 1);
 
-      List<Integer> notAccountSlots = paginationManager.getNotAccountSlots();
+      List<Integer> notAccountSlots = GUiPaginationManager.getNotAccountSlots();
 
       // Ajustement de l'index basé sur les slots non pris en compte
       int adjustedSlot = slot;
@@ -123,21 +123,21 @@ public class GuiPageManager {
         ItemStack item = items.get(adjustedSlot);
 
         // Retourner l'index de l'item dans la liste originale des items
-        for (int i = 0; i < paginationManager.getItems().size(); i++) {
-          if (item.equals(paginationManager.getItems().get(i))) index = i;
+        for (int i = 0; i < GUiPaginationManager.getItems().size(); i++) {
+          if (item.equals(GUiPaginationManager.getItems().get(i))) index = i;
         }
       }
     }
-    else if (paginationManager.getType().equals(PaginationType.LOOP_LINE)) {
+    else if (GUiPaginationManager.getType().equals(GuiPaginationType.LOOP_LINE)) {
 
       int indexStart = McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().getGuiPage(player, menu.getClass().getSimpleName());
-      int slotStart = paginationManager.getSlotStart();
+      int slotStart = GUiPaginationManager.getSlotStart();
 
       if (indexStart == -1) return -1;
 
-      List<ItemStack> items = Math.reorderItemsAZ(paginationManager.getItems(), indexStart - 1);
+      List<ItemStack> items = Math.reorderItemsAZ(GUiPaginationManager.getItems(), indexStart - 1);
 
-      List<Integer> notAccountSlots = paginationManager.getNotAccountSlots();
+      List<Integer> notAccountSlots = GUiPaginationManager.getNotAccountSlots();
 
       // Calcul de l'index ajusté pour les slots non pris en compte
       int adjustedSlot = slot;
@@ -155,8 +155,8 @@ public class GuiPageManager {
           ItemStack item = items.get(adjustedSlot);
 
           // Retourner l'index de l'item dans la liste originale des items
-          for (int i = 0; i < paginationManager.getItems().size(); i++) {
-            if (item.equals(paginationManager.getItems().get(i))) index = i;
+          for (int i = 0; i < GUiPaginationManager.getItems().size(); i++) {
+            if (item.equals(GUiPaginationManager.getItems().get(i))) index = i;
           }
         }
       }

@@ -53,11 +53,11 @@ public class GuiManager extends Service implements Listener{
         .filter(menu -> event.getView().getTitle().equalsIgnoreCase(menu.name(mtPlayer)))
         .forEach(menu -> {
 
-          PaginationManager paginationManager = menu.getPaginationManager(mtPlayer, inv);
+          GuiPaginationManager GUiPaginationManager = menu.getPaginationManager(mtPlayer, inv);
 
-          if (paginationManager != null) {
-            if (event.getSlot() == paginationManager.getSlotNext() && Minecraft.compareItem(paginationManager.getNext(), current)) paginationManager.getType().setNext(player, paginationManager, menu.getClass());
-            else if (event.getSlot() == paginationManager.getSlotPrevious() && Minecraft.compareItem(paginationManager.getPrevious(), current)) paginationManager.getType().setPrevious(player, paginationManager, menu.getClass());
+          if (GUiPaginationManager != null) {
+            if (event.getSlot() == GUiPaginationManager.getSlotNext() && Minecraft.compareItem(GUiPaginationManager.getNext(), current)) GUiPaginationManager.getType().setNext(player, GUiPaginationManager, menu.getClass());
+            else if (event.getSlot() == GUiPaginationManager.getSlotPrevious() && Minecraft.compareItem(GUiPaginationManager.getPrevious(), current)) GUiPaginationManager.getType().setPrevious(player, GUiPaginationManager, menu.getClass());
           }
 
 
@@ -72,13 +72,13 @@ public class GuiManager extends Service implements Listener{
 
       if (m != null) {
 
-        PaginationManager paginationManager = m.getPaginationManager(mtPlayer, inv);
+        GuiPaginationManager GUiPaginationManager = m.getPaginationManager(mtPlayer, inv);
 
-        if (paginationManager != null) {
-          if (event.getSlot() == paginationManager.getSlotNext() && Minecraft.compareItem(paginationManager.getNext(), current)) paginationManager.getType().setNext(player, paginationManager, m.getClass());
-          else if (event.getSlot() == paginationManager.getSlotPrevious() && Minecraft.compareItem(paginationManager.getPrevious(), current)) paginationManager.getType().setPrevious(player, paginationManager, m.getClass());
+        if (GUiPaginationManager != null) {
+          if (event.getSlot() == GUiPaginationManager.getSlotNext() && Minecraft.compareItem(GUiPaginationManager.getNext(), current)) GUiPaginationManager.getType().setNext(player, GUiPaginationManager, m.getClass());
+          else if (event.getSlot() == GUiPaginationManager.getSlotPrevious() && Minecraft.compareItem(GUiPaginationManager.getPrevious(), current)) GUiPaginationManager.getType().setPrevious(player, GUiPaginationManager, m.getClass());
 
-          if (getGuiConfig().getGuiPageManager().containsItemInPagination(paginationManager, event.getSlot())) indexPagination.set(getGuiConfig().getGuiPageManager().getIdItemInPagination(mtPlayer.getPlayer(), paginationManager, event.getSlot(), m));
+          if (getGuiConfig().getGuiPageManager().containsItemInPagination(GUiPaginationManager, event.getSlot())) indexPagination.set(getGuiConfig().getGuiPageManager().getIdItemInPagination(mtPlayer.getPlayer(), GUiPaginationManager, event.getSlot(), m));
 
         }
 
@@ -92,11 +92,11 @@ public class GuiManager extends Service implements Listener{
           .filter(menu -> event.getView().getTitle().equalsIgnoreCase(menu.name(mtPlayer)))
           .forEach(menu -> {
 
-            PaginationManager paginationManager = menu.getPaginationManager(mtPlayer, inv);
+            GuiPaginationManager GUiPaginationManager = menu.getPaginationManager(mtPlayer, inv);
 
-            if (paginationManager != null) {
-              if (event.getSlot() == paginationManager.getSlotNext() && current.getItemMeta().getDisplayName().equals(paginationManager.getNext().getItemMeta().getDisplayName())) paginationManager.getType().setNext(player, paginationManager, menu.getClass());
-              else if (event.getSlot() == paginationManager.getSlotPrevious() && current.getItemMeta().getDisplayName().equals(paginationManager.getPrevious().getItemMeta().getDisplayName())) paginationManager.getType().setPrevious(player, paginationManager, menu.getClass());
+            if (GUiPaginationManager != null) {
+              if (event.getSlot() == GUiPaginationManager.getSlotNext() && current.getItemMeta().getDisplayName().equals(GUiPaginationManager.getNext().getItemMeta().getDisplayName())) GUiPaginationManager.getType().setNext(player, GUiPaginationManager, menu.getClass());
+              else if (event.getSlot() == GUiPaginationManager.getSlotPrevious() && current.getItemMeta().getDisplayName().equals(GUiPaginationManager.getPrevious().getItemMeta().getDisplayName())) GUiPaginationManager.getType().setPrevious(player, GUiPaginationManager, menu.getClass());
             }
 
             menu.onClick(mtPlayer, inv, current, event.getSlot(), event.getClick(), indexPagination.get());
@@ -136,18 +136,8 @@ public class GuiManager extends Service implements Listener{
 
   }
 
-  public void addMenu(GuiBuilder m){
-    getRegisteredMenus().put(m.getClass(), m);
-  }
-
   public void addMenu(GuiBuilder... m){
     for (GuiBuilder menu : m) {
-      getRegisteredMenus().put(menu.getClass(), menu);
-    }
-  }
-
-  public void addMenu(List<GuiBuilder> menus) {
-    for (GuiBuilder menu : menus) {
       getRegisteredMenus().put(menu.getClass(), menu);
     }
   }
@@ -174,11 +164,11 @@ public class GuiManager extends Service implements Listener{
 
     try {
 
-      PaginationManager paginationManager = menu.getPaginationManager(mtPlayer, inv);
+      GuiPaginationManager GUiPaginationManager = menu.getPaginationManager(mtPlayer, inv);
 
-      if (paginationManager != null) {
+      if (GUiPaginationManager != null) {
 
-        if (!paginationManager.isSync())
+        if (!GUiPaginationManager.isSync())
           if (!getGuiConfig().getGuiPageManager().containsGuiPage(player, menu.getClass().getSimpleName())) getGuiConfig().getGuiPageManager().addGuiPage(player, menu.getClass().getSimpleName(), 1);
         else {
          for (MTPlayer MTPlayer : McTools.getService(PlayersService.class).getMtPlayers()) {
@@ -186,8 +176,8 @@ public class GuiManager extends Service implements Listener{
          }
         }
 
-        if (paginationManager.getSlotNext() > menu.getLines() * 9 || paginationManager.getSlotPrevious() > menu.getLines() *9) throw new IllegalArgumentException("The next or previous slot is out of the inventory | " + menu.getClass().getSimpleName());
-        paginationManager.getType().setPagination(player, paginationManager, menu, items);
+        if (GUiPaginationManager.getSlotNext() > menu.getLines() * 9 || GUiPaginationManager.getSlotPrevious() > menu.getLines() *9) throw new IllegalArgumentException("The next or previous slot is out of the inventory | " + menu.getClass().getSimpleName());
+        GUiPaginationManager.getType().setPagination(player, GUiPaginationManager, menu, items);
       }
 
       if (McTools.getCodex().isDefaultGui())

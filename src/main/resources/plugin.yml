@@ -3,6 +3,9 @@ version: '${version}'
 main: fr.dreamin.mctools.McTools
 api-version: '1.20'
 commands:
+  build:
+    description: "build"
+    aliases: ["b"]
   staff:
     description: "Staff"
     aliases: ["staff"]

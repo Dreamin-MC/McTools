@@ -7,9 +7,7 @@ import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.components.game.manager.BuildManager;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
-import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -29,8 +27,8 @@ public class TagCategoryListGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
-    return new PaginationManager(new ItemBuilder(Material.ARROW).toItemStack(), 27, new ItemBuilder(Material.ARROW).toItemStack(), 35, 0, 26, PaginationType.PAGE, BuildManager.getTagCategoryItemStacks(), Arrays.asList(), false);
+  public GuiPaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
+    return new GuiPaginationManager(new ItemBuilder(Material.ARROW).toItemStack(), 27, new ItemBuilder(Material.ARROW).toItemStack(), 35, 0, 26, GuiPaginationType.PAGE, BuildManager.getTagCategoryItemStacks(), Arrays.asList(), false);
   }
 
   @Override

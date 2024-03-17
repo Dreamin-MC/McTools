@@ -7,7 +7,6 @@ import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.packUtils.ItemsPreset;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
@@ -30,8 +29,8 @@ public class ArmorStandListRadiusGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
-    return new PaginationManager(ItemsPreset.arrowPrevious.getItem(), 36, ItemsPreset.arrowNext.getItem(), 44, 0, 35, PaginationType.PAGE, mtPlayer.getArmorStandManager().getArmorStandRadiusItemStack(), new ArrayList<>(), false);
+  public GuiPaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inventory) {
+    return new GuiPaginationManager(ItemsPreset.arrowPrevious.getItem(), 36, ItemsPreset.arrowNext.getItem(), 44, 0, 35, GuiPaginationType.PAGE, mtPlayer.getArmorStandManager().getArmorStandRadiusItemStack(), new ArrayList<>(), false);
   }
 
   @Override

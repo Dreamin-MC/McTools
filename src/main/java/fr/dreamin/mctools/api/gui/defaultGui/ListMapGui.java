@@ -4,13 +4,11 @@ import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.gui.*;
 import fr.dreamin.mctools.api.items.ItemBuilder;
-import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -40,8 +38,8 @@ public class ListMapGui implements GuiBuilder {
   }
 
   @Override
-  public PaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
-    return new PaginationManager(new ItemStack(Material.ARROW), 19, new ItemStack(Material.ARROW), 25, 10, 16, PaginationType.LOOP_LINE, items, List.of() ,false);
+  public GuiPaginationManager getPaginationManager(MTPlayer mtPlayer, Inventory inv) {
+    return new GuiPaginationManager(new ItemStack(Material.ARROW), 19, new ItemStack(Material.ARROW), 25, 10, 16, GuiPaginationType.LOOP_LINE, items, List.of() ,false);
   }
 
   @Override

@@ -6,12 +6,14 @@ import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.defaultGui.LanguageConfifGui;
 import fr.dreamin.mctools.api.gui.defaultGui.ListMapGui;
 import fr.dreamin.mctools.api.gui.defaultGui.WeatherSettingGui;
+import fr.dreamin.mctools.api.interfaces.InterfaceManager;
 import fr.dreamin.mctools.api.modelEngine.Interact;
 import fr.dreamin.mctools.api.log.Logging;
 import fr.dreamin.mctools.api.time.CooldownManager;
 import fr.dreamin.mctools.api.time.TimerManager;
 import fr.dreamin.mctools.api.triton.TritonManager;
 import fr.dreamin.mctools.api.voice.VoiceWallManager;
+import fr.dreamin.mctools.components.commands.build.CommandBuild;
 import fr.dreamin.mctools.components.commands.modelEngine.CommandInteract;
 import fr.dreamin.mctools.components.commands.modelEngine.CommandDoor;
 import fr.dreamin.mctools.components.commands.build.CommandTag;
@@ -69,7 +71,7 @@ public final class McTools extends JavaPlugin{
 
     dtGame = new MTGame(this);
 
-    getServiceManager().loadServices(Logging.class, GuiManager.class, PaperDependencyService.class, PlayersService.class, TimerManager.class, CooldownManager.class, GlowingEntities.class, GlowingBlocks.class);
+    getServiceManager().loadServices(Logging.class, GuiManager.class, InterfaceManager.class, PaperDependencyService.class, PlayersService.class, TimerManager.class, CooldownManager.class, GlowingEntities.class, GlowingBlocks.class);
 
     getService(PaperDependencyService.class)
       .ifPluginEnabled("FastAsyncWorldEdit", (pluginName, plugin) -> {
@@ -203,6 +205,7 @@ public final class McTools extends JavaPlugin{
       SimpleCommand.createCommand("tag", new CommandTag(), "tag");
       SimpleCommand.createCommand("door", new CommandDoor(), "door");
       SimpleCommand.createCommand("interact", new CommandInteract(), "interact");
+      SimpleCommand.createCommand("build", new CommandBuild(), "b");
     }
 
     SimpleCommand.createCommand("staff", new CommandStaff());
