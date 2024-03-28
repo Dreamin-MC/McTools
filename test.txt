@@ -1,0 +1,118 @@
+//------INTERFACE------//
+
+une interface peux avoir plusieurs instance;
+
+une interface peux avoir un object not cliclable pour le fond
+
+InterfaceBuilder {
+	- ObjectNotClickable //pour le fond
+	- list<InterfaceObject> showAllButton
+	- hashMap<Player,List<InterfaceObject>> showSpecificPlayer
+	- hashMap<List<Player>,List<InterfaceObject>> showSpecificListPlayer
+	- location
+	- onClick
+}
+
+//------OBJECT------//
+
+une object peut être différente chose :
+
+- un button item/text/block = possiblité de cliqué (ObjectClickable)
+- un item/text/block = pas de possibilité de cliqué (ObjectNotClickable)
+
+InterfaceObjectNotClickable extends InterfaceObject -> {
+  - set location
+  - set add yaw/pitch
+  - hashMap animation <AnimationType, Animation>
+}
+
+InterfaceObjectClickable extends InterfaceObject -> {
+	- set location
+	- set add yaw/pitch
+
+	List InteractionHandler
+		- Interaction
+		- set size hight ┐
+										 ├ pour pouvoir créer la liste d'interact correctement
+		- set size width ┘
+
+	- set clickable
+	- hashMap animation <AnimationType, Animation>
+	- list<InterfaceInteractType>
+}
+
+
+//enum pour le type d'interaction pris en compte sur le button
+InterfaceInteractionType -> {
+
+	//------INTERACT-AT-ENTITY------//
+
+	- parcourir toutes les instance d'interface qui ont le type InterfaceInteraction.INTERACTION_AT_ENTITY -> {
+
+			get le button selon la liste des ObjetClickable puis la liste d'interaction si il est en tru sur clickable
+			si le button != null get si il a un type d'animation sur le click | si oui play l'animation
+			appeler le callback qui est play à l'interaction {
+				getInterface()
+				getButton()
+				getMTPlayer()
+				getInterfaceInteractionType()
+			}
+		}
+
+	//------INTERACT------//
+
+	-	parcourir toutes les instance d'interface qui ont le type InterfaceInteraction.INTERACTION -> {
+
+			get le button selon la liste des ObjetClickable puis la liste d'interaction si il est en tru sur clickable
+			si le button != null get si il a un type d'animation sur le click | si oui play l'animation
+			appeler le callback qui est play à l'interaction {
+				getInterface()
+				getButton()
+				getMTPlayer()
+				getInterfaceInteractionType()
+			}
+
+		}
+
+	//------DAMAGE------//
+
+	- parcourir toutes les instance d'interface qui ont le type InterfaceInteraction.DAMAGE -> {
+
+			get le button selon la liste des ObjetClickable puis la liste d'interaction si il est en tru sur clickable
+			si le button != null get si il a un type d'animation sur le click | si oui play l'animation
+			appeler le callback qui est play à l'interaction {
+				getInterface()
+				getButton()
+				getMTPlayer()
+				getInterfaceInteractionType()
+			}
+
+		}
+
+}
+
+//------ANIMATION-TYPE------//
+
+AnimationType -> {
+	- CLICK
+	- RAYCAST
+	- IDLE
+}
+
+//------ANIMATION------//
+
+
+//interface pour une animation
+Animation -> {
+	- getMTPlayer()
+	- play()
+	- stop()
+}
+
+//régler le problème d'instance listplayer object
+
+//faire génération innteraction
+
+//prendre en compte la rotation de l'interface
+
+//check code/optimisation

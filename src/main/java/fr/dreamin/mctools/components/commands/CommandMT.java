@@ -3,19 +3,24 @@ package fr.dreamin.mctools.components.commands;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.gui.defaultGui.ListMapGui;
+import fr.dreamin.mctools.api.interfaces.InterfaceManager;
+import fr.dreamin.mctools.api.packUtils.ItemsPreset;
 import fr.dreamin.mctools.api.player.PlayerPerm;
+import fr.dreamin.mctools.api.service.manager.players.PlayersService;
+import fr.dreamin.mctools.components.interfaces.Test;
 import fr.dreamin.mctools.components.lang.Lang;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
-import fr.dreamin.mctools.api.service.manager.players.PlayersService;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.ItemDisplay;
 import org.bukkit.entity.Player;
+import org.bukkit.entity.TextDisplay;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -57,6 +62,31 @@ public class CommandMT implements CommandExecutor, TabCompleter {
           break;
         case "listmap":
           McTools.getService(GuiManager.class).open(player, ListMapGui.class);
+          break;
+        case "test":
+
+          Location location = player.getLocation().clone().add(0 , 3, 0);
+
+          location.setYaw(90);
+          location.setPitch(0);
+
+          Test test = new Test(location);
+
+          mtPlayer.setTest(test);
+
+          McTools.getService(InterfaceManager.class).addInterface(test);
+          break;
+        case "test1":
+          TextDisplay display = (TextDisplay) player.getLocation().getWorld().spawnEntity(player.getLocation(), EntityType.TEXT_DISPLAY);
+
+          display.setText("ttt");
+
+          Location loc = player.getLocation().clone().add(0, 10, 0);
+
+          loc.setYaw(display.getYaw() + 20);
+
+          Bukkit.getScheduler().runTaskLater(McTools.getInstance(), () -> {display.teleport(loc);}, 10);
+
           break;
         case "set":
           switch (args[1]) {

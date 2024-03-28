@@ -12,10 +12,7 @@ import org.bukkit.block.data.type.Slab;
 import org.bukkit.block.data.type.Snow;
 import org.bukkit.block.data.type.Stairs;
 import org.bukkit.block.data.type.TrapDoor;
-import org.bukkit.entity.ArmorStand;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Firework;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -623,21 +620,31 @@ public class Minecraft {
   public static List<ArmorStand> getNearbyArmorStands(MTPlayer MTPlayer, double radius) {
     // Récupère toutes les entités dans le rayon spécifié autour du joueur
     List<Entity> nearbyEntities = MTPlayer.getPlayer().getNearbyEntities(radius, radius, radius);
-
     List<ArmorStand> armorStands = new ArrayList<>(); // Créer une liste d'armor stand
 
     // Parcourt chaque entité pour vérifier si c'est un armor stand
     for (Entity entity : nearbyEntities) {
       if (entity instanceof ArmorStand) {
-
-        ArmorStand armorStand = (ArmorStand) entity; // Cast l'entité en armor stand
-
-        if (MTPlayer.getArmorStandManager().getIfArmorStandSelected(armorStand) == null) armorStands.add((ArmorStand) entity); // Ajoute l'armor stand à la liste
-
+        ArmorStand armorStand = (ArmorStand) entity;
+        if (MTPlayer.getArmorStandManager().getIfArmorStandSelected(armorStand) == null) armorStands.add((ArmorStand) entity);
       }
     }
-
     return armorStands; // Retourne la liste d'armor stand
+  }
+
+  public static List<Display> getNearbyDisplays(MTPlayer MTPlayer, double radius) {
+    // Récupère toutes les entités dans le rayon spécifié autour du joueur
+    List<Entity> nearbyEntities = MTPlayer.getPlayer().getNearbyEntities(radius, radius, radius);
+
+    List<Display> displays = new ArrayList<>();
+
+    for (Entity entity : nearbyEntities) {
+      if (entity instanceof Display) {
+        Display display = (Display) entity;
+        if (MTPlayer.getDisplayManager().getIfDisplaySelected(display) == null) displays.add(display);
+      }
+    }
+    return displays;
   }
 
 

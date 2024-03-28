@@ -26,10 +26,10 @@ public class Codex {
   @Getter @Setter private int voiceDistanceMax;
 
   //  >>>>>>>> BUILD <<<<<<<<
-  @Getter @Setter private boolean buildMode, buildArmorStand;
+  @Getter @Setter private boolean buildMode, buildArmorStand, buildDisplay;
 
   // >>>>>>>> INTERFACE <<<<<<<<
-  @Getter @Setter private boolean interactRaycast;
+  @Getter @Setter private boolean interactRaycast, interactGlowingRaycast;
 
   // >>>>>>>> DOOR <<<<<<<<
   @Getter @Setter private boolean doorMode;
@@ -111,10 +111,12 @@ public class Codex {
   private void initBuild() {
     buildMode = config.getBoolean("build.enable", false);
     buildArmorStand = config.getBoolean("build.armor-stand", false);
+    buildDisplay = config.getBoolean("build.display", false);
   }
 
   private void initInterface() {
     interactRaycast = config.getBoolean("interface.raycast", false);
+    interactGlowingRaycast = config.getBoolean("interface.glowing-raycast", false);
   }
 
   private void initDoor() {

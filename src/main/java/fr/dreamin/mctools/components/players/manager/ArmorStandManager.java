@@ -5,21 +5,19 @@ import fr.dreamin.mctools.api.colors.CustomChatColor;
 import fr.dreamin.mctools.api.glowing.GlowingEntities;
 import fr.dreamin.mctools.api.gui.GuiManager;
 import fr.dreamin.mctools.api.items.ItemBuilder;
-import fr.dreamin.mctools.components.gui.armorStand.ArmorStandListLockedGui;
-import fr.dreamin.mctools.components.gui.armorStand.ArmorStandListRadiusGui;
-import fr.dreamin.mctools.components.gui.armorStand.ArmorStandListSelectedGui;
+import fr.dreamin.mctools.components.gui.build.armorStand.ArmorStandListLockedGui;
+import fr.dreamin.mctools.components.gui.build.armorStand.ArmorStandListRadiusGui;
+import fr.dreamin.mctools.components.gui.build.armorStand.ArmorStandListSelectedGui;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.MTPlayer;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.ArmorStand;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class ArmorStandManager {
@@ -35,13 +33,9 @@ public class ArmorStandManager {
   @Getter private boolean setInvisibleArmorStand = false;
   @Getter @Setter private boolean leftArmPos = false;
   @Getter private MTPlayer mtPlayer;
-  @Getter private HashMap<String, Integer> guiPage = new HashMap<>();
 
   public ArmorStandManager(MTPlayer mtPlayer) {
     this.mtPlayer = mtPlayer;
-    this.guiPage.put("armorStandSelected", 1);
-    this.guiPage.put("armorStandLocked", 1);
-    this.guiPage.put("armorStandRadius", 1);
   }
 
 
@@ -95,11 +89,11 @@ public class ArmorStandManager {
 
         if (armorStand1.getPassenger() != null)
           McTools.getService(GlowingEntities.class).setGlowing(armorStand1.getPassenger(), mtPlayer.getPlayer(), ChatColor.WHITE);
+        this.addArmorStandSelected(armorStand1);
       } catch (ReflectiveOperationException e) {
         throw new RuntimeException(e);
       }
     }
-    armorStandSelected.addAll(armorStand);
   }
 
   public void removeArmorStandSelected(ArmorStand armorStand, boolean removeGlowing) {
@@ -149,7 +143,6 @@ public class ArmorStandManager {
     }
     this.armorStandSelected.remove(armorStand);
     armorStand.remove();
-    McTools.getService(GuiManager.class).getGuiConfig().getGuiPageManager().addGuiPage(mtPlayer.getPlayer(), ArmorStandListSelectedGui.class.getSimpleName(), 1);
   }
 
   public void dispawnAllArmorStandSelected() {

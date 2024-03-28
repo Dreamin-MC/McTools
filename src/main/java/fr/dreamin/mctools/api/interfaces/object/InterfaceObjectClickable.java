@@ -2,6 +2,7 @@ package fr.dreamin.mctools.api.interfaces.object;
 
 import fr.dreamin.mctools.api.interfaces.InterfaceBuilder;
 import fr.dreamin.mctools.api.interfaces.InterfaceInteractionType;
+import fr.dreamin.mctools.api.interfaces.animation.InterfaceAnimation;
 import fr.dreamin.mctools.api.interfaces.animation.InterfaceAnimationBuilder;
 import fr.dreamin.mctools.api.interfaces.animation.InterfaceAnimationType;
 import lombok.Getter;
@@ -25,8 +26,8 @@ public class InterfaceObjectClickable extends InterfaceObject{
   @Getter private List<Interaction> interactions = new ArrayList<>();
   @Getter private List<InterfaceInteractionType> interfaceInteractionTypes = new ArrayList<>();
 
-  public InterfaceObjectClickable(InterfaceBuilder interfaceBuilder, Location location, Display displayEntity, float yaw, float pitch, float height, float width, float depth, HashMap<InterfaceAnimationType, InterfaceAnimationBuilder> animations) {
-    super(interfaceBuilder, location,displayEntity, yaw, pitch, animations);
+  public InterfaceObjectClickable(InterfaceBuilder interfaceBuilder, Location location, float yaw, float pitch, EntityType entityType, float height, float width, float depth, HashMap<InterfaceAnimation, InterfaceAnimationBuilder> animations) {
+    super(interfaceBuilder, location, yaw, pitch, entityType, animations);
 
     this.location = location;
 
@@ -37,14 +38,24 @@ public class InterfaceObjectClickable extends InterfaceObject{
     return getInteractions().contains(interaction);
   }
 
+  //hauteur, largeur, profondeur
   private void setInteraction(float height, float width, float depth) {
 
-    Interaction interact = (Interaction) this.location.getWorld().spawnEntity(location, EntityType.INTERACTION);
+    float w = Math.max(width, depth);
+    float h = height;
 
-    interact.setInteractionHeight(height);
-    interact.setInteractionHeight(width);
+    int r = 0;
 
-    interactions.add(interact);
+    for (int i = 0; i < r; i++) {
+      Interaction interact = (Interaction) this.location.getWorld().spawnEntity(location.clone().add(0, -0.5, 0), EntityType.INTERACTION);
+
+      interact.setInteractionHeight(h);
+      interact.setInteractionHeight(w);
+
+      interactions.add(interact);
+    }
+
+
   }
 
 }

@@ -1,6 +1,7 @@
 package fr.dreamin.mctools.api.interfaces.animation.dflAnimation;
 
 import fr.dreamin.mctools.McTools;
+import fr.dreamin.mctools.api.glowing.GlowingEntities;
 import fr.dreamin.mctools.api.interfaces.animation.InterfaceAnimationBuilder;
 import fr.dreamin.mctools.api.interfaces.object.InterfaceObject;
 import fr.dreamin.mctools.components.players.MTPlayer;
@@ -11,12 +12,13 @@ import org.bukkit.util.Transformation;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class ClickAnimation implements InterfaceAnimationBuilder {
+public class RayCastAnimation implements InterfaceAnimationBuilder {
 
   @Override
   public void play(MTPlayer mtPlayer, Display display, InterfaceObject interfaceObject) {
-    mtPlayer.getPlayer().showEntity(McTools.getInstance(), display);
+
     display.setVisibleByDefault(false);
+    mtPlayer.getPlayer().showEntity(McTools.getInstance(), display);
     interfaceObject.getInterfaceObjectAnimationManager().getPlayingAnimations().put(mtPlayer, display);
 
     Bukkit.getScheduler().runTaskLater(McTools.getInstance(), () -> {
@@ -30,8 +32,8 @@ public class ClickAnimation implements InterfaceAnimationBuilder {
       if (display != null) {
         Transformation transformation = display.getTransformation();
 
-        if (var1.get()) transformation.getScale().add(0.03f,0.03f ,0.03f);
-        else transformation.getScale().add(-0.03f,-0.03f ,-0.03f);
+        if (var1.get()) transformation.getScale().add(0.003f,0.003f ,0.003f);
+        else transformation.getScale().add(-0.003f,-0.003f ,-0.003f);
 
         display.setTransformation(transformation);
       }
@@ -39,10 +41,17 @@ public class ClickAnimation implements InterfaceAnimationBuilder {
     } ,1, 1);
 
     //Change scale direction
-    Bukkit.getScheduler().runTaskLater(McTools.getInstance(), () -> {var1.set(false);}, 3);
+    Bukkit.getScheduler().runTaskLater(McTools.getInstance(), () -> {var1.set(false);}, 20);
 
     //Cancel scale and check if always target button
-    Bukkit.getScheduler().runTaskLater(McTools.getInstance(), () -> {animatedScale.cancel();}, 6);
+    Bukkit.getScheduler().runTaskLater(McTools.getInstance(), () -> {
+      animatedScale.cancel();
+      if (mtPlayer.getSelectObjectManager().getSelected() != null && mtPlayer.getSelectObjectManager().getSelected().equals(interfaceObject)) play(mtPlayer, display, interfaceObject);
+      else {
+        stop(mtPlayer, display, interfaceObject);
+      }
+
+    }, 40);
 
   }
 
@@ -58,6 +67,10 @@ public class ClickAnimation implements InterfaceAnimationBuilder {
 
   @Override
   public void stop(MTPlayer mtPlayer, Display display, InterfaceObject interfaceObject) {
-
+    try {
+      McTools.getService(GlowingEntities.class).unsetGlowing(display, mtPlayer.getPlayer());
+    } catch (ReflectiveOperationException e) {
+      throw new RuntimeException(e);
+    }
   }
 }

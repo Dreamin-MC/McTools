@@ -5,6 +5,7 @@ import fr.dreamin.mctools.api.items.ItemBuilder;
 import fr.dreamin.mctools.api.log.Logging;
 import fr.dreamin.mctools.api.player.PlayerPerm;
 import fr.dreamin.mctools.api.service.manager.dependency.PaperDependencyService;
+import fr.dreamin.mctools.components.interfaces.Test;
 import fr.dreamin.mctools.components.lang.Lang;
 import fr.dreamin.mctools.components.lang.LangMsg;
 import fr.dreamin.mctools.components.players.manager.*;
@@ -29,6 +30,7 @@ public class MTPlayer {
 
   @Getter private final BuildPlayerManager buildManager = new BuildPlayerManager();
   @Getter private ArmorStandManager armorStandManager = null;
+  @Getter private DisplayManager displayManager = null;
   @Getter private VoiceConfPlayerManager voiceConfManager = new VoiceConfPlayerManager(this);
   @Getter private final HudPlayerManager hudPlayerManager = null;
   @Getter private TritonPlayerManager tritonManager;
@@ -36,10 +38,15 @@ public class MTPlayer {
   @Getter private StaffPlayerManager staffPlayerManager = new StaffPlayerManager(this);
   @Getter private SelectObjectManager selectObjectManager = new SelectObjectManager(this);
 
+  @Getter @Setter private Test test;
+
   public MTPlayer(Player player) {
     this.player = player;
 
-    if (McTools.getCodex().isBuildMode()) this.armorStandManager = new ArmorStandManager(this);
+    if (McTools.getCodex().isBuildMode()) {
+      this.armorStandManager = new ArmorStandManager(this);
+      this.displayManager = new DisplayManager(this);
+    }
 
 //    this.hudPlayerManager = new HudPlayerManager(this);
 

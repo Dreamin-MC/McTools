@@ -14,12 +14,13 @@ import fr.dreamin.mctools.api.time.TimerManager;
 import fr.dreamin.mctools.api.triton.TritonManager;
 import fr.dreamin.mctools.api.voice.VoiceWallManager;
 import fr.dreamin.mctools.components.commands.build.CommandBuild;
+import fr.dreamin.mctools.components.commands.build.CommandDisplay;
 import fr.dreamin.mctools.components.commands.modelEngine.CommandInteract;
 import fr.dreamin.mctools.components.commands.modelEngine.CommandDoor;
 import fr.dreamin.mctools.components.commands.build.CommandTag;
-import fr.dreamin.mctools.components.commands.build.armorStand.CommandArmorStand;
-import fr.dreamin.mctools.components.commands.build.models.CommandCoal;
-import fr.dreamin.mctools.components.commands.build.models.CommandGetId;
+import fr.dreamin.mctools.components.commands.build.CommandArmorStand;
+import fr.dreamin.mctools.components.commands.build.CommandModel;
+import fr.dreamin.mctools.components.commands.build.CommandGetId;
 import fr.dreamin.mctools.components.commands.voice.CommandShowVoice;
 import fr.dreamin.mctools.components.commands.CommandMT;
 import fr.dreamin.mctools.api.commands.SimpleCommand;
@@ -29,7 +30,11 @@ import fr.dreamin.mctools.components.game.MTGame;
 import fr.dreamin.mctools.api.armorPose.ArmorManager;
 import fr.dreamin.mctools.components.game.manager.DoorManager;
 import fr.dreamin.mctools.components.game.manager.InteractManager;
-import fr.dreamin.mctools.components.gui.armorStand.*;
+import fr.dreamin.mctools.components.gui.build.armorStand.*;
+import fr.dreamin.mctools.components.gui.build.display.DisplayListRadiusGui;
+import fr.dreamin.mctools.components.gui.build.display.DisplayListSelectedGui;
+import fr.dreamin.mctools.components.gui.build.display.DisplayMenuGui;
+import fr.dreamin.mctools.components.gui.build.display.DisplayMoveRotateGui;
 import fr.dreamin.mctools.components.gui.staff.FreezeGui;
 import fr.dreamin.mctools.components.gui.tag.TagCategoryListGui;
 import fr.dreamin.mctools.components.gui.tag.TagListGui;
@@ -146,6 +151,13 @@ public final class McTools extends JavaPlugin{
       new ArmorStandArmsSettingsGui(),
       new ArmorStandListSelectedGui(),
 
+      //display
+      new DisplayMenuGui(),
+      new DisplayListRadiusGui(),
+      new DisplayMoveRotateGui(),
+      new DisplayListRadiusGui(),
+      new DisplayListSelectedGui(),
+
       //tag
       new TagCategoryListGui(),
       new TagListGui(),
@@ -198,14 +210,15 @@ public final class McTools extends JavaPlugin{
     SimpleCommand.createCommand("dv", new CommandDV());
 
     if (getCodex().isBuildMode()) {
-      SimpleCommand.createCommand("as", new CommandArmorStand(), "as");
-      SimpleCommand.createCommand("coal", new CommandCoal(), "getcoal");
+      SimpleCommand.createCommand("as", new CommandArmorStand(), "armorstand");
+      SimpleCommand.createCommand("model", new CommandModel(), "m");
       SimpleCommand.createCommand("getid", new CommandGetId(), "getid");
       SimpleCommand.createCommand("showvoice", new CommandShowVoice(), "showvoice");
       SimpleCommand.createCommand("tag", new CommandTag(), "tag");
       SimpleCommand.createCommand("door", new CommandDoor(), "door");
       SimpleCommand.createCommand("interact", new CommandInteract(), "interact");
       SimpleCommand.createCommand("build", new CommandBuild(), "b");
+      SimpleCommand.createCommand("display", new CommandDisplay(), "d");
     }
 
     SimpleCommand.createCommand("staff", new CommandStaff());

@@ -4,7 +4,9 @@ import com.denizenscript.denizen.npc.traits.InvisibleTrait;
 import com.denizenscript.denizen.npc.traits.SittingTrait;
 import com.denizenscript.denizen.npc.traits.SleepingTrait;
 import com.denizenscript.denizen.npc.traits.SneakingTrait;
+import lombok.Getter;
 import net.citizensnpcs.api.CitizensAPI;
+import net.citizensnpcs.api.npc.MemoryNPCDataStore;
 import net.citizensnpcs.api.npc.NPC;
 import net.citizensnpcs.api.npc.NPCRegistry;
 import net.citizensnpcs.api.trait.trait.Equipment;
@@ -22,12 +24,10 @@ import org.bukkit.inventory.ItemStack;
 public class NpcBuilder {
 
   private NPC npc;
-  private NPCRegistry registry;
+  @Getter private static NPCRegistry registry = CitizensAPI.createAnonymousNPCRegistry(new MemoryNPCDataStore());
 
   public NpcBuilder(String name) {
-
-    this.registry = CitizensAPI.getNPCRegistry();
-    this.npc = this.registry.createNPC(EntityType.PLAYER, name);
+    this.npc = registry.createNPC(EntityType.PLAYER, name);
   }
 
   public NpcBuilder(NPC npc) {

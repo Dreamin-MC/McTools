@@ -17,10 +17,13 @@ commands:
     aliases: ["dreaminvoice"]
   as:
     description: "as"
-    aliases: [ "as" ]
-  coal:
-    description: "coal"
-    aliases: [ "getcoal" ]
+    aliases: [ "armorstand" ]
+  display:
+    description: "display"
+    aliases: [ "d" ]
+  model:
+    description: "model"
+    aliases: [ "m" ]
   getid:
     description: "getid"
     aliases: [ "getid" ]

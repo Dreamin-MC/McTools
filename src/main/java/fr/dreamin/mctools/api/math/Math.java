@@ -1,9 +1,13 @@
 package fr.dreamin.mctools.api.math;
 
+import fr.dreamin.mctools.components.players.MTPlayer;
 import org.bukkit.Location;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.*;
 
@@ -182,6 +186,127 @@ public class Math {
 
     // Créer et retourner le vecteur direction
     return new Vector(directionX, directionY, directionZ).normalize();
+  }
+
+  public static float roundYawToCardinalDirection(float yaw) {
+    yaw = (yaw % 360 + 360) % 360;
+    if (yaw < 45 || yaw >= 315) {
+      return 0; // Sud
+    } else if (yaw < 135) {
+      return 90; // Ouest
+    } else if (yaw < 225) {
+      return 180; // Nord
+    } else {
+      return 270; // Est
+    }
+  }
+
+  @NotNull
+  public static Location getLocationAv(Entity entity, float roundedYaw, double addDistance) {
+    double rad = 0;
+
+    // Est
+    if (roundedYaw == 270) {
+      rad = java.lang.Math.toRadians(roundedYaw);
+    }
+    //Ouest
+    else if (roundedYaw == 90) {
+      rad = java.lang.Math.toRadians(roundedYaw);
+    }
+    //Sud
+    else if (roundedYaw == 0) {
+      rad = java.lang.Math.toRadians(roundedYaw + 180);
+    }
+    //Nord
+    else if (roundedYaw == 180) {
+      rad = java.lang.Math.toRadians(roundedYaw  + 180);
+    }
+
+
+    // Calculer la nouvelle position
+    double x = entity.getLocation().getX() + java.lang.Math.sin(rad) * addDistance;
+    double z = entity.getLocation().getZ() + java.lang.Math.cos(rad) * addDistance;
+
+    Location newLocation = new Location(entity.getWorld(), x, entity.getLocation().getY(), z);
+
+    newLocation.setYaw(entity.getLocation().getYaw());
+    return newLocation;
+  }
+
+  @NotNull
+  public static Location getLocationAr(Entity entity, float roundedYaw, double addDistance) {
+    double rad = 0;
+
+    // Est
+    if (roundedYaw == 270) {
+      rad = java.lang.Math.toRadians(roundedYaw);
+    }
+    //Ouest
+    else if (roundedYaw == 90) {
+      rad = java.lang.Math.toRadians(roundedYaw);
+    }
+    //Sud
+    else if (roundedYaw == 0) {
+      rad = java.lang.Math.toRadians(roundedYaw + 180);
+    }
+    //Nord
+    else if (roundedYaw == 180) {
+      rad = java.lang.Math.toRadians(roundedYaw  + 180);
+    }
+
+
+    // Calculer la nouvelle position
+    double x = entity.getLocation().getX() - java.lang.Math.sin(rad) * addDistance;
+    double z = entity.getLocation().getZ() - java.lang.Math.cos(rad) * addDistance;
+    Location newLocation = new Location(entity.getWorld(), x, entity.getLocation().getY(), z);
+    newLocation.setYaw(entity.getLocation().getYaw());
+    return newLocation;
+  }
+
+  public static Location getLocationG(Entity entity, float roundedYaw, double addDistance) {
+    double adjustedYaw = 0;
+
+    //Est
+    if (roundedYaw == 270) {
+      adjustedYaw = java.lang.Math.toRadians(roundedYaw - 90);
+    }
+    //Ouest
+    else if (roundedYaw == 90) {
+      adjustedYaw = java.lang.Math.toRadians(roundedYaw - 90);
+    }
+    //Sud
+    else if (roundedYaw == 0) {
+      adjustedYaw = java.lang.Math.toRadians(roundedYaw + 90);
+    }
+    //Nord
+    else if (roundedYaw == 180) {
+      adjustedYaw = java.lang.Math.toRadians(roundedYaw + 90);
+    }
+
+    double x = entity.getLocation().getX() + java.lang.Math.sin(adjustedYaw) * addDistance;
+    double z = entity.getLocation().getZ() + java.lang.Math.cos(adjustedYaw) * addDistance;
+    Location newLocation = new Location(entity.getWorld(), x, entity.getLocation().getY(), z);
+    newLocation.setYaw(entity.getLocation().getYaw());
+    return newLocation;
+  }
+
+  @NotNull
+  public static Location getLocationD(Entity entity, float roundedYaw, double addDistance) {
+    // Ajuster l'angle pour se déplacer perpendiculairement à droite
+    double adjustedYaw;
+    if (roundedYaw == 180 || roundedYaw == 0) {
+      // Inverser la direction pour le Sud et le Nord
+      adjustedYaw = java.lang.Math.toRadians(roundedYaw - 90);
+    } else {
+      adjustedYaw = java.lang.Math.toRadians(roundedYaw + 90);
+    }
+
+    // Calculer la nouvelle position
+    double x = entity.getLocation().getX() + java.lang.Math.sin(adjustedYaw) * addDistance;
+    double z = entity.getLocation().getZ() + java.lang.Math.cos(adjustedYaw) * addDistance;
+    Location newLocation = new Location(entity.getWorld(), x, entity.getLocation().getY(), z);
+    newLocation.setYaw(entity.getLocation().getYaw());
+    return newLocation;
   }
 
 }
