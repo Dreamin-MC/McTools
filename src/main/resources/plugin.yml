@@ -1,41 +1,4 @@
 name: McTools
 version: '${version}'
 main: fr.dreamin.mctools.McTools
-api-version: '1.20'
-commands:
-  build:
-    description: "build"
-    aliases: ["b"]
-  staff:
-    description: "Staff"
-    aliases: ["staff"]
-  mt:
-    description: "McTools"
-    aliases: ["mctools", "mt"]
-  dv:
-    description: "dv"
-    aliases: ["dreaminvoice"]
-  as:
-    description: "as"
-    aliases: [ "armorstand" ]
-  display:
-    description: "display"
-    aliases: [ "d" ]
-  model:
-    description: "model"
-    aliases: [ "m" ]
-  getid:
-    description: "getid"
-    aliases: [ "getid" ]
-  showvoice:
-    description: "showvoice"
-    aliases: [ "showvoice" ]
-  tag:
-    description: "tag"
-    aliases: [ "tag" ]
-  door:
-    description: "door"
-    aliases: [ "door" ]
-  interact:
-    description: "interact"
-    aliases: [ "interact" ]
+api-version: '1.21'
