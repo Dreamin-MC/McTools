@@ -1,0 +1,30 @@
+####################################################################################################
+#                                 __  __   _______          _                                      #
+#                                |  \/  | |__   __|        | |                                     #
+#                                | \  / | ___| | ___   ___ | |___                                  #
+#                                | |\/| |/ __| |/ _ \ / _ \| / __|                                 #
+#                                | |  | | (__| | (_) | (_) | \__ \                                 #
+#                                \_|  |_/\___\_/\___/ \___/|_|___/                                 #
+#                              Developer's : Dreamin discord.gg/dreamin                            #
+####################################################################################################
+
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+#>>       GENERAL CONFIGURATION      >>
+#>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
+general:
+
+  # Do not change this unless you know what you are doing.
+  version: "0.0.1"
+
+  # The prefix of the plugin
+  prefix: "§8» §f"
+
+  # The broadcast prefix of the plugin
+  broadcast-prefix: "[§c§lMcTools§r] "
+
+  #if activated the plugin takes into account that there is a resource pack, for customs/items guis and other, if deactivated it sets the guis by default
+  resourcepack: false
+
+  #Url of resource pack, set on joining the server
+  resourcepack-url: ""
