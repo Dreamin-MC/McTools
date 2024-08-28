@@ -9,15 +9,15 @@ import org.bukkit.entity.Player;
 public class LeavePlayerManager {
 
   public static void removePlayer(Player player) {
-
     PlayersService playersService = McTools.getService(PlayersService.class);
 
     MTPlayer mtPlayer = playersService.getPlayer(player);
 
-    mtPlayer.getPlayerTickManager().stopBukkitTask();
-
     if (mtPlayer != null) {
-      playersService.removeDTPlayer(mtPlayer);
+      mtPlayer.getPlayerTickManager().stopBukkitTask();
+
+      playersService.removeMTPlayer(mtPlayer);
+
       OnMtPlayerLeave.callEvent(mtPlayer);
     }
 

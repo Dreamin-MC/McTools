@@ -13,29 +13,18 @@ public class PlayersService extends Service {
 
   @Getter @Setter private Class<? extends MTPlayer> playerClass = null;
 
-  @Getter @Setter private List<MTPlayer> MtPlayers = new ArrayList<>(), spectators = new ArrayList<>();
+  @Getter @Setter private List<MTPlayer> mtPlayers = new ArrayList<>();
 
   //------ADDER------//
 
-  public void addDTPlayer(MTPlayer dTPlayer) {
-    if (!MtPlayers.contains(dTPlayer)) MtPlayers.add(dTPlayer);
-  }
-
-  public void addSpectators(Player player) {
-    MTPlayer dTPlayer = getPlayer(player);
-
-    if (!spectators.contains(dTPlayer)) spectators.add(dTPlayer);
+  public void addMTPlayer(MTPlayer mtPlayer) {
+    if (!mtPlayers.contains(mtPlayer)) mtPlayers.add(mtPlayer);
   }
 
   //------REMOVER------//
 
-  public void removeDTPlayer(MTPlayer dTPlayer) {
-    if (MtPlayers.contains(dTPlayer)) MtPlayers.remove(dTPlayer);
-  }
-
-  public void removeSpectators(Player player) {
-    MTPlayer dTPlayer = getPlayer(player);
-    spectators.remove(dTPlayer);
+  public void removeMTPlayer(MTPlayer mtPlayer) {
+    if (mtPlayers.contains(mtPlayer)) mtPlayers.remove(mtPlayer);
   }
 
   //------METHODS------//

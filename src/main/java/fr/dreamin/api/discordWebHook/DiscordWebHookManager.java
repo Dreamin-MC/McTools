@@ -1,5 +1,8 @@
 package fr.dreamin.api.discordWebHook;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.net.ssl.HttpsURLConnection;
 import java.awt.*;
 import java.io.IOException;
@@ -12,12 +15,10 @@ import java.util.*;
 
 public class DiscordWebHookManager {
 
-  private final String url;
-  private String content;
-  private String username;
-  private String avatarUrl;
-  private boolean tts;
-  private List<EmbedObject> embeds = new ArrayList<>();
+  @Getter private final String url;
+  @Getter @Setter private String content, username, avatarUrl;
+  @Getter @Setter private boolean tts;
+  @Getter private List<EmbedObject> embeds = new ArrayList<>();
 
   /**
    * Constructs a new DiscordWebhook instance
@@ -26,22 +27,6 @@ public class DiscordWebHookManager {
    */
   public DiscordWebHookManager(String url) {
     this.url = url;
-  }
-
-  public void setContent(String content) {
-    this.content = content;
-  }
-
-  public void setUsername(String username) {
-    this.username = username;
-  }
-
-  public void setAvatarUrl(String avatarUrl) {
-    this.avatarUrl = avatarUrl;
-  }
-
-  public void setTts(boolean tts) {
-    this.tts = tts;
   }
 
   public void addEmbed(EmbedObject embed) {
@@ -158,52 +143,14 @@ public class DiscordWebHookManager {
   }
 
   public static class EmbedObject {
-    private String title;
-    private String description;
-    private String url;
-    private Color color;
+    @Getter private String title, description, url;
+    @Getter private Color color;
 
-    private Footer footer;
-    private Thumbnail thumbnail;
-    private Image image;
-    private Author author;
-    private List<Field> fields = new ArrayList<>();
-
-    public String getTitle() {
-      return title;
-    }
-
-    public String getDescription() {
-      return description;
-    }
-
-    public String getUrl() {
-      return url;
-    }
-
-    public Color getColor() {
-      return color;
-    }
-
-    public Footer getFooter() {
-      return footer;
-    }
-
-    public Thumbnail getThumbnail() {
-      return thumbnail;
-    }
-
-    public Image getImage() {
-      return image;
-    }
-
-    public Author getAuthor() {
-      return author;
-    }
-
-    public List<Field> getFields() {
-      return fields;
-    }
+    @Getter @Setter private Footer footer;
+    @Getter private Thumbnail thumbnail;
+    @Getter private Image image;
+    @Getter private Author author;
+    @Getter private List<Field> fields = new ArrayList<>();
 
     public EmbedObject setTitle(String title) {
       this.title = title;
