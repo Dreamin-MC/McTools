@@ -1,11 +1,9 @@
 package fr.dreamin.mctools.component.listeners.joinPlayer;
 
-import fr.dreamin.api.items.ItemBuilder;
 import fr.dreamin.api.service.manager.players.PlayersService;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.api.listener.join.OnMtPlayerJoin;
 import fr.dreamin.mctools.component.player.MTPlayer;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
@@ -28,9 +26,7 @@ public class JoinPlayerManager {
         e.printStackTrace(); // Gérer les erreurs de création d'instance
       }
     }
-    else {
-      mtPlayer = new MTPlayer(player);
-    }
+    else mtPlayer = new MTPlayer(player);
 
     if (McTools.getCodex().isResourcePack() && McTools.getCodex().getResourcePackUrl() != null) player.setResourcePack(McTools.getCodex().getResourcePackUrl());
 

@@ -1,6 +1,5 @@
 package fr.dreamin.mctools;
 
-import fr.dreamin.api.colors.CustomChatColor;
 import fr.dreamin.api.gui.GuiManager;
 import fr.dreamin.api.service.Service;
 import fr.dreamin.api.service.ServiceManager;
@@ -11,7 +10,6 @@ import fr.dreamin.mctools.config.Codex;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 
 public final class McTools extends JavaPlugin {
 
@@ -38,7 +36,6 @@ public final class McTools extends JavaPlugin {
 
     @Override
     public void onDisable() {
-        // Plugin shutdown logic
         if (!Bukkit.getOnlinePlayers().isEmpty()) this.getLogger().warning("Be careful, this could create big problems if there are still players connected to the server after a reload.");
     }
 
