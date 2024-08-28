@@ -1,10 +1,14 @@
 package fr.dreamin.mctools.component.listeners.joinPlayer;
 
+import fr.dreamin.api.items.ItemBuilder;
 import fr.dreamin.api.service.manager.players.PlayersService;
 import fr.dreamin.mctools.McTools;
 import fr.dreamin.api.listener.join.OnMtPlayerJoin;
 import fr.dreamin.mctools.component.player.MTPlayer;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.components.FoodComponent;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;

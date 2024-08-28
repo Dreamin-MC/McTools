@@ -67,9 +67,62 @@ public class ItemBuilder {
     return this;
   }
 
-  public ItemBuilder setFood(FoodComponent foodComponent) {
+  public ItemBuilder setFood(int nutrition, float saturation, float eatsec, boolean canAlwaysEat) {
     ItemMeta itemMeta = is.getItemMeta();
+
+    FoodComponent foodComponent = new ItemStack(Material.APPLE).getItemMeta().getFood();
+    foodComponent.setNutrition(nutrition);
+    foodComponent.setSaturation(saturation);
+    foodComponent.setCanAlwaysEat(canAlwaysEat);
+    foodComponent.setEatSeconds(eatsec);
     itemMeta.setFood(foodComponent);
+
+    is.setItemMeta(itemMeta);
+    return this;
+  }
+
+  public ItemBuilder setFood(int nutrition, float saturation, float eatsec, boolean canAlwaysEat, ItemStack convertAfterEat) {
+    ItemMeta itemMeta = is.getItemMeta();
+
+    FoodComponent foodComponent = new ItemStack(Material.APPLE).getItemMeta().getFood();
+    foodComponent.setNutrition(nutrition);
+    foodComponent.setSaturation(saturation);
+    foodComponent.setCanAlwaysEat(canAlwaysEat);
+    foodComponent.setEatSeconds(eatsec);
+    foodComponent.setUsingConvertsTo(convertAfterEat);
+    itemMeta.setFood(foodComponent);
+
+    is.setItemMeta(itemMeta);
+    return this;
+  }
+
+  public ItemBuilder setFood(int nutrition, float saturation, float eatsec, boolean canAlwaysEat, List<FoodComponent.FoodEffect> foodEffects) {
+    ItemMeta itemMeta = is.getItemMeta();
+
+    FoodComponent foodComponent = new ItemStack(Material.APPLE).getItemMeta().getFood();
+    foodComponent.setNutrition(nutrition);
+    foodComponent.setSaturation(saturation);
+    foodComponent.setCanAlwaysEat(canAlwaysEat);
+    foodComponent.setEatSeconds(eatsec);
+    foodComponent.setEffects(foodEffects);
+    itemMeta.setFood(foodComponent);
+
+    is.setItemMeta(itemMeta);
+    return this;
+  }
+
+  public ItemBuilder setFood(int nutrition, float saturation, float eatsec, boolean canAlwaysEat, ItemStack convertAfterEat, List<FoodComponent.FoodEffect> foodEffects) {
+    ItemMeta itemMeta = is.getItemMeta();
+
+    FoodComponent foodComponent = new ItemStack(Material.APPLE).getItemMeta().getFood();
+    foodComponent.setNutrition(nutrition);
+    foodComponent.setSaturation(saturation);
+    foodComponent.setCanAlwaysEat(canAlwaysEat);
+    foodComponent.setEatSeconds(eatsec);
+    foodComponent.setUsingConvertsTo(convertAfterEat);
+    foodComponent.setEffects(foodEffects);
+    itemMeta.setFood(foodComponent);
+
     is.setItemMeta(itemMeta);
     return this;
   }
