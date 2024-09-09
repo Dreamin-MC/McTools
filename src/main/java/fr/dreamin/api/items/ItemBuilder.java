@@ -134,6 +134,13 @@ public class ItemBuilder {
     return this;
   }
 
+  public ItemBuilder setHideToolType(boolean b) {
+    ItemMeta itemMeta = is.getItemMeta();
+    itemMeta.setHideTooltip(b);
+    is.setItemMeta(itemMeta);
+    return this;
+  }
+
   public ItemBuilder setItemFlag(ItemFlag itemFlag) {
     ItemMeta itemMeta = is.getItemMeta();
     itemMeta.addItemFlags(itemFlag);
