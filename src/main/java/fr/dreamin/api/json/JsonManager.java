@@ -3,6 +3,7 @@ package fr.dreamin.api.json;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import fr.dreamin.api.cuboide.Cuboide;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -31,8 +32,9 @@ public class JsonManager {
 
     JsonArray jsonArray = gson.fromJson(location, JsonArray.class);
     for (int i = 0; i < jsonArray.size(); i++) {
-      JsonObject element = jsonArray.get(i).getAsJsonObject();
-      locationList.add(new Location(w, element.get("x").getAsDouble(), element.get("y").getAsDouble(), element.get("z").getAsDouble()));
+      JsonPrimitive element = jsonArray.get(i).getAsJsonPrimitive();
+
+      locationList.add(new Location(w, element.getAsJsonObject().get("x").getAsDouble(), element.getAsJsonObject().get("y").getAsDouble(), element.getAsJsonObject().get("z").getAsDouble()));
     }
 
     return locationList;
