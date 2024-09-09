@@ -55,6 +55,28 @@ public class JsonGetter {
     return locations;
   }
 
+  public static List<Location> getLocationsFromJson(String json, String sectionName, World w) {
+    List<Location> locations = new ArrayList<>();
+    try {
+      // Parse le JSON global et accède à la section donnée
+      JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+      JsonElement jsonElement = jsonObject.get(sectionName);
+
+      if (jsonElement != null && jsonElement.isJsonArray()) {
+        JsonArray jsonArray = jsonElement.getAsJsonArray();
+        for (JsonElement element : jsonArray) {
+          if (element.isJsonObject()) {
+            Location loc = parseLocation(element.getAsJsonObject(), w);
+            locations.add(loc);
+          }
+        }
+      }
+    } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
+      e.printStackTrace();
+    }
+    return locations;
+  }
+
   // ----------------------------------------------------------------
   // CUBOIDS
   // ----------------------------------------------------------------
