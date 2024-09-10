@@ -1,5 +1,5 @@
 /*
- * This file is part of FastBoard, licensed under the MIT License.
+ * This file is part of DreaminBoard, licensed under the MIT License.
  *
  * Copyright (c) 2019-2023 MrMicky
  *

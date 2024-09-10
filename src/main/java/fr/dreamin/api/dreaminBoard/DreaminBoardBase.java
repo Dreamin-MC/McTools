@@ -1,26 +1,3 @@
-/*
- * This file is part of FastBoard, licensed under the MIT License.
- *
- * Copyright (c) 2019-2023 MrMicky
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to deal
- * in the Software without restriction, including without limitation the rights
- * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- * copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in all
- * copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
- * SOFTWARE.
- */
 package fr.dreamin.api.dreaminBoard;
 
 import org.bukkit.ChatColor;
@@ -40,7 +17,6 @@ import java.util.stream.Stream;
  * Lightweight packet-based scoreboard API for Bukkit plugins.
  * It can be safely used asynchronously as everything is at packet level.
  * <p>
- * The project is on <a href="https://github.com/MrMicky-FR/FastBoard">GitHub</a>.
  *
  * @author Dreamin
  * @version 2.0.1
@@ -210,7 +186,7 @@ public abstract class DreaminBoardBase<T> {
   private boolean deleted = false;
 
   /**
-   * Creates a new FastBoard.
+   * Creates a new DreaminBoard.
    *
    * @param player the owner of the scoreboard
    */
@@ -529,7 +505,7 @@ public abstract class DreaminBoardBase<T> {
   /**
    * Get the player who has the scoreboard.
    *
-   * @return current player for this FastBoard
+   * @return current player for this DreaminBoard
    */
   public Player getPlayer() {
     return this.player;
@@ -572,7 +548,7 @@ public abstract class DreaminBoardBase<T> {
   }
 
   /**
-   * Delete this FastBoard, and will remove the scoreboard for the associated player if he is online.
+   * Delete this DreaminBoard, and will remove the scoreboard for the associated player if he is online.
    * After this, all uses of {@link #updateLines} and {@link #updateTitle} will throw an {@link IllegalStateException}
    *
    * @throws IllegalStateException if this was already call before
@@ -752,7 +728,7 @@ public abstract class DreaminBoardBase<T> {
 
   private void sendPacket(Object packet) throws Throwable {
     if (this.deleted) {
-      throw new IllegalStateException("This FastBoard is deleted");
+      throw new IllegalStateException("This DreaminBoard is deleted");
     }
 
     if (this.player.isOnline()) {

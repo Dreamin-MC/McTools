@@ -21,7 +21,7 @@ public final class DreaminReflection {
 
   private static volatile Object theUnsafe;
 
-  private FastReflection() {
+  private DreaminReflection() {
     throw new UnsupportedOperationException();
   }
 
