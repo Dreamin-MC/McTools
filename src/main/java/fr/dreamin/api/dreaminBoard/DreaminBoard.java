@@ -38,7 +38,7 @@ public class DreaminBoard extends DreaminBoardBase<String> {
   public void updateTitle(String title) {
     Objects.requireNonNull(title, "title");
 
-    if (!DreaminBoardBase.VersionType.V1_13.isHigherOrEqual() && title.length() > 32) {
+    if (!VersionType.V1_13.isHigherOrEqual() && title.length() > 32) {
       throw new IllegalArgumentException("Title is longer than 32 chars");
     }
 
@@ -52,7 +52,7 @@ public class DreaminBoard extends DreaminBoardBase<String> {
   public void updateLines(String... lines) {
     Objects.requireNonNull(lines, "lines");
 
-    if (!DreaminBoardBase.VersionType.V1_13.isHigherOrEqual()) {
+    if (!VersionType.V1_13.isHigherOrEqual()) {
       int lineCount = 0;
       for (String s : lines) {
         if (s != null && s.length() > 30) {
@@ -100,7 +100,7 @@ public class DreaminBoard extends DreaminBoardBase<String> {
       suffix = suffix.substring(0, maxLength);
     }
 
-    sendTeamPacket(score, DreaminBoardBase.TeamMode.UPDATE, prefix, suffix);
+    sendTeamPacket(score, TeamMode.UPDATE, prefix, suffix);
   }
 
   @Override
@@ -130,6 +130,6 @@ public class DreaminBoard extends DreaminBoardBase<String> {
    * @return max length
    */
   protected boolean hasLinesMaxLength() {
-    return !DreaminBoardBase.VersionType.V1_13.isHigherOrEqual();
+    return !VersionType.V1_13.isHigherOrEqual();
   }
 }
