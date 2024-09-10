@@ -1,6 +1,5 @@
 package fr.dreamin.mctools;
 
-import fr.dreamin.api.gui.GuiManager;
 import fr.dreamin.api.service.Service;
 import fr.dreamin.api.service.ServiceManager;
 import fr.dreamin.api.service.manager.dependency.PaperDependencyService;
@@ -25,7 +24,7 @@ public final class McTools extends JavaPlugin {
         saveDefaultConfig();
         codex = new Codex();
 
-        getServiceManager().loadServices(GuiManager.class, PaperDependencyService.class, PlayersService.class);
+        getServiceManager().loadServices(PaperDependencyService.class, PlayersService.class);
 
         // Load
         loadGui();
