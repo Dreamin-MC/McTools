@@ -4,6 +4,8 @@ import fr.dreamin.api.service.Service;
 import fr.dreamin.api.service.ServiceManager;
 import fr.dreamin.api.service.manager.dependency.PaperDependencyService;
 import fr.dreamin.api.service.manager.players.PlayersService;
+import fr.dreamin.api.time.CooldownManager;
+import fr.dreamin.api.time.TimerManager;
 import fr.dreamin.mctools.component.listeners.ListenerManager;
 import fr.dreamin.mctools.config.Codex;
 import lombok.Getter;
@@ -24,10 +26,9 @@ public final class McTools extends JavaPlugin {
         saveDefaultConfig();
         codex = new Codex();
 
-        getServiceManager().loadServices(PaperDependencyService.class, PlayersService.class);
+        getServiceManager().loadServices(PaperDependencyService.class, CooldownManager.class, TimerManager.class, PlayersService.class);
 
         // Load
-        loadGui();
         loadCommands();
 
         new ListenerManager(this);
@@ -45,8 +46,6 @@ public final class McTools extends JavaPlugin {
     public static <T> T resolveDependency(Class<T> d) {
         return d.cast(McTools.getInstance().getServiceManager().resolve(d));
     }
-
-    private void loadGui() {}
 
     private void loadCommands() {}
 

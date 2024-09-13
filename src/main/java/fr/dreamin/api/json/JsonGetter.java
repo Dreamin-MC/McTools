@@ -22,6 +22,9 @@ public class JsonGetter {
       if (jsonElement != null && jsonElement.isJsonObject()) {
         return parseLocation(jsonElement.getAsJsonObject(), w);
       }
+      else if (jsonElement != null && jsonElement.isJsonPrimitive()) {
+        return parseLocation(JsonParser.parseString(JsonParser.parseString(json).getAsJsonObject().get(sectionName).getAsString()).getAsJsonObject(), w);
+      }
     } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
       e.printStackTrace();
     }
@@ -58,9 +61,10 @@ public class JsonGetter {
   public static List<Location> getLocationsFromJson(String json, String sectionName, World w) {
     List<Location> locations = new ArrayList<>();
     try {
-      // Parse le JSON global et accède à la section donnée
+
       JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
       JsonElement jsonElement = jsonObject.get(sectionName);
+
 
       if (jsonElement != null && jsonElement.isJsonArray()) {
         JsonArray jsonArray = jsonElement.getAsJsonArray();
@@ -68,7 +72,31 @@ public class JsonGetter {
           if (element.isJsonObject()) {
             Location loc = parseLocation(element.getAsJsonObject(), w);
             locations.add(loc);
+          } else if (element.isJsonPrimitive()) {
+
+            JsonObject locObject = JsonParser.parseString(element.getAsString()).getAsJsonObject();
+            Location loc = parseLocation(locObject, w);
+            locations.add(loc);
           }
+        }
+      }
+
+      else if (jsonElement != null && jsonElement.isJsonPrimitive()) {
+
+        String jsonString = jsonElement.getAsString();
+        JsonElement parsedElement = JsonParser.parseString(jsonString);
+
+        if (parsedElement.isJsonArray()) {
+          JsonArray jsonArray = parsedElement.getAsJsonArray();
+          for (JsonElement element : jsonArray) {
+            if (element.isJsonObject()) {
+              Location loc = parseLocation(element.getAsJsonObject(), w);
+              locations.add(loc);
+            }
+          }
+        } else if (parsedElement.isJsonObject()) {
+          Location loc = parseLocation(parsedElement.getAsJsonObject(), w);
+          locations.add(loc);
         }
       }
     } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
@@ -76,6 +104,7 @@ public class JsonGetter {
     }
     return locations;
   }
+
 
   // ----------------------------------------------------------------
   // CUBOIDS
