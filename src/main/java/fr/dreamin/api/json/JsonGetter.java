@@ -113,12 +113,12 @@ public class JsonGetter {
 
   public static Cuboid getCuboidFromJson(World world, String json) {
     try {
-      JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
-
-      Location locA = parseLocation(jsonObject.getAsJsonObject("locA"), world);
-      Location locB = parseLocation(jsonObject.getAsJsonObject("locB"), world);
-
-      return new Cuboid(locA, locB);
+      JsonElement jsonElement = JsonParser.parseString(json).getAsJsonObject();
+      if (jsonElement != null && jsonElement.isJsonObject()) return new Cuboid(parseLocation(jsonElement.getAsJsonObject().getAsJsonObject("locA"), world), parseLocation(jsonElement.getAsJsonObject().getAsJsonObject("locB"), world));
+      else if (jsonElement != null && jsonElement.isJsonPrimitive()) {
+        JsonObject jsonObject = JsonParser.parseString(JsonParser.parseString(json).getAsString()).getAsJsonObject();
+        return new Cuboid(parseLocation(jsonObject.getAsJsonObject("locA"), world), parseLocation(jsonObject.getAsJsonObject("locB"), world));
+      }
     } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
       e.printStackTrace();
     }
@@ -147,12 +147,12 @@ public class JsonGetter {
 
   public static MemoryCuboid getMemoryCuboidFromJson(World world, String json) {
     try {
-      JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
-
-      Location locA = parseLocation(jsonObject.getAsJsonObject("locA"), world);
-      Location locB = parseLocation(jsonObject.getAsJsonObject("locB"), world);
-
-      return new MemoryCuboid(locA, locB);
+      JsonElement jsonElement = JsonParser.parseString(json).getAsJsonObject();
+      if (jsonElement != null && jsonElement.isJsonObject()) return new MemoryCuboid(parseLocation(jsonElement.getAsJsonObject().getAsJsonObject("locA"), world), parseLocation(jsonElement.getAsJsonObject().getAsJsonObject("locB"), world));
+      else if (jsonElement != null && jsonElement.isJsonPrimitive()) {
+        JsonObject jsonObject = JsonParser.parseString(JsonParser.parseString(json).getAsJsonObject().getAsString()).getAsJsonObject();
+        return new MemoryCuboid(parseLocation(jsonObject.getAsJsonObject("locA"), world), parseLocation(jsonObject.getAsJsonObject("locB"), world));
+      }
     } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
       e.printStackTrace();
     }
