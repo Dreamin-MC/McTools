@@ -3,7 +3,8 @@ package fr.dreamin.api.json;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import fr.dreamin.api.cuboide.Cuboide;
+import fr.dreamin.api.cuboide.Cuboid;
+import fr.dreamin.api.cuboide.MemoryCuboid;
 import org.bukkit.Location;
 
 import java.util.List;
@@ -31,11 +32,11 @@ public class JsonCreator {
   // CUBOIDS
   // ----------------------------------------------------------------
 
-  public static String createJsonFromCuboide(Cuboide cuboide) {
+  public static String createJsonFromCuboide(Cuboid cuboid) {
     JsonObject jsonObject = new JsonObject();
 
-    jsonObject.add("locA", createJsonObjectFromLocation(cuboide.getLocA(), false));
-    jsonObject.add("locB", createJsonObjectFromLocation(cuboide.getLocB(), false));
+    jsonObject.add("locA", createJsonObjectFromLocation(cuboid.getLocA(), false));
+    jsonObject.add("locB", createJsonObjectFromLocation(cuboid.getLocB(), false));
 
     return gson.toJson(jsonObject);
   }

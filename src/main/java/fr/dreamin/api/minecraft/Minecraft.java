@@ -2,9 +2,8 @@ package fr.dreamin.api.minecraft;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import fr.dreamin.api.cuboide.Cuboid;
 import fr.dreamin.mctools.McTools;
-import fr.dreamin.api.cuboide.Cuboide;
-import fr.dreamin.mctools.component.player.MTPlayer;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Bisected;
@@ -450,12 +449,12 @@ public class Minecraft {
     return location;
   }
 
-  public static void showCuboid(Player player, List<Cuboide> cuboid) {
+  public static void showCuboid(Player player, List<Cuboid> cuboidList) {
     World world = player.getWorld();
 
-    for (Cuboide cuboide : cuboid) {
-      Location coin1 = cuboide.getLocA();
-      Location coin2 = cuboide.getLocB();
+    for (Cuboid cuboid : cuboidList) {
+      Location coin1 = cuboid.getLocA();
+      Location coin2 = cuboid.getLocB();
 
       if (coin1 == null) coin1 = coin2;
       else if (coin2 == null) coin2 = coin1;
@@ -481,7 +480,7 @@ public class Minecraft {
     }
   }
 
-  public static void showCuboid(Player player, Cuboide cuboid, Particle.DustOptions color) {
+  public static void showCuboid(Player player, Cuboid cuboid, Particle.DustOptions color) {
     World world = player.getWorld();
 
 
