@@ -125,20 +125,6 @@ public class JsonGetter {
     return null;
   }
 
-  public static MemoryCuboid getMemoryCuboidFromJson(World world, String json) {
-    try {
-      JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
-
-      Location locA = parseLocation(jsonObject.getAsJsonObject("locA"), world);
-      Location locB = parseLocation(jsonObject.getAsJsonObject("locB"), world);
-
-      return new MemoryCuboid(locA, locB);
-    } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
-      e.printStackTrace();
-    }
-    return null;
-  }
-
   public static Cuboid getCuboidFromJson(World world, String json, String sectionName) {
     try {
       JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
@@ -159,6 +145,20 @@ public class JsonGetter {
     return null;
   }
 
+  public static MemoryCuboid getMemoryCuboidFromJson(World world, String json) {
+    try {
+      JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+
+      Location locA = parseLocation(jsonObject.getAsJsonObject("locA"), world);
+      Location locB = parseLocation(jsonObject.getAsJsonObject("locB"), world);
+
+      return new MemoryCuboid(locA, locB);
+    } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
+      e.printStackTrace();
+    }
+    return null;
+  }
+
   public static MemoryCuboid getMemoryCuboidFromJson(World world, String json, String sectionName) {
     try {
       JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
@@ -176,6 +176,134 @@ public class JsonGetter {
       e.printStackTrace();
     }
     return null;
+  }
+
+  public static List<Cuboid> getCuboidsFromJson(String json, String sectionName, World w) {
+    List<Cuboid> result = new ArrayList<>();
+    try {
+
+      JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+      JsonElement jsonElement = jsonObject.get(sectionName);
+
+
+      if (jsonElement != null && jsonElement.isJsonArray()) {
+        JsonArray jsonArray = jsonElement.getAsJsonArray();
+        for (JsonElement element : jsonArray) {
+          if (element.isJsonObject()) {
+            Cuboid cuboid = new Cuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("LocB"), w));
+            result.add(cuboid);
+          } else if (element.isJsonPrimitive()) {
+            JsonObject locObject = JsonParser.parseString(element.getAsString()).getAsJsonObject();
+            Cuboid cuboid = new Cuboid(parseLocation(locObject.getAsJsonObject("LocA"), w), parseLocation(locObject.getAsJsonObject("LocB"), w));
+            result.add(cuboid);
+          }
+        }
+      }
+
+      else if (jsonElement != null && jsonElement.isJsonPrimitive()) {
+
+        String jsonString = jsonElement.getAsString();
+        JsonElement parsedElement = JsonParser.parseString(jsonString);
+
+        if (parsedElement.isJsonArray()) {
+          JsonArray jsonArray = parsedElement.getAsJsonArray();
+          for (JsonElement element : jsonArray) {
+            if (element.isJsonObject()) {
+              Cuboid cuboid = new Cuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("LocB"), w));
+              result.add(cuboid);
+            }
+          }
+        } else if (parsedElement.isJsonObject()) {
+          Cuboid cuboid = new Cuboid(parseLocation(parsedElement.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(parsedElement.getAsJsonObject().getAsJsonObject("LocB"), w));
+          result.add(cuboid);
+        }
+      }
+    } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
+      e.printStackTrace();
+    }
+    return result;
+  }
+
+  public static List<Cuboid> getCuboidsFromJson(String json, World w) {
+    List<Cuboid> rs = new ArrayList<>();
+
+    try {
+      JsonArray jsonArray = JsonParser.parseString(json).getAsJsonArray();
+      for (JsonElement element : jsonArray) {
+        if (element.isJsonObject()) {
+          Cuboid cuboid = new Cuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("LocB"), w));
+          rs.add(cuboid);
+        }
+      }
+    } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
+      e.printStackTrace();
+    }
+
+    return rs;
+  }
+
+  public static List<MemoryCuboid> getMemoryCuboidsFromJson(String json, String sectionName, World w) {
+    List<MemoryCuboid> result = new ArrayList<>();
+    try {
+
+      JsonObject jsonObject = JsonParser.parseString(json).getAsJsonObject();
+      JsonElement jsonElement = jsonObject.get(sectionName);
+
+
+      if (jsonElement != null && jsonElement.isJsonArray()) {
+        JsonArray jsonArray = jsonElement.getAsJsonArray();
+        for (JsonElement element : jsonArray) {
+          if (element.isJsonObject()) {
+            MemoryCuboid cuboid = new MemoryCuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("LocB"), w));
+            result.add(cuboid);
+          } else if (element.isJsonPrimitive()) {
+            JsonObject locObject = JsonParser.parseString(element.getAsString()).getAsJsonObject();
+            MemoryCuboid cuboid = new MemoryCuboid(parseLocation(locObject.getAsJsonObject("LocA"), w), parseLocation(locObject.getAsJsonObject("LocB"), w));
+            result.add(cuboid);
+          }
+        }
+      }
+
+      else if (jsonElement != null && jsonElement.isJsonPrimitive()) {
+
+        String jsonString = jsonElement.getAsString();
+        JsonElement parsedElement = JsonParser.parseString(jsonString);
+
+        if (parsedElement.isJsonArray()) {
+          JsonArray jsonArray = parsedElement.getAsJsonArray();
+          for (JsonElement element : jsonArray) {
+            if (element.isJsonObject()) {
+              MemoryCuboid cuboid = new MemoryCuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("LocB"), w));
+              result.add(cuboid);
+            }
+          }
+        } else if (parsedElement.isJsonObject()) {
+          MemoryCuboid cuboid = new MemoryCuboid(parseLocation(parsedElement.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(parsedElement.getAsJsonObject().getAsJsonObject("LocB"), w));
+          result.add(cuboid);
+        }
+      }
+    } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
+      e.printStackTrace();
+    }
+    return result;
+  }
+
+  public static List<MemoryCuboid> getMemoryCuboidsFromJson(String json, World w) {
+    List<MemoryCuboid> rs = new ArrayList<>();
+
+    try {
+      JsonArray jsonArray = JsonParser.parseString(json).getAsJsonArray();
+      for (JsonElement element : jsonArray) {
+        if (element.isJsonObject()) {
+          MemoryCuboid cuboid = new MemoryCuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("LocB"), w));
+          rs.add(cuboid);
+        }
+      }
+    } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
+      e.printStackTrace();
+    }
+
+    return rs;
   }
 
   // ----------------------------------------------------------------
