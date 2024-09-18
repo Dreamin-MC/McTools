@@ -234,6 +234,4 @@ public class Cuboid {
       }
     }.runTaskTimerAsynchronously(plugin, 0L, tick);
   }
-
-
 }

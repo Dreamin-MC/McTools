@@ -113,12 +113,29 @@ public class JsonGetter {
 
   public static Cuboid getCuboidFromJson(World world, String json) {
     try {
-      JsonElement jsonElement = JsonParser.parseString(json).getAsJsonObject();
-      if (jsonElement != null && jsonElement.isJsonObject()) return new Cuboid(parseLocation(jsonElement.getAsJsonObject().getAsJsonObject("locA"), world), parseLocation(jsonElement.getAsJsonObject().getAsJsonObject("locB"), world));
-      else if (jsonElement != null && jsonElement.isJsonPrimitive()) {
-        JsonObject jsonObject = JsonParser.parseString(JsonParser.parseString(json).getAsString()).getAsJsonObject();
-        return new Cuboid(parseLocation(jsonObject.getAsJsonObject("locA"), world), parseLocation(jsonObject.getAsJsonObject("locB"), world));
+      JsonElement jsonElement = JsonParser.parseString(json);
+
+      // Vérifie si l'élément JSON est bien un objet
+      if (jsonElement != null && jsonElement.isJsonObject()) {
+        JsonObject jsonObject = jsonElement.getAsJsonObject();
+        // Vérifie si "locA" et "locB" sont des objets JSON et les parse
+        if (jsonObject.has("locA") && jsonObject.get("locA").isJsonObject() &&
+          jsonObject.has("locB") && jsonObject.get("locB").isJsonObject()) {
+          return new Cuboid(parseLocation(jsonObject.getAsJsonObject("locA"), world), parseLocation(jsonObject.getAsJsonObject("locB"), world));
+        } else throw new IllegalArgumentException("Missing or invalid 'locA' or 'locB' as JsonObject in JSON");
       }
+
+      // Si c'est un JsonPrimitive
+      if (jsonElement != null && jsonElement.isJsonPrimitive()) {
+        // On convertit le JsonPrimitive en JsonObject si nécessaire (selon le format attendu)
+        String primitiveValue = jsonElement.getAsString(); // Par exemple, une chaîne JSON
+        JsonObject jsonObject = JsonParser.parseString(primitiveValue).getAsJsonObject();
+        if (jsonObject.has("locA") && jsonObject.get("locA").isJsonObject() &&
+          jsonObject.has("locB") && jsonObject.get("locB").isJsonObject()) {
+          return new Cuboid(parseLocation(jsonObject.getAsJsonObject("locA"), world), parseLocation(jsonObject.getAsJsonObject("locB"), world));
+        } else throw new IllegalArgumentException("Missing or invalid 'locA' or 'locB' as JsonObject in Primitive JSON");
+      }
+
     } catch (JsonSyntaxException | IllegalStateException | NullPointerException e) {
       e.printStackTrace();
     }
@@ -190,11 +207,11 @@ public class JsonGetter {
         JsonArray jsonArray = jsonElement.getAsJsonArray();
         for (JsonElement element : jsonArray) {
           if (element.isJsonObject()) {
-            Cuboid cuboid = new Cuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("LocB"), w));
+            Cuboid cuboid = new Cuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("locA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("locB"), w));
             result.add(cuboid);
           } else if (element.isJsonPrimitive()) {
             JsonObject locObject = JsonParser.parseString(element.getAsString()).getAsJsonObject();
-            Cuboid cuboid = new Cuboid(parseLocation(locObject.getAsJsonObject("LocA"), w), parseLocation(locObject.getAsJsonObject("LocB"), w));
+            Cuboid cuboid = new Cuboid(parseLocation(locObject.getAsJsonObject("locA"), w), parseLocation(locObject.getAsJsonObject("locB"), w));
             result.add(cuboid);
           }
         }
@@ -209,12 +226,12 @@ public class JsonGetter {
           JsonArray jsonArray = parsedElement.getAsJsonArray();
           for (JsonElement element : jsonArray) {
             if (element.isJsonObject()) {
-              Cuboid cuboid = new Cuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("LocB"), w));
+              Cuboid cuboid = new Cuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("locA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("locB"), w));
               result.add(cuboid);
             }
           }
         } else if (parsedElement.isJsonObject()) {
-          Cuboid cuboid = new Cuboid(parseLocation(parsedElement.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(parsedElement.getAsJsonObject().getAsJsonObject("LocB"), w));
+          Cuboid cuboid = new Cuboid(parseLocation(parsedElement.getAsJsonObject().getAsJsonObject("locA"), w), parseLocation(parsedElement.getAsJsonObject().getAsJsonObject("locB"), w));
           result.add(cuboid);
         }
       }
@@ -231,7 +248,7 @@ public class JsonGetter {
       JsonArray jsonArray = JsonParser.parseString(json).getAsJsonArray();
       for (JsonElement element : jsonArray) {
         if (element.isJsonObject()) {
-          Cuboid cuboid = new Cuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("LocB"), w));
+          Cuboid cuboid = new Cuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("locA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("locB"), w));
           rs.add(cuboid);
         }
       }
@@ -254,11 +271,11 @@ public class JsonGetter {
         JsonArray jsonArray = jsonElement.getAsJsonArray();
         for (JsonElement element : jsonArray) {
           if (element.isJsonObject()) {
-            MemoryCuboid cuboid = new MemoryCuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("LocB"), w));
+            MemoryCuboid cuboid = new MemoryCuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("locA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("locB"), w));
             result.add(cuboid);
           } else if (element.isJsonPrimitive()) {
             JsonObject locObject = JsonParser.parseString(element.getAsString()).getAsJsonObject();
-            MemoryCuboid cuboid = new MemoryCuboid(parseLocation(locObject.getAsJsonObject("LocA"), w), parseLocation(locObject.getAsJsonObject("LocB"), w));
+            MemoryCuboid cuboid = new MemoryCuboid(parseLocation(locObject.getAsJsonObject("locA"), w), parseLocation(locObject.getAsJsonObject("locB"), w));
             result.add(cuboid);
           }
         }
@@ -273,12 +290,12 @@ public class JsonGetter {
           JsonArray jsonArray = parsedElement.getAsJsonArray();
           for (JsonElement element : jsonArray) {
             if (element.isJsonObject()) {
-              MemoryCuboid cuboid = new MemoryCuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("LocB"), w));
+              MemoryCuboid cuboid = new MemoryCuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("locA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("locB"), w));
               result.add(cuboid);
             }
           }
         } else if (parsedElement.isJsonObject()) {
-          MemoryCuboid cuboid = new MemoryCuboid(parseLocation(parsedElement.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(parsedElement.getAsJsonObject().getAsJsonObject("LocB"), w));
+          MemoryCuboid cuboid = new MemoryCuboid(parseLocation(parsedElement.getAsJsonObject().getAsJsonObject("locA"), w), parseLocation(parsedElement.getAsJsonObject().getAsJsonObject("locB"), w));
           result.add(cuboid);
         }
       }
@@ -295,7 +312,7 @@ public class JsonGetter {
       JsonArray jsonArray = JsonParser.parseString(json).getAsJsonArray();
       for (JsonElement element : jsonArray) {
         if (element.isJsonObject()) {
-          MemoryCuboid cuboid = new MemoryCuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("LocA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("LocB"), w));
+          MemoryCuboid cuboid = new MemoryCuboid(parseLocation(element.getAsJsonObject().getAsJsonObject("locA"), w), parseLocation(element.getAsJsonObject().getAsJsonObject("locB"), w));
           rs.add(cuboid);
         }
       }
