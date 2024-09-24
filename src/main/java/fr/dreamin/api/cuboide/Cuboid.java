@@ -234,4 +234,58 @@ public class Cuboid {
       }
     }.runTaskTimerAsynchronously(plugin, 0L, tick);
   }
+
+  public int countBlocksOfMaterial(Material material) {
+    if (locA == null || locB == null || !locA.getWorld().equals(locB.getWorld())) return 0;
+
+    World world = locA.getWorld();
+    int count = 0;
+
+    int minX = Math.min(locA.getBlockX(), locB.getBlockX());
+    int maxX = Math.max(locA.getBlockX(), locB.getBlockX());
+    int minY = Math.min(locA.getBlockY(), locB.getBlockY());
+    int maxY = Math.max(locA.getBlockY(), locB.getBlockY());
+    int minZ = Math.min(locA.getBlockZ(), locB.getBlockZ());
+    int maxZ = Math.max(locA.getBlockZ(), locB.getBlockZ());
+
+    for (int x = minX; x <= maxX; x++) {
+      for (int y = minY; y <= maxY; y++) {
+        for (int z = minZ; z <= maxZ; z++) {
+          Block block = world.getBlockAt(x, y, z);
+          if (block.getType() == material) {
+            count++;
+          }
+        }
+      }
+    }
+
+    return count;
+  }
+
+  public int countBlocksOfBlockData(BlockData blockData) {
+    if (locA == null || locB == null || !locA.getWorld().equals(locB.getWorld())) return 0;
+
+    World world = locA.getWorld();
+    int count = 0;
+
+    int minX = Math.min(locA.getBlockX(), locB.getBlockX());
+    int maxX = Math.max(locA.getBlockX(), locB.getBlockX());
+    int minY = Math.min(locA.getBlockY(), locB.getBlockY());
+    int maxY = Math.max(locA.getBlockY(), locB.getBlockY());
+    int minZ = Math.min(locA.getBlockZ(), locB.getBlockZ());
+    int maxZ = Math.max(locA.getBlockZ(), locB.getBlockZ());
+
+    for (int x = minX; x <= maxX; x++) {
+      for (int y = minY; y <= maxY; y++) {
+        for (int z = minZ; z <= maxZ; z++) {
+          Block block = world.getBlockAt(x, y, z);
+          if (block.getBlockData().matches(blockData)) {
+            count++;
+          }
+        }
+      }
+    }
+
+    return count;
+  }
 }
