@@ -46,6 +46,10 @@ public enum CustomChatColor {
     return this.color + String.valueOf(text);
   }
 
+  public int getRGB() {
+    return this.getColor().getColor().getRGB();
+  }
+
   public static String BOLD() {
     return "§l";
   }
