@@ -13,6 +13,7 @@ import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.inventory.meta.components.FoodComponent;
 import org.bukkit.persistence.PersistentDataType;
+import xyz.xenondevs.invui.item.Item;
 
 import java.util.Arrays;
 import java.util.List;
@@ -290,4 +291,9 @@ public class ItemBuilder {
   public ItemStack toItemStack() {
     return is;
   }
+
+  public xyz.xenondevs.invui.item.builder.ItemBuilder toGuiItem() {
+    return new xyz.xenondevs.invui.item.builder.ItemBuilder(this.toItemStack());
+  }
+
 }
