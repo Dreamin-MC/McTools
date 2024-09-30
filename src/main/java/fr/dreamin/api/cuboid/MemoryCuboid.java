@@ -20,7 +20,7 @@ public class MemoryCuboid extends Cuboid {
 
   public MemoryCuboid(Location locA, Location locB) {
     super(locA, locB);
-    saveBlocks(); // Appel à saveAll par défaut dans le constructeur
+    saveAll();
   }
 
   // Méthode pour sauvegarder uniquement les blocs
@@ -57,22 +57,27 @@ public class MemoryCuboid extends Cuboid {
 
   // Méthode pour restaurer uniquement les entités
   public void restoreEntities() {
+    removeAllEntities();
     World world = getLocA().getWorld();
     savedEntities.forEach(data -> {
       Entity entity = world.spawnEntity(data.getLocation(), data.getEntityType());
     });
   }
 
-  // Méthode pour sauvegarder à la fois les blocs et les entités
   public void saveAll() {
     saveBlocks();
     saveEntities();
   }
 
-  // Méthode pour restaurer à la fois les blocs et les entités
   public void restoreAll() {
     restoreBlocks();
     restoreEntities();
+  }
+
+  public void removeAllEntities() {
+    getLocA().getWorld().getEntities().stream()
+      .filter(entity -> isLocationIn(entity.getLocation())) // Filter entities inside the cuboid
+      .forEach(Entity::remove);
   }
 
   @Getter @Setter
