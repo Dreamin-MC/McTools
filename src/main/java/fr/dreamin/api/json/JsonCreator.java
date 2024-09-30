@@ -3,8 +3,7 @@ package fr.dreamin.api.json;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import fr.dreamin.api.cuboide.Cuboid;
-import fr.dreamin.api.cuboide.MemoryCuboid;
+import fr.dreamin.api.cuboid.Cuboid;
 import org.bukkit.Location;
 
 import java.util.List;

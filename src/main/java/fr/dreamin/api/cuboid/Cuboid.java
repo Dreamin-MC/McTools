@@ -1,4 +1,4 @@
-package fr.dreamin.api.cuboide;
+package fr.dreamin.api.cuboid;
 
 import lombok.Getter;
 import lombok.Setter;

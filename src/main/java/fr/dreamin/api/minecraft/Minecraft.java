@@ -2,7 +2,7 @@ package fr.dreamin.api.minecraft;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import fr.dreamin.api.cuboide.Cuboid;
+import fr.dreamin.api.cuboid.Cuboid;
 import fr.dreamin.mctools.McTools;
 import org.bukkit.*;
 import org.bukkit.block.Block;

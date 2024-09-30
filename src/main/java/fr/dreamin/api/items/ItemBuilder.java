@@ -177,6 +177,7 @@ public class ItemBuilder {
   public ItemBuilder setUnbreakable(boolean b) {
     ItemMeta im = is.getItemMeta();
     im.setUnbreakable(b);
+    is.setItemMeta(im);
     return this;
   }
 

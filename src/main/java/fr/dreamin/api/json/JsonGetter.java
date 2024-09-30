@@ -1,8 +1,8 @@
 package fr.dreamin.api.json;
 
 import com.google.gson.*;
-import fr.dreamin.api.cuboide.Cuboid;
-import fr.dreamin.api.cuboide.MemoryCuboid;
+import fr.dreamin.api.cuboid.Cuboid;
+import fr.dreamin.api.cuboid.MemoryCuboid;
 import org.bukkit.Location;
 import org.bukkit.World;
 
