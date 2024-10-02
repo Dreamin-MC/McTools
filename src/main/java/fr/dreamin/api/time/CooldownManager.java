@@ -4,14 +4,13 @@ import fr.dreamin.mctools.McTools;
 import fr.dreamin.api.listener.time.TimeEventAction;
 import fr.dreamin.api.listener.time.cooldown.OnCooldownEvent;
 import fr.dreamin.api.player.ActionPlayerKey;
-import fr.dreamin.api.service.Service;
 import fr.dreamin.api.time.event.CooldownCallback;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class CooldownManager extends Service {
+public class CooldownManager {
 
   // Map pour stocker les temps de fin de cooldown pour chaque clé joueur-action
   private final Map<ActionPlayerKey, Long> actionCooldowns = new HashMap<>();

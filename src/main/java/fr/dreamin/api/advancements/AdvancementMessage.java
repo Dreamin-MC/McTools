@@ -3,6 +3,7 @@ package fr.dreamin.api.advancements;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonObject;
+import fr.dreamin.mctools.McTools;
 import org.bukkit.Bukkit;
 import org.bukkit.NamespacedKey;
 import org.bukkit.advancement.Advancement;
@@ -21,7 +22,6 @@ public class AdvancementMessage extends DisplayMessage	{
   private String title, description, background;
   private String frame = "task";
   private boolean announce = false, toast = true;
-  private JavaPlugin pl;
 
   /**
    * Create a Toast/Advancement display (Top right corner)
@@ -29,10 +29,9 @@ public class AdvancementMessage extends DisplayMessage	{
    * @param title Message to show/send
    * @param icon minecraft id of display item (minecraft:...)
    * @param background minecraft id of background item (minecraft:...)
-   * @param pl Your plugin instance
    */
-  public AdvancementMessage(String id, String title, String icon, String background, JavaPlugin pl)	{
-    this(new NamespacedKey(pl, id), title, icon, background, pl);
+  public AdvancementMessage(String id, String title, String icon, String background)	{
+    this(new NamespacedKey(McTools.getInstance(), id), title, icon, background);
   }
 
   /**
@@ -41,14 +40,12 @@ public class AdvancementMessage extends DisplayMessage	{
    * @param title Message to show/send
    * @param icon minecraft id of display item (minecraft:...)
    * @param background minecraft id of background item (minecraft:...)
-   * @param pl Your plugin instance
    */
-  public AdvancementMessage(NamespacedKey id, String title, String icon, String background, JavaPlugin pl) {
+  public AdvancementMessage(NamespacedKey id, String title, String icon, String background) {
     this.id = id;
     this.title = title;
     this.description = "§7This Toast was created with DreamAPI";
     this.icon = icon;
-    this.pl = pl;
   }
 
   @Override
@@ -67,7 +64,7 @@ public class AdvancementMessage extends DisplayMessage	{
         revoke(players);
         remove();
       }
-    }.runTaskLater(pl, 20);
+    }.runTaskLater(McTools.getInstance(), 20);
   }
 
   @SuppressWarnings("deprecation")

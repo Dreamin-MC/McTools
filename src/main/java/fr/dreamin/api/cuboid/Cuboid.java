@@ -1,5 +1,6 @@
 package fr.dreamin.api.cuboid;
 
+import fr.dreamin.mctools.McTools;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Location;
@@ -123,7 +124,7 @@ public class Cuboid {
     }
   }
 
-  public void setMaterialEveryTick(final Material material, Plugin plugin, long tick, boolean topToBottom) {
+  public void setMaterialEveryTick(final Material material, long tick, boolean topToBottom) {
     final int minY = Math.min(locA.getBlockY(), locB.getBlockY());
     final int maxY = Math.max(locA.getBlockY(), locB.getBlockY());
 
@@ -147,10 +148,10 @@ public class Cuboid {
         if (topToBottom) currentY--;
         else currentY++;
       }
-    }.runTaskTimerAsynchronously(plugin, 0L, tick);
+    }.runTaskTimerAsynchronously(McTools.getInstance(), 0L, tick);
   }
 
-  public void setBlockDataEveryTick(final BlockData blockData, Plugin plugin, long tick, boolean topToBottom) {
+  public void setBlockDataEveryTick(final BlockData blockData, long tick, boolean topToBottom) {
     final int minY = Math.min(locA.getBlockY(), locB.getBlockY());
     final int maxY = Math.max(locA.getBlockY(), locB.getBlockY());
 
@@ -174,10 +175,10 @@ public class Cuboid {
         if (topToBottom) currentY--;
         else currentY++;
       }
-    }.runTaskTimerAsynchronously(plugin, 0L, tick);
+    }.runTaskTimerAsynchronously(McTools.getInstance(), 0L, tick);
   }
 
-  public void replaceMaterialEveryTick(final Material replaced, final Material newMaterial, Plugin plugin, long tick, boolean topToBottom) {
+  public void replaceMaterialEveryTick(final Material replaced, final Material newMaterial, long tick, boolean topToBottom) {
     final int minY = Math.min(locA.getBlockY(), locB.getBlockY());
     final int maxY = Math.max(locA.getBlockY(), locB.getBlockY());
 
@@ -203,10 +204,10 @@ public class Cuboid {
         if (topToBottom) currentY--;
         else currentY++;
       }
-    }.runTaskTimerAsynchronously(plugin, 0L, tick);
+    }.runTaskTimerAsynchronously(McTools.getInstance(), 0L, tick);
   }
 
-  public void replaceBlockDataEveryTick(final BlockData replaced, final BlockData newBlockData, Plugin plugin, long tick, boolean topToBottom) {
+  public void replaceBlockDataEveryTick(final BlockData replaced, final BlockData newBlockData, long tick, boolean topToBottom) {
     final int minY = Math.min(locA.getBlockY(), locB.getBlockY());
     final int maxY = Math.max(locA.getBlockY(), locB.getBlockY());
 
@@ -232,7 +233,7 @@ public class Cuboid {
         if (topToBottom) currentY--;
         else currentY++;
       }
-    }.runTaskTimerAsynchronously(plugin, 0L, tick);
+    }.runTaskTimerAsynchronously(McTools.getInstance(), 0L, tick);
   }
 
   public int countBlocksOfMaterial(Material material) {

@@ -16,6 +16,7 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.EulerAngle;
@@ -343,6 +344,7 @@ public class Minecraft {
       else itemStack.setAmount(itemStack.getAmount() - amount);
     }
   }
+
   public static Block getBlockUnderPlayer(Entity entity) {
     Location loc = entity.getLocation(); // récupère l'emplacement du joueur
     loc.subtract(0, 1, 0); // décale l'emplacement d'une unité vers le bas

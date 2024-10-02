@@ -1,8 +1,9 @@
-package fr.dreamin.mctools.component.cmd;
+package fr.dreamin.api.cmd;
 
 import fr.dreamin.mctools.McTools;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.PluginCommand;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.List;
 

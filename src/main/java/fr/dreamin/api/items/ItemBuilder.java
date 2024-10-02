@@ -181,9 +181,9 @@ public class ItemBuilder {
     return this;
   }
 
-  public ItemBuilder setCustomTag(String tagName, PersistentDataType type, Object value) {
+  public ItemBuilder setCustomTag(String nameSpace, String tagName, PersistentDataType type, Object value) {
     ItemMeta im = is.getItemMeta();
-    NamespacedKey key = new NamespacedKey(McTools.getInstance(), tagName);
+    NamespacedKey key = new NamespacedKey(nameSpace, tagName);
     im.getPersistentDataContainer().set(key, type, value);
     is.setItemMeta(im);
     return this;

@@ -1,6 +1,7 @@
 package fr.dreamin.api.listener.time.timer;
 
 import fr.dreamin.api.listener.time.TimeEventAction;
+import fr.dreamin.mctools.McTools;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
@@ -28,6 +29,6 @@ public class OnTimerEvent extends Event {
     return HANDLERS;
   }
   public static void callEvent(Object key, TimeEventAction action) {
-    Bukkit.getPluginManager().callEvent(new OnTimerEvent(key, action));
+    McTools.getInstance().getServer().getPluginManager().callEvent(new OnTimerEvent(key, action));
   }
 }

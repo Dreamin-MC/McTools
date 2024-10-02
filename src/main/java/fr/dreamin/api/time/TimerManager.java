@@ -4,14 +4,13 @@ import fr.dreamin.mctools.McTools;
 import fr.dreamin.api.listener.time.TimeEventAction;
 import fr.dreamin.api.listener.time.timer.OnTimerEvent;
 import fr.dreamin.api.player.ActionPlayerKey;
-import fr.dreamin.api.service.Service;
 import fr.dreamin.api.time.event.TimerCallback;
 import org.bukkit.Bukkit;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class TimerManager extends Service {
+public class TimerManager {
   private final Map<ActionPlayerKey, Integer> actionTimerTasks = new HashMap<>();
   private final Map<String, Integer> stringTimerTasks = new HashMap<>();
   private final Map<Object, TimerCallback> timerCallbacks = new HashMap<>();

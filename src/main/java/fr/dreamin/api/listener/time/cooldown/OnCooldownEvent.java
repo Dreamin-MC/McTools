@@ -1,6 +1,7 @@
 package fr.dreamin.api.listener.time.cooldown;
 
 import fr.dreamin.api.listener.time.TimeEventAction;
+import fr.dreamin.mctools.McTools;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.event.Event;
@@ -30,6 +31,6 @@ public class OnCooldownEvent extends Event {
     return HANDLERS;
   }
   public static void callEvent(Object key, int cooldownTick, TimeEventAction action) {
-    Bukkit.getPluginManager().callEvent(new OnCooldownEvent(key, cooldownTick, action));
+    McTools.getInstance().getServer().getPluginManager().callEvent(new OnCooldownEvent(key, cooldownTick, action));
   }
 }
