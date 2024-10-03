@@ -1,5 +1,0 @@
-name: McTools
-version: '${version}'
-main: fr.dreamin.mctools.McTools
-author: 'Dreamin'
-api-version: '1.21'
