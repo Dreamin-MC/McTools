@@ -4,6 +4,13 @@ plugins {
   id 'maven-publish'
 }
 
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(22)
+  }
+}
+
 group = 'fr.dreamin'
 version = '0.1.0'
 
