@@ -11,40 +11,40 @@ import java.util.List;
 public class Interpolation {
 
   /**
-   * Génère une liste de locations correspondant à une interpolation (linéaire ou non)
-   * entre deux locations sur un nombre de ticks donné.
+   * Generates a list of locations corresponding to an interpolation (linear or not)
+   * between two locations over a given number of ticks.
    *
-   * @param startLocation  La location de départ.
-   * @param endLocation    La location d'arrivée.
-   * @param ticks          Le nombre de ticks d'intervalle entre les deux locations.
-   * @param interpolationType Le type d'interpolation (linéaire, ease-in, ease-out, etc.).
-   * @return Une liste de locations.
+   * @param startLocation    The starting location.
+   * @param endLocation      The destination location.
+   * @param ticks            The number of ticks between the two locations.
+   * @param interpolationType The type of interpolation (linear, ease-in, ease-out, etc.).
+   * @return A list of locations.
    */
   public static List<Location> generateInterpolatedLocations(Location startLocation, Location endLocation, int ticks, InterpolationType interpolationType) {
     List<Location> locations = new ArrayList<>();
 
-    // Coordonnées de départ
+    // Starting coordinates
     double startX = startLocation.getX();
     double startY = startLocation.getY();
     double startZ = startLocation.getZ();
     float startYaw = startLocation.getYaw();
     float startPitch = startLocation.getPitch();
 
-    // Coordonnées d'arrivée
+    // Ending coordinates
     double endX = endLocation.getX();
     double endY = endLocation.getY();
     double endZ = endLocation.getZ();
     float endYaw = endLocation.getYaw();
     float endPitch = endLocation.getPitch();
 
-    // Générer les locations pour chaque tick
+    // Generate locations for each tick
     for (int i = 0; i <= ticks; i++) {
-      double t = (double) i / ticks; // Temps normalisé (0.0 à 1.0)
+      double t = (double) i / ticks; // Normalized time (0.0 to 1.0)
 
-      // Appliquer le type d'interpolation sélectionné
+      // Apply the selected interpolation type
       switch (interpolationType) {
         case LINEAR:
-          // Pas de modification pour la linéarité, t reste inchangé
+          // No change for linearity, t remains unchanged
           break;
         case EASE_OUT:
           t = easeOut(t);
@@ -57,14 +57,14 @@ public class Interpolation {
           break;
       }
 
-      // Calcul des valeurs interpolées pour chaque axe
+      // Calculate interpolated values for each axis
       double currentX = interpolate(startX, endX, t);
       double currentY = interpolate(startY, endY, t);
       double currentZ = interpolate(startZ, endZ, t);
       float currentYaw = (float) interpolate(startYaw, endYaw, t);
       float currentPitch = (float) interpolate(startPitch, endPitch, t);
 
-      // Ajouter la location interpolée à la liste
+      // Add the interpolated location to the list
       locations.add(new Location(startLocation.getWorld(), currentX, currentY, currentZ, currentYaw, currentPitch));
     }
 
@@ -72,28 +72,28 @@ public class Interpolation {
   }
 
   /**
-   * Génère une liste d'ArmorStandPose contenant la position et la pose (angles) des membres
-   * d'un ArmorStand entre deux positions et poses sur un nombre de ticks donné.
+   * Generates a list of ArmorStandPose containing the position and pose (angles) of the limbs
+   * of an ArmorStand between two positions and poses over a given number of ticks.
    *
-   * @param startLocation      La position de départ.
-   * @param endLocation        La position d'arrivée.
-   * @param startPose          Les angles des membres à la position de départ.
-   * @param endPose            Les angles des membres à la position d'arrivée.
-   * @param ticks              Le nombre de ticks d'intervalle entre les deux positions/poses.
-   * @param interpolationType  Le type d'interpolation (linéaire, ease-in, ease-out, etc.).
-   * @return Une liste d'ArmorStandPose contenant la position et les angles des membres.
+   * @param startLocation    The starting position.
+   * @param endLocation      The destination position.
+   * @param startPose        The limb angles at the starting position.
+   * @param endPose          The limb angles at the destination position.
+   * @param ticks            The number of ticks between the two positions/poses.
+   * @param interpolationType The type of interpolation (linear, ease-in, ease-out, etc.).
+   * @return A list of ArmorStandPose containing the position and limb angles.
    */
   public static List<ArmorStandPose> generateInterpolatedPosesWithLocation(Location startLocation, Location endLocation, ArmorStandPose startPose, ArmorStandPose endPose, int ticks, InterpolationType interpolationType) {
     List<ArmorStandPose> poses = new ArrayList<>();
 
-    // Coordonnées de départ
+    // Starting coordinates
     double startX = startLocation.getX();
     double startY = startLocation.getY();
     double startZ = startLocation.getZ();
     float startYaw = startLocation.getYaw();
     float startPitch = startLocation.getPitch();
 
-    // Coordonnées d'arrivée
+    // Ending coordinates
     double endX = endLocation.getX();
     double endY = endLocation.getY();
     double endZ = endLocation.getZ();
@@ -101,12 +101,12 @@ public class Interpolation {
     float endPitch = endLocation.getPitch();
 
     for (int i = 0; i <= ticks; i++) {
-      double t = (double) i / ticks; // Temps normalisé (0.0 à 1.0)
+      double t = (double) i / ticks; // Normalized time (0.0 to 1.0)
 
-      // Appliquer l'interpolation
+      // Apply interpolation
       switch (interpolationType) {
         case LINEAR:
-          break; // t reste inchangé pour l'interpolation linéaire
+          break; // t remains unchanged for linear interpolation
         case EASE_OUT:
           t = easeOut(t);
           break;
@@ -118,35 +118,35 @@ public class Interpolation {
           break;
       }
 
-      // Interpolation des positions
+      // Interpolation of positions
       double currentX = interpolate(startX, endX, t);
       double currentY = interpolate(startY, endY, t);
       double currentZ = interpolate(startZ, endZ, t);
       float currentYaw = (float) interpolate(startYaw, endYaw, t);
       float currentPitch = (float) interpolate(startPitch, endPitch, t);
 
-      // Créer la nouvelle location interpolée
+      // Create the new interpolated location
       Location interpolatedLocation = new Location(startLocation.getWorld(), currentX, currentY, currentZ, currentYaw, currentPitch);
 
-      // Interpolation des angles des membres
+      // Interpolation of limb angles
       EulerAngle interpolatedRightArm = interpolateEulerAngle(startPose.getRightArmPose(), endPose.getRightArmPose(), t);
       EulerAngle interpolatedLeftArm = interpolateEulerAngle(startPose.getLeftArmPose(), endPose.getLeftArmPose(), t);
       EulerAngle interpolatedRightLeg = interpolateEulerAngle(startPose.getRightLegPose(), endPose.getRightLegPose(), t);
       EulerAngle interpolatedLeftLeg = interpolateEulerAngle(startPose.getLeftLegPose(), endPose.getLeftLegPose(), t);
 
-      // Ajouter la pose (location + angles) à la liste
+      // Add the pose (location + angles) to the list
       poses.add(new ArmorStandPose(interpolatedLocation, interpolatedRightArm, interpolatedLeftArm, interpolatedRightLeg, interpolatedLeftLeg));
     }
 
     return poses;
   }
 
-  // Fonction d'interpolation linéaire
+  // Linear interpolation function
   private static double interpolate(double start, double end, double t) {
     return start + (end - start) * t;
   }
 
-  // Fonction d'interpolation pour les angles Euler
+  // Interpolation function for Euler angles
   private static EulerAngle interpolateEulerAngle(EulerAngle start, EulerAngle end, double t) {
     double x = interpolate(start.getX(), end.getX(), t);
     double y = interpolate(start.getY(), end.getY(), t);
@@ -154,17 +154,17 @@ public class Interpolation {
     return new EulerAngle(x, y, z);
   }
 
-  // Easing-out quadratique (rapide au début, puis ralentit)
+  // Quadratic ease-out (fast at the beginning, then slows down)
   private static double easeOut(double t) {
     return t * (2 - t);
   }
 
-  // Easing-in-out cubique (lent au début et à la fin, rapide au milieu)
+  // Cubic ease-in-out (slow at the beginning and end, fast in the middle)
   private static double easeInOut(double t) {
     return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
   }
 
-  // Easing-in quadratique (lent au début, puis accélère)
+  // Quadratic ease-in (slow at the beginning, then speeds up)
   private static double easeIn(double t) {
     return t * t;
   }

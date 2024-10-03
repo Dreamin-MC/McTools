@@ -17,7 +17,7 @@ public enum CustomChatColor {
   DARKGREEN(ChatColor.of("#00AA00")),
   GOLD(ChatColor.of("#FFAA00")),
   AQUA(ChatColor.of("#55FFFF")),
-  LIGTHPURPLE(ChatColor.of("#FF55FF")),
+  LIGHTPURPLE(ChatColor.of("#FF55FF")),
   PURPLE(ChatColor.of("#8A36fA")),
   DARKPURPLE(ChatColor.of("#AA00AA")),
   BLUE(ChatColor.of("#3f6CDF")),
@@ -43,79 +43,49 @@ public enum CustomChatColor {
   }
 
   public String getColorWithText(Object text) {
-    return this.color + String.valueOf(text);
+    return this.color + text.toString();
   }
 
   public int getRGB() {
-    return this.getColor().getColor().getRGB();
+    return this.color.getColor().getRGB();
   }
 
-  public static String BOLD() {
-    return "§l";
-  }
-
-  public static ChatColor CUSTOM(String hexa) {
+  // Utility method for custom colors
+  public static ChatColor getCustomColor(String hexa) {
     return ChatColor.of(hexa);
   }
 
-  public static String CUSTOM_WITHTEXT(Object text, String hexa) {
-    return ChatColor.of(hexa) + String.valueOf(text);
-  }
-
+  // Utility method to replace color placeholders in messages
   public static String getMsg(String msg, String... args) {
-
+    // Replace %n placeholders with args
     for (int i = 0; i < args.length; i++) {
-      if (msg.contains("%" + i)) msg = msg.replace("%" + i, args[i]);
+      msg = msg.replace("%" + i, args[i]);
     }
 
-    // Expression régulière pour détecter "[color]COULEUR[color]" avec une couleur en nom
-    String nameRegex = "\\[color\\](\\w+)\\[color\\]";
+    // Compile regex once for better performance
+    final Pattern namePattern = Pattern.compile("\\[color\\](\\w+)\\[color\\]");
+    final Pattern hexPattern = Pattern.compile("\\[color\\]#?([0-9A-Fa-f]{6})\\[color\\]");
 
-    // Expression régulière pour détecter "[color]HEXA[color]" avec une couleur hexadécimale
-    String hexRegex = "\\[color\\]#?([0-9A-Fa-f]{1,6})\\[color\\]";
-
-    // Création des patterns
-    Pattern namePattern = Pattern.compile(nameRegex);
-    Pattern hexPattern = Pattern.compile(hexRegex);
-
-    // Création des matchers
+    // Replace named colors
     Matcher nameMatcher = namePattern.matcher(msg);
-    Matcher hexMatcher = hexPattern.matcher(msg);
-
-    // Remplacement des couleurs en nom
     while (nameMatcher.find()) {
-      // Récupération de la couleur en nom
-      String colorName = nameMatcher.group(1);
-
+      String colorName = nameMatcher.group(1).toUpperCase();
       try {
-        CustomChatColor customColor = CustomChatColor.valueOf(colorName.toUpperCase()); // Conversion du nom en enum
+        CustomChatColor customColor = CustomChatColor.valueOf(colorName);
         msg = msg.replaceFirst("\\[color\\]" + colorName + "\\[color\\]", customColor.getColor().toString());
       } catch (IllegalArgumentException e) {
-        // Si le nom de couleur n'existe pas dans l'enum, on le remplace par une couleur d'erreur
-        msg = msg.replaceFirst("\\[color\\]" + colorName + "\\[color\\]", CustomChatColor.WHITE.getColor().toString());
+        msg = msg.replaceFirst("\\[color\\]" + colorName + "\\[color\\]", CustomChatColor.ERROR.getColor().toString());
       }
-
     }
 
-    // Remplacement des couleurs hexadécimales
+    // Replace hex colors
+    Matcher hexMatcher = hexPattern.matcher(msg);
     while (hexMatcher.find()) {
-      // Récupération de la couleur hexadécimale
-      String hexColor = hexMatcher.group(1);
-
-      // Vérification si le caractère '#' est manquant
-      if (!hexColor.startsWith("#")) hexColor = "#" + hexColor;
-
-      // Si la longueur de la chaîne hexadécimale est inférieure à 6 caractères, compléter avec des zéros
-      if (hexColor.length() < 7) msg = msg.replaceFirst("\\[color\\]" + hexColor + "\\[color\\]",CustomChatColor.WHITE.getColor().toString());
-        // Replace l'hexa par la couleur
-      else {
-        ChatColor color = CustomChatColor.CUSTOM(hexColor);
-        msg = msg.replaceFirst("\\[color\\]" + hexColor + "\\[color\\]", color != null ? color.toString() : CustomChatColor.WHITE.getColor().toString());
-      }
-
+      String hexColor = "#" + hexMatcher.group(1);
+      ChatColor color = getCustomColor(hexColor);
+      msg = msg.replaceFirst("\\[color\\]" + hexColor + "\\[color\\]", color != null ? color.toString() : CustomChatColor.ERROR.getColor().toString());
     }
 
     return msg;
   }
-
 }
