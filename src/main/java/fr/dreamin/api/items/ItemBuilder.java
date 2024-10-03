@@ -360,6 +360,23 @@ public class ItemBuilder {
   }
 
   /**
+   * Adds lore to the item, appending new lines instead of replacing the existing lore.
+   *
+   * @param lines The lines of lore to append.
+   * @return The ItemBuilder instance for method chaining.
+   */
+  public ItemBuilder setLore(String... lines) {
+    ItemMeta meta = is.getItemMeta();
+    if (meta != null) {
+      meta.setLore(Arrays.asList(lines));
+      is.setItemMeta(meta);
+    }
+    return this;
+  }
+
+
+
+  /**
    * Returns the custom model data of the item, if present.
    *
    * @return An Optional containing the custom model data, or empty if not set.
