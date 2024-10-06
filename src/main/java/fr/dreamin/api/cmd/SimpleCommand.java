@@ -10,10 +10,13 @@ import java.util.List;
 public class SimpleCommand {
 
   public static void createCommand(String name, CommandExecutor executor) {
+    if (McTools.getInstance() == null) return;
     McTools.getInstance().getCommand(name).setExecutor(executor);
   }
 
   public static void createCommand(String name, CommandExecutor executor, String... aliases) {
+    if (McTools.getInstance() == null) return;
+
     PluginCommand cmd = McTools.getInstance().getCommand(name);
     cmd.setAliases(List.of(aliases));
     cmd.setExecutor(executor);

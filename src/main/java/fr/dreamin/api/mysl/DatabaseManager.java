@@ -1,5 +1,6 @@
 package fr.dreamin.api.mysl;
 
+import fr.dreamin.api.listener.ListenerManager;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
