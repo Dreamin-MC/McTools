@@ -46,7 +46,6 @@ dependencies {
   implementation "xyz.xenondevs.invui:invui-kotlin:1.37"
   implementation 'fr.skytasul:glowingentities:1.3.5'
   implementation 'fr.mrmicky:fastboard:2.1.3'
-  compileOnly group: 'com.denizenscript', name: 'denizen', version: '1.3.1-SNAPSHOT'
   implementation 'net.kyori:adventure-nbt:4.12.0'
   compileOnly "com.bergerkiller.bukkit:BKCommonLib:1.21.1-v1"
   compileOnly('net.citizensnpcs:citizens-main:2.0.35-SNAPSHOT') {
