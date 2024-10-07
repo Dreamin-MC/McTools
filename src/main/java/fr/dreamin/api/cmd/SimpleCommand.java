@@ -21,4 +21,12 @@ public class SimpleCommand {
     cmd.setAliases(List.of(aliases));
     cmd.setExecutor(executor);
   }
+
+  public static void createCommand(String name, CommandExecutor executor, List<String> aliases) {
+    if (McTools.getInstance() == null) return;
+
+    PluginCommand cmd = McTools.getInstance().getCommand(name);
+    cmd.setAliases(aliases);
+    cmd.setExecutor(executor);
+  }
 }

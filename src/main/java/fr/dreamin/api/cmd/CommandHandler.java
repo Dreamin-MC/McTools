@@ -1,6 +1,5 @@
 package fr.dreamin.api.cmd;
 
-import fr.dreamin.mctools.McTools;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -17,17 +16,22 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 
   private final Map<String, CommandInterface> commands = new HashMap<>();
 
-  public void registerCommand(String commandName, CommandInterface commandInterface) {
-    commands.put(commandName.toLowerCase(), commandInterface);
-
-    if (McTools.getInstance() != null) SimpleCommand.createCommand(commandName, this);
+  public void registerCommand(CommandInterface commandInterface) {
+    loadCommand(commandInterface);
   }
 
   public void unregisterCommand(String commandName) {
     commands.remove(commandName.toLowerCase());
   }
 
-  public void executeCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String s, @NotNull String[] args) {
+  private void loadCommand(CommandInterface commandInterface) {
+
+    commands.put(commandInterface.name().toLowerCase(), commandInterface);
+
+    SimpleCommand.createCommand(commandInterface.name(), this, commandInterface.aliases());
+  }
+
+  private void executeCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String s, @NotNull String[] args) {
     CommandInterface command = commands.get(cmd.getName().toLowerCase());
 
     if (command != null) {
@@ -60,6 +64,29 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 
   }
 
+  private List<String> executeTabComplet(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String s, @NotNull String[] args) {
+    CommandInterface command = commands.get(cmd.getName().toLowerCase());
+
+    if (command != null) try {
+
+      Method method = command.getClass().getMethod("tabComplete", CommandSender.class, Command.class, String.class, String[].class);
+
+      if (method.isAnnotationPresent(RequiredPermission.class)) {
+        RequiredPermission permission = method.getAnnotation(RequiredPermission.class);
+        String[] requiredPermission = permission.values();
+        boolean requireAll = permission.requreAll();
+
+        if (!hasPermision(sender, requiredPermission, requireAll)) return List.of();
+      }
+      return (List<String>) method.invoke(command, sender, cmd, s, args);
+
+    }
+    catch (Exception e) {
+      sender.sendMessage("§cErreur lors de l'exécution de la commande : §7" + e.getMessage());
+    }
+    return List.of();
+  }
+
   private boolean hasPermision(CommandSender sender, String[] requiredPermissions, boolean requireAll) {
     boolean hasPermission = false;
 
@@ -82,15 +109,15 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
   }
 
   @Override
-  public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
+  public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
 
-    executeCommand(commandSender, command, s, strings);
+    executeCommand(sender, command, s, args);
 
     return false;
   }
 
   @Override
-  public @Nullable List<String> onTabComplete(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] strings) {
-    return List.of();
+  public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {
+    return executeTabComplet(sender, command, s, args);
   }
 }
