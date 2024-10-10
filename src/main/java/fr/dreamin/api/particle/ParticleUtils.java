@@ -1,8 +1,11 @@
 package fr.dreamin.api.particle;
 
+import fr.dreamin.mctools.McTools;
+import org.bukkit.Color;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
@@ -40,5 +43,81 @@ public class ParticleUtils {
    */
   private static boolean isPlayerInRange(final Player player, final Location location) {
     return player.getWorld().equals(location.getWorld()) && player.getLocation().distance(location) <= 20;
+  }
+
+  /**
+   * Starts a circular particle wave effect around the player.
+   *
+   * @param player               The player around whom the particles will be generated.
+   * @param durationInMicroSeconds Duration of the particle effect.
+   * @param showAll              If true, the particles will be visible to all players.
+   */
+  public static void startParticleWave(Player player, double durationInMicroSeconds, boolean showAll) {
+    new BukkitRunnable() {
+      private double radius = 0.0;
+      private double elapsedMicroSeconds = 0.0;
+      private final double radiusIncrement = 1.5;
+
+      @Override
+      public void run() {
+        if (elapsedMicroSeconds >= durationInMicroSeconds) {
+          this.cancel();
+          return;
+        }
+
+        for (int degree = 0; degree < 360; degree += 15) {
+          double angle = degree * Math.PI / 180;
+          double x = radius * Math.cos(angle);
+          double z = radius * Math.sin(angle);
+
+          if (showAll) {
+            player.getWorld().spawnParticle(Particle.DUST, player.getLocation().add(x, 0, z), 0, new Particle.DustOptions(Color.RED, 1));
+          } else {
+            player.spawnParticle(Particle.DUST, player.getLocation().add(x, 0, z), 0, new Particle.DustOptions(Color.RED, 1));
+          }
+        }
+        radius += radiusIncrement;
+        elapsedMicroSeconds += 0.1;
+      }
+    }.runTaskTimer(McTools.getInstance(), 0L, 1L);
+  }
+
+  /**
+   * Starts a reverse particle wave effect, where the circle shrinks.
+   *
+   * @param player               The player around whom the particles will shrink.
+   * @param durationInMicroSeconds Duration of the particle effect.
+   * @param showAll              If true, the particles will be visible to all players.
+   */
+  public static void startReverseParticleWave(Player player, double durationInMicroSeconds, boolean showAll) {
+    if (McTools.getInstance() == null) return;
+
+    new BukkitRunnable() {
+      private double radius = 7.5;
+      private double elapsedMicroSeconds = 0.0;
+      private final double radiusIncrement = -1.5;
+
+      @Override
+      public void run() {
+        if (elapsedMicroSeconds >= durationInMicroSeconds) {
+          this.cancel();
+          return;
+        }
+
+        for (int degree = 0; degree < 360; degree += 15) {
+          double angle = degree * Math.PI / 180;
+          double x = radius * Math.cos(angle);
+          double z = radius * Math.sin(angle);
+
+          if (showAll) {
+            player.getWorld().spawnParticle(Particle.DUST, player.getLocation().add(x, 0, z), 0, new Particle.DustOptions(Color.GREEN, 1));
+          } else {
+            player.spawnParticle(Particle.DUST, player.getLocation().add(x, 0, z), 0, new Particle.DustOptions(Color.GREEN, 1));
+          }
+        }
+        radius += radiusIncrement;
+        elapsedMicroSeconds += 0.1;
+      }
+    }.runTaskTimer(McTools.getInstance(), 0L, 1L);
   }
 }

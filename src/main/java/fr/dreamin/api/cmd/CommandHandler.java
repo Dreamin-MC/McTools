@@ -1,5 +1,6 @@
 package fr.dreamin.api.cmd;
 
+import fr.dreamin.mctools.McTools;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -57,6 +58,7 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
       }
       catch (Exception e) {
         sender.sendMessage("§cErreur lors de l'exécution de la commande : §7" + e.getMessage());
+        if (McTools.getInstance() != null) McTools.getInstance().getLogger().info(e.toString());
       }
 
     }

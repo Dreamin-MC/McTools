@@ -1,6 +1,12 @@
 package fr.dreamin.api.colors;
 
+import com.rexcantor64.triton.api.Triton;
+import com.rexcantor64.triton.api.TritonAPI;
+import com.rexcantor64.triton.api.language.Language;
+import com.rexcantor64.triton.api.language.LanguageManager;
+import com.rexcantor64.triton.api.players.LanguagePlayer;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.entity.Player;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -57,35 +63,62 @@ public enum CustomChatColor {
 
   // Utility method to replace color placeholders in messages
   public static String getMsg(String msg, String... args) {
-    // Replace %n placeholders with args
-    for (int i = 0; i < args.length; i++) {
+    // Remplacement des arguments du message (%0, %1, etc.)
+    for (int i = 0; i < args.length; ++i) {
       msg = msg.replace("%" + i, args[i]);
     }
 
-    // Compile regex once for better performance
-    final Pattern namePattern = Pattern.compile("\\[color\\](\\w+)\\[color\\]");
-    final Pattern hexPattern = Pattern.compile("\\[color\\]#?([0-9A-Fa-f]{6})\\[color\\]");
+    // Modèle pour les noms de couleurs (insensible à la casse)
+    Pattern namePattern = Pattern.compile("\\[color\\](\\w+)\\[color\\]", Pattern.CASE_INSENSITIVE);
+    // Modèle pour les couleurs hexadécimales (insensible à la casse)
+    Pattern hexPattern = Pattern.compile("\\[color\\]#?([0-9A-Fa-f]{6})\\[color\\]", Pattern.CASE_INSENSITIVE);
 
-    // Replace named colors
     Matcher nameMatcher = namePattern.matcher(msg);
+
+    // Remplacement des couleurs nommées
     while (nameMatcher.find()) {
       String colorName = nameMatcher.group(1).toUpperCase();
+
       try {
         CustomChatColor customColor = CustomChatColor.valueOf(colorName);
-        msg = msg.replaceFirst("\\[color\\]" + colorName + "\\[color\\]", customColor.getColor().toString());
+        msg = msg.replaceFirst("(?i)\\[color\\]" + colorName + "\\[color\\]", customColor.getColor().toString());
       } catch (IllegalArgumentException e) {
-        msg = msg.replaceFirst("\\[color\\]" + colorName + "\\[color\\]", CustomChatColor.ERROR.getColor().toString());
+        // Si la couleur n'existe pas, remplace par la couleur d'erreur
+        msg = msg.replaceFirst("(?i)\\[color\\]" + colorName + "\\[color\\]", CustomChatColor.ERROR.getColor().toString());
       }
     }
 
-    // Replace hex colors
+    // Remplacement des couleurs hexadécimales
     Matcher hexMatcher = hexPattern.matcher(msg);
     while (hexMatcher.find()) {
       String hexColor = "#" + hexMatcher.group(1);
       ChatColor color = getCustomColor(hexColor);
-      msg = msg.replaceFirst("\\[color\\]" + hexColor + "\\[color\\]", color != null ? color.toString() : CustomChatColor.ERROR.getColor().toString());
+      msg = msg.replaceFirst("(?i)\\[color\\]" + hexColor + "\\[color\\]", color != null ? color.toString() : CustomChatColor.ERROR.getColor().toString());
     }
 
     return msg;
   }
+
+  public static String getMsgTriton(Player player, String msgCode, String... args) {
+
+    player.sendMessage("ttttt");
+
+    if (TritonAPI.getInstance() == null) player.sendMessage("api null");
+
+    Triton api = TritonAPI.getInstance();
+
+    LanguagePlayer tPlayer = api.getPlayerManager().get(player.getUniqueId());
+
+    if (tPlayer == null) player.sendMessage("tPlayer null");
+    LanguageManager manager = api.getLanguageManager();
+
+    if (manager == null) player.sendMessage("manager null");
+
+    String message = manager.getText(tPlayer, msgCode);
+
+    if (message == null) player.sendMessage("message null");
+
+    return getMsg(message, args);
+  }
+
 }

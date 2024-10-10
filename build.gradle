@@ -52,6 +52,7 @@ dependencies {
     exclude group: '*', module: '*'
   }
   implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+  implementation 'com.github.tritonmc:Triton:3.9.5'
 }
 
 def targetJavaVersion = 22
