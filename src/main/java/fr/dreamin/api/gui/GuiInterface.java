@@ -9,11 +9,10 @@ public interface GuiInterface {
   String name();
   Gui gui(Player player);
   default void open(Player player) {
-    Window window = Window.single()
+    Window.single()
       .setViewer(player)
       .setGui(gui(player))
       .setTitle(name())
-      .build();
-    window.open();
+      .open(player);
   }
 }
