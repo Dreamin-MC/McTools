@@ -374,6 +374,15 @@ public class ItemBuilder {
     return this;
   }
 
+  public ItemBuilder setLore(List<String> lines) {
+    ItemMeta meta = is.getItemMeta();
+    if (meta!= null) {
+      meta.setLore(lines);
+      is.setItemMeta(meta);
+    }
+    return this;
+  }
+
 
 
   /**

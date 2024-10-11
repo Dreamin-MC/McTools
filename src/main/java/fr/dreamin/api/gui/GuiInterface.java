@@ -6,13 +6,29 @@ import xyz.xenondevs.invui.window.Window;
 
 public interface GuiInterface {
 
-  String name();
-  Gui gui(Player player);
+  String name(Player player); // Retourne le nom/titre de la GUI
+  default boolean closable(Player player) {
+    return true;
+  };
+  Gui guiUpper(Player player); // Retourne l'instance de GUI pour le joueur
+  default Gui guiLower(Player player) {
+    return Gui.normal()
+      .setStructure(
+        ". . . . . . . . . ",
+        ". . . . . . . . . ",
+        ". . . . . . . . . ",
+        ". . . . . . . . . "
+      )
+      .build();
+  }// Retourne
+
+  // Ouvre la GUI pour le joueur, méthode par défaut pour les GUIs en mode "single"
   default void open(Player player) {
     Window.single()
       .setViewer(player)
-      .setGui(gui(player))
-      .setTitle(name())
+      .setGui(guiUpper(player))
+      .setTitle(name(player))
+      .setCloseable(closable(player))
       .open(player);
   }
 }

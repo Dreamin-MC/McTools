@@ -26,9 +26,9 @@ public class ParticleUtils {
    * @param offsetY The offset for the particles along the Y axis.
    * @param offsetZ The offset for the particles along the Z axis.
    */
-  public static void sendParticleToAll(final List<Player> playerList, final Particle particle, final Location location, final int amount, final double speed, final double offsetX, final double offsetY, final double offsetZ) {
+  public static void sendParticleToAll(final List<Player> playerList, final Particle particle, final Location location, double distance, final int amount, final double speed, final double offsetX, final double offsetY, final double offsetZ) {
     playerList.forEach(player -> {
-      if (isPlayerInRange(player, location)) {
+      if (isPlayerInRange(player, location, distance)) {
         player.spawnParticle(particle, location, amount, offsetX, offsetY, offsetZ, speed);
       }
     });
@@ -41,8 +41,8 @@ public class ParticleUtils {
    * @param location The location of the particle.
    * @return true if the player is in the same world and within 20 blocks of the location, false otherwise.
    */
-  private static boolean isPlayerInRange(final Player player, final Location location) {
-    return player.getWorld().equals(location.getWorld()) && player.getLocation().distance(location) <= 20;
+  private static boolean isPlayerInRange(final Player player, final Location location, double distance) {
+    return player.getWorld().equals(location.getWorld()) && player.getLocation().distance(location) <= distance;
   }
 
   /**
