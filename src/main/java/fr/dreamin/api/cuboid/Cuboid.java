@@ -11,6 +11,9 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter @Setter
 public class Cuboid {
 
@@ -24,6 +27,31 @@ public class Cuboid {
   public Location getCenter() {
     if (locA == null || locB == null || (!locA.getWorld().equals(locB.getWorld()))) return null;
     return new Location(this.locA.getWorld(), (this.locA.getX() + this.locB.getX())/2, Math.min(this.locA.getY(), this.locB.getY()) +1, (this.locA.getZ() + this.locB.getZ())/2);
+  }
+
+  public List<Block> getBlocks() {
+    List<Block> rs = new ArrayList<>();
+
+    if (locA == null || locB == null || !locA.getWorld().equals(locB.getWorld())) return rs;
+
+    World world = locA.getWorld();
+
+    int minX = Math.min(locA.getBlockX(), locB.getBlockX());
+    int maxX = Math.max(locA.getBlockX(), locB.getBlockX());
+    int minY = Math.min(locA.getBlockY(), locB.getBlockY());
+    int maxY = Math.max(locA.getBlockY(), locB.getBlockY());
+    int minZ = Math.min(locA.getBlockZ(), locB.getBlockZ());
+    int maxZ = Math.max(locA.getBlockZ(), locB.getBlockZ());
+
+    for (int x = minX; x <= maxX; x++) {
+      for (int y = minY; y <= maxY; y++) {
+        for (int z = minZ; z <= maxZ; z++) {
+          rs.add(world.getBlockAt(x, y, z));
+        }
+      }
+    }
+
+    return rs;
   }
 
   public boolean isLocationIn(Location location) {
