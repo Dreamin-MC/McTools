@@ -74,15 +74,20 @@ public class SoundHandler {
 
     try {
       Sound sound = Sound.valueOf(this.label.toUpperCase());
-      if (location != null && player.getWorld().equals(location.getWorld()) && (distance < 0 || player.getLocation().distance(location) <= distance)) {
-        player.playSound(location, sound, this.category, this.volume, this.pitch);
-      } else {
-        player.playSound(player, sound, this.category, this.volume, this.pitch);
+
+      if (location != null) {
+        if (player.getWorld().equals(location.getWorld())) {
+          if ((distance < 0 || player.getLocation().distance(location) <= distance))
+            player.playSound(location, sound, this.category, this.volume, this.pitch);
+        }
       }
+      else player.playSound(player, sound, this.category, this.volume, this.pitch);
+
     } catch (IllegalArgumentException e) {
       playCustomSound(player, location);
     }
   }
+
   public void play(final Player player, final Location location) {
     play(player, location, -1);
   }
@@ -144,10 +149,7 @@ public class SoundHandler {
    * @param location The location to play the sound (optional).
    */
   private void playCustomSound(final Player player, final Location location) {
-    if (location != null && player.getWorld().equals(location.getWorld())) {
-      player.playSound(location, this.label, this.category, this.volume, this.pitch);
-    } else {
-      player.playSound(player, this.label, this.category, this.volume, this.pitch);
-    }
+    if (location != null && player.getWorld().equals(location.getWorld())) player.playSound(location, this.label, this.category, this.volume, this.pitch);
+    else player.playSound(player, this.label, this.category, this.volume, this.pitch);
   }
 }
