@@ -8,29 +8,20 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.Optional;
 
 /**
- * Handles the playing and stopping of sounds for players with specified volume, pitch, and category.
+ * Handles playing and stopping of sounds for players with specified volume, pitch, and category.
  */
 @Getter @Setter
 public class SoundHandler {
 
-  private final String label; // The label of the sound (either custom or a Bukkit Sound).
+  private final String label; // Label of the sound (custom or Bukkit Sound)
   private Float volume;
   private Float pitch;
   private SoundCategory category;
 
-  //-----------------CONSTRUCTORS-----------------
+  // Constructors
 
-  /**
-   * Constructs a SoundHandler with the specified sound name, category, volume, and pitch.
-   *
-   * @param soundName The name of the sound as a string.
-   * @param category The sound category (e.g., MUSIC, WEATHER, etc.).
-   * @param volume The volume of the sound.
-   * @param pitch The pitch of the sound.
-   */
   public SoundHandler(final String soundName, final SoundCategory category, final float volume, final float pitch) {
     this.label = soundName;
     this.volume = volume;
@@ -38,121 +29,79 @@ public class SoundHandler {
     this.category = category;
   }
 
-  /**
-   * Constructs a SoundHandler by copying another SoundHandler instance.
-   *
-   * @param soundHandler The SoundHandler to copy.
-   */
   public SoundHandler(final SoundHandler soundHandler) {
     this(soundHandler.getLabel(), soundHandler.getCategory(), soundHandler.getVolume(), soundHandler.getPitch());
   }
 
-  /**
-   * Constructs a SoundHandler using a Bukkit Sound enum.
-   *
-   * @param sound The Bukkit Sound.
-   * @param category The sound category.
-   * @param volume The volume of the sound.
-   * @param pitch The pitch of the sound.
-   */
   public SoundHandler(final Sound sound, final SoundCategory category, final float volume, final float pitch) {
-    this.label = sound.name();
-    this.volume = volume;
-    this.pitch = pitch;
-    this.category = category;
+    this(sound.name(), category, volume, pitch);
   }
 
-  //-----------------SOUND PLAYING-----------------
+  // Sound Playing
 
-  /**
-   * Plays the sound for a single player at the specified location.
-   *
-   * @param player The player to play the sound for.
-   * @param location The location where the sound should be played (optional).
-   */
   public void play(final Player player, final Location location, final double distance) {
-    if (this.label == null) return;
+    if (label == null) return;
 
-    Optional<Sound> sound = Optional.empty();
+    Sound sound = getSoundFromLabel();
 
-    try {
-      sound = Optional.of(Sound.valueOf(this.label.toUpperCase()));
-    }
-    catch (IllegalArgumentException e) {
-    }
-
-
-    if (sound.isPresent()) {
-      if (location != null) {
-        if (player.getWorld().equals(location.getWorld())) {
-          if ((distance < 0 || player.getLocation().distance(location) <= distance))
-            player.playSound(location, sound.get(), this.category, this.volume, this.pitch);
-        }
-      }
-      else player.playSound(player, sound.get(), this.category, this.volume, this.pitch);
-    }
-    else {
-      if (location != null) {
-        if (player.getWorld().equals(location.getWorld())) {
-          if ((distance < 0 || player.getLocation().distance(location) <= distance))
-            player.playSound(location, this.label, this.category, this.volume, this.pitch);
-        }
-      }
-      else player.playSound(player, this.label, this.category, this.volume, this.pitch);
-    }
+    if (sound != null) playSound(player, sound, location, distance);
+    else playCustomSound(player, location, distance);
   }
 
   public void play(final Player player, final Location location) {
     play(player, location, -1);
   }
 
-  /**
-   * Plays the sound for a list of players at the specified location.
-   *
-   * @param playerList The list of players to play the sound for.
-   * @param location The location where the sound should be played (optional).
-   */
   public void play(final List<Player> playerList, final Location location, final double distance) {
-    if (this.label == null) return;
-    playerList.forEach(player -> this.play(player, location, distance));
+    playerList.forEach(player -> play(player, location, distance));
   }
+
   public void play(final List<Player> playerList, final Location location) {
-    play(playerList, location);
+    play(playerList, location, -1);
   }
 
-  //-----------------SOUND STOPPING-----------------
+  // Sound Stopping
 
-  /**
-   * Stops the sound for a single player.
-   *
-   * @param player The player to stop the sound for.
-   */
   public void stop(final Player player) {
-    if (this.label == null) return;
+    if (label == null) return;
 
-    try {
-      Sound sound = Sound.valueOf(this.label.toUpperCase());
-      player.stopSound(sound);
-    } catch (IllegalArgumentException e) {
-      player.stopSound(this.label);
-    }
+    Sound sound = getSoundFromLabel();
+
+    if (sound != null) player.stopSound(sound);
+    else player.stopSound(label);
   }
 
-  /**
-   * Stops the sound for a list of players.
-   *
-   * @param playerList The list of players to stop the sound for.
-   */
   public void stop(final List<Player> playerList) {
-    if (this.label == null) return;
+    playerList.forEach(this::stop);
+  }
 
+  // Private Helper Methods
+
+  private Sound getSoundFromLabel() {
     try {
-      Sound sound = Sound.valueOf(this.label.toUpperCase());
-      playerList.forEach(player -> player.stopSound(sound));
+      return Sound.valueOf(label.toUpperCase());
     } catch (IllegalArgumentException e) {
-      playerList.forEach(player -> player.stopSound(this.label));
+      return null;
     }
   }
 
-  //-----------------PRIVATE HELPER METHODS-----------------
+  private void playSound(Player player, Sound sound, Location location, double distance) {
+    if (location != null && isWithinDistance(player, location, distance)) {
+      player.playSound(location, sound, category, volume, pitch);
+    } else {
+      player.playSound(player.getLocation(), sound, category, volume, pitch);
+    }
+  }
+
+  private void playCustomSound(Player player, Location location, double distance) {
+    if (location != null && isWithinDistance(player, location, distance)) {
+      player.playSound(location, label, category, volume, pitch);
+    } else {
+      player.playSound(player.getLocation(), label, category, volume, pitch);
+    }
+  }
+
+  private boolean isWithinDistance(Player player, Location location, double distance) {
+    return player.getWorld().equals(location.getWorld()) && (distance < 0 || player.getLocation().distance(location) <= distance);
+  }
 }
