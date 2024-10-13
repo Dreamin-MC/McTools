@@ -43,10 +43,7 @@ public class SoundHandler {
    * @param soundHandler The SoundHandler to copy.
    */
   public SoundHandler(final SoundHandler soundHandler) {
-    this.label = soundHandler.getLabel();
-    this.volume = soundHandler.getVolume();
-    this.pitch = soundHandler.getPitch();
-    this.category = soundHandler.getCategory();
+    this(soundHandler.getLabel(), soundHandler.getCategory(), soundHandler.getVolume(), soundHandler.getPitch());
   }
 
   /**
@@ -72,12 +69,12 @@ public class SoundHandler {
    * @param player The player to play the sound for.
    * @param location The location where the sound should be played (optional).
    */
-  public void play(final Player player, final Location location) {
+  public void play(final Player player, final Location location, final double distance) {
     if (this.label == null) return;
 
     try {
       Sound sound = Sound.valueOf(this.label.toUpperCase());
-      if (location != null && player.getWorld().equals(location.getWorld())) {
+      if (location != null && player.getWorld().equals(location.getWorld()) && (distance < 0 || player.getLocation().distance(location) <= distance)) {
         player.playSound(location, sound, this.category, this.volume, this.pitch);
       } else {
         player.playSound(player, sound, this.category, this.volume, this.pitch);
@@ -86,6 +83,9 @@ public class SoundHandler {
       playCustomSound(player, location);
     }
   }
+  public void play(final Player player, final Location location) {
+    play(player, location, -1);
+  }
 
   /**
    * Plays the sound for a list of players at the specified location.
@@ -93,21 +93,12 @@ public class SoundHandler {
    * @param playerList The list of players to play the sound for.
    * @param location The location where the sound should be played (optional).
    */
-  public void play(final List<Player> playerList, final Location location) {
+  public void play(final List<Player> playerList, final Location location, final double distance) {
     if (this.label == null) return;
-
-    try {
-      Sound sound = Sound.valueOf(this.label.toUpperCase());
-      playerList.forEach(player -> {
-        if (location != null && player.getWorld().equals(location.getWorld())) {
-          player.playSound(location, sound, this.category, this.volume, this.pitch);
-        } else {
-          player.playSound(player, sound, this.category, this.volume, this.pitch);
-        }
-      });
-    } catch (IllegalArgumentException e) {
-      playerList.forEach(player -> playCustomSound(player, location));
-    }
+    playerList.forEach(player -> this.play(player, location, distance));
+  }
+  public void play(final List<Player> playerList, final Location location) {
+    play(playerList, location);
   }
 
   //-----------------SOUND STOPPING-----------------
