@@ -8,6 +8,7 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Handles the playing and stopping of sounds for players with specified volume, pitch, and category.
@@ -72,19 +73,25 @@ public class SoundHandler {
   public void play(final Player player, final Location location, final double distance) {
     if (this.label == null) return;
 
-    try {
-      Sound sound = Sound.valueOf(this.label.toUpperCase());
+    Optional<Sound> sound = Optional.of(Sound.valueOf(this.label.toUpperCase()));
 
+    if (sound.isPresent()) {
       if (location != null) {
         if (player.getWorld().equals(location.getWorld())) {
           if ((distance < 0 || player.getLocation().distance(location) <= distance))
-            player.playSound(location, sound, this.category, this.volume, this.pitch);
+            player.playSound(location, sound.get(), this.category, this.volume, this.pitch);
         }
       }
-      else player.playSound(player, sound, this.category, this.volume, this.pitch);
-
-    } catch (IllegalArgumentException e) {
-      playCustomSound(player, location);
+      else player.playSound(player, sound.get(), this.category, this.volume, this.pitch);
+    }
+    else {
+      if (location != null) {
+        if (player.getWorld().equals(location.getWorld())) {
+          if ((distance < 0 || player.getLocation().distance(location) <= distance))
+            player.playSound(location, this.label, this.category, this.volume, this.pitch);
+        }
+      }
+      else player.playSound(player, this.label, this.category, this.volume, this.pitch);
     }
   }
 
@@ -141,15 +148,4 @@ public class SoundHandler {
   }
 
   //-----------------PRIVATE HELPER METHODS-----------------
-
-  /**
-   * Plays a custom sound by label for a player at a specific location.
-   *
-   * @param player The player to play the sound for.
-   * @param location The location to play the sound (optional).
-   */
-  private void playCustomSound(final Player player, final Location location) {
-    if (location != null && player.getWorld().equals(location.getWorld())) player.playSound(location, this.label, this.category, this.volume, this.pitch);
-    else player.playSound(player, this.label, this.category, this.volume, this.pitch);
-  }
 }
