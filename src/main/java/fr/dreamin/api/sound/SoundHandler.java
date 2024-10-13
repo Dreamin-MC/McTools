@@ -73,7 +73,14 @@ public class SoundHandler {
   public void play(final Player player, final Location location, final double distance) {
     if (this.label == null) return;
 
-    Optional<Sound> sound = Optional.of(Sound.valueOf(this.label.toUpperCase()));
+    Optional<Sound> sound = Optional.empty();
+
+    try {
+      sound = Optional.of(Sound.valueOf(this.label.toUpperCase()));
+    }
+    catch (IllegalArgumentException e) {
+    }
+
 
     if (sound.isPresent()) {
       if (location != null) {
