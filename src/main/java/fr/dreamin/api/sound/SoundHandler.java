@@ -86,16 +86,16 @@ public class SoundHandler {
   }
 
   private void playSound(Player player, Sound sound, Location location, double distance) {
-    if (location != null && isWithinDistance(player, location, distance)) {
-      player.playSound(location, sound, category, volume, pitch);
+    if (location != null) {
+      if (isWithinDistance(player, location, distance)) player.playSound(location, sound, category, volume, pitch);
     } else {
       player.playSound(player.getLocation(), sound, category, volume, pitch);
     }
   }
 
   private void playCustomSound(Player player, Location location, double distance) {
-    if (location != null && isWithinDistance(player, location, distance)) {
-      player.playSound(location, label, category, volume, pitch);
+    if (location != null) {
+      if (isWithinDistance(player, location, distance)) player.playSound(location, label, category, volume, pitch);
     } else {
       player.playSound(player.getLocation(), label, category, volume, pitch);
     }
