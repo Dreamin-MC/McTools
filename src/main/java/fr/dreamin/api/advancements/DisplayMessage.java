@@ -5,6 +5,8 @@ import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
+import java.util.Set;
 
 public abstract class DisplayMessage {
 
@@ -18,15 +20,15 @@ public abstract class DisplayMessage {
    * Show message to onlines players
    */
   public void showToAll()	{
-    showTo(Bukkit.getServer().getOnlinePlayers());
+    showTo((Player) Bukkit.getServer().getOnlinePlayers().stream().toList());
   };
 
   /**
    * Show message to specifics players
-   * @param collection Collection of players
+   * @param players Set of players
    */
-  public void showTo(Collection<? extends Player> collection)	{
-    for (Player player : collection)	{
+  public void showTo(List<Player> players)	{
+    for (Player player : players)	{
       showTo(player);
     }
   }
