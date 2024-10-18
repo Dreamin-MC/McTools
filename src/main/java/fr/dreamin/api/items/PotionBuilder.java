@@ -1,9 +1,10 @@
-package fr.dreamin.api.potion;
+package fr.dreamin.api.items;
 
 import lombok.Getter;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.PotionMeta;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
@@ -170,6 +171,22 @@ public class PotionBuilder {
     return this;
   }
 
+  /**
+   * Sets the custom model data for this item.
+   * Custom model data allows for custom textures in resource packs.
+   *
+   * @param data The custom model data value.
+   * @return The ItemBuilder instance for method chaining.
+   */
+  public PotionBuilder setCustomModelData(int data) {
+    ItemMeta meta = this.potion.getItemMeta();
+    if (meta != null) {
+      meta.setCustomModelData(data);
+      this.potion.setItemMeta(meta);
+    }
+    return this;
+  }
+
   //-----------------GETTER-----------------
 
   /**
@@ -179,6 +196,15 @@ public class PotionBuilder {
    */
   public ItemStack toItemStack() {
     return this.potion;
+  }
+
+  /**
+   * Converts this ItemBuilder to an InvUI item, useful for GUIs.
+   *
+   * @return The GUI-compatible item from InvUI.
+   */
+  public xyz.xenondevs.invui.item.builder.ItemBuilder toGuiItem() {
+    return new xyz.xenondevs.invui.item.builder.ItemBuilder(this.toItemStack());
   }
 
   /**
