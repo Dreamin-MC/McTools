@@ -227,22 +227,4 @@ public class PotionBuilder {
   public PotionBuilder clone() {
     return new PotionBuilder(this);
   }
-
-  //-----------------POTIONUSETYPE ENUM-----------------
-
-  /**
-   * Enum representing different types of potion usage: SELF, SPLASH, and LINGERING.
-   */
-  @Getter
-  public enum PotionUseType {
-    SELF(Material.POTION),
-    SPLASH(Material.SPLASH_POTION),
-    LINGERING(Material.LINGERING_POTION);
-
-    private final Material material;
-
-    PotionUseType(final Material material) {
-      this.material = material;
-    }
-  }
 }
