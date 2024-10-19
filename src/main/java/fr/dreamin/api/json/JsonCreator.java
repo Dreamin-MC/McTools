@@ -4,8 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import fr.dreamin.api.cuboid.Cuboid;
+import fr.dreamin.api.entity.interaction.InteractionData;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
+import org.joml.Vector3f;
 
 import java.util.List;
 
@@ -42,6 +45,12 @@ public class JsonCreator {
   // CUBOIDS
   // ----------------------------------------------------------------
 
+  public static JsonArray createJsonFromCuboids(@NotNull List<Cuboid> cuboids) {
+    JsonArray jsonArray = new JsonArray();
+    cuboids.forEach(cuboid -> jsonArray.add(createJsonFromCuboid(cuboid)));
+    return jsonArray;
+  }
+
   public static JsonObject createJsonFromCuboid(@NotNull Cuboid cuboid) {
     JsonObject jsonObject = new JsonObject();
 
@@ -51,4 +60,61 @@ public class JsonCreator {
     return jsonObject;
   }
 
+  // ----------------------------------------------------------------
+  // VECTORS
+  // ----------------------------------------------------------------
+
+  public static JsonObject createJsonFromVector(@NotNull Vector vector) {
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("x", vector.getX());
+    jsonObject.addProperty("y", vector.getY());
+    jsonObject.addProperty("z", vector.getZ());
+
+    return jsonObject;
+  }
+  public static JsonArray createJsonFromVectors(@NotNull List<Vector> vectors) {
+    JsonArray jsonArray = new JsonArray();
+    vectors.forEach(vector -> jsonArray.add(createJsonFromVector(vector)));
+    return jsonArray;
+  }
+
+  public static JsonObject createJsonFromVector3f(@NotNull Vector3f vector) {
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("x", vector.x);
+    jsonObject.addProperty("y", vector.y);
+    jsonObject.addProperty("z", vector.z);
+
+    return jsonObject;
+  }
+  public static JsonArray createJsonFromVector3fs(@NotNull List<Vector3f> vector3fs) {
+    JsonArray jsonArray = new JsonArray();
+    vector3fs.forEach(vector3f -> jsonArray.add(createJsonFromVector3f(vector3f)));
+    return jsonArray;
+  }
+
+  // ----------------------------------------------------------------
+  // INTERACTION DATA
+  // ----------------------------------------------------------------
+
+  public static JsonObject createJsonFromInteractionData(@NotNull InteractionData data) {
+    JsonObject jsonObject = new JsonObject();
+
+    jsonObject.addProperty("x", data.getLocation().getX());
+    jsonObject.addProperty("y", data.getLocation().getY());
+    jsonObject.addProperty("z", data.getLocation().getZ());
+    jsonObject.addProperty("yaw", data.getLocation().getYaw());
+    jsonObject.addProperty("pitch", data.getLocation().getPitch());
+
+    jsonObject.addProperty("height", data.getHeight());
+    jsonObject.addProperty("width", data.getWidth());
+
+    return jsonObject;
+  }
+  public static JsonArray createJsonFromInteractionsData(@NotNull List<InteractionData> interactionsData) {
+    JsonArray jsonArray = new JsonArray();
+    interactionsData.forEach(data -> jsonArray.add(createJsonFromInteractionData(data)));
+    return jsonArray;
+  }
 }
