@@ -52,8 +52,7 @@ public class JsonCreator {
     cuboids.forEach(cuboid -> jsonArray.add(createJsonFromCuboid(cuboid)));
     return jsonArray;
   }
-
-  @SneakyThrows
+  
   public static JsonObject createJsonFromCuboid(@NotNull Cuboid cuboid) {
     JsonObject jsonObject = new JsonObject();
 
