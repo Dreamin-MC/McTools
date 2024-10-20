@@ -5,11 +5,13 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import fr.dreamin.api.cuboid.Cuboid;
 import fr.dreamin.api.entity.interaction.InteractionData;
+import lombok.SneakyThrows;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.NotNull;
 import org.joml.Vector3f;
 
+import java.lang.reflect.Method;
 import java.util.List;
 
 public class JsonCreator {
@@ -45,12 +47,13 @@ public class JsonCreator {
   // CUBOIDS
   // ----------------------------------------------------------------
 
-  public static JsonArray createJsonFromCuboids(@NotNull List<Cuboid> cuboids) {
+  public static JsonArray createJsonFromCuboids(@NotNull List<? extends Cuboid> cuboids) {
     JsonArray jsonArray = new JsonArray();
     cuboids.forEach(cuboid -> jsonArray.add(createJsonFromCuboid(cuboid)));
     return jsonArray;
   }
 
+  @SneakyThrows
   public static JsonObject createJsonFromCuboid(@NotNull Cuboid cuboid) {
     JsonObject jsonObject = new JsonObject();
 
